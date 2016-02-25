@@ -1,0 +1,70 @@
+﻿@model CinemaProject.Models.subscription
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>subscription</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.user_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.user_id)
+            @Html.ValidationMessageFor(model => model.user_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.tariff_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.tariff_id)
+            @Html.ValidationMessageFor(model => model.tariff_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.start)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.start)
+            @Html.ValidationMessageFor(model => model.start)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.end)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.end)
+            @Html.ValidationMessageFor(model => model.end)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.payment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.payment)
+            @Html.ValidationMessageFor(model => model.payment)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

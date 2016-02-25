@@ -1,0 +1,50 @@
+﻿@model CinemaProject.Models.subscription
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>subscription</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.user_id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.user_id)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.tariff_id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.tariff_id)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.start)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.start)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.end)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.end)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.payment)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.payment)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

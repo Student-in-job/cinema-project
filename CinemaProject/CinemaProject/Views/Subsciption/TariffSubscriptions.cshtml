@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CinemaProject.Models.subscription>
+
+@{
+    ViewBag.Title = "TariffSubscriptions";
+}
+
+<h2>Все подписки к тарифу @ViewBag.TariffName</h2>
+
+<table>
+    <tr>
+        
+        <th>
+            @Html.Display("User"))
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.end)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.payment)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.users.Where(i=>i.subscription_id==item.id).Single().firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.end)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

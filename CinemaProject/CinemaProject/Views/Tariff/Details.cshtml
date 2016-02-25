@@ -1,0 +1,44 @@
+﻿@model CinemaProject.Models.tariff
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.name)</th>
+        <td>@Html.DisplayFor(model => model.name)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.description)</th>
+        <td>@Html.DisplayFor(model => model.description)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.creation_date)</th>
+        <td>@Html.DisplayFor(model => model.creation_date)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.price)</th>
+        <td>@Html.DisplayFor(model => model.price)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.adverticement_enabled)</th>
+        <td>@Html.DisplayFor(model => model.adverticement_enabled)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.new_films_enabled)</th>
+        <td>@Html.DisplayFor(model => model.new_films_enabled)</td>
+    </tr>
+    <tr>
+        <th>@Html.ActionLink("Subscribtions", "TariffSubscriptions", "Subsciption", new { id = Model.id},null)</th>
+        <td>@Html.DisplayFor(model => model.subscriptions.Count)</td>
+    </tr>
+
+</table>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
