@@ -1,64 +1,99 @@
-﻿@model CinemaProject.Models.video
+﻿@using System.Web.Razor
+@using CinemaProject.Models
+@model CinemaProject.Models.video
 
 @{
     ViewBag.Title = "Details";
 }
+<div id="video_header">
+    <h1>
+        @{
+            if (Model.type == 0)
+            {
+                <h1>Фильм: @Html.DisplayFor(model => model.name)</h1>
+            }
+            else
+            {
+                <h1> Сериал: @Html.DisplayFor(model => model.name)</h1>
+            }
+        }
 
+    </h1>
+</div >
+<div id="video_image">
+    <img src="/uploads/@Model.img_url" class="video-img-list"/>
+</div>
+<div id="video_details">
+
+    <div class="properties">
+        <span>
+            @Model.release_date.Year
+        </span>
+        <span>
+            Страна!
+        </span>
+        <span>
+            @{
+                foreach (var videogenre in Model.videogenres)
+                {
+                    @: <a style="text-decoration: none">
+                    @videogenre.genre.name
+                    @:,</a>
+                }
+            }
+        </span>
+        <span>
+            Длительность
+        </span>
+    </div>
+    <dl>
+        <dt>
+            Режиссер
+        </dt>
+        <dd>
+            @Model.director
+        </dd>
+        <dt>
+            В ролях
+        </dt>
+        <dd>
+            актер
+            @* @{
+                foreach (var videogenre in Model.actors)
+                {
+                    @: <a style="text-decoration: none">
+                        @videogenre.a.name
+                    @:,</a>
+                }
+            }*@
+        </dd>
+    </dl>
+
+    <div class="display-field">
+        @Html.DisplayFor(model => model.details)
+    </div>
+
+    
+    @{
+        string genres = "";
+        foreach (var videogenre in Model.videogenres)
+        {
+            genres = genres + ", " + videogenre.genre.name;
+        }
+    }
+    <p>Жанры:@genres</p>
+</div>
+@*
 <h2>Details</h2>
 
 <fieldset>
     <legend>video</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.age_limit)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.age_limit)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.release_date)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.release_date)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.details)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.details)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.director)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.director)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.type)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.type)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.img_url)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.img_url)
-    </div>
+     
+    
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+*@

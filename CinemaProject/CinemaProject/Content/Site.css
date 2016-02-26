@@ -302,6 +302,25 @@ ol.round {
         ol.round li.nine {
             background: url("../Images/orderedList9.png") no-repeat;
         }
+/* video */
+        #video_header {
+            height: 10%;
+            width: 100%;
+        }
+        #video_image {
+            float: left;
+            height: 100%;
+            width: 25%;
+        }
+        #video_details {
+            float: right;
+            position: static;
+            height: 100%;
+            width: 65%;
+        }
+        .properties>*+* {
+            margin-left: 10px;
+        }
 
 /* content */
 article {

@@ -32,12 +32,15 @@ namespace CinemaProject.Models
         public DbSet<genre> genres { get; set; }
         public DbSet<history> histories { get; set; }
         public DbSet<like> likes { get; set; }
+        public DbSet<manufacturer> manufacturers { get; set; }
         public DbSet<overview> overviews { get; set; }
         public DbSet<payment> payments { get; set; }
         public DbSet<role> roles { get; set; }
         public DbSet<subscription> subscriptions { get; set; }
         public DbSet<tariff> tariffs { get; set; }
         public DbSet<user> users { get; set; }
+        public DbSet<videoactor> videoactors { get; set; }
+        public DbSet<videogenre> videogenres { get; set; }
         public DbSet<video> videos { get; set; }
     }
 }

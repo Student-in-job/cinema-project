@@ -16,12 +16,12 @@ namespace CinemaProject.Models
     {
         public genre()
         {
-            this.videos = new HashSet<video>();
+            this.videogenres = new HashSet<videogenre>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
-        public virtual ICollection<video> videos { get; set; }
+        public virtual ICollection<videogenre> videogenres { get; set; }
     }
 }

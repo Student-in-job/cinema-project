@@ -42,7 +42,7 @@ namespace CinemaProject.Controllers
         public ActionResult Create()
         {
             video video = new video();
-            PopulateAssignedCourseData(video);
+            PopulateIncludedGenresData(video);
             return View(video);
         }
 
@@ -51,9 +51,8 @@ namespace CinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(video model, HttpPostedFileBase file, FormCollection formCollection, string[] selectedGenres)
+        public ActionResult Create(video model, HttpPostedFileBase file, string[] selectedGenres)
         {
-            UpdateVideoGenres(selectedGenres, model);
             if (ModelState.IsValid)
             {
                 if (file != null)
@@ -64,9 +63,16 @@ namespace CinemaProject.Controllers
                 }
                 db.videos.Add(model);
                 db.SaveChanges();
+//                var LastVideo = db.videos.Last();
+
+
+                UpdateVideoGenres(selectedGenres, model);
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
-            PopulateAssignedCourseData(model);
+            PopulateIncludedGenresData(model);
             return View(model);
         }
 
@@ -74,26 +80,32 @@ namespace CinemaProject.Controllers
         {
             if (selectedGenres == null)
             {
-                model.genres = new List<genre>();
+                model.videogenres = new List<videogenre>();
                 return;
             }
 
             var selectedGenresHS = new HashSet<string>(selectedGenres);
-            var videoGenres = new HashSet<int>(model.genres.Select(c => c.id));
+            var videoGenres = new HashSet<int>(model.videogenres.Select(c => c.genre_id));
             foreach (var genre in db.genres)
             {
                 if (selectedGenresHS.Contains(genre.id.ToString()))
                 {
                     if (!videoGenres.Contains(genre.id))
                     {
-                        model.genres.Add(genre);
+                        var videogenre = new videogenre();
+                        videogenre.genre_id = genre.id;
+                        videogenre.video_id = model.id;
+                        model.videogenres.Add(videogenre);
                     }
                 }
                 else
                 {
                     if (videoGenres.Contains(genre.id))
                     {
-                        model.genres.Remove(genre);
+                        var videogenre = new videogenre();
+                        videogenre.genre_id = genre.id;
+                        videogenre.video_id = model.id;
+                        model.videogenres.Remove(videogenre);
                     }
                 }
             }
@@ -109,7 +121,7 @@ namespace CinemaProject.Controllers
             {
                 return HttpNotFound();
             }
-
+            PopulateIncludedGenresData(video);
             return View(video);
         }
 
@@ -118,9 +130,9 @@ namespace CinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(video video, HttpPostedFileBase file)
+        public ActionResult Edit(video video, HttpPostedFileBase file, string[] selectedGenres)
         {
-
+            UpdateVideoGenres(selectedGenres, video);
             if (ModelState.IsValid)
             {
                 if (file != null)
@@ -168,10 +180,10 @@ namespace CinemaProject.Controllers
             base.Dispose(disposing);
         }
 
-        private void PopulateAssignedCourseData(video video)
+        private void PopulateIncludedGenresData(video video)
         {
             var allGenres = db.genres;
-            var videoGenres = new HashSet<int>(video.genres.Select(c => c.id));
+            var videoGenres = new HashSet<int>(video.videogenres/*.Where(i=>i.video_id==video.id)*/.Select(c => c.genre_id));
             var viewModel = new List<IncludedGenreData>();
             foreach (var genre in allGenres)
             {

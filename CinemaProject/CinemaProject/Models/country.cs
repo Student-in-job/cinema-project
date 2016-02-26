@@ -16,12 +16,12 @@ namespace CinemaProject.Models
     {
         public country()
         {
-            this.videos = new HashSet<video>();
+            this.manufacturers = new HashSet<manufacturer>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
-        public virtual ICollection<video> videos { get; set; }
+        public virtual ICollection<manufacturer> manufacturers { get; set; }
     }
 }

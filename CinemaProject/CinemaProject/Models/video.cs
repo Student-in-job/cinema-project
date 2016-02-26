@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace CinemaProject.Models
 {
     using System;
@@ -20,30 +18,26 @@ namespace CinemaProject.Models
         {
             this.contents = new HashSet<content>();
             this.likes = new HashSet<like>();
+            this.manufacturers = new HashSet<manufacturer>();
             this.overviews = new HashSet<overview>();
-            this.countries = new HashSet<country>();
-            this.actors = new HashSet<actor>();
-            this.genres = new HashSet<genre>();
+            this.videoactors = new HashSet<videoactor>();
+            this.videogenres = new HashSet<videogenre>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
         public int age_limit { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime release_date { get; set; }
-        [DataType(DataType.MultilineText)]
         public string details { get; set; }
         public string director { get; set; }
         public int type { get; set; }
-        [DataType(DataType.ImageUrl)]
         public string img_url { get; set; }
     
         public virtual ICollection<content> contents { get; set; }
         public virtual ICollection<like> likes { get; set; }
+        public virtual ICollection<manufacturer> manufacturers { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
-        public virtual ICollection<country> countries { get; set; }
-        public virtual ICollection<actor> actors { get; set; }
-        public virtual ICollection<genre> genres { get; set; }
+        public virtual ICollection<videoactor> videoactors { get; set; }
+        public virtual ICollection<videogenre> videogenres { get; set; }
     }
 }

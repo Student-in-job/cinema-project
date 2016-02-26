@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="cinemadbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="cinemadbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actors">
           <Key>
             <PropertyRef Name="id" />
@@ -70,13 +70,11 @@
           <Property Name="like" Type="bool" Nullable="false" />
           <Property Name="creation_date" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.cinemadb.manufacturer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="manufacturer">
           <Key>
-            <PropertyRef Name="video_id" />
-            <PropertyRef Name="country_id" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video_id" Type="int" Nullable="false" />
           <Property Name="country_id" Type="int" Nullable="false" />
         </EntityType>
@@ -145,23 +143,19 @@ warning 6002: The table/view 'def.cinemadb.manufacturer' does not have a primary
           <Property Name="balance" Type="double" Nullable="false" />
           <Property Name="subscription_id" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.cinemadb.videoactors' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="videoactors">
           <Key>
-            <PropertyRef Name="video_id" />
-            <PropertyRef Name="actor_id" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video_id" Type="int" Nullable="false" />
           <Property Name="actor_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.cinemadb.videogenres' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="videogenres">
           <Key>
-            <PropertyRef Name="video_id" />
-            <PropertyRef Name="genre_id" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video_id" Type="int" Nullable="false" />
           <Property Name="genre_id" Type="int" Nullable="false" />
         </EntityType>
@@ -410,31 +404,16 @@ warning 6002: The table/view 'def.cinemadb.videogenres' does not have a primary 
           <EntitySet Name="genres" EntityType="Self.genres" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="history" EntityType="Self.history" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="likes" EntityType="Self.likes" Schema="cinemadb" store:Type="Tables" />
+          <EntitySet Name="manufacturer" EntityType="Self.manufacturer" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="overviews" EntityType="Self.overviews" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="payments" EntityType="Self.payments" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="subscriptions" EntityType="Self.subscriptions" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="tariffs" EntityType="Self.tariffs" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="cinemadb" store:Type="Tables" />
+          <EntitySet Name="videoactors" EntityType="Self.videoactors" Schema="cinemadb" store:Type="Tables" />
+          <EntitySet Name="videogenres" EntityType="Self.videogenres" Schema="cinemadb" store:Type="Tables" />
           <EntitySet Name="videos" EntityType="Self.videos" Schema="cinemadb" store:Type="Tables" />
-          <EntitySet Name="manufacturer" EntityType="Self.manufacturer" store:Type="Tables" store:Schema="cinemadb">
-            <DefiningQuery>SELECT
-`manufacturer`.`video_id`, 
-`manufacturer`.`country_id`
-FROM `manufacturer` AS `manufacturer`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="videoactors" EntityType="Self.videoactors" store:Type="Tables" store:Schema="cinemadb">
-            <DefiningQuery>SELECT
-`videoactors`.`video_id`, 
-`videoactors`.`actor_id`
-FROM `videoactors` AS `videoactors`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="videogenres" EntityType="Self.videogenres" store:Type="Tables" store:Schema="cinemadb">
-            <DefiningQuery>SELECT
-`videogenres`.`video_id`, 
-`videogenres`.`genre_id`
-FROM `videogenres` AS `videogenres`</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
             <End Role="actors" EntitySet="actors" />
             <End Role="videoactors" EntitySet="videoactors" />
@@ -504,7 +483,8 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             <End Role="contents" EntitySet="contents" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="cinemadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -514,7 +494,7 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="videos" Relationship="Self.videoactors" FromRole="actors" ToRole="videos" />
+          <NavigationProperty Name="videoactors" Relationship="Self.fk_actor_video" FromRole="actors" ToRole="videoactors" />
         </EntityType>
         <EntityType Name="content">
           <Key>
@@ -537,7 +517,7 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="videos" Relationship="Self.manufacturer" FromRole="countries" ToRole="videos" />
+          <NavigationProperty Name="manufacturers" Relationship="Self.fk_country_video" FromRole="countries" ToRole="manufacturer" />
         </EntityType>
         <EntityType Name="employee">
           <Key>
@@ -557,7 +537,7 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="videos" Relationship="Self.videogenres" FromRole="genres" ToRole="videos" />
+          <NavigationProperty Name="videogenres" Relationship="Self.fk_genre_video" FromRole="genres" ToRole="videogenres" />
         </EntityType>
         <EntityType Name="history">
           <Key>
@@ -582,6 +562,16 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           <Property Name="creation_date" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="video" Relationship="Self.fk_like_video" FromRole="likes" ToRole="videos" />
           <NavigationProperty Name="user" Relationship="Self.fk_user_like" FromRole="likes" ToRole="users" />
+        </EntityType>
+        <EntityType Name="manufacturer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="country_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="country" Relationship="Self.fk_country_video" FromRole="manufacturer" ToRole="countries" />
+          <NavigationProperty Name="video" Relationship="Self.fk_video_country" FromRole="manufacturer" ToRole="videos" />
         </EntityType>
         <EntityType Name="overview">
           <Key>
@@ -652,13 +642,33 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           <Property Name="date_of_birth" Type="DateTime" Nullable="false" />
           <Property Name="sex" Type="Int32" Nullable="false" />
           <Property Name="login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="balance" Type="Double" Nullable="false" />
           <Property Name="subscription_id" Type="Int32" />
           <NavigationProperty Name="histories" Relationship="Self.fk_user_video" FromRole="users" ToRole="history" />
           <NavigationProperty Name="likes" Relationship="Self.fk_user_like" FromRole="users" ToRole="likes" />
           <NavigationProperty Name="overviews" Relationship="Self.fk_user_overview" FromRole="users" ToRole="overviews" />
           <NavigationProperty Name="payments" Relationship="Self.fk_user_payment" FromRole="users" ToRole="payments" />
           <NavigationProperty Name="subscription" Relationship="Self.fk_user_subscription" FromRole="users" ToRole="subscriptions" />
-          <Property Name="balance" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="videoactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="actor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="actor" Relationship="Self.fk_actor_video" FromRole="videoactors" ToRole="actors" />
+          <NavigationProperty Name="video" Relationship="Self.fk_video_actor" FromRole="videoactors" ToRole="videos" />
+        </EntityType>
+        <EntityType Name="videogenre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre" Relationship="Self.fk_genre_video" FromRole="videogenres" ToRole="genres" />
+          <NavigationProperty Name="video" Relationship="Self.fk_video_genre" FromRole="videogenres" ToRole="videos" />
         </EntityType>
         <EntityType Name="video">
           <Key>
@@ -670,15 +680,29 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           <Property Name="release_date" Type="DateTime" Nullable="false" />
           <Property Name="details" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="director" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="contents" Relationship="Self.fk1_content_video" FromRole="videos" ToRole="contents" />
           <NavigationProperty Name="likes" Relationship="Self.fk_like_video" FromRole="videos" ToRole="likes" />
+          <NavigationProperty Name="manufacturers" Relationship="Self.fk_video_country" FromRole="videos" ToRole="manufacturer" />
           <NavigationProperty Name="overviews" Relationship="Self.fk_video_overview" FromRole="videos" ToRole="overviews" />
-          <NavigationProperty Name="countries" Relationship="Self.manufacturer" FromRole="videos" ToRole="countries" />
-          <NavigationProperty Name="actors" Relationship="Self.videoactors" FromRole="videos" ToRole="actors" />
-          <NavigationProperty Name="genres" Relationship="Self.videogenres" FromRole="videos" ToRole="genres" />
-          <Property Name="type" Type="Int32" Nullable="false" />
-          <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="videoactors" Relationship="Self.fk_video_actor" FromRole="videos" ToRole="videoactors" />
+          <NavigationProperty Name="videogenres" Relationship="Self.fk_video_genre" FromRole="videos" ToRole="videogenres" />
         </EntityType>
+        <Association Name="fk_actor_video">
+          <End Role="actors" Type="Self.actor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="videoactors" Type="Self.videoactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="videoactors">
+              <PropertyRef Name="actor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_content_user">
           <End Role="contents" Type="Self.content" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -707,6 +731,20 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_country_video">
+          <End Role="countries" Type="Self.country" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="manufacturer" Type="Self.manufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="manufacturer">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_employee_role">
           <End Role="roles" Type="Self.role" Multiplicity="1" />
           <End Role="employees" Type="Self.employee" Multiplicity="*" />
@@ -716,6 +754,20 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             </Principal>
             <Dependent Role="employees">
               <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_genre_video">
+          <End Role="genres" Type="Self.genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="videogenres" Type="Self.videogenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="videogenres">
+              <PropertyRef Name="genre_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -754,6 +806,20 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             </Principal>
             <Dependent Role="likes">
               <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_video_country">
+          <End Role="videos" Type="Self.video" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="manufacturer" Type="Self.manufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="manufacturer">
+              <PropertyRef Name="video_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -819,17 +885,33 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="manufacturer">
-          <End Role="countries" Type="Self.country" Multiplicity="*" />
-          <End Role="videos" Type="Self.video" Multiplicity="*" />
+        <Association Name="fk_video_actor">
+          <End Role="videos" Type="Self.video" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="videoactors" Type="Self.videoactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="videoactors">
+              <PropertyRef Name="video_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="videoactors">
-          <End Role="actors" Type="Self.actor" Multiplicity="*" />
-          <End Role="videos" Type="Self.video" Multiplicity="*" />
-        </Association>
-        <Association Name="videogenres">
-          <End Role="genres" Type="Self.genre" Multiplicity="*" />
-          <End Role="videos" Type="Self.video" Multiplicity="*" />
+        <Association Name="fk_video_genre">
+          <End Role="videos" Type="Self.video" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="videogenres" Type="Self.videogenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="videos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="videogenres">
+              <PropertyRef Name="video_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OnlineCinemaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="actors" EntityType="Self.actor" />
@@ -839,13 +921,20 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           <EntitySet Name="genres" EntityType="Self.genre" />
           <EntitySet Name="histories" EntityType="Self.history" />
           <EntitySet Name="likes" EntityType="Self.like" />
+          <EntitySet Name="manufacturers" EntityType="Self.manufacturer" />
           <EntitySet Name="overviews" EntityType="Self.overview" />
           <EntitySet Name="payments" EntityType="Self.payment" />
           <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="subscriptions" EntityType="Self.subscription" />
           <EntitySet Name="tariffs" EntityType="Self.tariff" />
           <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="videoactors" EntityType="Self.videoactor" />
+          <EntitySet Name="videogenres" EntityType="Self.videogenre" />
           <EntitySet Name="videos" EntityType="Self.video" />
+          <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
+            <End Role="actors" EntitySet="actors" />
+            <End Role="videoactors" EntitySet="videoactors" />
+          </AssociationSet>
           <AssociationSet Name="fk_content_user" Association="Self.fk_content_user">
             <End Role="contents" EntitySet="contents" />
             <End Role="history" EntitySet="histories" />
@@ -854,9 +943,17 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             <End Role="videos" EntitySet="videos" />
             <End Role="contents" EntitySet="contents" />
           </AssociationSet>
+          <AssociationSet Name="fk_country_video" Association="Self.fk_country_video">
+            <End Role="countries" EntitySet="countries" />
+            <End Role="manufacturer" EntitySet="manufacturers" />
+          </AssociationSet>
           <AssociationSet Name="fk_employee_role" Association="Self.fk_employee_role">
             <End Role="roles" EntitySet="roles" />
             <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="fk_genre_video" Association="Self.fk_genre_video">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="videogenres" EntitySet="videogenres" />
           </AssociationSet>
           <AssociationSet Name="fk_user_video" Association="Self.fk_user_video">
             <End Role="users" EntitySet="users" />
@@ -869,6 +966,10 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           <AssociationSet Name="fk_user_like" Association="Self.fk_user_like">
             <End Role="users" EntitySet="users" />
             <End Role="likes" EntitySet="likes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_video_country" Association="Self.fk_video_country">
+            <End Role="videos" EntitySet="videos" />
+            <End Role="manufacturer" EntitySet="manufacturers" />
           </AssociationSet>
           <AssociationSet Name="fk_user_overview" Association="Self.fk_user_overview">
             <End Role="users" EntitySet="users" />
@@ -890,17 +991,13 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
             <End Role="subscriptions" EntitySet="subscriptions" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
-          <AssociationSet Name="manufacturer" Association="Self.manufacturer">
-            <End Role="countries" EntitySet="countries" />
+          <AssociationSet Name="fk_video_actor" Association="Self.fk_video_actor">
             <End Role="videos" EntitySet="videos" />
+            <End Role="videoactors" EntitySet="videoactors" />
           </AssociationSet>
-          <AssociationSet Name="videoactors" Association="Self.videoactors">
-            <End Role="actors" EntitySet="actors" />
+          <AssociationSet Name="fk_video_genre" Association="Self.fk_video_genre">
             <End Role="videos" EntitySet="videos" />
-          </AssociationSet>
-          <AssociationSet Name="videogenres" Association="Self.videogenres">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="videos" EntitySet="videos" />
+            <End Role="videogenres" EntitySet="videogenres" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -981,6 +1078,15 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="manufacturers">
+            <EntityTypeMapping TypeName="cinemadbModel.manufacturer">
+              <MappingFragment StoreEntitySet="manufacturer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="overviews">
             <EntityTypeMapping TypeName="cinemadbModel.overview">
               <MappingFragment StoreEntitySet="overviews">
@@ -1039,7 +1145,6 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="cinemadbModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="firstname" ColumnName="firstname" />
                 <ScalarProperty Name="secondname" ColumnName="secondname" />
@@ -1048,48 +1153,43 @@ FROM `videogenres` AS `videogenres`</DefiningQuery>
                 <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
                 <ScalarProperty Name="sex" ColumnName="sex" />
                 <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="subscription_id" ColumnName="subscription_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="videoactors">
+            <EntityTypeMapping TypeName="cinemadbModel.videoactor">
+              <MappingFragment StoreEntitySet="videoactors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="actor_id" ColumnName="actor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="videogenres">
+            <EntityTypeMapping TypeName="cinemadbModel.videogenre">
+              <MappingFragment StoreEntitySet="videogenres">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="videos">
             <EntityTypeMapping TypeName="cinemadbModel.video">
               <MappingFragment StoreEntitySet="videos">
-                <ScalarProperty Name="img_url" ColumnName="img_url" />
-                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="age_limit" ColumnName="age_limit" />
                 <ScalarProperty Name="release_date" ColumnName="release_date" />
                 <ScalarProperty Name="details" ColumnName="details" />
                 <ScalarProperty Name="director" ColumnName="director" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="manufacturer" TypeName="cinemadbModel.manufacturer" StoreEntitySet="manufacturer">
-            <EndProperty Name="countries">
-              <ScalarProperty Name="id" ColumnName="country_id" />
-            </EndProperty>
-            <EndProperty Name="videos">
-              <ScalarProperty Name="id" ColumnName="video_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="videoactors" TypeName="cinemadbModel.videoactors" StoreEntitySet="videoactors">
-            <EndProperty Name="actors">
-              <ScalarProperty Name="id" ColumnName="actor_id" />
-            </EndProperty>
-            <EndProperty Name="videos">
-              <ScalarProperty Name="id" ColumnName="video_id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="videogenres" TypeName="cinemadbModel.videogenres" StoreEntitySet="videogenres">
-            <EndProperty Name="genres">
-              <ScalarProperty Name="id" ColumnName="genre_id" />
-            </EndProperty>
-            <EndProperty Name="videos">
-              <ScalarProperty Name="id" ColumnName="video_id" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

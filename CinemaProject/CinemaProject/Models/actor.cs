@@ -16,12 +16,12 @@ namespace CinemaProject.Models
     {
         public actor()
         {
-            this.videos = new HashSet<video>();
+            this.videoactors = new HashSet<videoactor>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
-        public virtual ICollection<video> videos { get; set; }
+        public virtual ICollection<videoactor> videoactors { get; set; }
     }
 }

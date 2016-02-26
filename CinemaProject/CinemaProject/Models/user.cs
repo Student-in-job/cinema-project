@@ -30,8 +30,8 @@ namespace CinemaProject.Models
         public System.DateTime date_of_birth { get; set; }
         public int sex { get; set; }
         public string login { get; set; }
-        public Nullable<int> subscription_id { get; set; }
         public double balance { get; set; }
+        public Nullable<int> subscription_id { get; set; }
     
         public virtual ICollection<history> histories { get; set; }
         public virtual ICollection<like> likes { get; set; }

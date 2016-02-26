@@ -1,4 +1,5 @@
-﻿@model CinemaProject.Models.video
+﻿@using CinemaProject.Models.ViewModels
+@model CinemaProject.Models.video
 
 @{
     ViewBag.Title = "Edit";
@@ -60,7 +61,10 @@
             @Html.LabelFor(model => model.type)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.type)
+            @Html.DropDownListFor(model => model.type, new SelectList(new List<Object>{
+                       new { value = 0 , text = "Red"  },
+                       new { value = 1 , text = "Blue" }
+                    }, "value", "text", 2))
             @Html.ValidationMessageFor(model => model.type)
         </div>
 
@@ -68,20 +72,35 @@
             @Html.LabelFor(model => model.img_url)
         </div>
         <div class="editor-field">
-            <input id="ImagePath" title="Upload image" type="file" name="file" />
+            <input id="ImagePath" title="Upload image" type="file" name="file"/>
             @Html.ValidationMessageFor(model => model.img_url)
         </div>
+        <div class="editor-field">
+            <table>
+                <tr>
+                @{
+                    var cnt = 0;
+                    List<IncludedGenreData> genres = ViewBag.Genres;
 
-        @*        <div class="editor-label">*@
-@*            @Html.LabelFor(model => model.ImageUpload)*@
-@*        </div>*@
-@*        <div class="editor-field">*@
-@*            @Html.TextBoxFor(m => m.ImageUpload, new { type = "file" })*@
-@*            @Html.ValidationMessageFor(model => model.ImageUpload)*@
-@*        </div>*@
+                    foreach (var genre in genres)
+                    {
+                        if (cnt++%6 == 0)
+                        {
+                            @: </tr> <tr>
+                        }
+                        @:  <td>
+                            <input type="checkbox" name="selectedGenres" value="@genre.id" @(Html.Raw(genre.Included ? "checked=\"checked\"" : ""))/>
+                        @genre.id
+                        @: @genre.Title 
+                @:   </td>
+                    }
+                    @: </tr>
+                }
+            </table>
+        </div>
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Save"/>
         </p>
     </fieldset>
 </form>

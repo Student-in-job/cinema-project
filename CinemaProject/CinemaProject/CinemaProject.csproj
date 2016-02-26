@@ -246,6 +246,9 @@
     <Compile Include="Models\like.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\manufacturer.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OnlineCinemaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -280,6 +283,12 @@
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\video.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\videoactor.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\videogenre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\IncludedGenreData.cs" />
