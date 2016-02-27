@@ -16,12 +16,12 @@ namespace CinemaProject.Models
     {
         public video()
         {
-            this.contents = new HashSet<content>();
             this.likes = new HashSet<like>();
             this.manufacturers = new HashSet<manufacturer>();
             this.overviews = new HashSet<overview>();
             this.videoactors = new HashSet<videoactor>();
             this.videogenres = new HashSet<videogenre>();
+            this.contents = new HashSet<content>();
         }
     
         public int id { get; set; }
@@ -33,11 +33,11 @@ namespace CinemaProject.Models
         public int type { get; set; }
         public string img_url { get; set; }
     
-        public virtual ICollection<content> contents { get; set; }
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<manufacturer> manufacturers { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
         public virtual ICollection<videoactor> videoactors { get; set; }
         public virtual ICollection<videogenre> videogenres { get; set; }
+        public virtual ICollection<content> contents { get; set; }
     }
 }

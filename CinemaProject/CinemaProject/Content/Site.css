@@ -314,13 +314,25 @@ ol.round {
         }
         #video_details {
             float: right;
-            position: static;
             height: 100%;
             width: 65%;
         }
         .properties>*+* {
             margin-left: 10px;
         }
+        .video-img-list {
+            height: auto; 
+            width: auto; 
+            max-width: 100px; 
+            max-height: 100px;
+        }
+        .video-img {
+            height: auto; 
+            width: auto; 
+            max-width: 300px; 
+            max-height: 300px;
+        }
+
 
 /* content */
 article {
@@ -541,14 +553,6 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
-}
-/*Video
-----------------------------------------------------------*/
-.video-img-list {
-    height: auto; 
-    width: auto; 
-    max-width: 300px; 
-    max-height: 300px;
 }
 
 /* tables

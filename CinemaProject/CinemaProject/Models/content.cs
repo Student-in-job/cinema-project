@@ -21,7 +21,7 @@ namespace CinemaProject.Models
     
         public int id { get; set; }
         public string url { get; set; }
-        public string creation_date { get; set; }
+        public System.DateTime creation_date { get; set; }
         public int video_id { get; set; }
         public bool trailer { get; set; }
         public float price { get; set; }

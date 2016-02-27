@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d9849f4ffd3944f0b9c44eb874fa7460" Name="Diagram1">
         <EntityTypeShape EntityType="cinemadbModel.actor" Width="1.5" PointX="3.75" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="cinemadbModel.content" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="cinemadbModel.country" Width="1.5" PointX="3.75" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="cinemadbModel.employee" Width="1.5" PointX="8" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="cinemadbModel.genre" Width="1.5" PointX="5.75" PointY="16.125" IsExpanded="true" />
@@ -23,8 +22,6 @@
         <EntityTypeShape EntityType="cinemadbModel.videogenre" Width="1.5" PointX="8" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="cinemadbModel.video" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
         <AssociationConnector Association="cinemadbModel.fk_actor_video" ManuallyRouted="false" />
-        <AssociationConnector Association="cinemadbModel.fk_content_user" ManuallyRouted="false" />
-        <AssociationConnector Association="cinemadbModel.fk1_content_video" ManuallyRouted="false" />
         <AssociationConnector Association="cinemadbModel.fk_country_video" ManuallyRouted="false" />
         <AssociationConnector Association="cinemadbModel.fk_employee_role" ManuallyRouted="false" />
         <AssociationConnector Association="cinemadbModel.fk_genre_video" ManuallyRouted="false" />
@@ -39,6 +36,9 @@
         <AssociationConnector Association="cinemadbModel.fk_user_subscription" ManuallyRouted="false" />
         <AssociationConnector Association="cinemadbModel.fk_video_actor" ManuallyRouted="false" />
         <AssociationConnector Association="cinemadbModel.fk_video_genre" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="cinemadbModel.content" Width="1.5" PointX="3" PointY="9.5" />
+        <AssociationConnector Association="cinemadbModel.fk_content_user" />
+        <AssociationConnector Association="cinemadbModel.fk1_content_video" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

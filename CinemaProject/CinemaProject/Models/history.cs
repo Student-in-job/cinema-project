@@ -20,7 +20,7 @@ namespace CinemaProject.Models
         public System.DateTime watching_date { get; set; }
         public float payment { get; set; }
     
-        public virtual content content { get; set; }
         public virtual user user { get; set; }
+        public virtual content content { get; set; }
     }
 }

@@ -26,7 +26,6 @@ namespace CinemaProject.Models
         }
     
         public DbSet<actor> actors { get; set; }
-        public DbSet<content> contents { get; set; }
         public DbSet<country> countries { get; set; }
         public DbSet<employee> employees { get; set; }
         public DbSet<genre> genres { get; set; }
@@ -42,5 +41,6 @@ namespace CinemaProject.Models
         public DbSet<videoactor> videoactors { get; set; }
         public DbSet<videogenre> videogenres { get; set; }
         public DbSet<video> videos { get; set; }
+        public DbSet<content> contents { get; set; }
     }
 }

@@ -73,6 +73,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -214,6 +215,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
+    <Compile Include="Controllers\ContController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -297,6 +300,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\chosen.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -424,6 +429,10 @@
       <LastGenOutput>OnlineCinemaModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\chosen.proto.js" />
+    <Content Include="Scripts\chosen.proto.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -514,6 +523,12 @@
     <Content Include="Views\Video\Create.cshtml" />
     <Content Include="Views\Video\Edit.cshtml" />
     <Content Include="Views\Video\Delete.cshtml" />
+    <Content Include="Views\Content\Index.cshtml" />
+    <Content Include="Views\Content\Details.cshtml" />
+    <Content Include="Views\Content\Create.cshtml" />
+    <Content Include="Views\Content\Edit.cshtml" />
+    <Content Include="Views\Content\Delete.cshtml" />
+    <Content Include="Views\Content\AddContentByVideoId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

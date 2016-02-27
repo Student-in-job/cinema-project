@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="cinemadbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="cinemadbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actors">
           <Key>
             <PropertyRef Name="id" />
@@ -18,7 +18,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="creation_date" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="creation_date" Type="date" Nullable="false" />
           <Property Name="video_id" Type="int" Nullable="false" />
           <Property Name="trailer" Type="bool" Nullable="false" />
           <Property Name="price" Type="float" Nullable="false" />
@@ -483,8 +483,7 @@
             <End Role="contents" EntitySet="contents" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="cinemadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -495,21 +494,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="videoactors" Relationship="Self.fk_actor_video" FromRole="actors" ToRole="videoactors" />
-        </EntityType>
-        <EntityType Name="content">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="creation_date" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="video_id" Type="Int32" Nullable="false" />
-          <Property Name="trailer" Type="Boolean" Nullable="false" />
-          <Property Name="price" Type="Single" Nullable="false" />
-          <Property Name="quality" Type="Int32" Nullable="false" />
-          <Property Name="season_id" Type="Int32" />
-          <NavigationProperty Name="histories" Relationship="Self.fk_content_user" FromRole="contents" ToRole="history" />
-          <NavigationProperty Name="video" Relationship="Self.fk1_content_video" FromRole="contents" ToRole="videos" />
         </EntityType>
         <EntityType Name="country">
           <Key>
@@ -548,8 +532,8 @@
           <Property Name="content_id" Type="Int32" Nullable="false" />
           <Property Name="watching_date" Type="DateTime" Nullable="false" />
           <Property Name="payment" Type="Single" Nullable="false" />
-          <NavigationProperty Name="content" Relationship="Self.fk_content_user" FromRole="history" ToRole="contents" />
           <NavigationProperty Name="user" Relationship="Self.fk_user_video" FromRole="history" ToRole="users" />
+          <NavigationProperty Name="content" Relationship="cinemadbModel.fk_content_user" FromRole="history" ToRole="content" />
         </EntityType>
         <EntityType Name="like">
           <Key>
@@ -682,12 +666,12 @@
           <Property Name="director" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="type" Type="Int32" Nullable="false" />
           <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="contents" Relationship="Self.fk1_content_video" FromRole="videos" ToRole="contents" />
           <NavigationProperty Name="likes" Relationship="Self.fk_like_video" FromRole="videos" ToRole="likes" />
           <NavigationProperty Name="manufacturers" Relationship="Self.fk_video_country" FromRole="videos" ToRole="manufacturer" />
           <NavigationProperty Name="overviews" Relationship="Self.fk_video_overview" FromRole="videos" ToRole="overviews" />
           <NavigationProperty Name="videoactors" Relationship="Self.fk_video_actor" FromRole="videos" ToRole="videoactors" />
           <NavigationProperty Name="videogenres" Relationship="Self.fk_video_genre" FromRole="videos" ToRole="videogenres" />
+          <NavigationProperty Name="contents" Relationship="cinemadbModel.fk1_content_video" FromRole="video" ToRole="content" />
         </EntityType>
         <Association Name="fk_actor_video">
           <End Role="actors" Type="Self.actor" Multiplicity="1">
@@ -700,34 +684,6 @@
             </Principal>
             <Dependent Role="videoactors">
               <PropertyRef Name="actor_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_content_user">
-          <End Role="contents" Type="Self.content" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="history" Type="Self.history" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="contents">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="history">
-              <PropertyRef Name="content_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk1_content_video">
-          <End Role="videos" Type="Self.video" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="contents" Type="Self.content" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="videos">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="contents">
-              <PropertyRef Name="video_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -915,7 +871,6 @@
         </Association>
         <EntityContainer Name="OnlineCinemaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="actors" EntityType="Self.actor" />
-          <EntitySet Name="contents" EntityType="Self.content" />
           <EntitySet Name="countries" EntityType="Self.country" />
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="genres" EntityType="Self.genre" />
@@ -934,14 +889,6 @@
           <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
             <End Role="actors" EntitySet="actors" />
             <End Role="videoactors" EntitySet="videoactors" />
-          </AssociationSet>
-          <AssociationSet Name="fk_content_user" Association="Self.fk_content_user">
-            <End Role="contents" EntitySet="contents" />
-            <End Role="history" EntitySet="histories" />
-          </AssociationSet>
-          <AssociationSet Name="fk1_content_video" Association="Self.fk1_content_video">
-            <End Role="videos" EntitySet="videos" />
-            <End Role="contents" EntitySet="contents" />
           </AssociationSet>
           <AssociationSet Name="fk_country_video" Association="Self.fk_country_video">
             <End Role="countries" EntitySet="countries" />
@@ -999,7 +946,59 @@
             <End Role="videos" EntitySet="videos" />
             <End Role="videogenres" EntitySet="videogenres" />
           </AssociationSet>
+          <EntitySet Name="contents" EntityType="cinemadbModel.content" />
+          <AssociationSet Name="fk_content_user" Association="cinemadbModel.fk_content_user">
+            <End Role="content" EntitySet="contents" />
+            <End Role="history" EntitySet="histories" />
+          </AssociationSet>
+          <AssociationSet Name="fk1_content_video" Association="cinemadbModel.fk1_content_video">
+            <End Role="video" EntitySet="videos" />
+            <End Role="content" EntitySet="contents" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="content">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="creation_date" Type="DateTime" Nullable="false" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="trailer" Type="Boolean" Nullable="false" />
+          <Property Name="price" Type="Single" Nullable="false" />
+          <Property Name="quality" Type="Int32" Nullable="false" />
+          <Property Name="season_id" Type="Int32" />
+          <NavigationProperty Name="histories" Relationship="cinemadbModel.fk_content_user" FromRole="content" ToRole="history" />
+          <NavigationProperty Name="video" Relationship="cinemadbModel.fk1_content_video" FromRole="content" ToRole="video" />
+        </EntityType>
+        <Association Name="fk_content_user">
+          <End Type="cinemadbModel.content" Role="content" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="cinemadbModel.history" Role="history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="content">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="content_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1_content_video">
+          <End Type="cinemadbModel.video" Role="video" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="cinemadbModel.content" Role="content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="video">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="content">
+              <PropertyRef Name="video_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1011,20 +1010,6 @@
               <MappingFragment StoreEntitySet="actors">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="contents">
-            <EntityTypeMapping TypeName="cinemadbModel.content">
-              <MappingFragment StoreEntitySet="contents">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
-                <ScalarProperty Name="video_id" ColumnName="video_id" />
-                <ScalarProperty Name="trailer" ColumnName="trailer" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="quality" ColumnName="quality" />
-                <ScalarProperty Name="season_id" ColumnName="season_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1187,6 +1172,20 @@
                 <ScalarProperty Name="director" ColumnName="director" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contents">
+            <EntityTypeMapping TypeName="cinemadbModel.content">
+              <MappingFragment StoreEntitySet="contents">
+                <ScalarProperty Name="season_id" ColumnName="season_id" />
+                <ScalarProperty Name="quality" ColumnName="quality" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="trailer" ColumnName="trailer" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
