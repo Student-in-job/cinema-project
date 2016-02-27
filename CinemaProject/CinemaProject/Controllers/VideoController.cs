@@ -51,7 +51,7 @@ namespace CinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(video model, HttpPostedFileBase file, string[] selectedGenres)
+        public ActionResult Create(video model, HttpPostedFileBase file, string[] selectedGenres, string[] selectedActors)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +67,8 @@ namespace CinemaProject.Controllers
 
 
                 UpdateVideoGenres(selectedGenres, model);
+                UpdateVideoActors(selectedGenres, model);
+
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
                 
@@ -74,6 +76,41 @@ namespace CinemaProject.Controllers
             }
             PopulateIncludedGenresData(model);
             return View(model);
+        }
+
+        private void UpdateVideoActors(string[] selectedActors, video model)
+        {
+            if (selectedActors == null)
+            {
+                model.videogenres = new List<videogenre>();
+                return;
+            }
+
+            var selectedActorsHS = new HashSet<string>(selectedActors);
+            var videoActors = new HashSet<int>(model.videoactors.Select(c => c.actor_id));
+            foreach (var actor in db.actors)
+            {
+                if (selectedActorsHS.Contains(actor.id.ToString()))
+                {
+                    if (!videoActors.Contains(actor.id))
+                    {
+                        var videoactor = new videoactor();
+                        videoactor.actor_id = actor.id;
+                        videoactor.video_id = model.id;
+                        model.videoactors.Add(videoactor);
+                    }
+                }
+                else
+                {
+                    if (videoActors.Contains(actor.id))
+                    {
+                        var videoactor = new videoactor();
+                        videoactor.actor_id = actor.id;
+                        videoactor.video_id = model.id;
+                        model.videoactors.Remove(videoactor);
+                    }
+                }
+            }
         }
 
         private void UpdateVideoGenres(string[] selectedGenres, video model)
@@ -183,18 +220,32 @@ namespace CinemaProject.Controllers
         private void PopulateIncludedGenresData(video video)
         {
             var allGenres = db.genres;
+            var allActors = db.actors;
             var videoGenres = new HashSet<int>(video.videogenres/*.Where(i=>i.video_id==video.id)*/.Select(c => c.genre_id));
-            var viewModel = new List<IncludedGenreData>();
+            var videoActors = new HashSet<int>(video.videoactors.Select(i=>i.actor_id));
+            var genreDatas = new List<IncludedGenreData>();
+            var actorDatas = new List<IncludedGenreData>();
             foreach (var genre in allGenres)
             {
-                viewModel.Add(new IncludedGenreData
+                genreDatas.Add(new IncludedGenreData
                 {
                     id = genre.id,
                     Title = genre.name,
                     Included = videoGenres.Contains(genre.id)
                 });
             }
-            ViewBag.Genres = viewModel;
+            foreach (var actor in allActors)
+            {
+                actorDatas.Add(new IncludedGenreData
+                {
+                    id = actor.id,
+                    Title = actor.name,
+                    Included = videoActors.Contains(actor.id)
+                });
+            }
+            ViewBag.Genres = genreDatas;
+            ViewBag.Actors = actorDatas;
+            
         }
     }
 }
