@@ -28,19 +28,25 @@ namespace CinemaProject.Models
         public DbSet<actor> actors { get; set; }
         public DbSet<country> countries { get; set; }
         public DbSet<employee> employees { get; set; }
+        public DbSet<episodehistory> episodehistories { get; set; }
+        public DbSet<episode> episodes { get; set; }
         public DbSet<genre> genres { get; set; }
-        public DbSet<history> histories { get; set; }
         public DbSet<like> likes { get; set; }
         public DbSet<manufacturer> manufacturers { get; set; }
+        public DbSet<moovy> moovies { get; set; }
+        public DbSet<moviehistory> moviehistories { get; set; }
         public DbSet<overview> overviews { get; set; }
         public DbSet<payment> payments { get; set; }
         public DbSet<role> roles { get; set; }
+        public DbSet<season> seasons { get; set; }
         public DbSet<subscription> subscriptions { get; set; }
         public DbSet<tariff> tariffs { get; set; }
+        public DbSet<trailer> trailers { get; set; }
+        public DbSet<usermovy> usermovies { get; set; }
         public DbSet<user> users { get; set; }
+        public DbSet<userseason> userseasons { get; set; }
         public DbSet<videoactor> videoactors { get; set; }
         public DbSet<videogenre> videogenres { get; set; }
         public DbSet<video> videos { get; set; }
-        public DbSet<content> contents { get; set; }
     }
 }

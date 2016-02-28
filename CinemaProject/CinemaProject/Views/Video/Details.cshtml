@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Details";
 }
-<div id="video_header">
+<div style="height: 50px">
     <h1>
         @{
             if (Model.type == 0)
@@ -20,80 +20,69 @@
 
     </h1>
 </div >
-<div id="video_image">
-    <img src="/uploads/@Model.img_url" class="video-img"/>
+<div style="display: inline-block" >
+    <div style="width: 300px; float: left">
+        <img src="/uploads/@Model.img_url" class="video-img" />
+    </div>
+    <div style="height: auto">
+
+        <div class="properties">
+            <span>
+                @Model.release_date.Year
+            </span>
+            <span>
+                Страна!
+            </span>
+            <span>
+                @{
+                    foreach (var videogenre in Model.videogenres)
+                    {
+                        @: <a style="text-decoration: none">
+                            @videogenre.genre.name
+                            @:,</a>
+                }
+                }
+            </span>
+            <span>
+                Длительность
+            </span>
+        </div>
+        <dl>
+            <dt>
+                Режиссер
+            </dt>
+            <dd>
+                @Model.director
+            </dd>
+            <dt>
+                В ролях
+            </dt>
+            <dd>
+                актер
+                @* @{
+                        foreach (var videogenre in Model.actors)
+                        {
+                            @: <a style="text-decoration: none">
+                                @videogenre.a.name
+                            @:,</a>
+                        }
+                    }*@
+            </dd>
+        </dl>
+
+        <div class="display-field">
+            @Html.DisplayFor(model => model.details)
+        </div>
+
+    </div>
 </div>
-<div id="video_details">
 
-    <div class="properties">
-        <span>
-            @Model.release_date.Year
-        </span>
-        <span>
-            Страна!
-        </span>
-        <span>
-            @{
-                foreach (var videogenre in Model.videogenres)
-                {
-                    @: <a style="text-decoration: none">
-                    @videogenre.genre.name
-                    @:,</a>
-                }
-            }
-        </span>
-        <span>
-            Длительность
-        </span>
-    </div>
-    <dl>
-        <dt>
-            Режиссер
-        </dt>
-        <dd>
-            @Model.director
-        </dd>
-        <dt>
-            В ролях
-        </dt>
-        <dd>
-            актер
-            @* @{
-                foreach (var videogenre in Model.actors)
-                {
-                    @: <a style="text-decoration: none">
-                        @videogenre.a.name
-                    @:,</a>
-                }
-            }*@
-        </dd>
-    </dl>
-
-    <div class="display-field">
-        @Html.DisplayFor(model => model.details)
-    </div>
-
-    
+<div >
+    @Html.ActionLink("Add content","AddContentByVideoId","Content", new {id = Model.id },null)
     @{
-        string genres = "";
-        foreach (var videogenre in Model.videogenres)
+        foreach (var content in Model.contents)
         {
-            genres = genres + ", " + videogenre.genre.name;
+            @Html.ActionLink("content", "Watch", "Content", new {url = content.url}, null)
         }
     }
-    <p>Жанры:@genres</p>
 </div>
-@*
-<h2>Details</h2>
-
-<fieldset>
-    <legend>video</legend>
-
-     
-    
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-*@
