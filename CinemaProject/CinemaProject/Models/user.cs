@@ -16,10 +16,13 @@ namespace CinemaProject.Models
     {
         public user()
         {
-            this.histories = new HashSet<history>();
+            this.episodehistories = new HashSet<episodehistory>();
             this.likes = new HashSet<like>();
+            this.moviehistories = new HashSet<moviehistory>();
             this.overviews = new HashSet<overview>();
             this.payments = new HashSet<payment>();
+            this.usermovies = new HashSet<usermovy>();
+            this.userseasons = new HashSet<userseason>();
         }
     
         public int id { get; set; }
@@ -33,10 +36,13 @@ namespace CinemaProject.Models
         public double balance { get; set; }
         public Nullable<int> subscription_id { get; set; }
     
-        public virtual ICollection<history> histories { get; set; }
+        public virtual ICollection<episodehistory> episodehistories { get; set; }
         public virtual ICollection<like> likes { get; set; }
+        public virtual ICollection<moviehistory> moviehistories { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
         public virtual ICollection<payment> payments { get; set; }
         public virtual subscription subscription { get; set; }
+        public virtual ICollection<usermovy> usermovies { get; set; }
+        public virtual ICollection<userseason> userseasons { get; set; }
     }
 }

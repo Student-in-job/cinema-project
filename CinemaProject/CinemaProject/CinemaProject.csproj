@@ -446,6 +446,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\media-upload.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Web.config">
@@ -529,6 +530,7 @@
     <Content Include="Views\Content\Edit.cshtml" />
     <Content Include="Views\Content\Delete.cshtml" />
     <Content Include="Views\Content\AddContentByVideoId.cshtml" />
+    <Content Include="Views\Content\Watch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
