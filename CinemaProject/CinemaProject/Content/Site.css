@@ -332,7 +332,14 @@ ol.round {
             max-width: 300px; 
             max-height: 300px;
         }
-        
+        a.video-placeholder
+        {
+             background: url(../Images/video_placeholder.jpg) no-repeat top left;
+            display: block;
+             width: 150px;
+             height: 150px;
+             text-indent: -9999px; /* hides the link text */
+        }
 
 
 /* content */

@@ -31,45 +31,35 @@
                 @Model.release_date.Year
             </span>
             <span>
-                Страна!
+                @{
+                    foreach (var man in Model.manufacturers)
+                    {
+                        @man.country.name
+                    }
+                }
             </span>
             <span>
                 @{
                     foreach (var videogenre in Model.videogenres)
                     {
                         @: <a style="text-decoration: none">
-                            @videogenre.genre.name
-                            @:,</a>
-                }
+                        @videogenre.genre.name
+                        @:,</a>
+                    }
                 }
             </span>
             <span>
                 Длительность
             </span>
         </div>
-        <dl>
-            <dt>
-                Режиссер
-            </dt>
-            <dd>
-                @Model.director
-            </dd>
-            <dt>
-                В ролях
-            </dt>
-            <dd>
-                актер
-                @* @{
-                        foreach (var videogenre in Model.actors)
-                        {
-                            @: <a style="text-decoration: none">
-                                @videogenre.a.name
-                            @:,</a>
-                        }
-                    }*@
-            </dd>
-        </dl>
-
+        <p>Режиссер: @Model.director</p>
+        <p>
+            В ролях: 
+            @foreach (var videoactor in Model.videoactors)
+            {
+            @videoactor.actor.name  @: , 
+            }
+        </p>
         <div class="display-field">
             @Html.DisplayFor(model => model.details)
         </div>
@@ -78,11 +68,37 @@
 </div>
 
 <div >
-    @Html.ActionLink("Add content","AddContentByVideoId","Content", new {id = Model.id },null)
-    @{
-        foreach (var content in Model.contents)
-        {
-            @Html.ActionLink("content", "Watch", "Content", new {url = content.url}, null)
-        }
+    
+    @if (Model.type == 0)
+    {
+        @Html.Partial("MoviePartial", Model.movies)
     }
+    else
+    {
+        @Html.Partial("SeriesPartial", Model.seasons)
+        @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
+    }
+    <div>
+        <h5>Трейлеры</h5>
+        <table >
+            @foreach (var trailer in Model.trailers)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Смотреть", "Watch", "Video", new {url = trailer.url}, new {@class = "video-placeholder"})
+                    </td>
+                    <td>
+                        <h3>@trailer.title</h3>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Редактировать", "Edit", "Trailer", new {id = trailer.id}, null) <br/>
+                        @Html.ActionLink("Удалить", "Delete", "Trailer", new {video_id = Model.id}, null) <br/>
+                    </td>
+                </tr>
+
+            }
+        </table>
+        @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new{ video_id = Model.id}, null)
+    </div>
+    
 </div>
