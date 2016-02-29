@@ -21,7 +21,7 @@ namespace CinemaProject.Models
             this.moviehistories = new HashSet<moviehistory>();
             this.overviews = new HashSet<overview>();
             this.payments = new HashSet<payment>();
-            this.usermovies = new HashSet<usermovy>();
+            this.usermovies = new HashSet<UserMovie>();
             this.userseasons = new HashSet<userseason>();
         }
     
@@ -42,7 +42,7 @@ namespace CinemaProject.Models
         public virtual ICollection<overview> overviews { get; set; }
         public virtual ICollection<payment> payments { get; set; }
         public virtual subscription subscription { get; set; }
-        public virtual ICollection<usermovy> usermovies { get; set; }
+        public virtual ICollection<UserMovie> usermovies { get; set; }
         public virtual ICollection<userseason> userseasons { get; set; }
     }
 }

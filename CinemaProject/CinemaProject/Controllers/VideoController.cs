@@ -23,6 +23,13 @@ namespace CinemaProject.Controllers
             return View(db.videos.ToList());
         }
 
+        [HttpGet]
+        public ActionResult Watch(string url)
+        {
+            ViewBag.url = url;
+            return View();
+        }
+
         //
         // GET: /Video/Details/5
 
@@ -42,7 +49,7 @@ namespace CinemaProject.Controllers
         public ActionResult Create()
         {
             video video = new video();
-            PopulateIncludedGenresData(video);
+            PopulateIncludedVideoData(video);
             return View(video);
         }
 
@@ -51,7 +58,7 @@ namespace CinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(video model, HttpPostedFileBase file, string[] selectedGenres, string[] selectedActors)
+        public ActionResult Create(video model, HttpPostedFileBase file, string[] selectedGenres, string[] selectedActors, string[] selectedCountries)
         {
             if (ModelState.IsValid)
             {
@@ -67,14 +74,16 @@ namespace CinemaProject.Controllers
 
 
                 UpdateVideoGenres(selectedGenres, model);
-                UpdateVideoActors(selectedGenres, model);
+                UpdateVideoActors(selectedActors, model);
+                UpdateVideoCountries(selectedCountries, model);
+
 
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
                 
                 return RedirectToAction("Index");
             }
-            PopulateIncludedGenresData(model);
+            PopulateIncludedVideoData(model);
             return View(model);
         }
 
@@ -147,6 +156,40 @@ namespace CinemaProject.Controllers
                 }
             }
         }
+        private void UpdateVideoCountries(string[] selectedCountries, video model)
+        {
+            if (selectedCountries == null)
+            {
+                model.manufacturers = new List<manufacturer>();
+                return;
+            }
+
+            var selectedCountriesHS = new HashSet<string>(selectedCountries);
+            var videoCountries = new HashSet<int>(model.manufacturers.Select(c => c.country_id));
+            foreach (var country in db.countries)
+            {
+                if (selectedCountriesHS.Contains(country.id.ToString()))
+                {
+                    if (!videoCountries.Contains(country.id))
+                    {
+                        var manufacturer = new manufacturer();
+                        manufacturer.country_id = country.id;
+                        manufacturer.video_id = model.id;
+                        model.manufacturers.Add(manufacturer);
+                    }
+                }
+                else
+                {
+                    if (videoCountries.Contains(country.id))
+                    {
+                        var manufacturer = new manufacturer();
+                        manufacturer.country_id = country.id;
+                        manufacturer.video_id = model.id;
+                        model.manufacturers.Remove(manufacturer);
+                    }
+                }
+            }
+        }
 
         //
         // GET: /Video/Edit/5
@@ -158,7 +201,7 @@ namespace CinemaProject.Controllers
             {
                 return HttpNotFound();
             }
-            PopulateIncludedGenresData(video);
+            PopulateIncludedVideoData(video);
             return View(video);
         }
 
@@ -217,17 +260,20 @@ namespace CinemaProject.Controllers
             base.Dispose(disposing);
         }
 
-        private void PopulateIncludedGenresData(video video)
+        private void PopulateIncludedVideoData(video video)
         {
             var allGenres = db.genres;
             var allActors = db.actors;
+            var allCountries = db.countries;
             var videoGenres = new HashSet<int>(video.videogenres/*.Where(i=>i.video_id==video.id)*/.Select(c => c.genre_id));
             var videoActors = new HashSet<int>(video.videoactors.Select(i=>i.actor_id));
-            var genreDatas = new List<IncludedGenreData>();
-            var actorDatas = new List<IncludedGenreData>();
+            var videoCountries = new HashSet<int>(video.manufacturers.Select(i=>i.country_id));
+            var genreDatas = new List<IncludedData>();
+            var actorDatas = new List<IncludedData>();
+            var countryDatas = new List<IncludedData>();
             foreach (var genre in allGenres)
             {
-                genreDatas.Add(new IncludedGenreData
+                genreDatas.Add(new IncludedData
                 {
                     id = genre.id,
                     Title = genre.name,
@@ -236,15 +282,26 @@ namespace CinemaProject.Controllers
             }
             foreach (var actor in allActors)
             {
-                actorDatas.Add(new IncludedGenreData
+                actorDatas.Add(new IncludedData
                 {
                     id = actor.id,
                     Title = actor.name,
                     Included = videoActors.Contains(actor.id)
                 });
             }
+            foreach (var country in allCountries)
+            {
+                countryDatas.Add(new IncludedData
+                {
+                    id = country.id,
+                    Title = country.name,
+                    Included = videoActors.Contains(country.id)
+                });
+            }
+
             ViewBag.Genres = genreDatas;
             ViewBag.Actors = actorDatas;
+            ViewBag.Countries = countryDatas;
             
         }
     }

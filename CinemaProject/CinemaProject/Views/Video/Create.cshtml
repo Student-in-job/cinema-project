@@ -78,7 +78,7 @@
                 <tr>
                 @{
                     int cnt = 0;
-                    List<CinemaProject.Models.ViewModels.IncludedGenreData> genres = ViewBag.Genres;
+                    List<CinemaProject.Models.ViewModels.IncludedData> genres = ViewBag.Genres;
 
                     foreach (var genre in genres)
                     {
@@ -106,11 +106,11 @@
                 <tr>
                 @{
                     int count = 0;
-                    List<CinemaProject.Models.ViewModels.IncludedGenreData> actors = ViewBag.Actors;
+                    List<CinemaProject.Models.ViewModels.IncludedData> actors = ViewBag.Actors;
 
                     foreach (var actor in actors)
                     {
-                        if (cnt++%6 == 0)
+                        if (count++%6 == 0)
                         {
                             @: </tr> <tr>
                         }
@@ -124,7 +124,38 @@
                 }
             </table>
         </div>
-        
+
+        <div class="editor-label">
+            @Html.Label("Страны")
+        </div>
+
+        <div class="editor-field">
+            <table>
+                <tr>
+                    @{
+                        int count1 = 0;
+                        List<CinemaProject.Models.ViewModels.IncludedData> countries = ViewBag.Countries;
+
+                        foreach (var country in countries)
+                        {
+                            if (count1++%6 == 0)
+                            {
+                                @: </tr> <tr>
+                            }
+                            @: <td> 
+                            <input type="checkbox" name="selectedCountries" value="@country.id" @(Html.Raw(country.Included ? "checked=\"checked\"" : ""))/>
+                            @country.id
+                            @:
+                            @country.Title
+                            @*@ country.id
+                            @:@ country.Title
+                            @: </td >*@
+                        }
+                        @: </tr>
+                    }
+                </table>
+            </div>
+
         <p>
             <input type="submit" value="Create"/>
         </p>

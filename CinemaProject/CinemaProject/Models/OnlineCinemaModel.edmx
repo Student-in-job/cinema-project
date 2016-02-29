@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="onlinecinemaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="onlinecinemaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actors">
           <Key>
             <PropertyRef Name="id" />
@@ -43,7 +43,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="season_id" Type="int" Nullable="false" />
@@ -73,17 +73,6 @@
           <Property Name="video_id" Type="int" Nullable="false" />
           <Property Name="country_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="moovies">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="creation_date" Type="date" Nullable="false" />
-          <Property Name="video_id" Type="int" Nullable="false" />
-          <Property Name="price" Type="float" Nullable="false" />
-          <Property Name="quality" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="moviehistory">
           <Key>
             <PropertyRef Name="id" />
@@ -93,6 +82,17 @@
           <Property Name="content_id" Type="int" Nullable="false" />
           <Property Name="watching_date" Type="date" Nullable="false" />
           <Property Name="payment" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="movies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="creation_date" Type="date" Nullable="false" />
+          <Property Name="video_id" Type="int" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="quality" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="overviews">
           <Key>
@@ -242,12 +242,12 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_content_user">
-          <End Role="moovies" Type="Self.moovies" Multiplicity="1">
+          <End Role="movies" Type="Self.movies" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="moviehistory" Type="Self.moviehistory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="moovies">
+            <Principal Role="movies">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="moviehistory">
@@ -320,10 +320,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_purchase_movie">
-          <End Role="moovies" Type="Self.moovies" Multiplicity="0..1" />
+          <End Role="movies" Type="Self.movies" Multiplicity="0..1" />
           <End Role="usermovies" Type="Self.usermovies" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="moovies">
+            <Principal Role="movies">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="usermovies">
@@ -549,12 +549,12 @@
           <End Role="videos" Type="Self.videos" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="moovies" Type="Self.moovies" Multiplicity="*" />
+          <End Role="movies" Type="Self.movies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="videos">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="moovies">
+            <Dependent Role="movies">
               <PropertyRef Name="video_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -568,8 +568,8 @@
           <EntitySet Name="genres" EntityType="Self.genres" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="likes" EntityType="Self.likes" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="manufacturer" EntityType="Self.manufacturer" Schema="onlinecinema" store:Type="Tables" />
-          <EntitySet Name="moovies" EntityType="Self.moovies" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="moviehistory" EntityType="Self.moviehistory" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="movies" EntityType="Self.movies" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="overviews" EntityType="Self.overviews" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="payments" EntityType="Self.payments" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="onlinecinema" store:Type="Tables" />
@@ -588,7 +588,7 @@
             <End Role="videoactors" EntitySet="videoactors" />
           </AssociationSet>
           <AssociationSet Name="fk_content_user" Association="Self.fk_content_user">
-            <End Role="moovies" EntitySet="moovies" />
+            <End Role="movies" EntitySet="movies" />
             <End Role="moviehistory" EntitySet="moviehistory" />
           </AssociationSet>
           <AssociationSet Name="fk_country_video" Association="Self.fk_country_video">
@@ -612,7 +612,7 @@
             <End Role="likes" EntitySet="likes" />
           </AssociationSet>
           <AssociationSet Name="fk_purchase_movie" Association="Self.fk_purchase_movie">
-            <End Role="moovies" EntitySet="moovies" />
+            <End Role="movies" EntitySet="movies" />
             <End Role="usermovies" EntitySet="usermovies" />
           </AssociationSet>
           <AssociationSet Name="fk_purchase_user" Association="Self.fk_purchase_user">
@@ -685,11 +685,10 @@
           </AssociationSet>
           <AssociationSet Name="fk1_content_video" Association="Self.fk1_content_video">
             <End Role="videos" EntitySet="videos" />
-            <End Role="moovies" EntitySet="moovies" />
+            <End Role="movies" EntitySet="movies" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="onlinecinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -773,20 +772,6 @@
           <NavigationProperty Name="country" Relationship="Self.fk_country_video" FromRole="manufacturer" ToRole="countries" />
           <NavigationProperty Name="video" Relationship="Self.fk_video_country" FromRole="manufacturer" ToRole="videos" />
         </EntityType>
-        <EntityType Name="moovy">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="creation_date" Type="DateTime" Nullable="false" />
-          <Property Name="video_id" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Single" Nullable="false" />
-          <Property Name="quality" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="moviehistories" Relationship="Self.fk_content_user" FromRole="moovies" ToRole="moviehistory" />
-          <NavigationProperty Name="usermovies" Relationship="Self.fk_purchase_movie" FromRole="moovies" ToRole="usermovies" />
-          <NavigationProperty Name="video" Relationship="Self.fk1_content_video" FromRole="moovies" ToRole="videos" />
-        </EntityType>
         <EntityType Name="moviehistory">
           <Key>
             <PropertyRef Name="id" />
@@ -796,8 +781,8 @@
           <Property Name="content_id" Type="Int32" Nullable="false" />
           <Property Name="watching_date" Type="DateTime" Nullable="false" />
           <Property Name="payment" Type="Single" Nullable="false" />
-          <NavigationProperty Name="moovy" Relationship="Self.fk_content_user" FromRole="moviehistory" ToRole="moovies" />
           <NavigationProperty Name="user" Relationship="Self.fk_user_video" FromRole="moviehistory" ToRole="users" />
+          <NavigationProperty Name="movy" Relationship="onlinecinemaModel.fk_content_user" FromRole="moviehistory" ToRole="movy" />
         </EntityType>
         <EntityType Name="overview">
           <Key>
@@ -879,7 +864,7 @@
           <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="video" Relationship="Self.fk_video_trailer" FromRole="trailers" ToRole="videos" />
         </EntityType>
-        <EntityType Name="usermovy">
+        <EntityType Name="UserMovie">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -888,8 +873,8 @@
           <Property Name="movie_id" Type="Int32" />
           <Property Name="payment" Type="Decimal" Nullable="false" />
           <Property Name="purchase_date" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="moovy" Relationship="Self.fk_purchase_movie" FromRole="usermovies" ToRole="moovies" />
           <NavigationProperty Name="user" Relationship="Self.fk_purchase_user" FromRole="usermovies" ToRole="users" />
+          <NavigationProperty Name="movy" Relationship="onlinecinemaModel.fk_purchase_movie" FromRole="UserMovie" ToRole="movy" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -960,12 +945,12 @@
           <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="likes" Relationship="Self.fk_like_video" FromRole="videos" ToRole="likes" />
           <NavigationProperty Name="manufacturers" Relationship="Self.fk_video_country" FromRole="videos" ToRole="manufacturer" />
-          <NavigationProperty Name="moovies" Relationship="Self.fk1_content_video" FromRole="videos" ToRole="moovies" />
           <NavigationProperty Name="overviews" Relationship="Self.fk_video_overview" FromRole="videos" ToRole="overviews" />
           <NavigationProperty Name="seasons" Relationship="Self.fk_video__season" FromRole="videos" ToRole="seasons" />
           <NavigationProperty Name="trailers" Relationship="Self.fk_video_trailer" FromRole="videos" ToRole="trailers" />
           <NavigationProperty Name="videoactors" Relationship="Self.fk_video_actor" FromRole="videos" ToRole="videoactors" />
           <NavigationProperty Name="videogenres" Relationship="Self.fk_video_genre" FromRole="videos" ToRole="videogenres" />
+          <NavigationProperty Name="movies" Relationship="onlinecinemaModel.fk1_content_video" FromRole="video" ToRole="movy" />
         </EntityType>
         <Association Name="fk_actor_video">
           <End Role="actors" Type="Self.actor" Multiplicity="1">
@@ -1095,46 +1080,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_content_user">
-          <End Role="moovies" Type="Self.moovy" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="moviehistory" Type="Self.moviehistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="moovies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="moviehistory">
-              <PropertyRef Name="content_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_purchase_movie">
-          <End Role="moovies" Type="Self.moovy" Multiplicity="0..1" />
-          <End Role="usermovies" Type="Self.usermovy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="moovies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="usermovies">
-              <PropertyRef Name="movie_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk1_content_video">
-          <End Role="videos" Type="Self.video" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="moovies" Type="Self.moovy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="videos">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="moovies">
-              <PropertyRef Name="video_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_user_video">
           <End Role="users" Type="Self.user" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1249,7 +1194,7 @@
         </Association>
         <Association Name="fk_purchase_user">
           <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="usermovies" Type="Self.usermovy" Multiplicity="*" />
+          <End Role="usermovies" Type="onlinecinemaModel.UserMovie" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -1308,7 +1253,6 @@
           <EntitySet Name="genres" EntityType="Self.genre" />
           <EntitySet Name="likes" EntityType="Self.like" />
           <EntitySet Name="manufacturers" EntityType="Self.manufacturer" />
-          <EntitySet Name="moovies" EntityType="Self.moovy" />
           <EntitySet Name="moviehistories" EntityType="Self.moviehistory" />
           <EntitySet Name="overviews" EntityType="Self.overview" />
           <EntitySet Name="payments" EntityType="Self.payment" />
@@ -1317,7 +1261,7 @@
           <EntitySet Name="subscriptions" EntityType="Self.subscription" />
           <EntitySet Name="tariffs" EntityType="Self.tariff" />
           <EntitySet Name="trailers" EntityType="Self.trailer" />
-          <EntitySet Name="usermovies" EntityType="Self.usermovy" />
+          <EntitySet Name="UserMovies1" EntityType="onlinecinemaModel.UserMovie" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="userseasons" EntityType="Self.userseason" />
           <EntitySet Name="videoactors" EntityType="Self.videoactor" />
@@ -1363,18 +1307,6 @@
             <End Role="videos" EntitySet="videos" />
             <End Role="manufacturer" EntitySet="manufacturers" />
           </AssociationSet>
-          <AssociationSet Name="fk_content_user" Association="Self.fk_content_user">
-            <End Role="moovies" EntitySet="moovies" />
-            <End Role="moviehistory" EntitySet="moviehistories" />
-          </AssociationSet>
-          <AssociationSet Name="fk_purchase_movie" Association="Self.fk_purchase_movie">
-            <End Role="moovies" EntitySet="moovies" />
-            <End Role="usermovies" EntitySet="usermovies" />
-          </AssociationSet>
-          <AssociationSet Name="fk1_content_video" Association="Self.fk1_content_video">
-            <End Role="videos" EntitySet="videos" />
-            <End Role="moovies" EntitySet="moovies" />
-          </AssociationSet>
           <AssociationSet Name="fk_user_video" Association="Self.fk_user_video">
             <End Role="users" EntitySet="users" />
             <End Role="moviehistory" EntitySet="moviehistories" />
@@ -1413,7 +1345,7 @@
           </AssociationSet>
           <AssociationSet Name="fk_purchase_user" Association="Self.fk_purchase_user">
             <End Role="users" EntitySet="users" />
-            <End Role="usermovies" EntitySet="usermovies" />
+            <End Role="usermovies" EntitySet="UserMovies1" />
           </AssociationSet>
           <AssociationSet Name="fk_user_season" Association="Self.fk_user_season">
             <End Role="users" EntitySet="users" />
@@ -1427,7 +1359,74 @@
             <End Role="videos" EntitySet="videos" />
             <End Role="videogenres" EntitySet="videogenres" />
           </AssociationSet>
+          <EntitySet Name="movies1" EntityType="onlinecinemaModel.movie" />
+          <AssociationSet Name="fk_content_user" Association="onlinecinemaModel.fk_content_user">
+            <End Role="movy" EntitySet="movies1" />
+            <End Role="moviehistory" EntitySet="moviehistories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_purchase_movie" Association="onlinecinemaModel.fk_purchase_movie">
+            <End Role="movy" EntitySet="movies1" />
+            <End Role="UserMovie" EntitySet="UserMovies1" />
+          </AssociationSet>
+          <AssociationSet Name="fk1_content_video" Association="onlinecinemaModel.fk1_content_video">
+            <End Role="video" EntitySet="videos" />
+            <End Role="movy" EntitySet="movies1" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="movie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="creation_date" Type="DateTime" Nullable="false" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Single" Nullable="false" />
+          <Property Name="quality" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="moviehistories" Relationship="onlinecinemaModel.fk_content_user" FromRole="movy" ToRole="moviehistory" />
+          <NavigationProperty Name="usermovies" Relationship="onlinecinemaModel.fk_purchase_movie" FromRole="movy" ToRole="UserMovie" />
+          <NavigationProperty Name="video" Relationship="onlinecinemaModel.fk1_content_video" FromRole="movy" ToRole="video" />
+        </EntityType>
+        <Association Name="fk_content_user">
+          <End Type="onlinecinemaModel.movie" Role="movy" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="onlinecinemaModel.moviehistory" Role="moviehistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="moviehistory">
+              <PropertyRef Name="content_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_purchase_movie">
+          <End Type="onlinecinemaModel.movie" Role="movy" Multiplicity="0..1" />
+          <End Type="onlinecinemaModel.UserMovie" Role="UserMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserMovie">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1_content_video">
+          <End Type="onlinecinemaModel.video" Role="video" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="onlinecinemaModel.movie" Role="movy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="video">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="movy">
+              <PropertyRef Name="video_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1507,18 +1506,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="video_id" ColumnName="video_id" />
                 <ScalarProperty Name="country_id" ColumnName="country_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="moovies">
-            <EntityTypeMapping TypeName="onlinecinemaModel.moovy">
-              <MappingFragment StoreEntitySet="moovies">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
-                <ScalarProperty Name="video_id" ColumnName="video_id" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="quality" ColumnName="quality" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1609,8 +1596,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="usermovies">
-            <EntityTypeMapping TypeName="onlinecinemaModel.usermovy">
+          <EntitySetMapping Name="UserMovies1">
+            <EntityTypeMapping TypeName="onlinecinemaModel.UserMovie">
               <MappingFragment StoreEntitySet="usermovies">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
@@ -1676,6 +1663,18 @@
                 <ScalarProperty Name="director" ColumnName="director" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movies1">
+            <EntityTypeMapping TypeName="onlinecinemaModel.movie">
+              <MappingFragment StoreEntitySet="movies">
+                <ScalarProperty Name="quality" ColumnName="quality" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

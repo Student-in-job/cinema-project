@@ -33,7 +33,6 @@ namespace CinemaProject.Models
         public DbSet<genre> genres { get; set; }
         public DbSet<like> likes { get; set; }
         public DbSet<manufacturer> manufacturers { get; set; }
-        public DbSet<moovy> moovies { get; set; }
         public DbSet<moviehistory> moviehistories { get; set; }
         public DbSet<overview> overviews { get; set; }
         public DbSet<payment> payments { get; set; }
@@ -42,11 +41,12 @@ namespace CinemaProject.Models
         public DbSet<subscription> subscriptions { get; set; }
         public DbSet<tariff> tariffs { get; set; }
         public DbSet<trailer> trailers { get; set; }
-        public DbSet<usermovy> usermovies { get; set; }
+        public DbSet<UserMovie> UserMovies1 { get; set; }
         public DbSet<user> users { get; set; }
         public DbSet<userseason> userseasons { get; set; }
         public DbSet<videoactor> videoactors { get; set; }
         public DbSet<videogenre> videogenres { get; set; }
         public DbSet<video> videos { get; set; }
+        public DbSet<movie> movies1 { get; set; }
     }
 }

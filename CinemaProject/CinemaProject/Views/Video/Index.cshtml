@@ -32,10 +32,9 @@
             <p> @Html.DisplayFor(modelItem => item.release_date)</p>
         </td>
         <td>
-            <p>@Html.ActionLink("Редактировать", "Edit", new { id = item.id }) </p>
-            <p>@Html.ActionLink("Описание", "Details", new { id = item.id }) </p>
-            <p>@Html.ActionLink("Удалить", "Delete", new {id = item.id})</p>
-            <p>@Html.ActionLink("Добваить контент", "AddContentByVideoId", "Content", new { id = item.id }, null)</p>
+        @Html.ActionLink("Редактировать", "Edit", new {id = item.id})  <br/>
+            @Html.ActionLink("Описание", "Details", new { id = item.id })<br/> 
+            @Html.ActionLink("Удалить", "Delete", new {id = item.id})<br/>
         </td>
     </tr>
 }    

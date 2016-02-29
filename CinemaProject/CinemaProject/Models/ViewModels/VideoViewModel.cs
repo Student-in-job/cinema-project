@@ -10,7 +10,6 @@ namespace CinemaProject.Models.ViewModels
     {
         public VideoViewModel()
         {
-            this.contents = new HashSet<content>();
             this.likes = new HashSet<like>();
             this.overviews = new HashSet<overview>();
             this.countries = new HashSet<country>();
@@ -31,7 +30,6 @@ namespace CinemaProject.Models.ViewModels
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
     
-        public virtual ICollection<content> contents { get; set; }
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
         public virtual ICollection<country> countries { get; set; }
