@@ -4,12 +4,45 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Фильмы и Сериалы</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
+<table >
+@foreach (var item in Model)
+{
+    <tr >
+        <td>
+            <img src="/uploads/@item.img_url" class="video-img-list" style=""/>
+        </td>
+        <td >
+            <h3>
+                @{
+                    if (item.type == 0)
+                    {
+                        <h4>Фильм: @item.name</h4>
+                    }
+                    else
+                    {
+                        <h4>Сериал: @item.name</h4>
+                    }
+                }
+            </h3>
+            <p> @Html.DisplayFor(modelItem => item.release_date)</p>
+        </td>
+        <td>
+        @Html.ActionLink("Редактировать", "Edit", new {id = item.id})  <br/>
+            @Html.ActionLink("Описание", "Details", new { id = item.id })<br/> 
+            @Html.ActionLink("Удалить", "Delete", new {id = item.id})<br/>
+        </td>
+    </tr>
+}    
+</table>
+
+
+
+@*<table>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.name)
@@ -68,6 +101,6 @@
         </tr>
     }
 
-</table>
+</table>*@
 
 

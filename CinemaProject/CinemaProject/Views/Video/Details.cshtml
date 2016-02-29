@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Details";
 }
-<div id="video_header">
+<div style="height: 50px">
     <h1>
         @{
             if (Model.type == 0)
@@ -20,80 +20,85 @@
 
     </h1>
 </div >
-<div id="video_image">
-    <img src="/uploads/@Model.img_url" class="video-img-list"/>
-</div>
-<div id="video_details">
+<div style="display: inline-block" >
+    <div style="width: 300px; float: left">
+        <img src="/uploads/@Model.img_url" class="video-img" />
+    </div>
+    <div style="height: auto">
 
-    <div class="properties">
-        <span>
-            @Model.release_date.Year
-        </span>
-        <span>
-            Страна!
-        </span>
-        <span>
-            @{
-                foreach (var videogenre in Model.videogenres)
-                {
-                    @: <a style="text-decoration: none">
-                    @videogenre.genre.name
-                    @:,</a>
+        <div class="properties">
+            <span>
+                @Model.release_date.Year
+            </span>
+            <span>
+                @{
+                    foreach (var man in Model.manufacturers)
+                    {
+                        @man.country.name
+                    }
                 }
+            </span>
+            <span>
+                @{
+                    foreach (var videogenre in Model.videogenres)
+                    {
+                        @: <a style="text-decoration: none">
+                        @videogenre.genre.name
+                        @:,</a>
+                    }
+                }
+            </span>
+            <span>
+                Длительность
+            </span>
+        </div>
+        <p>Режиссер: @Model.director</p>
+        <p>
+            В ролях: 
+            @foreach (var videoactor in Model.videoactors)
+            {
+            @videoactor.actor.name  @: , 
             }
-        </span>
-        <span>
-            Длительность
-        </span>
-    </div>
-    <dl>
-        <dt>
-            Режиссер
-        </dt>
-        <dd>
-            @Model.director
-        </dd>
-        <dt>
-            В ролях
-        </dt>
-        <dd>
-            актер
-            @* @{
-                foreach (var videogenre in Model.actors)
-                {
-                    @: <a style="text-decoration: none">
-                        @videogenre.a.name
-                    @:,</a>
-                }
-            }*@
-        </dd>
-    </dl>
+        </p>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.details)
+        </div>
 
-    <div class="display-field">
-        @Html.DisplayFor(model => model.details)
     </div>
-
-    
-    @{
-        string genres = "";
-        foreach (var videogenre in Model.videogenres)
-        {
-            genres = genres + ", " + videogenre.genre.name;
-        }
-    }
-    <p>Жанры:@genres</p>
 </div>
-@*
-<h2>Details</h2>
 
-<fieldset>
-    <legend>video</legend>
-
-     
+<div >
     
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-*@
+    @if (Model.type == 0)
+    {
+        @Html.Partial("MoviePartial", Model.movies)
+    }
+    else
+    {
+        @Html.Partial("SeriesPartial", Model.seasons)
+        @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
+    }
+    <div>
+        <h5>Трейлеры</h5>
+        <table >
+            @foreach (var trailer in Model.trailers)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Смотреть", "Watch", "Video", new {url = trailer.url}, new {@class = "video-placeholder"})
+                    </td>
+                    <td>
+                        <h3>@trailer.title</h3>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Редактировать", "Edit", "Trailer", new {id = trailer.id}, null) <br/>
+                        @Html.ActionLink("Удалить", "Delete", "Trailer", new {video_id = Model.id}, null) <br/>
+                    </td>
+                </tr>
+
+            }
+        </table>
+        @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new{ video_id = Model.id}, null)
+    </div>
+    
+</div>

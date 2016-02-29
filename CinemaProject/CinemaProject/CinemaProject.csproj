@@ -73,6 +73,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -214,11 +215,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
+    <Compile Include="Controllers\ContController.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\EpisodeController.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SeasonController.cs" />
     <Compile Include="Controllers\SubsciptionController.cs" />
     <Compile Include="Controllers\TariffController.cs" />
+    <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -228,25 +235,31 @@
     <Compile Include="Models\actor.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\content.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\employee.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\genre.cs">
+    <Compile Include="Models\episode.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\history.cs">
+    <Compile Include="Models\episodehistory.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\genre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\like.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\manufacturer.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\movie.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\moviehistory.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OnlineCinemaModel.Context.cs">
@@ -273,13 +286,25 @@
     <Compile Include="Models\role.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\season.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\subscription.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tariff.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\trailer.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\user.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserMovie.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\userseason.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\video.cs">
@@ -291,12 +316,14 @@
     <Compile Include="Models\videogenre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\IncludedGenreData.cs" />
+    <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\chosen.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -424,6 +451,10 @@
       <LastGenOutput>OnlineCinemaModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\chosen.proto.js" />
+    <Content Include="Scripts\chosen.proto.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -437,6 +468,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\media-upload.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Web.config">
@@ -514,6 +546,34 @@
     <Content Include="Views\Video\Create.cshtml" />
     <Content Include="Views\Video\Edit.cshtml" />
     <Content Include="Views\Video\Delete.cshtml" />
+    <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\Movie\Details.cshtml" />
+    <Content Include="Views\Movie\Create.cshtml" />
+    <Content Include="Views\Movie\Edit.cshtml" />
+    <Content Include="Views\Movie\Delete.cshtml" />
+    <Content Include="Views\Movie\AddMovieByVideoId.cshtml" />
+    <Content Include="Views\Video\Watch.cshtml" />
+    <Content Include="Views\Trailer\Index.cshtml" />
+    <Content Include="Views\Trailer\Details.cshtml" />
+    <Content Include="Views\Trailer\Create.cshtml" />
+    <Content Include="Views\Trailer\Edit.cshtml" />
+    <Content Include="Views\Trailer\Delete.cshtml" />
+    <Content Include="Views\Trailer\AddTrailerByVideoId.cshtml" />
+    <Content Include="Views\Season\Index.cshtml" />
+    <Content Include="Views\Season\Details.cshtml" />
+    <Content Include="Views\Season\Create.cshtml" />
+    <Content Include="Views\Season\Edit.cshtml" />
+    <Content Include="Views\Season\Delete.cshtml" />
+    <Content Include="Views\Season\AddSeasonByVideoId.cshtml" />
+    <Content Include="Views\Video\MoviePartial.cshtml" />
+    <Content Include="Views\Video\SeriesPartial.cshtml" />
+    <Content Include="Views\Episode\Index.cshtml" />
+    <Content Include="Views\Episode\Details.cshtml" />
+    <Content Include="Views\Episode\Create.cshtml" />
+    <Content Include="Views\Episode\Edit.cshtml" />
+    <Content Include="Views\Episode\Delete.cshtml" />
+    <Content Include="Views\Episode\AddEpisodeBySeasonId.cshtml" />
+    <Content Include="Views\Trailer\AddTrilerByVideoId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
