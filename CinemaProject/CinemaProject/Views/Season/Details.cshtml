@@ -1,0 +1,55 @@
+﻿@model CinemaProject.Models.season
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.video.name :сезон @Model.name</h2>
+<p> Цена: @Model.price сум</p>
+<p> Дата релиза: @Model.release_date</p>
+@Html.ActionLink("Редактировать", "Edit", new {id = Model.id}) |
+@Html.ActionLink("Удалить", "Delete", new {id = Model.id}) 
+<h5>
+    Эпизоды
+</h5>
+@foreach (var episode in Model.episodes)
+{
+    @Html.ActionLink("Эпизод"+episode.name,"Details","Episode",new{id = episode.id}) <br/>
+}
+@Html.ActionLink("Добавить эпизод", "AddSeasonByVideoId", "Episode", new { id = Model.id })
+
+@*<fieldset>
+    <legend>season</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.price)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.release_date)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.release_date)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.video.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.video.name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
