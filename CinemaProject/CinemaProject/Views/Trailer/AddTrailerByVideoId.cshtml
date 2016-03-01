@@ -1,0 +1,41 @@
+﻿@model CinemaProject.Models.trailer
+
+@{
+    ViewBag.Title = "AddTrailerByVideoId";
+}
+
+<h2>Добавить трейлер для фильма</h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        @Html.HiddenFor(model => Model.video_id)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.title)
+            @Html.ValidationMessageFor(model => model.url)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.url)
+        </div>
+        <div class="editor-field">
+            <input id="url" title="Загрузить трейлер" type="file" name="file" />
+            @Html.ValidationMessageFor(model => model.url)
+        </div>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+</form>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
