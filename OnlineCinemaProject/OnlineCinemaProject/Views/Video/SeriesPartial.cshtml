@@ -1,0 +1,13 @@
+﻿@model IEnumerable<OnlineCinemaProject.Models.season>
+<div>
+    <h5>Сезоны</h5>
+    @foreach (var content in Model)
+    {
+        @Html.ActionLink("Сезон" + content.name, "Details", "Season", new {id = content.id}, null)
+        <br/>
+    }
+
+
+
+
+</div>

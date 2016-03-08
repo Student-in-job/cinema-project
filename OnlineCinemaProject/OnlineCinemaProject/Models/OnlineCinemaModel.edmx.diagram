@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e0e089bcceaf4f769b6f27180094a5e1" Name="Diagram1">
+        <EntityTypeShape EntityType="OnlineCinemaModel.actor" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetrole" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuserclaim" Width="1.5" PointX="7.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuserlogin" Width="1.5" PointX="7.5" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.country" Width="1.5" PointX="6" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.episodehistory" Width="1.5" PointX="7.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.episode" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.genre" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.like" Width="1.5" PointX="10.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.manufacturer" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.moviehistory" Width="1.5" PointX="10.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.movy" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.overview" Width="1.5" PointX="10.5" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.payment" Width="1.5" PointX="7.5" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.season" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.subscription" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.tariff" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.trailer" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.usermovy" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.userseason" Width="1.5" PointX="7.5" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.videoactor" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.videogenre" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.video" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_actor_video" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.IdentityUserClaim_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.IdentityUserLogin_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserEpisodeHistory" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserLikes" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserMovies" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserOverview" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserOwnMovies" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserPayment" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserSeasons" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserSubscriptions" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_country_video" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_episde_user" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_season_episode" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_genre_video" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_like_video" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_video_country" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_content_user" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_purchase_movie" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk1_content_video" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_video_overview" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_season_user" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_video__season" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_tariff_user" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_video_trailer" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_video_actor" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_video_genre" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Пополнить баланс пользователя" + @ViewBag.UserName;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>user</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.Hidden("id")
+
+
+
+        <div class="form-group">
+            @Html.Label("Введите кол-во денег")
+            <div class="col-md-10">
+                @Html.TextBox("Amount")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
