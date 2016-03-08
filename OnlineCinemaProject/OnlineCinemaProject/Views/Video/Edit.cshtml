@@ -1,0 +1,113 @@
+﻿@using OnlineCinemaProject.Models.ViewModels
+@model OnlineCinemaProject.Models.video
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>video</legend>
+
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.img_url)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.age_limit)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.age_limit)
+            @Html.ValidationMessageFor(model => model.age_limit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.release_date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.release_date)
+            @Html.ValidationMessageFor(model => model.release_date)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.details)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.details)
+            @Html.ValidationMessageFor(model => model.details)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.director)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.director)
+            @Html.ValidationMessageFor(model => model.director)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.type)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.type, new SelectList(new List<Object>{
+                       new { value = 0 , text = "Red"  },
+                       new { value = 1 , text = "Blue" }
+                    }, "value", "text", 2))
+            @Html.ValidationMessageFor(model => model.type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.img_url)
+        </div>
+        <div class="editor-field">
+            <input id="ImagePath" title="Upload image" type="file" name="file"/>
+            @Html.ValidationMessageFor(model => model.img_url)
+        </div>
+        <div class="editor-field">
+            <table>
+                <tr>
+                @{
+                    var cnt = 0;
+                    List<IncludedData> genres = ViewBag.Genres;
+
+                    foreach (var genre in genres)
+                    {
+                        if (cnt++%6 == 0)
+                        {
+                            @: </tr> <tr>
+                        }
+                        @:  <td>
+                            <input type="checkbox" name="selectedGenres" value="@genre.id" @(Html.Raw(genre.Included ? "checked=\"checked\"" : ""))/>
+                        @genre.id
+                        @: @genre.Title 
+                @:   </td>
+                    }
+                    @: </tr>
+                }
+            </table>
+        </div>
+
+        <p>
+            <input type="submit" value="Save"/>
+        </p>
+    </fieldset>
+</form>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
