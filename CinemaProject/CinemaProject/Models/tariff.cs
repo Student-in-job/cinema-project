@@ -26,6 +26,7 @@ namespace CinemaProject.Models
         public decimal price { get; set; }
         public bool adverticement_enabled { get; set; }
         public bool new_films_enabled { get; set; }
+        public bool enabled { get; set; }
     
         public virtual ICollection<subscription> subscriptions { get; set; }
     }
