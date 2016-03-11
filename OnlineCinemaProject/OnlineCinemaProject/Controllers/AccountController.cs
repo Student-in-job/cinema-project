@@ -36,11 +36,10 @@ namespace OnlineCinemaProject.Controllers
             return View(users.ToList());
         }
 
-        [HttpGet]
         public ActionResult TopUp(string id)
         {
             ViewBag.UserName = db.aspnetusers.Find(id).UserName;
-            return View(id);
+            return View((object)id);
         }
         [HttpPost]
         public ActionResult TopUp(string id, Decimal Amount)
@@ -124,7 +123,11 @@ namespace OnlineCinemaProject.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "User");
+                    var user1 =  db.aspnetusers.Find(user.Id);
+                    user1.Balance = 0;
                     await SignInAsync(user, isPersistent: false);
+                    db.Entry(user1).State = EntityState.Modified;
+                    db.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
                 else
