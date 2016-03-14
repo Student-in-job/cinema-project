@@ -34,6 +34,12 @@ namespace CinemaProject.Models
         public int sex { get; set; }
         public string login { get; set; }
         public double balance { get; set; }
+
+        public string FullName()
+        {
+            return firstname + " " + secondname;
+        }
+
         public Nullable<int> subscription_id { get; set; }
     
         public virtual ICollection<episodehistory> episodehistories { get; set; }

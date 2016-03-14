@@ -16,8 +16,6 @@ namespace OnlineCinemaProject.Models
     {
         public aspnetuser()
         {
-            this.aspnetuserclaims = new HashSet<aspnetuserclaim>();
-            this.aspnetuserlogins = new HashSet<aspnetuserlogin>();
             this.episodehistories = new HashSet<episodehistory>();
             this.likes = new HashSet<like>();
             this.moviehistories = new HashSet<moviehistory>();
@@ -39,11 +37,9 @@ namespace OnlineCinemaProject.Models
         public string Email { get; set; }
         public Nullable<int> Sex { get; set; }
         public Nullable<System.DateTime> JoinDate { get; set; }
-        public Nullable<decimal> Balance { get; set; }
+        public decimal Balance { get; set; }
         public Nullable<int> SubscriptionId { get; set; }
     
-        public virtual ICollection<aspnetuserclaim> aspnetuserclaims { get; set; }
-        public virtual ICollection<aspnetuserlogin> aspnetuserlogins { get; set; }
         public virtual ICollection<episodehistory> episodehistories { get; set; }
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<moviehistory> moviehistories { get; set; }

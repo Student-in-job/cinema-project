@@ -12,12 +12,16 @@ namespace OnlineCinemaProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class aspnetuserlogin
+    public partial class banner
     {
-        public string UserId { get; set; }
-        public string LoginProvider { get; set; }
-        public string ProviderKey { get; set; }
+        public int id { get; set; }
+        public System.DateTime start { get; set; }
+        public System.DateTime end { get; set; }
+        public double payment { get; set; }
+        public int adv_id { get; set; }
+        public string name { get; set; }
+        public string img_url { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
+        public virtual advertiser advertiser { get; set; }
     }
 }

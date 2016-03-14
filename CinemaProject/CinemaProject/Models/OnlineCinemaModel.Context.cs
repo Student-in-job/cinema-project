@@ -16,8 +16,7 @@ namespace CinemaProject.Models
     public partial class OnlineCinemaEntities : DbContext
     {
         public OnlineCinemaEntities()
-//            : base("name=OnlineCinemaEntities")
-            : base("name=ServerEntities")
+            : base("name=OnlineCinemaEntities")
         {
         }
     

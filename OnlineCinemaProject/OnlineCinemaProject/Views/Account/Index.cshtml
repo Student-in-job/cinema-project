@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineCinemaProject.Models.aspnetuser>
+﻿@model IEnumerable<OnlineCinemaProject.Models.user>
 
 @{
     ViewBag.Title = "Index";
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
+            @Html.DisplayNameFor(model => model.DateOfBirth)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserName)
@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
+            @Html.DisplayFor(modelItem => item.DateOfBirth)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
@@ -53,10 +53,10 @@
             @Html.DisplayFor(modelItem => item.Balance)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id }) |
-            @Html.ActionLink("TopUp", "TopUp", new { id=item.id }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.id }) |*@
+            @Html.ActionLink("TopUp", "TopUp", new { id=item.Id }) 
         </td>
     </tr>
 }
