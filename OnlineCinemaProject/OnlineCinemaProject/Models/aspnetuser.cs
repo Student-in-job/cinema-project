@@ -16,7 +16,6 @@ namespace OnlineCinemaProject.Models
     {
         public aspnetuser()
         {
-            this.episodehistories = new HashSet<episodehistory>();
             this.likes = new HashSet<like>();
             this.moviehistories = new HashSet<moviehistory>();
             this.overviews = new HashSet<overview>();
@@ -24,6 +23,7 @@ namespace OnlineCinemaProject.Models
             this.payments = new HashSet<payment>();
             this.userseasons = new HashSet<userseason>();
             this.aspnetroles = new HashSet<aspnetrole>();
+            this.episodehistories = new HashSet<episodehistory>();
         }
     
         public string Id { get; set; }
@@ -37,10 +37,9 @@ namespace OnlineCinemaProject.Models
         public string Email { get; set; }
         public Nullable<int> Sex { get; set; }
         public Nullable<System.DateTime> JoinDate { get; set; }
-        public decimal Balance { get; set; }
+        public Nullable<decimal> Balance { get; set; }
         public Nullable<int> SubscriptionId { get; set; }
     
-        public virtual ICollection<episodehistory> episodehistories { get; set; }
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<moviehistory> moviehistories { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
@@ -49,5 +48,6 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<userseason> userseasons { get; set; }
         public virtual subscription subscription { get; set; }
         public virtual ICollection<aspnetrole> aspnetroles { get; set; }
+        public virtual ICollection<episodehistory> episodehistories { get; set; }
     }
 }
