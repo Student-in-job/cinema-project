@@ -1,0 +1,99 @@
+﻿@model OnlineCinemaProject.Models.banner
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+<form action="" method="post" enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal">
+        <h4>Banner</h4>
+
+        <fieldset>
+
+            <legend>Banner</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.id)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.id)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.name)
+                @Html.ValidationMessageFor(model => model.name)
+
+            </div>
+
+          
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.start)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.start)
+                @Html.ValidationMessageFor(model => model.start)
+
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.end)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(model => model.end)
+                @Html.ValidationMessageFor(model => model.end)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.payment)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(model => model.payment)
+                @Html.ValidationMessageFor(model => model.payment)
+
+            </div>
+
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.adv_id)
+            </div>
+
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.adv_id, (SelectList)ViewBag.advlist)
+                @Html.ValidationMessageFor(model => model.adv_id)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.img_url)
+            </div>
+            <div class="editor-field">
+                <input id="ImagePath" title="Upload a product image" type="file" name="file" />
+                @Html.ValidationMessageFor(model => model.img_url)
+            </div>
+
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+</form>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

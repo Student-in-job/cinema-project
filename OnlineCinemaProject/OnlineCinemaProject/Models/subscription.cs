@@ -23,7 +23,7 @@ namespace OnlineCinemaProject.Models
         public int tariff_id { get; set; }
         public System.DateTime start { get; set; }
         public System.DateTime end { get; set; }
-        public double payment { get; set; }
+        public decimal payment { get; set; }
     
         public virtual ICollection<aspnetuser> aspnetusers { get; set; }
         public virtual tariff tariff { get; set; }

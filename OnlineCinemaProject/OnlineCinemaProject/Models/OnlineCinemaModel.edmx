@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OnlineCinemaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OnlineCinemaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actors">
           <Key>
             <PropertyRef Name="id" />
@@ -12,31 +12,21 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
+        <EntityType Name="advertiser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
         <EntityType Name="aspnetroles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="longtext" Nullable="false" />
-        </EntityType>
-        <EntityType Name="aspnetuserclaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClaimType" Type="longtext" />
-          <Property Name="ClaimValue" Type="longtext" />
-          <Property Name="User_Id" Type="varchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="aspnetuserlogins">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-          </Key>
-          <Property Name="UserId" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="LoginProvider" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="varchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="aspnetuserroles">
           <Key>
@@ -63,6 +53,18 @@
           <Property Name="JoinDate" Type="date" />
           <Property Name="Balance" Type="decimal" Precision="10" Scale="0" />
           <Property Name="SubscriptionId" Type="int" />
+        </EntityType>
+        <EntityType Name="banners">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="start" Type="date" Nullable="false" />
+          <Property Name="end" Type="date" Nullable="false" />
+          <Property Name="payment" Type="double" Nullable="false" />
+          <Property Name="adv_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="countries">
           <Key>
@@ -132,7 +134,7 @@
           <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="creation_date" Type="date" Nullable="false" />
           <Property Name="video_id" Type="int" Nullable="false" />
-          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="quality" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="overviews">
@@ -174,7 +176,7 @@
           <Property Name="tariff_id" Type="int" Nullable="false" />
           <Property Name="start" Type="date" Nullable="false" />
           <Property Name="end" Type="date" Nullable="false" />
-          <Property Name="payment" Type="double" Nullable="false" />
+          <Property Name="payment" Type="decimal" Precision="10" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="tariffs">
           <Key>
@@ -187,6 +189,19 @@
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="adverticement_enabled" Type="bool" Nullable="false" />
           <Property Name="new_films_enabled" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="teaser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="start" Type="date" Nullable="false" />
+          <Property Name="end" Type="date" Nullable="false" />
+          <Property Name="showAmount" Type="int" Nullable="false" />
+          <Property Name="payment" Type="double" Nullable="false" />
+          <Property Name="adv_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="trailers">
           <Key>
@@ -260,6 +275,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_adv_banner">
+          <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
+          <End Role="banners" Type="Self.banners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advertiser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="banners">
+              <PropertyRef Name="adv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_content_user">
           <End Role="movies" Type="Self.movies" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -311,6 +338,18 @@
             </Principal>
             <Dependent Role="videogenres">
               <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_teaser">
+          <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
+          <End Role="teaser" Type="Self.teaser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advertiser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teaser">
+              <PropertyRef Name="adv_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -562,34 +601,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="IdentityUserClaim_User">
-          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="aspnetuserclaims" Type="Self.aspnetuserclaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="aspnetuserclaims">
-              <PropertyRef Name="User_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="IdentityUserLogin_User">
-          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="aspnetuserlogins" Type="Self.aspnetuserlogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="aspnetuserlogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="IdentityUserRole_Role">
           <End Role="aspnetroles" Type="Self.aspnetroles" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -620,11 +631,11 @@
         </Association>
         <EntityContainer Name="OnlineCinemaModelStoreContainer">
           <EntitySet Name="actors" EntityType="Self.actors" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="advertiser" EntityType="Self.advertiser" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="aspnetroles" EntityType="Self.aspnetroles" Schema="onlinecinema" store:Type="Tables" />
-          <EntitySet Name="aspnetuserclaims" EntityType="Self.aspnetuserclaims" Schema="onlinecinema" store:Type="Tables" />
-          <EntitySet Name="aspnetuserlogins" EntityType="Self.aspnetuserlogins" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="aspnetuserroles" EntityType="Self.aspnetuserroles" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="banners" EntityType="Self.banners" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="countries" EntityType="Self.countries" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="episodehistory" EntityType="Self.episodehistory" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="episodes" EntityType="Self.episodes" Schema="onlinecinema" store:Type="Tables" />
@@ -638,6 +649,7 @@
           <EntitySet Name="seasons" EntityType="Self.seasons" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="subscriptions" EntityType="Self.subscriptions" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="tariffs" EntityType="Self.tariffs" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="teaser" EntityType="Self.teaser" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="trailers" EntityType="Self.trailers" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="usermovies" EntityType="Self.usermovies" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="userseasons" EntityType="Self.userseasons" Schema="onlinecinema" store:Type="Tables" />
@@ -647,6 +659,10 @@
           <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
             <End Role="actors" EntitySet="actors" />
             <End Role="videoactors" EntitySet="videoactors" />
+          </AssociationSet>
+          <AssociationSet Name="fk_adv_banner" Association="Self.fk_adv_banner">
+            <End Role="advertiser" EntitySet="advertiser" />
+            <End Role="banners" EntitySet="banners" />
           </AssociationSet>
           <AssociationSet Name="fk_content_user" Association="Self.fk_content_user">
             <End Role="movies" EntitySet="movies" />
@@ -663,6 +679,10 @@
           <AssociationSet Name="fk_genre_video" Association="Self.fk_genre_video">
             <End Role="genres" EntitySet="genres" />
             <End Role="videogenres" EntitySet="videogenres" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_teaser" Association="Self.fk_id_teaser">
+            <End Role="advertiser" EntitySet="advertiser" />
+            <End Role="teaser" EntitySet="teaser" />
           </AssociationSet>
           <AssociationSet Name="fk_like_video" Association="Self.fk_like_video">
             <End Role="videos" EntitySet="videos" />
@@ -744,14 +764,6 @@
             <End Role="subscriptions" EntitySet="subscriptions" />
             <End Role="aspnetusers" EntitySet="aspnetusers" />
           </AssociationSet>
-          <AssociationSet Name="IdentityUserClaim_User" Association="Self.IdentityUserClaim_User">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="aspnetuserclaims" EntitySet="aspnetuserclaims" />
-          </AssociationSet>
-          <AssociationSet Name="IdentityUserLogin_User" Association="Self.IdentityUserLogin_User">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="aspnetuserlogins" EntitySet="aspnetuserlogins" />
-          </AssociationSet>
           <AssociationSet Name="IdentityUserRole_Role" Association="Self.IdentityUserRole_Role">
             <End Role="aspnetroles" EntitySet="aspnetroles" />
             <End Role="aspnetuserroles" EntitySet="aspnetuserroles" />
@@ -761,8 +773,7 @@
             <End Role="aspnetuserroles" EntitySet="aspnetuserroles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OnlineCinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -782,27 +793,6 @@
           <Property Name="Name" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="aspnetusers" Relationship="Self.aspnetuserroles" FromRole="aspnetroles" ToRole="aspnetusers" />
         </EntityType>
-        <EntityType Name="aspnetuserclaim">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClaimType" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <Property Name="ClaimValue" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="aspnetuser" Relationship="Self.IdentityUserClaim_User" FromRole="aspnetuserclaims" ToRole="aspnetusers" />
-        </EntityType>
-        <EntityType Name="aspnetuserlogin">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-          </Key>
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="aspnetuser" Relationship="Self.IdentityUserLogin_User" FromRole="aspnetuserlogins" ToRole="aspnetusers" />
-        </EntityType>
         <EntityType Name="aspnetuser">
           <Key>
             <PropertyRef Name="Id" />
@@ -820,8 +810,6 @@
           <Property Name="JoinDate" Type="DateTime" />
           <Property Name="Balance" Type="Decimal" />
           <Property Name="SubscriptionId" Type="Int32" />
-          <NavigationProperty Name="aspnetuserclaims" Relationship="Self.IdentityUserClaim_User" FromRole="aspnetusers" ToRole="aspnetuserclaims" />
-          <NavigationProperty Name="aspnetuserlogins" Relationship="Self.IdentityUserLogin_User" FromRole="aspnetusers" ToRole="aspnetuserlogins" />
           <NavigationProperty Name="episodehistories" Relationship="Self.FkUserEpisodeHistory" FromRole="aspnetusers" ToRole="episodehistory" />
           <NavigationProperty Name="likes" Relationship="Self.FkUserLikes" FromRole="aspnetusers" ToRole="likes" />
           <NavigationProperty Name="moviehistories" Relationship="Self.FkUserMovies" FromRole="aspnetusers" ToRole="moviehistory" />
@@ -902,21 +890,7 @@
           <Property Name="watching_date" Type="DateTime" Nullable="false" />
           <Property Name="payment" Type="Single" Nullable="false" />
           <NavigationProperty Name="aspnetuser" Relationship="Self.FkUserMovies" FromRole="moviehistory" ToRole="aspnetusers" />
-          <NavigationProperty Name="movy" Relationship="Self.fk_content_user" FromRole="moviehistory" ToRole="movies" />
-        </EntityType>
-        <EntityType Name="movy">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="creation_date" Type="DateTime" Nullable="false" />
-          <Property Name="video_id" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Single" Nullable="false" />
-          <Property Name="quality" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="moviehistories" Relationship="Self.fk_content_user" FromRole="movies" ToRole="moviehistory" />
-          <NavigationProperty Name="usermovies" Relationship="Self.fk_purchase_movie" FromRole="movies" ToRole="usermovies" />
-          <NavigationProperty Name="video" Relationship="Self.fk1_content_video" FromRole="movies" ToRole="videos" />
+          <NavigationProperty Name="movy" Relationship="OnlineCinemaModel.fk_content_user" FromRole="moviehistory" ToRole="movy" />
         </EntityType>
         <EntityType Name="overview">
           <Key>
@@ -963,7 +937,7 @@
           <Property Name="tariff_id" Type="Int32" Nullable="false" />
           <Property Name="start" Type="DateTime" Nullable="false" />
           <Property Name="end" Type="DateTime" Nullable="false" />
-          <Property Name="payment" Type="Double" Nullable="false" />
+          <Property Name="payment" Type="Decimal" Nullable="false" />
           <NavigationProperty Name="aspnetusers" Relationship="Self.FkUserSubscriptions" FromRole="subscriptions" ToRole="aspnetusers" />
           <NavigationProperty Name="tariff" Relationship="Self.fk_tariff_user" FromRole="subscriptions" ToRole="tariffs" />
         </EntityType>
@@ -1000,7 +974,7 @@
           <Property Name="payment" Type="Decimal" Nullable="false" />
           <Property Name="purchase_date" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="aspnetuser" Relationship="Self.FkUserOwnMovies" FromRole="usermovies" ToRole="aspnetusers" />
-          <NavigationProperty Name="movy" Relationship="Self.fk_purchase_movie" FromRole="usermovies" ToRole="movies" />
+          <NavigationProperty Name="movy" Relationship="OnlineCinemaModel.fk_purchase_movie" FromRole="usermovy" ToRole="movy" />
         </EntityType>
         <EntityType Name="userseason">
           <Key>
@@ -1048,12 +1022,12 @@
           <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="likes" Relationship="Self.fk_like_video" FromRole="videos" ToRole="likes" />
           <NavigationProperty Name="manufacturers" Relationship="Self.fk_video_country" FromRole="videos" ToRole="manufacturer" />
-          <NavigationProperty Name="movies" Relationship="Self.fk1_content_video" FromRole="videos" ToRole="movies" />
           <NavigationProperty Name="overviews" Relationship="Self.fk_video_overview" FromRole="videos" ToRole="overviews" />
           <NavigationProperty Name="seasons" Relationship="Self.fk_video__season" FromRole="videos" ToRole="seasons" />
           <NavigationProperty Name="trailers" Relationship="Self.fk_video_trailer" FromRole="videos" ToRole="trailers" />
           <NavigationProperty Name="videoactors" Relationship="Self.fk_video_actor" FromRole="videos" ToRole="videoactors" />
           <NavigationProperty Name="videogenres" Relationship="Self.fk_video_genre" FromRole="videos" ToRole="videogenres" />
+          <NavigationProperty Name="movies" Relationship="OnlineCinemaModel.fk1_content_video" FromRole="video" ToRole="movy" />
         </EntityType>
         <Association Name="fk_actor_video">
           <End Role="actors" Type="Self.actor" Multiplicity="1">
@@ -1066,34 +1040,6 @@
             </Principal>
             <Dependent Role="videoactors">
               <PropertyRef Name="actor_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="IdentityUserClaim_User">
-          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="aspnetuserclaims" Type="Self.aspnetuserclaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="aspnetuserclaims">
-              <PropertyRef Name="User_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="IdentityUserLogin_User">
-          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="aspnetuserlogins" Type="Self.aspnetuserlogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="aspnetuserlogins">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1271,46 +1217,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_content_user">
-          <End Role="movies" Type="Self.movy" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="moviehistory" Type="Self.moviehistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="movies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="moviehistory">
-              <PropertyRef Name="content_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_purchase_movie">
-          <End Role="movies" Type="Self.movy" Multiplicity="0..1" />
-          <End Role="usermovies" Type="Self.usermovy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="movies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="usermovies">
-              <PropertyRef Name="movie_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk1_content_video">
-          <End Role="videos" Type="Self.video" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="movies" Type="Self.movy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="videos">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="movies">
-              <PropertyRef Name="video_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_video_overview">
           <End Role="videos" Type="Self.video" Multiplicity="1" />
           <End Role="overviews" Type="Self.overview" Multiplicity="*" />
@@ -1406,8 +1312,6 @@
         <EntityContainer Name="OnlineCinemaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="actors" EntityType="Self.actor" />
           <EntitySet Name="aspnetroles" EntityType="Self.aspnetrole" />
-          <EntitySet Name="aspnetuserclaims" EntityType="Self.aspnetuserclaim" />
-          <EntitySet Name="aspnetuserlogins" EntityType="Self.aspnetuserlogin" />
           <EntitySet Name="aspnetusers" EntityType="Self.aspnetuser" />
           <EntitySet Name="countries" EntityType="Self.country" />
           <EntitySet Name="episodehistories" EntityType="Self.episodehistory" />
@@ -1416,7 +1320,6 @@
           <EntitySet Name="likes" EntityType="Self.like" />
           <EntitySet Name="manufacturers" EntityType="Self.manufacturer" />
           <EntitySet Name="moviehistories" EntityType="Self.moviehistory" />
-          <EntitySet Name="movies" EntityType="Self.movy" />
           <EntitySet Name="overviews" EntityType="Self.overview" />
           <EntitySet Name="payments" EntityType="Self.payment" />
           <EntitySet Name="seasons" EntityType="Self.season" />
@@ -1431,14 +1334,6 @@
           <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
             <End Role="actors" EntitySet="actors" />
             <End Role="videoactors" EntitySet="videoactors" />
-          </AssociationSet>
-          <AssociationSet Name="IdentityUserClaim_User" Association="Self.IdentityUserClaim_User">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="aspnetuserclaims" EntitySet="aspnetuserclaims" />
-          </AssociationSet>
-          <AssociationSet Name="IdentityUserLogin_User" Association="Self.IdentityUserLogin_User">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="aspnetuserlogins" EntitySet="aspnetuserlogins" />
           </AssociationSet>
           <AssociationSet Name="FkUserEpisodeHistory" Association="Self.FkUserEpisodeHistory">
             <End Role="aspnetusers" EntitySet="aspnetusers" />
@@ -1496,18 +1391,6 @@
             <End Role="videos" EntitySet="videos" />
             <End Role="manufacturer" EntitySet="manufacturers" />
           </AssociationSet>
-          <AssociationSet Name="fk_content_user" Association="Self.fk_content_user">
-            <End Role="movies" EntitySet="movies" />
-            <End Role="moviehistory" EntitySet="moviehistories" />
-          </AssociationSet>
-          <AssociationSet Name="fk_purchase_movie" Association="Self.fk_purchase_movie">
-            <End Role="movies" EntitySet="movies" />
-            <End Role="usermovies" EntitySet="usermovies" />
-          </AssociationSet>
-          <AssociationSet Name="fk1_content_video" Association="Self.fk1_content_video">
-            <End Role="videos" EntitySet="videos" />
-            <End Role="movies" EntitySet="movies" />
-          </AssociationSet>
           <AssociationSet Name="fk_video_overview" Association="Self.fk_video_overview">
             <End Role="videos" EntitySet="videos" />
             <End Role="overviews" EntitySet="overviews" />
@@ -1540,7 +1423,147 @@
             <End Role="aspnetroles" EntitySet="aspnetroles" />
             <End Role="aspnetusers" EntitySet="aspnetusers" />
           </AssociationSet>
+          <EntitySet Name="advertisers" EntityType="OnlineCinemaModel.advertiser" />
+          <EntitySet Name="banners" EntityType="OnlineCinemaModel.banner" />
+          <EntitySet Name="teasers" EntityType="OnlineCinemaModel.teaser" />
+          <AssociationSet Name="fk_adv_banner" Association="OnlineCinemaModel.fk_adv_banner">
+            <End Role="advertiser" EntitySet="advertisers" />
+            <End Role="banner" EntitySet="banners" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_teaser" Association="OnlineCinemaModel.fk_id_teaser">
+            <End Role="advertiser" EntitySet="advertisers" />
+            <End Role="teaser" EntitySet="teasers" />
+          </AssociationSet>
+          <EntitySet Name="movies" EntityType="OnlineCinemaModel.movy" />
+          <AssociationSet Name="fk_content_user" Association="OnlineCinemaModel.fk_content_user">
+            <End Role="movy" EntitySet="movies" />
+            <End Role="moviehistory" EntitySet="moviehistories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_purchase_movie" Association="OnlineCinemaModel.fk_purchase_movie">
+            <End Role="movy" EntitySet="movies" />
+            <End Role="usermovy" EntitySet="usermovies" />
+          </AssociationSet>
+          <AssociationSet Name="fk1_content_video" Association="OnlineCinemaModel.fk1_content_video">
+            <End Role="video" EntitySet="videos" />
+            <End Role="movy" EntitySet="movies" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="advertiser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="banners" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="advertiser" ToRole="banner" />
+          <NavigationProperty Name="teasers" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="advertiser" ToRole="teaser" />
+        </EntityType>
+        <EntityType Name="banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start" Type="DateTime" Nullable="false" />
+          <Property Name="end" Type="DateTime" Nullable="false" />
+          <Property Name="payment" Type="Double" Nullable="false" />
+          <Property Name="adv_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
+        </EntityType>
+        <EntityType Name="teaser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start" Type="DateTime" Nullable="false" />
+          <Property Name="end" Type="DateTime" Nullable="false" />
+          <Property Name="showAmount" Type="Int32" Nullable="false" />
+          <Property Name="payment" Type="Double" Nullable="false" />
+          <Property Name="adv_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="teaser" ToRole="advertiser" />
+        </EntityType>
+        <Association Name="fk_adv_banner">
+          <End Type="OnlineCinemaModel.advertiser" Role="advertiser" Multiplicity="1" />
+          <End Type="OnlineCinemaModel.banner" Role="banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advertiser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="banner">
+              <PropertyRef Name="adv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_teaser">
+          <End Type="OnlineCinemaModel.advertiser" Role="advertiser" Multiplicity="1" />
+          <End Type="OnlineCinemaModel.teaser" Role="teaser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advertiser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teaser">
+              <PropertyRef Name="adv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="movy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="creation_date" Type="DateTime" Nullable="false" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" />
+          <Property Name="quality" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="moviehistories" Relationship="OnlineCinemaModel.fk_content_user" FromRole="movy" ToRole="moviehistory" />
+          <NavigationProperty Name="usermovies" Relationship="OnlineCinemaModel.fk_purchase_movie" FromRole="movy" ToRole="usermovy" />
+          <NavigationProperty Name="video" Relationship="OnlineCinemaModel.fk1_content_video" FromRole="movy" ToRole="video" />
+        </EntityType>
+        <Association Name="fk_content_user">
+          <End Type="OnlineCinemaModel.movy" Role="movy" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="OnlineCinemaModel.moviehistory" Role="moviehistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="moviehistory">
+              <PropertyRef Name="content_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_purchase_movie">
+          <End Type="OnlineCinemaModel.movy" Role="movy" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.usermovy" Role="usermovy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usermovy">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1_content_video">
+          <End Type="OnlineCinemaModel.video" Role="video" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="OnlineCinemaModel.movy" Role="movy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="video">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="movy">
+              <PropertyRef Name="video_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1560,25 +1583,6 @@
               <MappingFragment StoreEntitySet="aspnetroles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="aspnetuserclaims">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetuserclaim">
-              <MappingFragment StoreEntitySet="aspnetuserclaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="aspnetuserlogins">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetuserlogin">
-              <MappingFragment StoreEntitySet="aspnetuserlogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1665,18 +1669,6 @@
                 <ScalarProperty Name="content_id" ColumnName="content_id" />
                 <ScalarProperty Name="watching_date" ColumnName="watching_date" />
                 <ScalarProperty Name="payment" ColumnName="payment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="movies">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.movy">
-              <MappingFragment StoreEntitySet="movies">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
-                <ScalarProperty Name="video_id" ColumnName="video_id" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="quality" ColumnName="quality" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1810,6 +1802,55 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="advertisers">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.advertiser">
+              <MappingFragment StoreEntitySet="advertiser">
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="banners">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
+              <MappingFragment StoreEntitySet="banners">
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="adv_id" ColumnName="adv_id" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teasers">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.teaser">
+              <MappingFragment StoreEntitySet="teaser">
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="adv_id" ColumnName="adv_id" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="showAmount" ColumnName="showAmount" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movies">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.movy">
+              <MappingFragment StoreEntitySet="movies">
+                <ScalarProperty Name="quality" ColumnName="quality" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -12,23 +12,20 @@ namespace OnlineCinemaProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class movy
+    public partial class advertiser
     {
-        public movy()
+        public advertiser()
         {
-            this.moviehistories = new HashSet<moviehistory>();
-            this.usermovies = new HashSet<usermovy>();
+            this.banners = new HashSet<banner>();
+            this.teasers = new HashSet<teaser>();
         }
     
         public int id { get; set; }
-        public string url { get; set; }
-        public System.DateTime creation_date { get; set; }
-        public int video_id { get; set; }
-        public decimal price { get; set; }
-        public int quality { get; set; }
+        public string name { get; set; }
+        public string email { get; set; }
+        public string phone_number { get; set; }
     
-        public virtual ICollection<moviehistory> moviehistories { get; set; }
-        public virtual ICollection<usermovy> usermovies { get; set; }
-        public virtual video video { get; set; }
+        public virtual ICollection<banner> banners { get; set; }
+        public virtual ICollection<teaser> teasers { get; set; }
     }
 }

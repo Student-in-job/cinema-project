@@ -47,7 +47,11 @@ namespace OnlineCinemaProject.Models
     public class RegisterViewModel
     {
         [Required]
+<<<<<<< HEAD
         [Display(Name = "Логин")]
+=======
+        [Display(Name = "Login")]
+>>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
         public string UserName { get; set; }
 
         [Required]
