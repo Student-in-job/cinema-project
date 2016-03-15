@@ -17,10 +17,10 @@ namespace OnlineCinemaProject.Models
         public int id { get; set; }
         public string user_id { get; set; }
         public int season_id { get; set; }
-        public decimal payment { get; set; }
-        public System.DateTime purchase_date { get; set; }
+        public int payment_id { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
         public virtual season season { get; set; }
+        public virtual payment payment { get; set; }
     }
 }

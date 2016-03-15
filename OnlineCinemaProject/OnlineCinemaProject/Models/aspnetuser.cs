@@ -19,11 +19,11 @@ namespace OnlineCinemaProject.Models
             this.likes = new HashSet<like>();
             this.moviehistories = new HashSet<moviehistory>();
             this.overviews = new HashSet<overview>();
-            this.usermovies = new HashSet<usermovy>();
-            this.payments = new HashSet<payment>();
-            this.userseasons = new HashSet<userseason>();
             this.aspnetroles = new HashSet<aspnetrole>();
             this.episodehistories = new HashSet<episodehistory>();
+            this.usermovies = new HashSet<usermovy>();
+            this.userseasons = new HashSet<userseason>();
+            this.payments = new HashSet<payment>();
         }
     
         public string Id { get; set; }
@@ -43,11 +43,11 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<moviehistory> moviehistories { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
-        public virtual ICollection<usermovy> usermovies { get; set; }
-        public virtual ICollection<payment> payments { get; set; }
-        public virtual ICollection<userseason> userseasons { get; set; }
-        public virtual subscription subscription { get; set; }
         public virtual ICollection<aspnetrole> aspnetroles { get; set; }
         public virtual ICollection<episodehistory> episodehistories { get; set; }
+        public virtual ICollection<usermovy> usermovies { get; set; }
+        public virtual ICollection<userseason> userseasons { get; set; }
+        public virtual subscription subscription { get; set; }
+        public virtual ICollection<payment> payments { get; set; }
     }
 }
