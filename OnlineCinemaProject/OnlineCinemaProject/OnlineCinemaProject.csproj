@@ -459,11 +459,9 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\TopUp.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-=======
     <Content Include="Views\Advertiser\Create.cshtml" />
     <Content Include="Views\Advertiser\Delete.cshtml" />
     <Content Include="Views\Advertiser\Details.cshtml" />
@@ -517,11 +515,8 @@
           <DevelopmentServerPort>16772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
-<<<<<<< HEAD
-=======
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://10.42.0.8:80/</IISAppRootUrl>
->>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
