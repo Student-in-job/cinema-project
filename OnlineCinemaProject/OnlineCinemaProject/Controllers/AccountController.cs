@@ -116,6 +116,9 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
+<<<<<<< HEAD
+                var user = new ApplicationUser() { UserName = model.UserName , FirstName = model.FirstName, LastName = model.LastName,/* BirthDay = model.BirthDay,*/ Email = model.Email};
+=======
                 var user = new ApplicationUser()
                 {
                     UserName = model.UserName,
@@ -126,6 +129,7 @@ namespace OnlineCinemaProject.Controllers
                     Gender = model.Gender,
                     Balance = 0*/
                 };
+>>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

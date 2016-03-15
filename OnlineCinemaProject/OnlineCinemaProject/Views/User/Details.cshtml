@@ -1,4 +1,4 @@
-﻿@model CinemaProject.Models.user
+﻿@model OnlineCinemaProject.Models.aspnetuser
 
 @{
     ViewBag.Title = "Details";
@@ -7,71 +7,95 @@
 <h2>Details</h2>
 
 <div>
-    <h4>user</h4>
+    <h4>aspnetuser</h4>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.firstname)
+            @Html.DisplayNameFor(model => model.UserName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.firstname)
+            @Html.DisplayFor(model => model.UserName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.secondname)
+            @Html.DisplayNameFor(model => model.PasswordHash)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.secondname)
+            @Html.DisplayFor(model => model.PasswordHash)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayNameFor(model => model.SecurityStamp)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.email)
+            @Html.DisplayFor(model => model.SecurityStamp)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.password)
+            @Html.DisplayNameFor(model => model.Discriminator)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.password)
+            @Html.DisplayFor(model => model.Discriminator)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.date_of_birth)
+            @Html.DisplayNameFor(model => model.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.date_of_birth)
+            @Html.DisplayFor(model => model.FirstName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.sex)
+            @Html.DisplayNameFor(model => model.LastName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.sex)
+            @Html.DisplayFor(model => model.LastName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.login)
+            @Html.DisplayNameFor(model => model.BirthDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.login)
+            @Html.DisplayFor(model => model.BirthDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.balance)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.balance)
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JoinDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Balance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Balance)
         </dd>
 
         <dt>
@@ -85,6 +109,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
