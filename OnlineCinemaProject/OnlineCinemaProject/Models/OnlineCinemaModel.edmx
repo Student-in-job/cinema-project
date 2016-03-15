@@ -80,7 +80,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="episode_id" Type="int" Nullable="false" />
           <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="watching_date" Type="varchar" MaxLength="45" />
+          <Property Name="watching_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="episodes">
           <Key>
@@ -810,7 +810,6 @@
           <Property Name="JoinDate" Type="DateTime" />
           <Property Name="Balance" Type="Decimal" />
           <Property Name="SubscriptionId" Type="Int32" />
-          <NavigationProperty Name="episodehistories" Relationship="Self.FkUserEpisodeHistory" FromRole="aspnetusers" ToRole="episodehistory" />
           <NavigationProperty Name="likes" Relationship="Self.FkUserLikes" FromRole="aspnetusers" ToRole="likes" />
           <NavigationProperty Name="moviehistories" Relationship="Self.FkUserMovies" FromRole="aspnetusers" ToRole="moviehistory" />
           <NavigationProperty Name="overviews" Relationship="Self.FkUserOverview" FromRole="aspnetusers" ToRole="overviews" />
@@ -819,6 +818,7 @@
           <NavigationProperty Name="userseasons" Relationship="Self.FkUserSeasons" FromRole="aspnetusers" ToRole="userseasons" />
           <NavigationProperty Name="subscription" Relationship="Self.FkUserSubscriptions" FromRole="aspnetusers" ToRole="subscriptions" />
           <NavigationProperty Name="aspnetroles" Relationship="Self.aspnetuserroles" FromRole="aspnetusers" ToRole="aspnetroles" />
+          <NavigationProperty Name="episodehistories" Relationship="OnlineCinemaModel.FkUserEpisodeHistory" FromRole="aspnetuser" ToRole="episodehistory" />
         </EntityType>
         <EntityType Name="country">
           <Key>
@@ -828,17 +828,6 @@
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="manufacturers" Relationship="Self.fk_country_video" FromRole="countries" ToRole="manufacturer" />
         </EntityType>
-        <EntityType Name="episodehistory">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="episode_id" Type="Int32" Nullable="false" />
-          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="watching_date" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="aspnetuser" Relationship="Self.FkUserEpisodeHistory" FromRole="episodehistory" ToRole="aspnetusers" />
-          <NavigationProperty Name="episode" Relationship="Self.fk_episde_user" FromRole="episodehistory" ToRole="episodes" />
-        </EntityType>
         <EntityType Name="episode">
           <Key>
             <PropertyRef Name="id" />
@@ -847,8 +836,8 @@
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="season_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="episodehistories" Relationship="Self.fk_episde_user" FromRole="episodes" ToRole="episodehistory" />
           <NavigationProperty Name="season" Relationship="Self.fk_season_episode" FromRole="episodes" ToRole="seasons" />
+          <NavigationProperty Name="episodehistories" Relationship="OnlineCinemaModel.fk_episde_user" FromRole="episode" ToRole="episodehistory" />
         </EntityType>
         <EntityType Name="genre">
           <Key>
@@ -1043,18 +1032,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FkUserEpisodeHistory">
-          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="1" />
-          <End Role="episodehistory" Type="Self.episodehistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="episodehistory">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FkUserLikes">
           <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="1" />
           <End Role="likes" Type="Self.like" Multiplicity="*" />
@@ -1150,18 +1127,6 @@
             </Principal>
             <Dependent Role="manufacturer">
               <PropertyRef Name="country_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_episde_user">
-          <End Role="episodes" Type="Self.episode" Multiplicity="1" />
-          <End Role="episodehistory" Type="Self.episodehistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="episodes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="episodehistory">
-              <PropertyRef Name="episode_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1314,7 +1279,6 @@
           <EntitySet Name="aspnetroles" EntityType="Self.aspnetrole" />
           <EntitySet Name="aspnetusers" EntityType="Self.aspnetuser" />
           <EntitySet Name="countries" EntityType="Self.country" />
-          <EntitySet Name="episodehistories" EntityType="Self.episodehistory" />
           <EntitySet Name="episodes" EntityType="Self.episode" />
           <EntitySet Name="genres" EntityType="Self.genre" />
           <EntitySet Name="likes" EntityType="Self.like" />
@@ -1334,10 +1298,6 @@
           <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
             <End Role="actors" EntitySet="actors" />
             <End Role="videoactors" EntitySet="videoactors" />
-          </AssociationSet>
-          <AssociationSet Name="FkUserEpisodeHistory" Association="Self.FkUserEpisodeHistory">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="episodehistory" EntitySet="episodehistories" />
           </AssociationSet>
           <AssociationSet Name="FkUserLikes" Association="Self.FkUserLikes">
             <End Role="aspnetusers" EntitySet="aspnetusers" />
@@ -1370,10 +1330,6 @@
           <AssociationSet Name="fk_country_video" Association="Self.fk_country_video">
             <End Role="countries" EntitySet="countries" />
             <End Role="manufacturer" EntitySet="manufacturers" />
-          </AssociationSet>
-          <AssociationSet Name="fk_episde_user" Association="Self.fk_episde_user">
-            <End Role="episodes" EntitySet="episodes" />
-            <End Role="episodehistory" EntitySet="episodehistories" />
           </AssociationSet>
           <AssociationSet Name="fk_season_episode" Association="Self.fk_season_episode">
             <End Role="seasons" EntitySet="seasons" />
@@ -1446,6 +1402,15 @@
           <AssociationSet Name="fk1_content_video" Association="OnlineCinemaModel.fk1_content_video">
             <End Role="video" EntitySet="videos" />
             <End Role="movy" EntitySet="movies" />
+          </AssociationSet>
+          <EntitySet Name="episodehistories" EntityType="OnlineCinemaModel.episodehistory" />
+          <AssociationSet Name="FkUserEpisodeHistory" Association="OnlineCinemaModel.FkUserEpisodeHistory">
+            <End Role="aspnetuser" EntitySet="aspnetusers" />
+            <End Role="episodehistory" EntitySet="episodehistories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_episde_user" Association="OnlineCinemaModel.fk_episde_user">
+            <End Role="episode" EntitySet="episodes" />
+            <End Role="episodehistory" EntitySet="episodehistories" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="advertiser">
@@ -1564,6 +1529,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="episodehistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="episode_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="watching_date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.FkUserEpisodeHistory" FromRole="episodehistory" ToRole="aspnetuser" />
+          <NavigationProperty Name="episode" Relationship="OnlineCinemaModel.fk_episde_user" FromRole="episodehistory" ToRole="episode" />
+        </EntityType>
+        <Association Name="FkUserEpisodeHistory">
+          <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="1" />
+          <End Type="OnlineCinemaModel.episodehistory" Role="episodehistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetuser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="episodehistory">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_episde_user">
+          <End Type="OnlineCinemaModel.episode" Role="episode" Multiplicity="1" />
+          <End Type="OnlineCinemaModel.episodehistory" Role="episodehistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="episode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="episodehistory">
+              <PropertyRef Name="episode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1610,16 +1610,6 @@
               <MappingFragment StoreEntitySet="countries">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="episodehistories">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.episodehistory">
-              <MappingFragment StoreEntitySet="episodehistory">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="episode_id" ColumnName="episode_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="watching_date" ColumnName="watching_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1847,6 +1837,16 @@
                 <ScalarProperty Name="video_id" ColumnName="video_id" />
                 <ScalarProperty Name="creation_date" ColumnName="creation_date" />
                 <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="episodehistories">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.episodehistory">
+              <MappingFragment StoreEntitySet="episodehistory">
+                <ScalarProperty Name="watching_date" ColumnName="watching_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="episode_id" ColumnName="episode_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

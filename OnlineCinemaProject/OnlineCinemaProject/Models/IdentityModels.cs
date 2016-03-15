@@ -1,11 +1,8 @@
 ﻿using System;
-<<<<<<< HEAD
 using System.Data.Entity;
 using System.Security.Claims;
-=======
 using System.Collections.Generic;
 using System.Data.Entity;
->>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,7 +21,7 @@ namespace OnlineCinemaProject.Models
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             return userIdentity;
-        }
+    }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -38,6 +35,6 @@ namespace OnlineCinemaProject.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
-        }
+    }
     }
 }
