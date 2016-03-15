@@ -28,42 +28,42 @@ namespace OnlineCinemaProject.Controllers
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        public ActionResult Index()
-        {
-            var users = db.aspnetusers;
-            return View(users.ToList());
-        }
-
-        public ActionResult TopUp(string id)
-        {
-            ViewBag.UserName = db.aspnetusers.Find(id).UserName;
-            return View((object)id);
-        }
-        [HttpPost]
-        public ActionResult TopUp(string id, Decimal amount)
-        {
-            aspnetuser user1 = db.aspnetusers.Find(id);
-            user1.Balance = (Decimal)(user1.Balance + amount);
-            if (ModelState.IsValid)
-            {
-                /*db.Entry(user1).State = EntityState.Modified;
-                db.SaveChanges();
-
-                payment payment = new payment
-                {
-                    user = user1,
-                    amount = (float)amount,
-                    name = "Пополнение баланса",
-                    payment_date = DateTime.Now
-                };
-
-                db.payments.Add(payment);
-                db.SaveChanges();*/
-
-                return RedirectToAction("Index");
-            }
-            return View(user1);
-        }
+//        public ActionResult Index()
+//        {
+//            var users = db.aspnetusers;
+//            return View(users.ToList());
+//        }
+//
+//        public ActionResult TopUp(string id)
+//        {
+//            ViewBag.UserName = db.aspnetusers.Find(id).UserName;
+//            return View((object)id);
+//        }
+//        [HttpPost]
+//        public ActionResult TopUp(string id, Decimal amount)
+//        {
+//            aspnetuser user1 = db.aspnetusers.Find(id);
+//            user1.Balance = (Decimal)(user1.Balance + amount);
+//            if (ModelState.IsValid)
+//            {
+//                /*db.Entry(user1).State = EntityState.Modified;
+//                db.SaveChanges();
+//
+//                payment payment = new payment
+//                {
+//                    user = user1,
+//                    amount = (float)amount,
+//                    name = "Пополнение баланса",
+//                    payment_date = DateTime.Now
+//                };
+//
+//                db.payments.Add(payment);
+//                db.SaveChanges();*/
+//
+//                return RedirectToAction("Index");
+//            }
+//            return View(user1);
+//        }
 
         //
         // GET: /Account/Login
@@ -116,20 +116,15 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-<<<<<<< HEAD
-                var user = new ApplicationUser() { UserName = model.UserName , FirstName = model.FirstName, LastName = model.LastName,/* BirthDay = model.BirthDay,*/ Email = model.Email};
-=======
                 var user = new ApplicationUser()
                 {
-                    UserName = model.UserName,
-                    /*FirstName = model.FirstName,
+                    UserName = model.UserName , 
+                    FirstName = model.FirstName, 
                     LastName = model.LastName,
-                    DateOfBirth = model.DateOfBirth,
-                    Email = model.Email,
-                    Gender = model.Gender,
-                    Balance = 0*/
+                    /* BirthDay = model.BirthDay,*/ 
+                    Email = model.Email
                 };
->>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

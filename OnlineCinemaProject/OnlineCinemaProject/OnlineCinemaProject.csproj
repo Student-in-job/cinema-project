@@ -218,7 +218,6 @@
     <Compile Include="Controllers\SubsciptionController.cs" />
     <Compile Include="Controllers\TariffController.cs" />
     <Compile Include="Controllers\TeaserController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
@@ -477,11 +476,6 @@
     <Content Include="Views\Teaser\Details.cshtml" />
     <Content Include="Views\Teaser\Edit.cshtml" />
     <Content Include="Views\Teaser\Index.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
