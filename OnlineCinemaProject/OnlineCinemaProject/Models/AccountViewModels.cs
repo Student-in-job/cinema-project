@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineCinemaProject.Models
 {
@@ -46,18 +47,41 @@ namespace OnlineCinemaProject.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+<<<<<<< HEAD
+        [Display(Name = "Логин")]
+=======
+        [Display(Name = "Login")]
+>>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
         public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Повторите пароль")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Дата рождения")]
+        public DateTime BirthDay { get; set; }
+
+        [Required]
+        [Display(Name = "Электронная почта")]
+        public string Email { get; set; }
+
+
+        
     }
 }

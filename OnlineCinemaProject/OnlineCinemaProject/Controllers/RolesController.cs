@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using OnlineCinemaProject.Models;
@@ -11,12 +9,12 @@ namespace OnlineCinemaProject.Controllers
     [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
-        public ApplicationDbContext context = new ApplicationDbContext();
+        public ApplicationDbContext Context = new ApplicationDbContext();
         //
         // GET: /Role/
         public ActionResult Index()
         {
-            var roles = context.Roles.ToList();
+            var roles = Context.Roles.ToList();
             return View(roles);
         }
 
@@ -33,11 +31,11 @@ namespace OnlineCinemaProject.Controllers
 
             try
             {
-                context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+                Context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
                 {
                     Name = collection["RoleName"]
                 });
-                context.SaveChanges();
+                Context.SaveChanges();
                 ViewBag.ResultMessage = "Role created successfully !";
                 return RedirectToAction("Index");
             }
@@ -47,17 +45,17 @@ namespace OnlineCinemaProject.Controllers
             }
         }
 
-        public ActionResult Delete(string RoleName)
+        public ActionResult Delete(string roleName)
         {
-            var thisRole = context.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            context.Roles.Remove(thisRole);
-            context.SaveChanges();
+            var thisRole = Context.Roles.FirstOrDefault(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
+            Context.Roles.Remove(thisRole);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(string roleName)
         {
-            var thisRole = context.Roles.Where(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            var thisRole = Context.Roles.FirstOrDefault(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
 
             return View(thisRole);
         }
@@ -70,8 +68,8 @@ namespace OnlineCinemaProject.Controllers
         {
             try
             {
-                context.Entry(role).State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
+                Context.Entry(role).State = System.Data.Entity.EntityState.Modified;
+                Context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -84,23 +82,23 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult ManageUserRoles()
         {
             // prepopulat roles for the view dropdown
-            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            var list = Context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RoleAddToUser(string UserName, string RoleName)
+        public ActionResult RoleAddToUser(string userName, string roleName)
         {
-            ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase));
+            ApplicationUser user = Context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
             var account = new AccountController();
-            account.UserManager.AddToRole(user.Id, RoleName);
+            if (user != null) account.UserManager.AddToRole(user.Id, roleName);
 
             ViewBag.ResultMessage = "Role created successfully !";
 
             // prepopulat roles for the view dropdown
-            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            var list = Context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
             return View("ManageUserRoles");
@@ -108,17 +106,17 @@ namespace OnlineCinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetRoles(string UserName)
+        public ActionResult GetRoles(string userName)
         {
-            if (!string.IsNullOrWhiteSpace(UserName))
+            if (!string.IsNullOrWhiteSpace(userName))
             {
-                ApplicationUser user = context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                ApplicationUser user = Context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
                 var account = new AccountController();
 
-                ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id);
+                if (user != null) ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id);
 
                 // prepopulat roles for the view dropdown
-                var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                var list = Context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
                 ViewBag.Roles = list;
             }
 
@@ -127,14 +125,14 @@ namespace OnlineCinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteRoleForUser(string UserName, string RoleName)
+        public ActionResult DeleteRoleForUser(string userName, string roleName)
         {
             var account = new AccountController();
-            ApplicationUser user = context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            ApplicationUser user = Context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
 
-            if (account.UserManager.IsInRole(user.Id, RoleName))
+            if (user != null && account.UserManager.IsInRole(user.Id, roleName))
             {
-                account.UserManager.RemoveFromRole(user.Id, RoleName);
+                account.UserManager.RemoveFromRole(user.Id, roleName);
                 ViewBag.ResultMessage = "Role removed from this user successfully !";
             }
             else
@@ -142,7 +140,7 @@ namespace OnlineCinemaProject.Controllers
                 ViewBag.ResultMessage = "This user doesn't belong to selected role.";
             }
             // prepopulat roles for the view dropdown
-            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            var list = Context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
             return View("ManageUserRoles");

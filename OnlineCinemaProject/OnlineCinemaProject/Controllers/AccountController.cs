@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -36,32 +34,31 @@ namespace OnlineCinemaProject.Controllers
             return View(users.ToList());
         }
 
-        [HttpGet]
         public ActionResult TopUp(string id)
         {
             ViewBag.UserName = db.aspnetusers.Find(id).UserName;
-            return View(id);
+            return View((object)id);
         }
         [HttpPost]
-        public ActionResult TopUp(string id, Decimal Amount)
+        public ActionResult TopUp(string id, Decimal amount)
         {
             aspnetuser user1 = db.aspnetusers.Find(id);
-            user1.Balance = (Decimal)(user1.Balance + Amount);
+            user1.Balance = (Decimal)(user1.Balance + amount);
             if (ModelState.IsValid)
             {
-                db.Entry(user1).State = EntityState.Modified;
+                /*db.Entry(user1).State = EntityState.Modified;
                 db.SaveChanges();
 
                 payment payment = new payment
                 {
-                    aspnetuser = user1,
-                    amount = (float)Amount,
+                    user = user1,
+                    amount = (float)amount,
                     name = "Пополнение баланса",
                     payment_date = DateTime.Now
                 };
 
                 db.payments.Add(payment);
-                db.SaveChanges();
+                db.SaveChanges();*/
 
                 return RedirectToAction("Index");
             }
@@ -119,7 +116,20 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
+<<<<<<< HEAD
+                var user = new ApplicationUser() { UserName = model.UserName , FirstName = model.FirstName, LastName = model.LastName,/* BirthDay = model.BirthDay,*/ Email = model.Email};
+=======
+                var user = new ApplicationUser()
+                {
+                    UserName = model.UserName,
+                    /*FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    DateOfBirth = model.DateOfBirth,
+                    Email = model.Email,
+                    Gender = model.Gender,
+                    Balance = 0*/
+                };
+>>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -143,16 +153,8 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
-            ManageMessageId? message = null;
             IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-            if (result.Succeeded)
-            {
-                message = ManageMessageId.RemoveLoginSuccess;
-            }
-            else
-            {
-                message = ManageMessageId.Error;
-            }
+            ManageMessageId? message = result.Succeeded ? ManageMessageId.RemoveLoginSuccess : ManageMessageId.Error;
             return RedirectToAction("Manage", new { Message = message });
         }
 
@@ -348,7 +350,7 @@ namespace OnlineCinemaProject.Controllers
         {
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
-            return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
+            return PartialView("_RemoveAccountPartial", linkedAccounts);
         }
 
         protected override void Dispose(bool disposing)

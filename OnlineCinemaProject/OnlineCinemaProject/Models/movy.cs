@@ -24,7 +24,7 @@ namespace OnlineCinemaProject.Models
         public string url { get; set; }
         public System.DateTime creation_date { get; set; }
         public int video_id { get; set; }
-        public float price { get; set; }
+        public decimal price { get; set; }
         public int quality { get; set; }
     
         public virtual ICollection<moviehistory> moviehistories { get; set; }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineCinemaProject.Models.aspnetuser>
+﻿@model IEnumerable<OnlineCinemaProject.Models.user>
 
 @{
     ViewBag.Title = "Index";
@@ -20,9 +20,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
+<<<<<<< HEAD
+        @*<th>
             @Html.DisplayNameFor(model => model.BirthDate)
+        </th>*@
+=======
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
         </th>
+>>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
         <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
@@ -43,9 +49,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-        <td>
+<<<<<<< HEAD
+        @*<td>
             @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>*@
+=======
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfBirth)
         </td>
+>>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
@@ -53,10 +65,10 @@
             @Html.DisplayFor(modelItem => item.Balance)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id }) |
-            @Html.ActionLink("TopUp", "TopUp", new { id=item.id }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.id }) |*@
+            @Html.ActionLink("TopUp", "TopUp", new { id=item.Id }) 
         </td>
     </tr>
 }

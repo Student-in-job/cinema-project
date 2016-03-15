@@ -153,6 +153,7 @@
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="adverticement_enabled" Type="bool" Nullable="false" />
           <Property Name="new_films_enabled" Type="bool" Nullable="false" />
+          <Property Name="enabled" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="trailers">
           <Key>
@@ -853,6 +854,7 @@
           <Property Name="adverticement_enabled" Type="Boolean" Nullable="false" />
           <Property Name="new_films_enabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="subscriptions" Relationship="Self.fk_tariff_user" FromRole="tariffs" ToRole="subscriptions" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="trailer">
           <Key>
@@ -1576,6 +1578,7 @@
           <EntitySetMapping Name="tariffs">
             <EntityTypeMapping TypeName="onlinecinemaModel.tariff">
               <MappingFragment StoreEntitySet="tariffs">
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
