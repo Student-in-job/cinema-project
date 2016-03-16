@@ -23,9 +23,11 @@ namespace OnlineCinemaProject.Models
         public int tariff_id { get; set; }
         public System.DateTime start { get; set; }
         public System.DateTime end { get; set; }
-        public decimal payment { get; set; }
+        public int payment_id { get; set; }
+        public bool enabled { get; set; }
     
         public virtual ICollection<aspnetuser> aspnetusers { get; set; }
         public virtual tariff tariff { get; set; }
+        public virtual payment payment { get; set; }
     }
 }

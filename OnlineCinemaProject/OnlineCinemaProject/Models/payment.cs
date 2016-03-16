@@ -14,12 +14,23 @@ namespace OnlineCinemaProject.Models
     
     public partial class payment
     {
+        public payment()
+        {
+            this.usermovies = new HashSet<usermovy>();
+            this.subscriptions = new HashSet<subscription>();
+            this.userseasons = new HashSet<userseason>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public System.DateTime payment_date { get; set; }
-        public float amount { get; set; }
+        public decimal amount { get; set; }
         public string user_id { get; set; }
+        public bool payment1 { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
+        public virtual ICollection<usermovy> usermovies { get; set; }
+        public virtual ICollection<subscription> subscriptions { get; set; }
+        public virtual ICollection<userseason> userseasons { get; set; }
     }
 }

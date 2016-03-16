@@ -28,7 +28,7 @@ namespace OnlineCinemaProject.Models
         public int quality { get; set; }
     
         public virtual ICollection<moviehistory> moviehistories { get; set; }
-        public virtual ICollection<usermovy> usermovies { get; set; }
         public virtual video video { get; set; }
+        public virtual ICollection<usermovy> usermovies { get; set; }
     }
 }
