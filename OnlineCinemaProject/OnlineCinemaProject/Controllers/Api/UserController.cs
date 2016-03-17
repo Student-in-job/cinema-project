@@ -246,7 +246,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
         }
         [HttpGet]
-        [Route("api/movie/buySeason/{movieId}/{userId}")]
+        [Route("api/movie/buySeason/{seasonId}/{userId}")]
         public IHttpActionResult BuySeason(int seasonId, string userId)
         {
             var season = _db.seasons.Find(seasonId);
