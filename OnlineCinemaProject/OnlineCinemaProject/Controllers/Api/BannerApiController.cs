@@ -26,7 +26,7 @@ namespace OnlineCinemaProject.Controllers.Api
     */
     public class BannerApiController : ApiController
     {
-        private OnlineCinemaEntities db = new OnlineCinemaEntities();
+        /*private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
         // GET odata/BannerApi
         [Queryable]
@@ -174,6 +174,6 @@ namespace OnlineCinemaProject.Controllers.Api
         private bool bannerExists(int key)
         {
             return db.banners.Count(e => e.id == key) > 0;
-        }
+        }*/
     }
 }
