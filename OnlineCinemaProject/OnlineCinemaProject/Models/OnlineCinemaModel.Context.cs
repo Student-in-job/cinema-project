@@ -35,13 +35,9 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<manufacturer> manufacturers { get; set; }
         public virtual DbSet<moviehistory> moviehistories { get; set; }
         public virtual DbSet<overview> overviews { get; set; }
-        public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<season> seasons { get; set; }
-        public virtual DbSet<subscription> subscriptions { get; set; }
         public virtual DbSet<tariff> tariffs { get; set; }
         public virtual DbSet<trailer> trailers { get; set; }
-        public virtual DbSet<usermovy> usermovies { get; set; }
-        public virtual DbSet<userseason> userseasons { get; set; }
         public virtual DbSet<videoactor> videoactors { get; set; }
         public virtual DbSet<videogenre> videogenres { get; set; }
         public virtual DbSet<video> videos { get; set; }
@@ -50,5 +46,9 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<teaser> teasers { get; set; }
         public virtual DbSet<movy> movies { get; set; }
         public virtual DbSet<episodehistory> episodehistories { get; set; }
+        public virtual DbSet<subscription> subscriptions { get; set; }
+        public virtual DbSet<usermovy> usermovies { get; set; }
+        public virtual DbSet<userseason> userseasons { get; set; }
+        public virtual DbSet<payment> payments { get; set; }
     }
 }

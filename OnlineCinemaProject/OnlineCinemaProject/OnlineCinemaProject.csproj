@@ -203,7 +203,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
+    <Compile Include="Controllers\Api\BannerApiController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
+    <Compile Include="Controllers\Api\TariffController.cs" />
+    <Compile Include="Controllers\Api\TiserApiController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -218,7 +221,6 @@
     <Compile Include="Controllers\SubsciptionController.cs" />
     <Compile Include="Controllers\TariffController.cs" />
     <Compile Include="Controllers\TeaserController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
@@ -459,11 +461,9 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\TopUp.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-=======
     <Content Include="Views\Advertiser\Create.cshtml" />
     <Content Include="Views\Advertiser\Delete.cshtml" />
     <Content Include="Views\Advertiser\Details.cshtml" />
@@ -479,11 +479,6 @@
     <Content Include="Views\Teaser\Details.cshtml" />
     <Content Include="Views\Teaser\Edit.cshtml" />
     <Content Include="Views\Teaser\Index.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -517,11 +512,8 @@
           <DevelopmentServerPort>16772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
-<<<<<<< HEAD
-=======
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://10.42.0.8:80/</IISAppRootUrl>
->>>>>>> 30c5cc87b3a8b124ad29ee923ca7c917d3abb978
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
