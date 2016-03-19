@@ -30,6 +30,8 @@ namespace OnlineCinemaProject
             builder.EntitySet<videoactor>("videoactor");
             builder.EntitySet<videogenre>("videogenre");
             builder.EntitySet<movy>("movy");
+            builder.EntitySet<moviehistory>("moviehistory");
+            builder.EntitySet<usermovy>("usermovy");
             config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
         }
     }
