@@ -203,10 +203,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
-    <Compile Include="Controllers\Api\BannerApiController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
     <Compile Include="Controllers\Api\TariffController.cs" />
-    <Compile Include="Controllers\Api\TiserApiController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -355,6 +353,7 @@
       <DependentUpon>OnlineCinemaModel.edmx</DependentUpon>
       <LastGenOutput>OnlineCinemaModel.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\ivan.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -513,7 +512,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://10.42.0.8:80/</IISAppRootUrl>
+          <IISAppRootUrl>http://0.0.0.0:80</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
