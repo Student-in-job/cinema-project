@@ -17,21 +17,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Онлайн Кинотеатр", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Genres", "Index", "Genre")</li>
-                    <li>@Html.ActionLink("Actors", "Index", "Actor")</li>
-                    <li>@Html.ActionLink("Countrie", "Index", "Country")</li>
-                    <li>@Html.ActionLink("Tariffs", "Index", "Tariff")</li>
-                    <li>@Html.ActionLink("Videos", "Index", "Video")</li>
-                    <li>@Html.ActionLink("Advertiser", "Index", "Advertiser")</li>
-                    <li>@Html.ActionLink("Banner", "Index", "Banner")</li>
-                    <li>@Html.ActionLink("Teaser", "Index", "Teaser")</li>
+                    @*<li>@Html.ActionLink("Домашняя", "Index", "Home")</li>*@
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("Жанры", "Index", "Genre")</li>
+                    <li>@Html.ActionLink("Актеры", "Index", "Actor")</li>
+                    <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
+                    <li>@Html.ActionLink("Роли", "Index", "Roles")</li>
+                    <li>@Html.ActionLink("Страны", "Index", "Country")</li>
+                    <li>@Html.ActionLink("Тарифы", "Index", "Tariff")</li>
+                    <li>@Html.ActionLink("Видео", "Index", "Video")</li>
+                    <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
+                    <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
+                    <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
