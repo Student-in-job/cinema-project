@@ -21,20 +21,37 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("Домашняя", "Index", "Home")</li>
+                        <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
+                        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+                    }
                     
-                    @*<li>@Html.ActionLink("Домашняя", "Index", "Home")</li>*@
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Жанры", "Index", "Genre")</li>
-                    <li>@Html.ActionLink("Актеры", "Index", "Actor")</li>
-                    <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
-                    <li>@Html.ActionLink("Роли", "Index", "Roles")</li>
-                    <li>@Html.ActionLink("Страны", "Index", "Country")</li>
-                    <li>@Html.ActionLink("Тарифы", "Index", "Tariff")</li>
-                    <li>@Html.ActionLink("Видео", "Index", "Video")</li>
-                    <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
-                    <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
-                    <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
+                    
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Роли", "Index", "Roles")</li>
+                        <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
+                    }
+                    @if (User.IsInRole("ContentManager"))
+                    {
+                        <li>@Html.ActionLink("Видео", "Index", "Video")</li>
+                        <li>@Html.ActionLink("Жанры", "Index", "Genre")</li>
+                        <li>@Html.ActionLink("Актеры", "Index", "Actor")</li>
+                        <li>@Html.ActionLink("Страны", "Index", "Country")</li>
+                    }
+                    @if (User.IsInRole("PRManager"))
+                    {
+                        <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
+                        <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
+                        <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
+                    }
+                    @if (User.IsInRole("BilingManager"))
+                    {
+                        <li>@Html.ActionLink("Тарифы", "Index", "Tariff")</li>
+                    }
+                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
