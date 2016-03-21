@@ -14,15 +14,7 @@
         <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discriminator)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
@@ -44,9 +36,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Balance)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.subscription.id)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -55,15 +45,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PasswordHash)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SecurityStamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discriminator)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>
@@ -85,9 +67,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Balance)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.subscription.id)
-        </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

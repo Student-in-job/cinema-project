@@ -10,6 +10,7 @@ using PagedList;
 
 namespace OnlineCinemaProject.Controllers
 {
+    [Authorize(Roles = "ContentManager")]
     public class genreController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();

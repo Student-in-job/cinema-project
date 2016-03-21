@@ -9,6 +9,7 @@ using PagedList;
 
 namespace OnlineCinemaProject.Controllers
 {
+    [Authorize(Roles = "PRManager ")]
     public class AdvertiserController : Controller
     {
         private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();

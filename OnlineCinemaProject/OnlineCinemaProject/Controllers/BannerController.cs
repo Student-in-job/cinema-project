@@ -11,6 +11,7 @@ using PagedList;
 
 namespace CinemaProject.Controllers
 {
+    [Authorize(Roles = "PRManager ")]
     public class BannerController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
