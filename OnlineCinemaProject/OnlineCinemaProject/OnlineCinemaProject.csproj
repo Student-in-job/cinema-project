@@ -478,6 +478,8 @@
     <Content Include="Views\Teaser\Details.cshtml" />
     <Content Include="Views\Teaser\Edit.cshtml" />
     <Content Include="Views\Teaser\Index.cshtml" />
+    <Content Include="Views\Shared\MoviePartial.cshtml" />
+    <Content Include="Views\Shared\SeriesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
