@@ -353,7 +353,6 @@
       <DependentUpon>OnlineCinemaModel.edmx</DependentUpon>
       <LastGenOutput>OnlineCinemaModel.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\ivan.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -478,8 +477,6 @@
     <Content Include="Views\Teaser\Details.cshtml" />
     <Content Include="Views\Teaser\Edit.cshtml" />
     <Content Include="Views\Teaser\Index.cshtml" />
-    <Content Include="Views\Shared\MoviePartial.cshtml" />
-    <Content Include="Views\Shared\SeriesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -514,7 +511,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://0.0.0.0:80</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:80</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
