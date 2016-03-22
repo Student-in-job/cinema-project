@@ -44,7 +44,7 @@ namespace OnlineCinemaProject.Controllers
                 if (user != null)
                 {
                     // SignInAsync(user, model.RememberMe);
-                    return "{hello}";
+                    return User.Identity.GetUserId();
                 }
             }
 

@@ -11,6 +11,7 @@ using OnlineCinemaProject.Models.ViewModels;
 
 namespace OnlineCinemaProject.Controllers
 {
+    [Authorize(Roles = "ContentManager")]
     public class VideoController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();

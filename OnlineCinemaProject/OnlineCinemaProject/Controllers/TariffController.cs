@@ -10,6 +10,7 @@ using PagedList;
 
 namespace OnlineCinemaProject.Controllers
 {
+    [Authorize(Roles = "BilingManager")]
     public class tariffController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();

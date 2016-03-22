@@ -15,6 +15,7 @@ namespace OnlineCinemaProject.Controllers
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
         // GET: /User/
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var aspnetusers = db.aspnetusers.Include(a => a.subscription);
