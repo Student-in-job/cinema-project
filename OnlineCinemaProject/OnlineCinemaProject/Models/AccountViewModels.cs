@@ -83,6 +83,8 @@ namespace OnlineCinemaProject.Models
         [Display(Name = "Ваш пол")]
         public int Sex { get; set; }
 
+        
+
 
         
     }

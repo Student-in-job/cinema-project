@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    
 }
 
 <h2>Index</h2>
@@ -36,6 +37,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Balance)
         </th>
+        
        
         <th></th>
     </tr>
@@ -67,6 +69,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Balance)
         </td>
+       
         
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
