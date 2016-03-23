@@ -14,8 +14,10 @@ namespace OnlineCinemaProject.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-       // public DateTime BirthDay { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Email { get; set; }
+        public int Sex { get; set; }
+        public int Balance { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
