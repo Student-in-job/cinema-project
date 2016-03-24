@@ -7,6 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace OnlineCinemaProject.Models
 {
     using System;

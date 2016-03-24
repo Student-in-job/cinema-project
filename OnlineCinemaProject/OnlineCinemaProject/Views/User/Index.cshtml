@@ -1,41 +1,43 @@
 ﻿@model IEnumerable<OnlineCinemaProject.Models.aspnetuser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Список пользователей";
+    
 }
 
-<h2>Index</h2>
+<h2>Список пользователей</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать нового", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayName("Логин")
         </th>
         
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayName("Имя")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayName("Фамилия")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
+            @Html.DisplayName("Дата рождения")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayName("Элетронная почта")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sex)
+            @Html.DisplayName("Пол")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.JoinDate)
+            @Html.DisplayName("Дата регистрации")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Balance)
+            @Html.DisplayName("Баланс")
         </th>
+        
        
         <th></th>
     </tr>
@@ -67,11 +69,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Balance)
         </td>
+       
         
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Просмотреть", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

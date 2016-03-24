@@ -19,7 +19,11 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Index()
         {
             var aspnetusers = db.aspnetusers.Include(a => a.subscription);
+            var aspnetroles = db.aspnetroles.ToList();
+            
+            
             return View(aspnetusers.ToList());
+            
         }
 
         // GET: /User/Details/5

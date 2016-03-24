@@ -6,7 +6,7 @@ namespace OnlineCinemaProject.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
     }
 
@@ -74,7 +74,7 @@ namespace OnlineCinemaProject.Models
         public DateTime BirthDate { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Вы неправильно ввели E-mail адрес")]
+        [EmailAddress(ErrorMessage = "Вы неправильно ввели E-mail адрес")]
         [Display(Name = "Электронная почта")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Email { get; set; }
@@ -82,6 +82,8 @@ namespace OnlineCinemaProject.Models
         [Required]
         [Display(Name = "Ваш пол")]
         public int Sex { get; set; }
+
+        
 
 
         
