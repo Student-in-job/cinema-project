@@ -292,6 +292,9 @@
     <Compile Include="Models\season.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\statistics_banner.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\subscription.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -478,6 +481,10 @@
     <Content Include="Views\Teaser\Details.cshtml" />
     <Content Include="Views\Teaser\Edit.cshtml" />
     <Content Include="Views\Teaser\Index.cshtml" />
+    <Content Include="Views\Banner\Rotator.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\genre.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

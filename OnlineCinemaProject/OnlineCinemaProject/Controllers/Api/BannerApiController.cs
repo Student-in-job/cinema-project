@@ -26,7 +26,7 @@ namespace OnlineCinemaProject.Controllers.Api
     */
     public class BannerApiController : ApiController
     {
-        /*private OnlineCinemaEntities db = new OnlineCinemaEntities();
+        private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
         // GET odata/BannerApi
         [Queryable]
@@ -39,7 +39,7 @@ namespace OnlineCinemaProject.Controllers.Api
             }
 
             string query = "SELECT * FROM userbanners WHERE token = @p0 and is_shown = 0 limit 10";
-            
+
             var banners = await db.banners.SqlQuery(query, token).SingleOrDefaultAsync();
             if (banners == null)
             {
@@ -90,7 +90,7 @@ namespace OnlineCinemaProject.Controllers.Api
             return Updated(banner);
         }
 
-        // POST odata/BannerApi
+         //POST odata/BannerApi
         public IHttpActionResult Post(banner banner)
         {
             if (!ModelState.IsValid)
@@ -104,7 +104,7 @@ namespace OnlineCinemaProject.Controllers.Api
             return Created(banner);
         }
 
-        // PATCH odata/BannerApi(5)
+       //  PATCH odata/BannerApi(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public IHttpActionResult Patch([FromODataUri] int key, Delta<banner> patch)
         {
@@ -155,7 +155,7 @@ namespace OnlineCinemaProject.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET odata/BannerApi(5)/advertiser
+         //GET odata/BannerApi(5)/advertiser
         [Queryable]
         public SingleResult<advertiser> Getadvertiser([FromODataUri] int key)
         {
@@ -174,6 +174,6 @@ namespace OnlineCinemaProject.Controllers.Api
         private bool bannerExists(int key)
         {
             return db.banners.Count(e => e.id == key) > 0;
-        }*/
+        }
     }
 }

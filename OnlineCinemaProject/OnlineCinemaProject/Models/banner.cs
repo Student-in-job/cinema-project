@@ -14,6 +14,11 @@ namespace OnlineCinemaProject.Models
     
     public partial class banner
     {
+        public banner()
+        {
+            this.statistics_banner = new HashSet<statistics_banner>();
+        }
+    
         public int id { get; set; }
         public System.DateTime start { get; set; }
         public System.DateTime end { get; set; }
@@ -23,5 +28,6 @@ namespace OnlineCinemaProject.Models
         public string img_url { get; set; }
     
         public virtual advertiser advertiser { get; set; }
+        public virtual ICollection<statistics_banner> statistics_banner { get; set; }
     }
 }

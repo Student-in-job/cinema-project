@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="39674be097d74315a196461283ae4737" Name="Diagram1">
+      <Diagram DiagramId="39674be097d74315a196461283ae4737" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="OnlineCinemaModel.actor" Width="1.5" PointX="9" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetrole" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetrole" Width="1.5" PointX="1.875" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="4.625" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineCinemaModel.country" Width="1.5" PointX="9" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineCinemaModel.episode" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineCinemaModel.genre" Width="1.5" PointX="11" PointY="21.5" IsExpanded="true" />
@@ -36,9 +36,9 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_video_actor" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_genre" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.advertiser" Width="1.5" PointX="0.75" PointY="3.125" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.banner" Width="1.5" PointX="3" PointY="1.125" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.teaser" Width="1.5" PointX="3" PointY="4.375" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.advertiser" Width="1.5" PointX="0.5" PointY="3.25" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.banner" Width="1.5" PointX="2.5" PointY="3.25" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.teaser" Width="1.5" PointX="0.5" PointY="6" />
         <AssociationConnector Association="OnlineCinemaModel.fk_adv_banner" />
         <AssociationConnector Association="OnlineCinemaModel.fk_id_teaser" />
         <EntityTypeShape EntityType="OnlineCinemaModel.movy" Width="1.5" PointX="8.25" PointY="3.875" />
@@ -61,6 +61,9 @@
         <AssociationConnector Association="OnlineCinemaModel.FkMoviePayment" />
         <AssociationConnector Association="OnlineCinemaModel.FkPaymentSubscription" />
         <AssociationConnector Association="OnlineCinemaModel.FkSeasonPayment" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.statistics_banner" Width="1.5" PointX="3.75" PointY="0.625" />
+        <AssociationConnector Association="OnlineCinemaModel.id_user" />
+        <AssociationConnector Association="OnlineCinemaModel.id_banner" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,6 +24,7 @@ namespace OnlineCinemaProject.Models
             this.usermovies = new HashSet<usermovy>();
             this.userseasons = new HashSet<userseason>();
             this.payments = new HashSet<payment>();
+            this.statistics_banner = new HashSet<statistics_banner>();
         }
     
         public string Id { get; set; }
@@ -49,5 +50,6 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<userseason> userseasons { get; set; }
         public virtual subscription subscription { get; set; }
         public virtual ICollection<payment> payments { get; set; }
+        public virtual ICollection<statistics_banner> statistics_banner { get; set; }
     }
 }

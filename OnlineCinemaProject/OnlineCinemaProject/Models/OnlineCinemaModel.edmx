@@ -80,7 +80,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="episode_id" Type="int" Nullable="false" />
           <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="watching_date" Type="date" Nullable="false" />
+          <Property Name="watching_date" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="episodes">
           <Key>
@@ -134,7 +134,7 @@
           <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="creation_date" Type="date" Nullable="false" />
           <Property Name="video_id" Type="int" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
           <Property Name="quality" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="overviews">
@@ -155,9 +155,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="payment_date" Type="date" Nullable="false" />
-          <Property Name="amount" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="payment" Type="bool" />
         </EntityType>
         <EntityType Name="seasons">
           <Key>
@@ -169,6 +168,16 @@
           <Property Name="release_date" Type="date" />
           <Property Name="video_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="statistics_banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="show_amount" Type="int" />
+          <Property Name="id_banner" Type="int" />
+          <Property Name="id_user" Type="varchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="subscriptions">
           <Key>
             <PropertyRef Name="id" />
@@ -177,8 +186,7 @@
           <Property Name="tariff_id" Type="int" Nullable="false" />
           <Property Name="start" Type="date" Nullable="false" />
           <Property Name="end" Type="date" Nullable="false" />
-          <Property Name="payment_id" Type="int" Nullable="false" />
-          <Property Name="enabled" Type="bool" Nullable="false" />
+          <Property Name="payment" Type="double" Nullable="false" />
         </EntityType>
         <EntityType Name="tariffs">
           <Key>
@@ -220,8 +228,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="movie_id" Type="int" Nullable="false" />
-          <Property Name="payment_id" Type="int" Nullable="false" />
+          <Property Name="movie_id" Type="int" />
+          <Property Name="payment" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="purchase_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="userseasons">
           <Key>
@@ -230,7 +239,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="season_id" Type="int" Nullable="false" />
-          <Property Name="payment_id" Type="int" Nullable="false" />
+          <Property Name="payment" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="purchase_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="videoactors">
           <Key>
@@ -366,7 +376,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_purchase_movie">
-          <End Role="movies" Type="Self.movies" Multiplicity="1" />
+          <End Role="movies" Type="Self.movies" Multiplicity="0..1" />
           <End Role="usermovies" Type="Self.usermovies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="movies">
@@ -505,42 +515,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FkMoviePayment">
-          <End Role="payments" Type="Self.payments" Multiplicity="1" />
-          <End Role="usermovies" Type="Self.usermovies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="payments">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="usermovies">
-              <PropertyRef Name="payment_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FkPaymentSubscription">
-          <End Role="payments" Type="Self.payments" Multiplicity="1" />
-          <End Role="subscriptions" Type="Self.subscriptions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="payments">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="subscriptions">
-              <PropertyRef Name="payment_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FkSeasonPayment">
-          <End Role="payments" Type="Self.payments" Multiplicity="1" />
-          <End Role="userseasons" Type="Self.userseasons" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="payments">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="userseasons">
-              <PropertyRef Name="payment_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FkUserEpisodeHistory">
           <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
           <End Role="episodehistory" Type="Self.episodehistory" Multiplicity="*" />
@@ -637,6 +611,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="id_banner">
+          <End Role="banners" Type="Self.banners" Multiplicity="0..1" />
+          <End Role="statistics_banner" Type="Self.statistics_banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="banners">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="statistics_banner">
+              <PropertyRef Name="id_banner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_user">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="0..1" />
+          <End Role="statistics_banner" Type="Self.statistics_banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="statistics_banner">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="IdentityUserRole_Role">
           <End Role="aspnetroles" Type="Self.aspnetroles" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -683,6 +681,7 @@
           <EntitySet Name="overviews" EntityType="Self.overviews" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="payments" EntityType="Self.payments" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="seasons" EntityType="Self.seasons" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="statistics_banner" EntityType="Self.statistics_banner" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="subscriptions" EntityType="Self.subscriptions" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="tariffs" EntityType="Self.tariffs" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="teaser" EntityType="Self.teaser" Schema="onlinecinema" store:Type="Tables" />
@@ -768,18 +767,6 @@
             <End Role="videos" EntitySet="videos" />
             <End Role="movies" EntitySet="movies" />
           </AssociationSet>
-          <AssociationSet Name="FkMoviePayment" Association="Self.FkMoviePayment">
-            <End Role="payments" EntitySet="payments" />
-            <End Role="usermovies" EntitySet="usermovies" />
-          </AssociationSet>
-          <AssociationSet Name="FkPaymentSubscription" Association="Self.FkPaymentSubscription">
-            <End Role="payments" EntitySet="payments" />
-            <End Role="subscriptions" EntitySet="subscriptions" />
-          </AssociationSet>
-          <AssociationSet Name="FkSeasonPayment" Association="Self.FkSeasonPayment">
-            <End Role="payments" EntitySet="payments" />
-            <End Role="userseasons" EntitySet="userseasons" />
-          </AssociationSet>
           <AssociationSet Name="FkUserEpisodeHistory" Association="Self.FkUserEpisodeHistory">
             <End Role="aspnetusers" EntitySet="aspnetusers" />
             <End Role="episodehistory" EntitySet="episodehistory" />
@@ -811,6 +798,14 @@
           <AssociationSet Name="FkUserSubscriptions" Association="Self.FkUserSubscriptions">
             <End Role="subscriptions" EntitySet="subscriptions" />
             <End Role="aspnetusers" EntitySet="aspnetusers" />
+          </AssociationSet>
+          <AssociationSet Name="id_banner" Association="Self.id_banner">
+            <End Role="banners" EntitySet="banners" />
+            <End Role="statistics_banner" EntitySet="statistics_banner" />
+          </AssociationSet>
+          <AssociationSet Name="id_user" Association="Self.id_user">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="statistics_banner" EntitySet="statistics_banner" />
           </AssociationSet>
           <AssociationSet Name="IdentityUserRole_Role" Association="Self.IdentityUserRole_Role">
             <End Role="aspnetroles" EntitySet="aspnetroles" />
@@ -867,6 +862,7 @@
           <NavigationProperty Name="userseasons" Relationship="OnlineCinemaModel.FkUserSeasons" FromRole="aspnetuser" ToRole="userseason" />
           <NavigationProperty Name="subscription" Relationship="OnlineCinemaModel.FkUserSubscriptions" FromRole="aspnetuser" ToRole="subscription" />
           <NavigationProperty Name="payments" Relationship="OnlineCinemaModel.FkUserPayment" FromRole="aspnetuser" ToRole="payment" />
+          <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_user" FromRole="aspnetuser" ToRole="statistics_banner" />
         </EntityType>
         <EntityType Name="country">
           <Key>
@@ -1353,6 +1349,15 @@
             <End Role="payment" EntitySet="payments" />
             <End Role="userseason" EntitySet="userseasons" />
           </AssociationSet>
+          <EntitySet Name="statistics_banner" EntityType="OnlineCinemaModel.statistics_banner" />
+          <AssociationSet Name="id_user" Association="OnlineCinemaModel.id_user">
+            <End Role="aspnetuser" EntitySet="aspnetusers" />
+            <End Role="statistics_banner" EntitySet="statistics_banner" />
+          </AssociationSet>
+          <AssociationSet Name="id_banner" Association="OnlineCinemaModel.id_banner">
+            <End Role="banner" EntitySet="banners" />
+            <End Role="statistics_banner" EntitySet="statistics_banner" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="advertiser">
           <Key>
@@ -1377,6 +1382,7 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
+          <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_banner" FromRole="banner" ToRole="statistics_banner" />
         </EntityType>
         <EntityType Name="teaser">
           <Key>
@@ -1506,6 +1512,7 @@
           <NavigationProperty Name="tariff" Relationship="OnlineCinemaModel.fk_tariff_user" FromRole="subscription" ToRole="tariff" />
           <NavigationProperty Name="payment" Relationship="OnlineCinemaModel.FkPaymentSubscription" FromRole="subscription" ToRole="payment" />
           <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="payment1" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="usermovy">
           <Key>
@@ -1518,6 +1525,8 @@
           <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.FkUserOwnMovies" FromRole="usermovy" ToRole="aspnetuser" />
           <NavigationProperty Name="movy" Relationship="OnlineCinemaModel.fk_purchase_movie" FromRole="usermovy" ToRole="movy" />
           <NavigationProperty Name="payment" Relationship="OnlineCinemaModel.FkMoviePayment" FromRole="usermovy" ToRole="payment" />
+          <Property Name="payment1" Type="Decimal" Nullable="false" />
+          <Property Name="purchase_date" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="userseason">
           <Key>
@@ -1530,6 +1539,8 @@
           <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.FkUserSeasons" FromRole="userseason" ToRole="aspnetuser" />
           <NavigationProperty Name="season" Relationship="OnlineCinemaModel.fk_season_user" FromRole="userseason" ToRole="season" />
           <NavigationProperty Name="payment" Relationship="OnlineCinemaModel.FkSeasonPayment" FromRole="userseason" ToRole="payment" />
+          <Property Name="payment1" Type="Decimal" Nullable="false" />
+          <Property Name="purchase_date" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="FkUserOwnMovies">
           <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="1" />
@@ -1663,6 +1674,42 @@
             </Principal>
             <Dependent Role="userseason">
               <PropertyRef Name="payment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="statistics_banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="show_amount" Type="Int32" />
+          <Property Name="id_banner" Type="Int32" />
+          <Property Name="id_user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.id_user" FromRole="statistics_banner" ToRole="aspnetuser" />
+          <NavigationProperty Name="banner" Relationship="OnlineCinemaModel.id_banner" FromRole="statistics_banner" ToRole="banner" />
+        </EntityType>
+        <Association Name="id_user">
+          <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.statistics_banner" Role="statistics_banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetuser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="statistics_banner">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_banner">
+          <End Type="OnlineCinemaModel.banner" Role="banner" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.statistics_banner" Role="statistics_banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="banner">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="statistics_banner">
+              <PropertyRef Name="id_banner" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1912,8 +1959,7 @@
           <EntitySetMapping Name="subscriptions">
             <EntityTypeMapping TypeName="OnlineCinemaModel.subscription">
               <MappingFragment StoreEntitySet="subscriptions">
-                <ScalarProperty Name="enabled" ColumnName="enabled" />
-                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="payment1" ColumnName="payment" />
                 <ScalarProperty Name="end" ColumnName="end" />
                 <ScalarProperty Name="start" ColumnName="start" />
                 <ScalarProperty Name="tariff_id" ColumnName="tariff_id" />
@@ -1924,7 +1970,8 @@
           <EntitySetMapping Name="usermovies">
             <EntityTypeMapping TypeName="OnlineCinemaModel.usermovy">
               <MappingFragment StoreEntitySet="usermovies">
-                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="purchase_date" ColumnName="purchase_date" />
+                <ScalarProperty Name="payment1" ColumnName="payment" />
                 <ScalarProperty Name="movie_id" ColumnName="movie_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -1934,7 +1981,8 @@
           <EntitySetMapping Name="userseasons">
             <EntityTypeMapping TypeName="OnlineCinemaModel.userseason">
               <MappingFragment StoreEntitySet="userseasons">
-                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="purchase_date" ColumnName="purchase_date" />
+                <ScalarProperty Name="payment1" ColumnName="payment" />
                 <ScalarProperty Name="season_id" ColumnName="season_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -1944,11 +1992,21 @@
           <EntitySetMapping Name="payments">
             <EntityTypeMapping TypeName="OnlineCinemaModel.payment">
               <MappingFragment StoreEntitySet="payments">
-                <ScalarProperty Name="payment1" ColumnName="payment" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="payment_date" ColumnName="payment_date" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statistics_banner">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_banner">
+              <MappingFragment StoreEntitySet="statistics_banner">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_banner" ColumnName="id_banner" />
+                <ScalarProperty Name="show_amount" ColumnName="show_amount" />
+                <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
