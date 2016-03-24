@@ -9,6 +9,7 @@ using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
 {
+    [Authorize(Roles = "ContentManager")]
     public class SeasonController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();

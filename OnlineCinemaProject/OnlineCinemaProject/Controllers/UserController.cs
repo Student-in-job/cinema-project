@@ -15,10 +15,15 @@ namespace OnlineCinemaProject.Controllers
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
         // GET: /User/
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var aspnetusers = db.aspnetusers.Include(a => a.subscription);
+            var aspnetroles = db.aspnetroles.ToList();
+            
+            
             return View(aspnetusers.ToList());
+            
         }
 
         // GET: /User/Details/5

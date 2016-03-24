@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="39674be097d74315a196461283ae4737" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="OnlineCinemaModel.actor" Width="1.5" PointX="9" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetrole" Width="1.5" PointX="1.875" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="4.625" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.country" Width="1.5" PointX="9" PointY="27.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.episode" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.genre" Width="1.5" PointX="11" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.like" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.manufacturer" Width="1.5" PointX="11.25" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.moviehistory" Width="1.5" PointX="7.5" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.overview" Width="1.5" PointX="10.5" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.season" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+      <Diagram DiagramId="39674be097d74315a196461283ae4737" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="OnlineCinemaModel.actor" Width="1.5" PointX="18" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetrole" Width="1.5" PointX="2.875" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="5.125" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.country" Width="1.5" PointX="18" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.episode" Width="1.5" PointX="9.5" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.genre" Width="1.5" PointX="18" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.like" Width="1.5" PointX="7.125" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.manufacturer" Width="1.5" PointX="15.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.moviehistory" Width="1.5" PointX="7.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.overview" Width="1.5" PointX="9.375" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.season" Width="1.5" PointX="12.125" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineCinemaModel.tariff" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.trailer" Width="1.5" PointX="8.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.videoactor" Width="1.5" PointX="11.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.videogenre" Width="1.5" PointX="13.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.video" Width="1.5" PointX="6" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.trailer" Width="1.5" PointX="11.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.videoactor" Width="1.5" PointX="15.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.videogenre" Width="1.5" PointX="15.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.video" Width="1.5" PointX="11.75" PointY="3.25" IsExpanded="true" />
         <AssociationConnector Association="OnlineCinemaModel.fk_actor_video" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserLikes" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserMovies" ManuallyRouted="false" />
@@ -36,27 +36,27 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_video_actor" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_genre" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.advertiser" Width="1.5" PointX="0.5" PointY="3.25" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.banner" Width="1.5" PointX="2.5" PointY="3.25" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.teaser" Width="1.5" PointX="0.5" PointY="6" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.advertiser" Width="1.5" PointX="22.375" PointY="3.25" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.banner" Width="1.5" PointX="20.25" PointY="1.125" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.teaser" Width="1.5" PointX="20.25" PointY="4.375" />
         <AssociationConnector Association="OnlineCinemaModel.fk_adv_banner" />
         <AssociationConnector Association="OnlineCinemaModel.fk_id_teaser" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.movy" Width="1.5" PointX="8.25" PointY="3.875" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.movy" Width="1.5" PointX="8.125" PointY="0.5" />
         <AssociationConnector Association="OnlineCinemaModel.fk_content_user" />
         <AssociationConnector Association="OnlineCinemaModel.fk1_content_video" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.episodehistory" Width="1.5" PointX="13.5" PointY="12.875" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.episodehistory" Width="1.5" PointX="6.75" PointY="8.875" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserEpisodeHistory" />
         <AssociationConnector Association="OnlineCinemaModel.fk_episde_user" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.subscription" Width="1.5" PointX="3" PointY="11.125" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.usermovy" Width="1.5" PointX="10.5" PointY="7.25" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.userseason" Width="1.5" PointX="10.5" PointY="14.875" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.subscription" Width="1.5" PointX="2.75" PointY="8.375" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.usermovy" Width="1.5" PointX="1.625" PointY="0.5" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.userseason" Width="1.5" PointX="9.625" PointY="12.125" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserOwnMovies" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserSeasons" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserSubscriptions" />
         <AssociationConnector Association="OnlineCinemaModel.fk_purchase_movie" />
         <AssociationConnector Association="OnlineCinemaModel.fk_season_user" />
         <AssociationConnector Association="OnlineCinemaModel.fk_tariff_user" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.payment" Width="1.5" PointX="7.5" PointY="21.125" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.payment" Width="1.5" PointX="16.5" PointY="8.25" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserPayment" />
         <AssociationConnector Association="OnlineCinemaModel.FkMoviePayment" />
         <AssociationConnector Association="OnlineCinemaModel.FkPaymentSubscription" />

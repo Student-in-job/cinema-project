@@ -6,7 +6,7 @@ namespace OnlineCinemaProject.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
     }
 
@@ -32,12 +32,12 @@ namespace OnlineCinemaProject.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Логин")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -47,7 +47,7 @@ namespace OnlineCinemaProject.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Login")]
+        [Display(Name = "Логин")]
         public string UserName { get; set; }
 
         [Required]
@@ -58,7 +58,7 @@ namespace OnlineCinemaProject.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Повторите пароль")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -71,11 +71,19 @@ namespace OnlineCinemaProject.Models
 
         [Required]
         [Display(Name = "Дата рождения")]
-        public DateTime BirthDay { get; set; }
+        public DateTime BirthDate { get; set; }
 
         [Required]
+        [EmailAddress(ErrorMessage = "Вы неправильно ввели E-mail адрес")]
         [Display(Name = "Электронная почта")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Email { get; set; }
+        
+        [Required]
+        [Display(Name = "Ваш пол")]
+        public int Sex { get; set; }
+
+        
 
 
         
