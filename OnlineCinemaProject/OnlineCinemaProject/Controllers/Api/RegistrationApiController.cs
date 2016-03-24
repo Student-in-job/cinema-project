@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
@@ -41,7 +42,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
         // POST api/<controller>
-        public async void Post([FromBody]RegisterViewModel model)
+        public async Task<string> Post([FromBody]RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -52,24 +53,25 @@ namespace OnlineCinemaProject.Controllers.Api
                     LastName = model.LastName,
                     BirthDate = model.BirthDate,
                     Email = model.Email,
-                    Sex = model.Sex
+                    Sex = model.Sex,
+                    JoinDate = DateTime.Now
                 };
 
-                //var result = await UserManager<>.CreateAsync(user, model.Password);
-                //if (result.Succeeded)
-                //{
-                //    UserManager.AddToRole(user.Id, "User");
-                //   // await SignInAsync(user, isPersistent: false);
-                //    //return RedirectToAction("Index", "Home");
-                //}
-                //else
-                //{
-                //    AddErrors(result);
-                //}
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "User");
+                   // await SignInAsync(user, isPersistent: false);
+                    //return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
             }
 
             // If we got this far, something failed, redisplay form
-           // return View(model);
+            return "succesful";
             
            
         }
@@ -90,11 +92,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 ModelState.AddModelError("", error);
             }
         }
-        //private async Task SignInAsync(ApplicationUser user, bool isPersistent)
-        //{
-        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-        //    var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-        //    AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
-        //}
+
+        
     }
 }
