@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
@@ -29,6 +30,13 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Details(int id = 0)
         {
             movy movie = db.movies.Find(id);
+            var movieHistory = db.moviehistories.Where(i => i.movie_id == id);
+            int watchingAmount = 0;
+            foreach (var item in movieHistory)
+            {
+                ++watchingAmount;
+            }
+            ViewBag.WatchingAmount = watchingAmount;
             if (movie == null)
             {
                 return HttpNotFound();
@@ -149,7 +157,9 @@ namespace OnlineCinemaProject.Controllers
             }
             return View(movie);
         }
+
         
+
 
         protected override void Dispose(bool disposing)
         {

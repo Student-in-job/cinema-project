@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 using OnlineCinemaProject.Models.ViewModels;
 
@@ -24,12 +25,12 @@ namespace OnlineCinemaProject.Controllers
             return View(db.videos.ToList());
         }
 
-        [HttpGet]
-        public ActionResult Watch(string url)
+        public ActionResult Watch(String videoUrl)
         {
-            ViewBag.url = url;
-            return View();
+            return new VideoResult(videoUrl);
         }
+
+       
 
         //
         // GET: /Video/Details/5
@@ -253,6 +254,11 @@ namespace OnlineCinemaProject.Controllers
             db.videos.Remove(video);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public PartialViewResult VideoTrailers()
+        {
+            return PartialView();
         }
 
         protected override void Dispose(bool disposing)

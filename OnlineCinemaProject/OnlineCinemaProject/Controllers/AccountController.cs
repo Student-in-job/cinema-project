@@ -122,6 +122,7 @@ namespace OnlineCinemaProject.Controllers
                     LastName = model.LastName,
                     /* BirthDay = model.BirthDay,*/ 
                     Email = model.Email
+                    
                 };
                 
                 var result = await UserManager.CreateAsync(user, model.Password);

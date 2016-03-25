@@ -16,9 +16,8 @@ namespace OnlineCinemaProject.Models
     {
         public int id { get; set; }
         public string user_id { get; set; }
-        public int content_id { get; set; }
+        public int movie_id { get; set; }
         public System.DateTime watching_date { get; set; }
-        public float payment { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
         public virtual movy movy { get; set; }

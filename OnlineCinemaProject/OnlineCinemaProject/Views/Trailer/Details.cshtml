@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Details";
 }
+<video style="margin: 20px; align-self: center" width="640" height="480" controls autoplay="autoplay"><source src="@Url.Action("Watch","Video", new {videoUrl = Model.url})" type="video/mp4"></video>
 
 <h2>Details</h2>
 
