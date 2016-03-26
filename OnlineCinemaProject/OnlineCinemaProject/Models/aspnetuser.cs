@@ -7,6 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace OnlineCinemaProject.Models
 {
     using System;
@@ -24,6 +27,7 @@ namespace OnlineCinemaProject.Models
             this.userseasons = new HashSet<userseason>();
             this.payments = new HashSet<payment>();
             this.moviehistories = new HashSet<moviehistory>();
+            this.statistics_banner = new HashSet<statistics_banner>();
         }
     
         public string Id { get; set; }
@@ -49,5 +53,6 @@ namespace OnlineCinemaProject.Models
         public virtual subscription subscription { get; set; }
         public virtual ICollection<payment> payments { get; set; }
         public virtual ICollection<moviehistory> moviehistories { get; set; }
+        public virtual ICollection<statistics_banner> statistics_banner { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿@model OnlineCinemaProject.Models.RegisterViewModel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Регистрация";
+
 }
+
 <style type="text/css">.datefield { }
 
  .datetime { }
@@ -13,7 +15,7 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 { 
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Создайте новый профиль</h4>
     <hr />
     @Html.ValidationSummary()
     <div class="form-group">
@@ -34,18 +36,17 @@
             @Html.TextBoxFor(m => m.LastName, new {@class = "form-control"})
         </div>
     </div>
-    @*<div class="form-group">
-        @Html.LabelFor(m => m.BirthDay, new {@class = "col-md-2 control-label"})
+    <div class="form-group">
+        @Html.LabelFor(m => m.BirthDate, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.BirthDay, new { @class = "datetime", type = "date" })
+            @Html.TextBoxFor(m => m.BirthDate, new { @class = "datetime", type = "date" })
         </div>
-    </div>*@
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Email, new {@placeholder = "E-mail"})<br/>
         </div>
-        
     </div>
     @*<div class="form-group">
         @Html.LabelFor(m => m.FirstName, new {@class = "col-md-2 control-label"})
@@ -70,17 +71,17 @@
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
         </div>
-    </div>
+    </div>*@
     <div class="form-group">
-        @Html.LabelFor(m=>m.Gender, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m=>m.Sex, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-           @Html.DropDownListFor(model => model.Gender, new SelectList(new List<Object>
+           @Html.DropDownListFor(model => model.Sex, new SelectList(new List<Object>
             {
-                new {value = 0, text = "Male"},
-                new {value = 1, text = "Female"}
+                new {value = 0, text = "Жен"},
+                new {value = 1, text = "Муж"}
             }, "value", "text", 2))
         </div>
-    </div>*@
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -95,11 +96,12 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <input type="submit" class="btn btn-default" value="Регистрация" />
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }

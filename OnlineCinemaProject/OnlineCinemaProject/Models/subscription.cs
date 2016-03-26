@@ -25,6 +25,7 @@ namespace OnlineCinemaProject.Models
         public System.DateTime end { get; set; }
         public int payment_id { get; set; }
         public bool enabled { get; set; }
+        public double payment1 { get; set; }
     
         public virtual ICollection<aspnetuser> aspnetusers { get; set; }
         public virtual tariff tariff { get; set; }

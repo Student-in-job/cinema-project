@@ -43,8 +43,8 @@ namespace OnlineCinemaProject.Controllers
                 var user =  UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
-                    // SignInAsync(user, model.RememberMe);
-                    return User.Identity.GetUserId();
+                    
+                    return user.Id;
                 }
             }
 

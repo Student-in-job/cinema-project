@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
+    <Compile Include="Controllers\Api\RegistrationApiController.cs" />
     <Compile Include="Controllers\Api\TariffController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
@@ -217,13 +218,11 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
     <Compile Include="Controllers\SubsciptionController.cs" />
-    <Compile Include="Controllers\BillingController.cs" />
+    <Compile Include="Controllers\TariffController.cs" />
     <Compile Include="Controllers\TeaserController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
-    <Compile Include="CustomResult\VideoResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -294,6 +293,9 @@
     <Compile Include="Models\season.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\statistics_banner.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\subscription.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -321,7 +323,6 @@
     <Compile Include="Models\videogenre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VideoModel.cs" />
     <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
@@ -330,38 +331,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap.css" />
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap.min.css" />
-    <Content Include="Content\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\bootstrap-3.3.6-dist\js\bootstrap.js" />
-    <Content Include="Content\bootstrap-3.3.6-dist\js\bootstrap.min.js" />
-    <Content Include="Content\bootstrap-3.3.6-dist\js\npm.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\font-awesome-4.5.0\css\font-awesome.css" />
-    <Content Include="Content\font-awesome-4.5.0\css\font-awesome.min.css" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\font-awesome-4.5.0\HELP-US-OUT.txt" />
-    <Content Include="Content\jquery-1.12.2.js" />
-    <Content Include="Content\jquery-1.12.2.min.js" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\images\ui-icons_444444_256x240.png" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\images\ui-icons_555555_256x240.png" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\images\ui-icons_777620_256x240.png" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\images\ui-icons_777777_256x240.png" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\images\ui-icons_cc0000_256x240.png" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\index.html" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.css" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.js" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.min.css" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.structure.css" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
-    <Content Include="Content\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -386,45 +357,6 @@
       <DependentUpon>OnlineCinemaModel.edmx</DependentUpon>
       <LastGenOutput>OnlineCinemaModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\FontAwesome.otf" />
-    <Content Include="Content\font-awesome-4.5.0\less\animated.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\bordered-pulled.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\core.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\fixed-width.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\font-awesome.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\icons.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\larger.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\list.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\mixins.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\path.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\rotated-flipped.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\stacked.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\variables.less" />
-    <Content Include="Content\font-awesome-4.5.0\scss\font-awesome.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_animated.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_bordered-pulled.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_core.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_fixed-width.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_icons.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_larger.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_list.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_mixins.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_path.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_rotated-flipped.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_stacked.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -506,11 +438,11 @@
     <Content Include="Views\Subsciption\Edit.cshtml" />
     <Content Include="Views\Subsciption\Index.cshtml" />
     <Content Include="Views\Subsciption\TariffSubscriptions.cshtml" />
-    <Content Include="Views\Billing\Create.cshtml" />
-    <Content Include="Views\Billing\Delete.cshtml" />
-    <Content Include="Views\Billing\Details.cshtml" />
-    <Content Include="Views\Billing\Edit.cshtml" />
-    <Content Include="Views\Billing\Index.cshtml" />
+    <Content Include="Views\Tariff\Create.cshtml" />
+    <Content Include="Views\Tariff\Delete.cshtml" />
+    <Content Include="Views\Tariff\Details.cshtml" />
+    <Content Include="Views\Tariff\Edit.cshtml" />
+    <Content Include="Views\Tariff\Index.cshtml" />
     <Content Include="Views\Trailer\AddTrailerByVideoId.cshtml" />
     <Content Include="Views\Trailer\AddTrilerByVideoId.cshtml" />
     <Content Include="Views\Trailer\Create.cshtml" />
@@ -549,14 +481,10 @@
     <Content Include="Views\Teaser\Details.cshtml" />
     <Content Include="Views\Teaser\Edit.cshtml" />
     <Content Include="Views\Teaser\Index.cshtml" />
-    <Content Include="Views\Billing\Tariffs.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Video\VideoTrailers.cshtml" />
-    <Content Include="Views\Trailer\Partial1.cshtml" />
+    <Content Include="Views\Banner\Rotator.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\genre.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
