@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Error403";
+}
+
+<h2>Error403</h2>
+
+<customerrors mode="On" defaultredirect="~/Error">
+   
+    <error redirect="~/Error/UnauthorizedAccess" statuscode="403" />
+</customerrors>
