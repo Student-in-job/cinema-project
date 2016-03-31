@@ -18,8 +18,6 @@ namespace OnlineCinemaProject.Models
         public string user_id { get; set; }
         public int movie_id { get; set; }
         public int payment_id { get; set; }
-        public decimal payment1 { get; set; }
-        public System.DateTime purchase_date { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
         public virtual movy movy { get; set; }

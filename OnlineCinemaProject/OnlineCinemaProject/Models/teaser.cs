@@ -14,6 +14,11 @@ namespace OnlineCinemaProject.Models
     
     public partial class teaser
     {
+        public teaser()
+        {
+            this.statistics_teaser = new HashSet<statistics_teaser>();
+        }
+    
         public int id { get; set; }
         public System.DateTime start { get; set; }
         public System.DateTime end { get; set; }
@@ -24,5 +29,6 @@ namespace OnlineCinemaProject.Models
         public string img_url { get; set; }
     
         public virtual advertiser advertiser { get; set; }
+        public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
     }
 }

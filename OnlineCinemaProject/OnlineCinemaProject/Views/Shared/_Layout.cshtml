@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
@@ -20,45 +22,63 @@
                 @Html.ActionLink("Онлайн Кинотеатр", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
                 <ul class="nav navbar-nav">
-                    @if (User.IsInRole("User"))
-                    {
-                        <li>@Html.ActionLink("Домашняя", "Index", "Home")</li>
-                        <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
-                        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
-                    }
-                    
-                    
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("Роли", "Index", "Roles")</li>
-                        <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
-                    }
-                    @if (User.IsInRole("ContentManager"))
-                    {
-                        <li>@Html.ActionLink("Видео", "Index", "Video")</li>
-                        <li>@Html.ActionLink("Жанры", "Index", "Genre")</li>
-                        <li>@Html.ActionLink("Актеры", "Index", "Actor")</li>
-                        <li>@Html.ActionLink("Страны", "Index", "Country")</li>
-                    }
-                    @if (User.IsInRole("PRManager"))
-                    {
-                        <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
-                        <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
-                        <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
-                    }
-                    @if (User.IsInRole("BilingManager"))
-                    {
-                        <li>@Html.ActionLink("Тарифы", "Index", "Tariff")</li>
-                    }
-                    
+                    <li>@Html.ActionLink("Домашняя", "Index", "Home")</li>
+                    <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
+                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
                 </ul>
+                
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9">
+            @RenderBody()
+        </div>
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Link</a>
+                @*<a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>*@
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Роли", "Index", "Roles",null ,new {@class="list-group-item"})
+                    @Html.ActionLink("Пользователи", "Index", "User", null, new { @class = "list-group-item" })
+                }
+                @if (User.IsInRole("ContentManager"))
+                {
+                    @Html.ActionLink("Видео", "Index", "Video", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Жанры", "Index", "Genre", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Актеры", "Index", "Actor", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Страны", "Index", "Country", null, new { @class = "list-group-item" })
+                }
+                @if (User.IsInRole("PRManager"))
+                {
+                    @Html.ActionLink("Рекламодатель", "Index", "Advertiser", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Баннеры", "Index", "Banner", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Тизеры", "Index", "Teaser", null, new { @class = "list-group-item" })
+                }
+                @if (User.IsInRole("BilingManager"))
+                {
+                    @Html.ActionLink("Тарифы", "Index", "Billing", null, new { @class = "list-group-item" })
+                }
+
+            </div>
+        </div>
+    </div>
+       
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>

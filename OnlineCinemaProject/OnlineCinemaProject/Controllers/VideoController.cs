@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 using OnlineCinemaProject.Models.ViewModels;
 
@@ -24,12 +25,12 @@ namespace OnlineCinemaProject.Controllers
             return View(db.videos.ToList());
         }
 
-        [HttpGet]
-        public ActionResult Watch(string url)
+        public ActionResult Watch(String videoUrl)
         {
-            ViewBag.url = url;
-            return View();
+            return new VideoResult(videoUrl);
         }
+
+       
 
         //
         // GET: /Video/Details/5
@@ -255,6 +256,11 @@ namespace OnlineCinemaProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public PartialViewResult VideoTrailers()
+        {
+            return PartialView();
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
@@ -296,7 +302,7 @@ namespace OnlineCinemaProject.Controllers
                 {
                     id = country.id,
                     Title = country.name,
-                    Included = videoActors.Contains(country.id)
+                    Included = videoCountries.Contains(country.id)
                 });
             }
 
@@ -305,5 +311,39 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.Countries = countryDatas;
             
         }
+        [HttpGet]
+        public ActionResult CreateNew()
+        {
+            video video = new video
+            {
+                release_date = DateTime.Now
+            };
+            PopulateIncludedVideoData(video);
+            return View(video);
+        }
+       /* [HttpPost]
+        public ActionResult CreateNew(video model, HttpPostedFileBase file,)
+        {
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                                          + file.FileName);
+                    model.img_url = file.FileName;
+                }
+                db.videos.Add(model);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult SelectGenres(video video)
+        {
+            return View();
+        }*/
     }
 }

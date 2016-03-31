@@ -18,11 +18,10 @@ namespace OnlineCinemaProject.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var aspnetusers = db.aspnetusers.Include(a => a.subscription);
             var aspnetroles = db.aspnetroles.ToList();
             
             
-            return View(aspnetusers.ToList());
+            return View(/*aspnetusers.ToList()*/);
             
         }
 
@@ -62,7 +61,6 @@ namespace OnlineCinemaProject.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SubscriptionId = new SelectList(db.subscriptions, "id", "id", aspnetuser.SubscriptionId);
             return View(aspnetuser);
         }
 
@@ -78,7 +76,6 @@ namespace OnlineCinemaProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SubscriptionId = new SelectList(db.subscriptions, "id", "id", aspnetuser.SubscriptionId);
             return View(aspnetuser);
         }
 
@@ -95,7 +92,6 @@ namespace OnlineCinemaProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SubscriptionId = new SelectList(db.subscriptions, "id", "id", aspnetuser.SubscriptionId);
             return View(aspnetuser);
         }
 

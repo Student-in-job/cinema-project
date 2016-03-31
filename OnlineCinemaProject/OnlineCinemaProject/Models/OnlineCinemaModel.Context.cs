@@ -33,7 +33,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<like> likes { get; set; }
         public virtual DbSet<manufacturer> manufacturers { get; set; }
-        public virtual DbSet<moviehistory> moviehistories { get; set; }
         public virtual DbSet<overview> overviews { get; set; }
         public virtual DbSet<season> seasons { get; set; }
         public virtual DbSet<tariff> tariffs { get; set; }
@@ -46,10 +45,12 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<teaser> teasers { get; set; }
         public virtual DbSet<movy> movies { get; set; }
         public virtual DbSet<episodehistory> episodehistories { get; set; }
-        public virtual DbSet<subscription> subscriptions { get; set; }
         public virtual DbSet<usermovy> usermovies { get; set; }
         public virtual DbSet<userseason> userseasons { get; set; }
-        public virtual DbSet<payment> payments { get; set; }
+        public virtual DbSet<moviehistory> moviehistories { get; set; }
         public virtual DbSet<statistics_banner> statistics_banner { get; set; }
+        public virtual DbSet<statistics_teaser> statistics_teaser { get; set; }
+        public virtual DbSet<payment> payments { get; set; }
+        public virtual DbSet<subscription> subscriptions { get; set; }
     }
 }

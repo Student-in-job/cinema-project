@@ -152,5 +152,7 @@ namespace OnlineCinemaProject.Controllers
             }
             return View(trailer);
         }
+
+        
     }
 }
