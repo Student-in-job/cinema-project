@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="color_primary">#cb2323</color>
+	<color name="color_primary_light">#cb2323</color>
+	<color name="color_primary_dark">#cb2323</color>
+	<color name="window_bg">#f7f7f7</color>
+	<color name="error_text_color">#FF0000</color>
+	<color name="white">#ffffff</color>
+	<color name="black">#000000</color>
+	<color name="red">#ff0000</color>
+
+</resources>
