@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Net;
 using System.Web.Http;
 using OnlineCinemaProject.Models;
+using OnlineCinemaProject.Models.DomainModels;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -28,8 +29,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = tariff.price,
-                name = "Подписка на тариф "+ tariff.name,
-                payment1 = false,
+                title = "Подписка на тариф "+ tariff.name,
+                payment_type = false,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);
@@ -42,7 +43,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 start = DateTime.Now,
                 end = DateTime.Now.AddMonths(1)
             };
-            subscription.aspnetusers.Add(user);
+            /*subscription.aspnetusers.Add(user); todo*/
 
             _db.subscriptions.Add(subscription);
             _db.SaveChanges();
@@ -65,17 +66,20 @@ namespace OnlineCinemaProject.Controllers.Api
         [Route("api/movie/watch/{movieId}/{userId}")]
         public IHttpActionResult WatchMovie(int movieId, string userId)
         {
-            var movie = _db.movies.Find(movieId);
-            var user = _db.aspnetusers.Find(userId);
+            MovieDomain movie = (MovieDomain)_db.movies.Find(movieId);
+            UserDomain user = (UserDomain)_db.aspnetusers.Find(userId);
             if (movie == null || user == null)
             {
                 return NotFound();
             }
-            
-            if (!UserHasThisMovie(user,movie) || !movie.price.Equals(0) || !UserHasTariff(user))// если пользователь не купил ранее этот фильм или фильм не бесплатный
+            if (!user.CheckAccess(movie))
             {
                 return new HttpActionResult(HttpStatusCode.NotAcceptable, "Фильм платный заплотите сначала");
             }
+            /*if (!UserHasThisMovie(user,movie) || !movie.price.Equals(0) || !UserHasTariff(user))// если пользователь не купил ранее этот фильм или фильм не бесплатный
+            {
+                return new HttpActionResult(HttpStatusCode.NotAcceptable, "Фильм платный заплотите сначала");
+            }*/
             moviehistory moviehistory = new moviehistory
             {
                 aspnetuser = user,
@@ -91,10 +95,10 @@ namespace OnlineCinemaProject.Controllers.Api
 
         private bool UserHasTariff(aspnetuser user)
         {
-            if (user.subscription.enabled)
+           /* if (user.subscription.enabled)
             {
                 return true;                
-            }
+            }todo */ 
             return false;
         }
 
@@ -184,8 +188,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = amount,
-                name = "Пополнение баланса",
-                payment1 = true,
+                title = "Пополнение баланса",
+                payment_type = true,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);
@@ -225,8 +229,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = movie.price,
-                name = "Покупка фильма " + movie.video.name,
-                payment1 = false,
+                title = "Покупка фильма " + movie.video.name,
+                payment_type = false,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);
@@ -268,8 +272,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = season.price,
-                name = "Покупка сезона" + season.name+", сериала" + season.video.name,
-                payment1 = false,
+                title = "Покупка сезона" + season.name+", сериала" + season.video.name,
+                payment_type = false,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);

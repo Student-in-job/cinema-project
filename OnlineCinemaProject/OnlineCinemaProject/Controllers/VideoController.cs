@@ -17,6 +17,51 @@ namespace OnlineCinemaProject.Controllers
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
+        public ActionResult GetPartialView(string id)
+        {
+            switch (id)
+            {
+                case "details_tab":
+                    return PartialView("DetailsPartial");
+                case "actors_tab":
+                    return PartialView("ActorsPartial");
+                case "videos_tab":
+                    return PartialView("VideoContentPartial");
+                case "statistics_tab":
+                    return PartialView("StatisticsPartial");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult _SubmissionTab()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _SearchTab()
+        {
+            return PartialView();
+        }
+
+        public ActionResult ActrorsPartial()
+        {
+                    return PartialView("ActorsPartial");
+        }
+        public ActionResult DetailsPartial()
+        {
+                    return PartialView("DetailsPartial");
+        }
+        public ActionResult StatisticsPartial()
+        {
+                    return PartialView("StatisticsPartial");
+        }
+        public ActionResult ContentPartial()
+        {
+                    return PartialView("VideoContentPartial");
+        }
+
+
         //
         // GET: /Video/
 
@@ -302,7 +347,7 @@ namespace OnlineCinemaProject.Controllers
                 {
                     id = country.id,
                     Title = country.name,
-                    Included = videoActors.Contains(country.id)
+                    Included = videoCountries.Contains(country.id)
                 });
             }
 
@@ -311,5 +356,39 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.Countries = countryDatas;
             
         }
+        [HttpGet]
+        public ActionResult CreateNew()
+        {
+            video video = new video
+            {
+                release_date = DateTime.Now
+            };
+            PopulateIncludedVideoData(video);
+            return View(video);
+        }
+       /* [HttpPost]
+        public ActionResult CreateNew(video model, HttpPostedFileBase file,)
+        {
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                                          + file.FileName);
+                    model.img_url = file.FileName;
+                }
+                db.videos.Add(model);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult SelectGenres(video video)
+        {
+            return View();
+        }*/
     }
 }

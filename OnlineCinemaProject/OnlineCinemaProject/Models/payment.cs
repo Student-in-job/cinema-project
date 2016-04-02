@@ -17,20 +17,20 @@ namespace OnlineCinemaProject.Models
         public payment()
         {
             this.usermovies = new HashSet<usermovy>();
-            this.subscriptions = new HashSet<subscription>();
             this.userseasons = new HashSet<userseason>();
+            this.subscriptions = new HashSet<subscription>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
+        public string title { get; set; }
         public System.DateTime payment_date { get; set; }
         public decimal amount { get; set; }
         public string user_id { get; set; }
-        public bool payment1 { get; set; }
+        public bool payment_type { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual ICollection<usermovy> usermovies { get; set; }
-        public virtual ICollection<subscription> subscriptions { get; set; }
         public virtual ICollection<userseason> userseasons { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
+        public virtual ICollection<subscription> subscriptions { get; set; }
     }
 }
