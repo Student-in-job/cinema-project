@@ -43,9 +43,13 @@
                     }
                     @if (User.IsInRole("PRManager"))
                     {
-                        <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
+                        @*<li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
                         <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
                         <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
+                         <li>@Html.ActionLink("Ротатор1", "Rotator", "Banner")</li>
+                        <li>@Html.ActionLink("Статистика1", "Index", "StatisticsBanner")</li>
+                                   <li>@Html.ActionLink("Ротатор2", "Rotator", "Teaser")</li>
+                        <li>@Html.ActionLink("Статистика2", "Index", "StatisticsTeaser")</li>*@
                     }
                     @if (User.IsInRole("BilingManager"))
                     {

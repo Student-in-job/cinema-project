@@ -7,9 +7,7 @@
 
     <h2>Advertiser</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+   
 
     @using (Html.BeginForm("Index", "Advertiser", FormMethod.Get))
     {
@@ -60,3 +58,6 @@
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>

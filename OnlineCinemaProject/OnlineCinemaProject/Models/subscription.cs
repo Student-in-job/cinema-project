@@ -14,21 +14,15 @@ namespace OnlineCinemaProject.Models
     
     public partial class subscription
     {
-        public subscription()
-        {
-            this.aspnetusers = new HashSet<aspnetuser>();
-        }
-    
         public int id { get; set; }
-        public int tariff_id { get; set; }
-        public System.DateTime start { get; set; }
-        public System.DateTime end { get; set; }
-        public int payment_id { get; set; }
-        public bool enabled { get; set; }
-        public double payment1 { get; set; }
+        public Nullable<int> tariff_id { get; set; }
+        public Nullable<System.DateTime> start { get; set; }
+        public Nullable<System.DateTime> end { get; set; }
+        public Nullable<int> payment_id { get; set; }
+        public string UserId { get; set; }
     
-        public virtual ICollection<aspnetuser> aspnetusers { get; set; }
-        public virtual tariff tariff { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
         public virtual payment payment { get; set; }
+        public virtual tariff tariff { get; set; }
     }
 }

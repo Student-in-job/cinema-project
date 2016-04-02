@@ -26,7 +26,7 @@ namespace OnlineCinemaProject.Models
         public System.DateTime payment_date { get; set; }
         public decimal amount { get; set; }
         public string user_id { get; set; }
-        public bool payment1 { get; set; }
+        public Nullable<bool> payment1 { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
         public virtual ICollection<usermovy> usermovies { get; set; }

@@ -42,7 +42,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 start = DateTime.Now,
                 end = DateTime.Now.AddMonths(1)
             };
-            subscription.aspnetusers.Add(user);
+            //subscription.aspnetuser.Add(user);
 
             _db.subscriptions.Add(subscription);
             _db.SaveChanges();
@@ -91,10 +91,10 @@ namespace OnlineCinemaProject.Controllers.Api
 
         private bool UserHasTariff(aspnetuser user)
         {
-            if (user.subscription.enabled)
-            {
-                return true;                
-            }
+            //if (user.subscription.enabled)
+            //{
+            //    return true;                
+            //}
             return false;
         }
 

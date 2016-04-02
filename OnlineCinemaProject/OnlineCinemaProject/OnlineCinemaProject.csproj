@@ -203,9 +203,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
+    <Compile Include="Controllers\Api\BannerApiController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
     <Compile Include="Controllers\Api\RegistrationApiController.cs" />
     <Compile Include="Controllers\Api\TariffController.cs" />
+    <Compile Include="Controllers\Api\TeaserApiController.cs" />
+    <Compile Include="Controllers\Api\TiserApiController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -218,12 +221,15 @@
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
+    <Compile Include="Controllers\StatisticsBannerController.cs" />
+    <Compile Include="Controllers\StatisticsTeaserController.cs" />
     <Compile Include="Controllers\SubsciptionController.cs" />
     <Compile Include="Controllers\TariffController.cs" />
     <Compile Include="Controllers\TeaserController.cs" />
     <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="EFNavigationPropertyConverter .cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +246,12 @@
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnetuser.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\aspnetuserclaim.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\aspnetuserlogin.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\banner.cs">
@@ -294,7 +306,11 @@
     <Compile Include="Models\season.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StatisticBanner.cs" />
     <Compile Include="Models\statistics_banner.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\statistics_teaser.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\subscription.cs">
@@ -490,6 +506,16 @@
     <Content Include="Views\Error\Error404.cshtml" />
     <Content Include="Views\Error\Error403.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
+    <Content Include="Views\StatisticsBanner\Create.cshtml" />
+    <Content Include="Views\StatisticsBanner\Delete.cshtml" />
+    <Content Include="Views\StatisticsBanner\Details.cshtml" />
+    <Content Include="Views\StatisticsBanner\Edit.cshtml" />
+    <Content Include="Views\StatisticsBanner\Index.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Create.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Delete.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Details.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Edit.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -524,7 +550,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:80</IISAppRootUrl>
+          <IISAppRootUrl>http://10.42.0.26:80</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
