@@ -18,8 +18,8 @@ namespace OnlineCinemaProject.Models
         public Nullable<int> tariff_id { get; set; }
         public Nullable<System.DateTime> start { get; set; }
         public Nullable<System.DateTime> end { get; set; }
-        public Nullable<int> payment_id { get; set; }
-        public string UserId { get; set; }
+        public int payment_id { get; set; }
+        public string user_id { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
         public virtual payment payment { get; set; }

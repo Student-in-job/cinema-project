@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>HTML5 MediaElement - HLS</title>	
+	
+	<script src="js/jquery.js"></script>	
+	<script src="js/mediaelement-and-player.min.js"></script>
+	<link rel="stylesheet" href="style.min.css" />
+</head>
+<body>
+
+<h1>MediaElementPlayer.js</h1>
+
+<h2>HLS Wrapper</h2>
+
+<video width="640" height="360" id="player1">
+    
+    <!-- Pseudo HTML5 -->
+    <source type="application/x-mpegURL" src="http://172.20.16.4/mobile/pursuit/pursuit_of_happYness.m3u8" />
+
+</video>
+	
+<span id="player1-mode"></span>
+
+<h3> Test Videos </h3>
+<div> The following videos should stream correctly. Each time an
+issue is reported with a sample playlist, it will be added in the list
+and verified after bugfixing </div>
+<ul id="streamlist">
+</ul>
+
+<input id="userInput" value="http://172.20.16.4/mobile/pursuit/pursuit_of_happYness.m3u8" size="80"> <button onclick="userSubmit()">Load and Play</button><br>
+<p>
+
+<script type="text/javascript" src="js/hls_streams.js"></script>
+<script type="text/javascript">
+
+function userSubmit() {
+   loadStream(document.getElementById('userInput').value);
+}
+function loadStream(url) {
+$('video')[0].player.setSrc(url);
+$('video')[0].player.play();
+}
+
+
+
+</script>
+
+<script>
+
+$('video').mediaelementplayer({
+	success: function(media, node, player) {
+		$('#' + node.id + '-mode').html('mode: ' + media.pluginType);
+	}
+});
+
+</script>
+
+</body>
+</html>

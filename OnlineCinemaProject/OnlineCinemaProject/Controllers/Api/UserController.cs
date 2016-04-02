@@ -28,8 +28,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = tariff.price,
-                name = "Подписка на тариф "+ tariff.name,
-                payment1 = false,
+                title = "Подписка на тариф "+ tariff.name,
+                payment_type = false,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);
@@ -42,7 +42,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 start = DateTime.Now,
                 end = DateTime.Now.AddMonths(1)
             };
-            //subscription.aspnetuser.Add(user);
+            /*subscription.aspnetusers.Add(user); todo*/
 
             _db.subscriptions.Add(subscription);
             _db.SaveChanges();
@@ -91,10 +91,10 @@ namespace OnlineCinemaProject.Controllers.Api
 
         private bool UserHasTariff(aspnetuser user)
         {
-            //if (user.subscription.enabled)
-            //{
-            //    return true;                
-            //}
+           /* if (user.subscription.enabled)
+            {
+                return true;                
+            }todo */ 
             return false;
         }
 
@@ -184,8 +184,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = amount,
-                name = "Пополнение баланса",
-                payment1 = true,
+                title = "Пополнение баланса",
+                payment_type = true,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);
@@ -225,8 +225,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = movie.price,
-                name = "Покупка фильма " + movie.video.name,
-                payment1 = false,
+                title = "Покупка фильма " + movie.video.name,
+                payment_type = false,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);
@@ -268,8 +268,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = season.price,
-                name = "Покупка сезона" + season.name+", сериала" + season.video.name,
-                payment1 = false,
+                title = "Покупка сезона" + season.name+", сериала" + season.video.name,
+                payment_type = false,
                 payment_date = DateTime.Now,
             };
             _db.payments.Add(payment);

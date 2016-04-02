@@ -16,65 +16,66 @@ namespace OnlineCinemaProject.Controllers
         private readonly OnlineCinemaEntities db = new OnlineCinemaEntities();
 
         // GET: /StatisticsBanner/
-        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-             var statistics_banner = db.statistics_banner.Include(s => s.aspnetuser).Include(s => s.banner);
-            return View(statistics_banner.ToList());
+        //public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        //{
+        //    var statistics_banner = db.statistics_banner.Include(s => s.aspnetuser).Include(s => s.banner);
+        //    return View(statistics_banner.ToList());
 
-        //    ViewBag.CurrentSort = sortOrder;
-        //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-        //    ViewBag.DateSortParm = sortOrder == "show_amount" ? "show_amount_desc" : "show_amount";
-        //    ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+        //    //    ViewBag.CurrentSort = sortOrder;
+        //    //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+        //    //    ViewBag.DateSortParm = sortOrder == "show_amount" ? "show_amount_desc" : "show_amount";
+        //    //    ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
 
 
-        //    if (searchString != null)
-        //    {
-        //        page = 1;
-        //    }
-        //    else
-        //    {
-        //        searchString = currentFilter;
-        //    }
+        //    //    if (searchString != null)
+        //    //    {
+        //    //        page = 1;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        searchString = currentFilter;
+        //    //    }
 
-        //    ViewBag.CurrentFilter = searchString;
+        //    //    ViewBag.CurrentFilter = searchString;
 
-        //    var statistic_banners = from s in db.statistic_banners.
-        //                            select s;
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        statistic_banners = statistic_banners.Where(s => s.name.ToUpper().Contains(searchString.ToUpper()));
+        //    //    var statistic_banners = from s in db.statistic_banners.
+        //    //                            select s;
+        //    //    if (!String.IsNullOrEmpty(searchString))
+        //    //    {
+        //    //        statistic_banners = statistic_banners.Where(s => s.name.ToUpper().Contains(searchString.ToUpper()));
 
-        //    }
-        //    switch (sortOrder)
-        //    {
-        //        case "name_desc":
-        //            statistic_banners = statistic_banners.OrderByDescending(s => s.name);
-        //            break;
-        //        case "show_amount":
-        //            statistic_banners = statistic_banners.OrderBy(s => s.show_amount);
-        //            break;
-        //        case "show_amount_desc":
-        //            statistic_banners = statistic_banners.OrderByDescending(s => s.show_amount);
-        //            break;
-        //        case "date":
-        //            statistic_banners = statistic_banners.OrderBy(s => s.date);
-        //            break;
-        //        case "date_desc":
-        //            statistic_banners = statistic_banners.OrderByDescending(s => s.date);
-        //            break;
-        //        default:  // Name ascending 
-        //            statistic_banners = statistic_banners.OrderBy(s => s.name);
-        //            break;
-        //    }
+        //    //    }
+        //    //    switch (sortOrder)
+        //    //    {
+        //    //        case "name_desc":
+        //    //            statistic_banners = statistic_banners.OrderByDescending(s => s.name);
+        //    //            break;
+        //    //        case "show_amount":
+        //    //            statistic_banners = statistic_banners.OrderBy(s => s.show_amount);
+        //    //            break;
+        //    //        case "show_amount_desc":
+        //    //            statistic_banners = statistic_banners.OrderByDescending(s => s.show_amount);
+        //    //            break;
+        //    //        case "date":
+        //    //            statistic_banners = statistic_banners.OrderBy(s => s.date);
+        //    //            break;
+        //    //        case "date_desc":
+        //    //            statistic_banners = statistic_banners.OrderByDescending(s => s.date);
+        //    //            break;
+        //    //        default:  // Name ascending 
+        //    //            statistic_banners = statistic_banners.OrderBy(s => s.name);
+        //    //            break;
+        //    //    }
 
-        //    int pageSize = 3;
-        //    int pageNumber = (page ?? 1);
-        //    return View(statistic_banners.ToPagedList(pageNumber, pageSize));
+        //    //    int pageSize = 3;
+        //    //    int pageNumber = (page ?? 1);
+        //    //    return View(statistic_banners.ToPagedList(pageNumber, pageSize));
+        //    //}
+
         //}
-
     }
 }
-        // GET: /StatisticsBanner/Details/5
+// GET: /StatisticsBanner/Details/5
         //public ActionResult Details(int? id)
         //{
         //    if (id == null)

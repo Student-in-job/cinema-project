@@ -1,7 +1,10 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web;
+using System.Web.Http;
 using System.Web.Routing;
 using System.Web.Mvc;
 using System.Web.Optimization;
+using OnlineCinemaProject.Controllers;
 
 namespace OnlineCinemaProject
 {
@@ -17,5 +20,7 @@ namespace OnlineCinemaProject
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
         }
+
+
     }
 }

@@ -26,7 +26,6 @@ namespace OnlineCinemaProject.Models
         public int adv_id { get; set; }
         public string name { get; set; }
         public string img_url { get; set; }
-        public int show_amount { get; set; }
     
         public virtual advertiser advertiser { get; set; }
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }

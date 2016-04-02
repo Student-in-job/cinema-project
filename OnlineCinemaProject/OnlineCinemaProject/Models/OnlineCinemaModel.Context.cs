@@ -40,6 +40,7 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<manufacturer> manufacturers { get; set; }
         public virtual DbSet<moviehistory> moviehistories { get; set; }
         public virtual DbSet<movy> movies { get; set; }
+        public virtual DbSet<my_aspnet_profiles> my_aspnet_profiles { get; set; }
         public virtual DbSet<overview> overviews { get; set; }
         public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<season> seasons { get; set; }

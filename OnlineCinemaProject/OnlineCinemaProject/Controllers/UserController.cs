@@ -20,9 +20,6 @@ namespace OnlineCinemaProject.Controllers
         {
             //var aspnetusers = db.aspnetusers.Include(a => a.subscription);
             var aspnetroles = db.aspnetroles.ToList();
-
-
-            return View(db.aspnetroles.ToList());
             
         }
 
