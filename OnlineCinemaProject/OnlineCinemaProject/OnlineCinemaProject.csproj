@@ -333,6 +333,7 @@
     <Compile Include="Models\videogenre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VideoModel.cs" />
     <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
@@ -913,14 +914,9 @@
     <Content Include="Views\Video\MoviePartial.cshtml" />
     <Content Include="Views\Video\SeriesPartial.cshtml" />
     <Content Include="Views\Video\Watch.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
-    <Content Include="Views\User\Details.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\TopUp.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Advertiser\Create.cshtml" />
     <Content Include="Views\Advertiser\Delete.cshtml" />
     <Content Include="Views\Advertiser\Details.cshtml" />
@@ -956,6 +952,14 @@
     <Content Include="Views\Video\CreateNew.cshtml" />
     <Content Include="Views\Billing\Text.cshtml" />
     <Content Include="Views\Errors\Error404.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Errors\Error401.cshtml" />
+    <Content Include="Views\Errors\Error402.cshtml" />
+    <Content Include="Views\Errors\Error403.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

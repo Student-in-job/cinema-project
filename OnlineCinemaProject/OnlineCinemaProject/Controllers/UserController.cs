@@ -10,19 +10,16 @@ using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
 {
+     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
         // GET: /User/
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var aspnetroles = db.aspnetroles.ToList();
-            
-            
-            return View(/*aspnetusers.ToList()*/);
-            
+            var aspnetusers = db.aspnetusers.Include(a => a.tariff);
+            return View(aspnetusers.ToList());
         }
 
         // GET: /User/Details/5
@@ -43,7 +40,7 @@ namespace OnlineCinemaProject.Controllers
         // GET: /User/Create
         public ActionResult Create()
         {
-            ViewBag.SubscriptionId = new SelectList(db.subscriptions, "id", "id");
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name");
             return View();
         }
 
@@ -52,7 +49,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,SubscriptionId")] aspnetuser aspnetuser)
+        public ActionResult Create([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,TariffId")] aspnetuser aspnetuser)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +58,7 @@ namespace OnlineCinemaProject.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -76,6 +74,7 @@ namespace OnlineCinemaProject.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -84,7 +83,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,SubscriptionId")] aspnetuser aspnetuser)
+        public ActionResult Edit([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,TariffId")] aspnetuser aspnetuser)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +91,7 @@ namespace OnlineCinemaProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
