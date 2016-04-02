@@ -13,13 +13,13 @@ namespace OnlineCinemaProject.Controllers
     [Authorize(Roles = "PRManager ")]
     public class StatisticsBannerController : Controller
     {
-        private readonly OnlineCinemaEntities db = new OnlineCinemaEntities();
-
+      private readonly OnlineCinemaEntities db = new OnlineCinemaEntities();
+         public ActionResult Index(){
         // GET: /StatisticsBanner/
         //public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         //{
-        //    var statistics_banner = db.statistics_banner.Include(s => s.aspnetuser).Include(s => s.banner);
-        //    return View(statistics_banner.ToList());
+            var statistics_banner = db.statistics_banner.Include(s => s.aspnetuser).Include(s => s.banner);
+            return View(statistics_banner.ToList());}
 
         //    //    ViewBag.CurrentSort = sortOrder;
         //    //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";

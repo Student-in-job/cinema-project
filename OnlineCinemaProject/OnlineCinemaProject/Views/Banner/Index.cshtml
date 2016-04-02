@@ -10,14 +10,14 @@
     <h2>Banner</h2>
 
     
-@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-    
-}
+@*@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+
+    }*@
     <table class="table">
         <tr>
             <th>
@@ -72,10 +72,10 @@
         }   
 
     </table>
-                      <br />
+                      @*<br />
                       Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
                       @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 <p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
