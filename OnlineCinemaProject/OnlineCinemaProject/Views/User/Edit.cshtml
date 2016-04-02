@@ -105,10 +105,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SubscriptionId, "SubscriptionId", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TariffId, "TariffId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SubscriptionId", String.Empty)
-                @Html.ValidationMessageFor(model => model.SubscriptionId)
+                @Html.DropDownList("TariffId", String.Empty)
+                @Html.ValidationMessageFor(model => model.TariffId)
             </div>
         </div>
 

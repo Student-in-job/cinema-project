@@ -1,10 +1,10 @@
 ﻿@model OnlineCinemaProject.Models.aspnetuser
 
 @{
-    ViewBag.Title = "Создание нового пользовтаеля";
+    ViewBag.Title = "Create";
 }
 
-<h2>Создание нового пользователя</h2>
+<h2>Create</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -112,10 +112,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SubscriptionId, "SubscriptionId", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TariffId, "TariffId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SubscriptionId", String.Empty)
-                @Html.ValidationMessageFor(model => model.SubscriptionId)
+                @Html.DropDownList("TariffId", String.Empty)
+                @Html.ValidationMessageFor(model => model.TariffId)
             </div>
         </div>
 
