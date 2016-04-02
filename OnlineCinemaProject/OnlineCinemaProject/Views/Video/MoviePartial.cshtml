@@ -1,40 +1,51 @@
-﻿@model IEnumerable<OnlineCinemaProject.Models.movie>
-<div>
+﻿@model IEnumerable<OnlineCinemaProject.Models.movy>
+<div class="marketing">
     <h3>Видео</h3>
-    <table >
-        @foreach (var content in Model)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink("Смотреть", "Watch", "Movie", new { url = content.url }, new { @class = "video-placeholder" })
-                </td>
-                <td>
 
-                    <br />
-                    @switch (content.quality)
-                    {
-                        case 0:
-                            {
-                                @:Качество: HD
-                                break;
-                            }
-                        case 1:
-                            {
-                                @:Качество: SD
-                                break;
-                            }
-                    }
-                    <br />
-                    Цена: @content.price сум
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-2">
+                    <img class="img-thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                    <h2>@Html.ActionLink("Смотреть", "Details", "Movie", new { id = item.id }, new { @class = "btn-info " })</h2>
+                </div>
+            }
+        </div>
 
-                </td>
-                <td>
-                    @Html.ActionLink("Редактировать", "Edit", "Movie", new { id = content.id }, null) <br />
-                    @Html.ActionLink("Удалить", "Delete", "Movie", new { id = content.id }, null) <br />
-                </td>
-            </tr>
+    @*<table >
+            @foreach (var content in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Смотреть", "Watch", "Movie", new { url = content.url }, new { @class = "video-placeholder" })
+                    </td>
+                    <td>
 
-        }
-    </table>
+                        <br />
+                        @switch (content.quality)
+                        {
+                            case 0:
+                                {
+                                    @:Качество: HD
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    @:Качество: SD
+                                    break;
+                                }
+                        }
+                        <br />
+                        Цена: @content.price сум
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Редактировать", "Edit", "Movie", new { id = content.id }, null) <br />
+                        @Html.ActionLink("Удалить", "Delete", "Movie", new { id = content.id }, null) <br />
+                    </td>
+                </tr>
+
+            }
+        </table>*@
 
 </div>

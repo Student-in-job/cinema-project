@@ -124,6 +124,7 @@ namespace OnlineCinemaProject.Controllers
                     Email = model.Email,
                     Sex =  model.Sex,
                     JoinDate = DateTime.Now
+                    
                 };
                 
                 var result = await UserManager.CreateAsync(user, model.Password);

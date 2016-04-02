@@ -9,98 +9,32 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table >
 @foreach (var item in Model)
 {
-    <tr >
-        <td>
-            <img src="/uploads/@item.img_url" class="video-img-list" style=""/>
-        </td>
-        <td >
-            <h3>
-                @{
-                    if (item.type == 0)
-                    {
-                        <h4>Фильм: @item.name</h4>
-                    }
-                    else
-                    {
-                        <h4>Сериал: @item.name</h4>
-                    }
+    <hr class="featurette-divider"/>
+    <div class="row featurette">
+        <div class="col-md-3">
+            <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="~/uploads/@item.img_url" data-holder-rendered="true" style="width: 200px; height: 200px;">
+        </div>
+        <div class="col-md-6">
+            @{
+                if (item.type == 0)
+                {
+                    <h4>Фильм: @item.name</h4>
                 }
-            </h3>
+                else
+                {
+                    <h4>Сериал: @item.name</h4>
+                }
+            }
             <p> @Html.DisplayFor(modelItem => item.release_date)</p>
-        </td>
-        <td>
-        @Html.ActionLink("Редактировать", "Edit", new {id = item.id})  <br/>
-            @Html.ActionLink("Описание", "Details", new { id = item.id })<br/> 
-            @Html.ActionLink("Удалить", "Delete", new {id = item.id})<br/>
-        </td>
-    </tr>
-}    
-</table>
+        </div>
+        <div class="col-md-3">
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) <br />
+            @Html.ActionLink("Описание", "Details", new { id = item.id })<br />
+            @Html.ActionLink("Удалить", "Delete", new { id = item.id })<br />
+        </div>
 
-
-
-@*<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.age_limit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.release_date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.details)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.director)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.img_url)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.age_limit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.release_date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.details)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.type)
-            </td>
-            
-            <td>
-                <img src="/uploads/@item.img_url" alt="Image" class="video-img-list" />
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.id}) |
-                @Html.ActionLink("Details", "Details", new {id = item.id}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.id})
-            </td>
-        </tr>
-    }
-
-</table>*@
-
+    </div>
+}
 

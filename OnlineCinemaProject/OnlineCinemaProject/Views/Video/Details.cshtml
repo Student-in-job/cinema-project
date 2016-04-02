@@ -5,26 +5,27 @@
 @{
     ViewBag.Title = "Details";
 }
-<div style="height: 50px">
-    <h1>
-        @{
-            if (Model.type == 0)
-            {
-                <h1> Фильм: @Html.DisplayFor(model => model.name)</h1>
-            }
-            else
-            {
-                <h1> Сериал: @Html.DisplayFor(model => model.name)</h1>
-            }
-        }
 
-    </h1>
+
+<div class="featurette">
+    <h1> Фильм: @Html.DisplayFor(model => model.name)</h1>
+    @{
+        if (Model.type == 0)
+        {
+            <h1> Фильм: @Html.DisplayFor(model => model.name)</h1>
+        }
+        else
+        {
+            <h1> Сериал: @Html.DisplayFor(model => model.name)</h1>
+        }
+    }
+
 </div >
-<div style="display: inline-block" >
-    <div style="width: 300px; float: left">
-        <img src="/uploads/@Model.img_url" class="video-img" />
+<div class="row featurette">
+    <div class="col-md-5">
+        <img class="featurette-image img-responsive center-block" src="~/uploads/@Model.img_url" class="video-img"/>
     </div>
-    <div style="height: auto">
+    <div class="col-md-7">
 
         <div class="properties">
             <span>
@@ -53,52 +54,39 @@
             </span>
         </div>
         <p>Режиссер: @Model.director</p>
-        <p>
-            В ролях: 
-            @foreach (var videoactor in Model.videoactors)
-            {
-            @videoactor.actor.name  @: , 
-            }
-        </p>
         <div class="display-field">
             @Html.DisplayFor(model => model.details)
         </div>
 
     </div>
 </div>
+<hr class="featurette-divider"/>
+<div class="marketing">
+    <div class="row">
+        @foreach (var videoactor in Model.videoactors)
+        {
+            <div class="col-lg-2">
+                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="60" height="60">
+                <h2>@Html.ActionLink(videoactor.actor.name, "Details", "Actor", new {id = videoactor.actor.id}, new {@class = "btn-link "})</h2>
+            </div>
+        }
+    </div>
+</div>
+<hr class="featurette-divider" />
+<div>
 
-<div >
-    
     @if (Model.type == 0)
     {
         @Html.Partial("MoviePartial", Model.movies)
+        @Html.ActionLink("Добавить Видео", "AddSeasonByVideoId", "Season", new {id = @Model.id}, null)
     }
     else
     {
         @Html.Partial("SeriesPartial", Model.seasons)
-        @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
+        @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new {id = @Model.id}, null)
     }
-    <div>
-        <h5>Трейлеры</h5>
-        <table >
-            @foreach (var trailer in Model.trailers)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Смотреть", "Watch", "Video", new {url = trailer.url}, new {@class = "video-placeholder"})
-                    </td>
-                    <td>
-                        <h3>@trailer.title</h3>
-                    </td>
-                    <td>
-                        @Html.ActionLink("Редактировать", "Edit", "Trailer", new {id = trailer.id}, null) <br/>
-                        @Html.ActionLink("Удалить", "Delete", "Trailer", new {video_id = Model.id}, null) <br/>
-                    </td>
-                </tr>
-
-            }
-        </table>
-        @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new{ video_id = Model.id}, null)
-    </div>
-    
+    <hr class="featurette-divider"/>
+    @Html.Partial("VideoTrailers", Model.trailers)
+    @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new { video_id = Model.id }, null)
 </div>
+
