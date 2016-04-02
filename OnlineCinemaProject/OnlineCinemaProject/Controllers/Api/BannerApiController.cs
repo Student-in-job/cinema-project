@@ -1,179 +1,87 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using OnlineCinemaProject.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
-    /*
-    To add a route for this controller, merge these statements into the Register method of the WebApiConfig class. Note that OData URLs are case sensitive.
-
-    using System.Web.Http.OData.Builder;
-    using OnlineCinemaProject.Models;
-    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<banner>("BannerApi");
-    builder.EntitySet<advertiser>("advertisers"); 
-    config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
-    */
     public class BannerApiController : ApiController
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
-
-        // GET odata/BannerApi
-        [Queryable]
-        public IQueryable<banner> GetBannerApi()
+        [HttpGet]
+        [Route("api/banner/")]
+        public HttpResponseMessage GetBanner() 
+        
         {
-            IEnumerable<string> headerValues;
-            var token = string.Empty;
-            if(Request.Headers.TryGetValues("token", out headerValues)) {
-                token = headerValues.FirstOrDefault();
-            }
 
-            string query = "SELECT * FROM userbanners WHERE token = @p0 and is_shown = 0 limit 10";
+            db.Configuration.ProxyCreationEnabled = false;
+            // string token = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
+            //IEnumerable<string> headerValues;
+            //var id_user = string.Empty;
+            //if (Request.Headers.TryGetValues("token", out headerValues))
+            //{
+            //    id_user = headerValues.FirstOrDefault();
+            //}
+            //SELECT banners.img_url statistics_banner from banners where banners.id not in (SELECT statistics_banner.id_banner from statistics_banner WHERE statistics_banner.id_user = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
 
-            var banners = await db.banners.SqlQuery(query, token).SingleOrDefaultAsync();
-            if (banners == null)
-            {
-                return Ok();
-            }
+            string query = "SELECT * FROM banners order by show_amount asc";
 
-            return Ok(banners);
-        }
+            var banner = db.banners.SqlQuery(query).ToList().First();
 
-        // GET odata/BannerApi(5)
-        [Queryable]
-        public SingleResult<banner> Getbanner([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.banners.Where(banner => banner.id == key));
-        }
+            var sb = db.statistics_banner.Find(banner.id);
 
-        // PUT odata/BannerApi(5)
-        public IHttpActionResult Put([FromODataUri] int key, banner banner)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (key != banner.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(banner).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!bannerExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(banner);
-        }
-
-         //POST odata/BannerApi
-        public IHttpActionResult Post(banner banner)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.banners.Add(banner);
+            db.banners.Attach(banner);
+            banner.show_amount = banner.show_amount + 1;
+            var entry = db.Entry(banner);
+            entry.Property(e => e.show_amount).IsModified = true;
+            // other changed properties
             db.SaveChanges();
 
-            return Created(banner);
-        }
-
-       //  PATCH odata/BannerApi(5)
-        [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<banner> patch)
-        {
-            if (!ModelState.IsValid)
+            if (sb != null)
             {
-                return BadRequest(ModelState);
+
+                db.statistics_banner.Attach(sb);
+                sb.date = DateTime.Now;
+                sb.show_amount = banner.show_amount;
+                var entry1 = db.Entry(sb);
+                entry1.Property(e => e.show_amount).IsModified = true;
+                entry1.Property(e => e.date).IsModified = true;
+                // other changed properties
+                db.SaveChanges();
+
+
             }
-
-            banner banner = db.banners.Find(key);
-            if (banner == null)
+            else
             {
-                return NotFound();
-            }
-
-            patch.Patch(banner);
-
-            try
-            {
+                sb = new statistics_banner();
+                sb.date = DateTime.Now;
+                sb.id_banner = banner.id;
+                sb.show_amount = banner.show_amount;
+                sb.id_user = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
+                db.statistics_banner.Add(sb);
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!bannerExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return Updated(banner);
+           string strJSON =   Newtonsoft.Json.JsonConvert.SerializeObject(banner, Formatting.Indented, 
+new JsonSerializerSettings {
+        PreserveReferencesHandling = PreserveReferencesHandling.Objects
+});
+       //     string strJSON = JsonConvert.SerializeObject(banner,
+       //new EFNavigationPropertyConverter(), new JsonSerializerSettings
+       //{
+       //    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+       //});
+
+           var response = new HttpResponseMessage();
+           response.Content = new StringContent(strJSON);
+           response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+           return response;
         }
 
-        // DELETE odata/BannerApi(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
-        {
-            banner banner = db.banners.Find(key);
-            if (banner == null)
-            {
-                return NotFound();
-            }
-
-            db.banners.Remove(banner);
-            db.SaveChanges();
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-         //GET odata/BannerApi(5)/advertiser
-        [Queryable]
-        public SingleResult<advertiser> Getadvertiser([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.banners.Where(m => m.id == key).Select(m => m.advertiser));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool bannerExists(int key)
-        {
-            return db.banners.Count(e => e.id == key) > 0;
-        }
     }
 }

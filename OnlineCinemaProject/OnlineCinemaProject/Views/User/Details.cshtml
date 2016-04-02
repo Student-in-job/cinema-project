@@ -1,71 +1,14 @@
 ﻿@model OnlineCinemaProject.Models.aspnetuser
 
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Details";
 }
 
-<h2>Profile</h2>
+<h2>Details</h2>
 
 <div>
-    <h4>@Html.DisplayFor(model => model.UserName)</h4>
+    <h4>aspnetuser</h4>
 	<hr />
-
-    <dl class="dl-horizontal">
-        <dt>
-            Tariff:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.subscription.tariff.name)
-        </dd>
-        <dt>
-            От:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.subscription.start)
-        </dd>
-        <dt>
-            До:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.subscription.end)
-        </dd>
-    </dl>
-
-    <dl class="dl-horizontal">
-        <dt>
-            Балан:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Balance) 
-            @Html.ActionLink(" TopUp", "TopUp", new { userId = Model.Id })
-        </dd>
-
-    </dl>
-    <table>
-        <tr>
-            <th> Payment history</th>
-        </tr>
-        @foreach(var payment in Model.payments)
-            {
-                <tr>
-                    <td>
-                        <dl class="dl-horizontal">
-                            <dd>
-                                @payment.payment_date
-                            </dd>
-                            <dd>
-                                @payment.name
-                            </dd>
-                            <dd>
-                                @payment.amount
-                            </dd>
-                        </dl>
-                    </td>
-                </tr>
-            }
-    </table>
-
-    @{/*}
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
@@ -156,16 +99,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.subscription.id)
+            @Html.DisplayNameFor(model => model.tariff.name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.subscription.id)
+            @Html.DisplayFor(model => model.tariff.name)
         </dd>
 
     </dl>
-*/}
 </div>
 <p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

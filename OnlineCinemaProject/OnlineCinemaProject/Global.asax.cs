@@ -1,7 +1,10 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web;
+using System.Web.Http;
 using System.Web.Routing;
 using System.Web.Mvc;
 using System.Web.Optimization;
+using OnlineCinemaProject.Controllers;
 
 namespace OnlineCinemaProject
 {
@@ -9,6 +12,7 @@ namespace OnlineCinemaProject
     {
         protected void Application_Start()
         {
+            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -16,5 +20,7 @@ namespace OnlineCinemaProject
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
         }
+
+
     }
 }

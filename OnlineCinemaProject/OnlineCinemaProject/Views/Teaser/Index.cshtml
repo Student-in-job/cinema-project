@@ -7,9 +7,7 @@
 
     <h2>Teaser</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+   
 
     @using (Html.BeginForm("Index", "Teaser", FormMethod.Get))
     {
@@ -35,7 +33,7 @@
             <th>
                 @Html.ActionLink("payment", "Index", new { sortOrder = ViewBag.paymentSortParm })
             </th>
-            <th> show amount</th>
+           
             <th>
                 advertiser
             </th>
@@ -60,15 +58,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.payment)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.showAmount)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.advertiser.name)
                 </td>
 
                 <td>
-                    <img src="/uploads/@item.img_url" class="video-img-list" style="" />
+                    <img src="~/uploads/@item.img_url" class="video-img-list" style="" />
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
@@ -83,3 +81,6 @@
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>

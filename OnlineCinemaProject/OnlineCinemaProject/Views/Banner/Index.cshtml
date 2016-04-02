@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.banner>
+﻿@model IEnumerable<OnlineCinemaProject.Models.banner>
                       @using PagedList.Mvc;
 
                                <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
@@ -9,18 +9,15 @@
 
     <h2>Banner</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-
-@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
     
-}
+@*@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+
+    }*@
     <table class="table">
         <tr>
             <th>
@@ -64,7 +61,7 @@
                     @Html.DisplayFor(modelItem => item.advertiser.name)
                 </td>
                 <td>
-    <img src="~/uploads/@item.img_url" class="video-img-list" style="" />
+    <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="200" height="200"/>
 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
@@ -75,7 +72,10 @@
         }   
 
     </table>
-                      <br />
+                      @*<br />
                       Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
                       @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
