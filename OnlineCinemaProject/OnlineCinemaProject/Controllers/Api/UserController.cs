@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Net;
 using System.Web.Http;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.DomainModels;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -15,13 +14,13 @@ namespace OnlineCinemaProject.Controllers.Api
         public IHttpActionResult Subscribe(string userId, int tariffId)
         {
             var tariff = _db.tariffs.Find(tariffId);
-            
+
             var user = _db.aspnetusers.Find(userId);
             if (tariff == null || user == null)
             {
                 return new HttpActionResult(HttpStatusCode.NotFound, "Пользователя с данным Id не существует");
             }
-            if (!DrawMoney(user,tariff.price))
+            if (!DrawMoney(user, tariff.price))
             {
                 return new HttpActionResult(HttpStatusCode.NotAcceptable, "Ндостаточно средств на балансе");
             }
@@ -29,7 +28,7 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = tariff.price,
-                title = "Подписка на тариф "+ tariff.name,
+                title = "Подписка на тариф " + tariff.name,
                 payment_type = false,
                 payment_date = DateTime.Now,
             };
@@ -58,7 +57,7 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 return NotFound();
             }
-            TopUp(user,amount);
+            /*TopUp(user,amount);*/
             return Ok();
         }
 
@@ -66,20 +65,16 @@ namespace OnlineCinemaProject.Controllers.Api
         [Route("api/movie/watch/{movieId}/{userId}")]
         public IHttpActionResult WatchMovie(int movieId, string userId)
         {
-            MovieDomain movie = (MovieDomain)_db.movies.Find(movieId);
-            UserDomain user = (UserDomain)_db.aspnetusers.Find(userId);
+            movy movie = _db.movies.Find(movieId);
+            aspnetuser user = _db.aspnetusers.Find(userId);
             if (movie == null || user == null)
             {
-                return NotFound();
+                return new HttpActionResult(HttpStatusCode.NotFound, "Фильм отсутствует на сервере");
             }
             if (!user.CheckAccess(movie))
             {
-                return new HttpActionResult(HttpStatusCode.NotAcceptable, "Фильм платный заплотите сначала");
+                return new HttpActionResult((HttpStatusCode)1002, "Для просмотра оплатите стоимость фильма");
             }
-            /*if (!UserHasThisMovie(user,movie) || !movie.price.Equals(0) || !UserHasTariff(user))// если пользователь не купил ранее этот фильм или фильм не бесплатный
-            {
-                return new HttpActionResult(HttpStatusCode.NotAcceptable, "Фильм платный заплотите сначала");
-            }*/
             moviehistory moviehistory = new moviehistory
             {
                 aspnetuser = user,
@@ -90,15 +85,15 @@ namespace OnlineCinemaProject.Controllers.Api
             _db.moviehistories.Add(moviehistory);
             _db.SaveChanges();
 
-            return Ok();
+            return new HttpActionResult(HttpStatusCode.Accepted, "Фильм доступен");
         }
 
         private bool UserHasTariff(aspnetuser user)
         {
-           /* if (user.subscription.enabled)
-            {
-                return true;                
-            }todo */ 
+            /* if (user.subscription.enabled)
+             {
+                 return true;                
+             }todo */
             return false;
         }
 
@@ -112,8 +107,8 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 return NotFound();
             }
-            
-            if (!UserHasThisSeason(user,episode.season) || !episode.season.price.Equals(0) || !UserHasTariff(user))// если пользователь не купил ранее этот фильм или фильм не бесплатный
+
+            if (!UserHasThisSeason(user, episode.season) || !episode.season.price.Equals(0) || !UserHasTariff(user))// если пользователь не купил ранее этот фильм или фильм не бесплатный
             {
                 return new HttpActionResult(HttpStatusCode.NotAcceptable, "Фильм платный заплотите сначала");
             }
@@ -149,7 +144,7 @@ namespace OnlineCinemaProject.Controllers.Api
         public IHttpActionResult WatchEpisode(int episodeId)
         {
             var episode = _db.episodes.Find(episodeId);
-            if (episode == null )
+            if (episode == null)
             {
                 return NotFound();
             }
@@ -181,23 +176,7 @@ namespace OnlineCinemaProject.Controllers.Api
             return true;
         }
 
-        public void TopUp(aspnetuser user, decimal amount)
-        {
-            user.Balance += amount;
-            payment payment = new payment
-            {
-                aspnetuser = user,
-                amount = amount,
-                title = "Пополнение баланса",
-                payment_type = true,
-                payment_date = DateTime.Now,
-            };
-            _db.payments.Add(payment);
-            _db.Entry(user).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
-
-        public bool CheckBalance(decimal? balance, decimal amount ) // проверить хватит ли денег 
+        public bool CheckBalance(decimal? balance, decimal amount) // проверить хватит ли денег 
         {
             if (balance < amount)
             {
@@ -220,7 +199,7 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 return new HttpActionResult(HttpStatusCode.NotAcceptable, "Пользователь уже купил данный ф");
             }
-            if(!DrawMoney(user,movie.price))
+            if (!DrawMoney(user, movie.price))
             {
                 return new HttpActionResult(HttpStatusCode.NotAcceptable, "Ндостаточно средств на балансе");
             }
@@ -272,7 +251,7 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 aspnetuser = user,
                 amount = season.price,
-                title = "Покупка сезона" + season.name+", сериала" + season.video.name,
+                title = "Покупка сезона" + season.name + ", сериала" + season.video.name,
                 payment_type = false,
                 payment_date = DateTime.Now,
             };

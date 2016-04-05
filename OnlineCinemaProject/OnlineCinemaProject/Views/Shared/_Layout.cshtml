@@ -71,6 +71,10 @@
                     @Html.ActionLink("Рекламодатель", "Index", "Advertiser", null, new { @class = "list-group-item" })
                     @Html.ActionLink("Баннеры", "Index", "Banner", null, new { @class = "list-group-item" })
                     @Html.ActionLink("Тизеры", "Index", "Teaser", null, new { @class = "list-group-item" })
+                     @Html.ActionLink("Ротатор баннеров", "Rotator", "Banner", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Ротатор тизеров", "Rotator", "Teaser", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Статистика баннеров", "Index", "StatisticsBanner", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Статистика тизеров", "Index", "StatisticsTeaser", null, new { @class = "list-group-item" })
                 }
                 @if (User.IsInRole("BilingManager"))
                 {

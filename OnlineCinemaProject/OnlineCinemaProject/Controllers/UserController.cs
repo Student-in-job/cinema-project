@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -10,17 +10,46 @@ using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
 {
+     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
+[HttpGet]
+         public ActionResult TopUpBalance()
+         {
+             return View();
+         }
+         [HttpPost]
+         public ActionResult TopUpBalance(TopUpViewModel model)
+         {
+             aspnetuser user = db.aspnetusers.Find(model.UserId);
+             if (user != null)
+             {
+                 user.TopUpBalance(model.Amount);
+                 payment payment = new payment
+                 {
+                     aspnetuser = user,
+                     amount = model.Amount,
+                     title = "Пополнение баланса",
+                     payment_type = true,
+                     payment_date = DateTime.Now,
+                 };
+                 db.payments.Add(payment);
+                 db.Entry(user).State = EntityState.Modified;
+                 db.SaveChanges();
+                 ModelState.AddModelError("Ok", "Операция Успешно выполнена!");
+                 return View();
+             }
+             ModelState.AddModelError("Failed", "Неправильо введен Id пользователя.");
+             return View(model);
+         }
+
         // GET: /User/
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var aspnetroles = db.aspnetroles.ToList();
-            return View(db.aspnetusers.ToList());
-            
+            var aspnetusers = db.aspnetusers.Include(a => a.tariff);
+            return View(aspnetusers.ToList());
         }
 
         // GET: /User/Details/5
@@ -35,13 +64,21 @@ namespace OnlineCinemaProject.Controllers
             {
                 return HttpNotFound();
             }
+            /*ICollection<subscription> subscriptions = db.subscriptions.Where(i =>
+                i.tariff == aspnetuser.tariff &&
+                i.aspnetuser == aspnetuser
+                ).ToList();*/
+            ViewBag.subscriptions = db.subscriptions.Where(i =>
+                i.tariff == aspnetuser.tariff &&
+                i.aspnetuser == aspnetuser
+                ).ToList();
             return View(aspnetuser);
         }
 
         // GET: /User/Create
         public ActionResult Create()
         {
-            ViewBag.SubscriptionId = new SelectList(db.subscriptions, "id", "id");
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name");
             return View();
         }
 
@@ -50,7 +87,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,SubscriptionId")] aspnetuser aspnetuser)
+        public ActionResult Create([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,TariffId")] aspnetuser aspnetuser)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +96,7 @@ namespace OnlineCinemaProject.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -74,6 +112,7 @@ namespace OnlineCinemaProject.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -82,7 +121,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,SubscriptionId")] aspnetuser aspnetuser)
+        public ActionResult Edit([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,TariffId")] aspnetuser aspnetuser)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +129,7 @@ namespace OnlineCinemaProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -127,5 +167,23 @@ namespace OnlineCinemaProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+public ActionResult Profile(string id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             aspnetuser aspnetuser = db.aspnetusers.Find(id);
+             if (aspnetuser == null)
+             {
+                 return HttpNotFound();
+             }
+             
+             ICollection<subscription> subscriptions = db.subscriptions.Where(i =>i.user_id == aspnetuser.Id).ToList();
+             ViewBag.subscriptions = subscriptions;
+             return View(aspnetuser);
+         }
+
     }
 }

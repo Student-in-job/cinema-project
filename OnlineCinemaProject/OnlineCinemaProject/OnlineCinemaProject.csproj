@@ -206,29 +206,35 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
+    <Compile Include="Controllers\Api\BannerApiController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
     <Compile Include="Controllers\Api\RegistrationApiController.cs" />
     <Compile Include="Controllers\Api\TariffController.cs" />
+    <Compile Include="Controllers\Api\TeaserApiController.cs" />
+    <Compile Include="Controllers\Api\TiserApiController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\EpisodeController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginApiController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
+    <Compile Include="Controllers\StatisticsBannerController.cs" />
+    <Compile Include="Controllers\StatisticsTeaserController.cs" />
     <Compile Include="Controllers\SubsciptionController.cs" />
     <Compile Include="Controllers\TeaserController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="CustomResult\ApiResponce.cs" />
     <Compile Include="CustomResult\VideoResult.cs" />
+    <Compile Include="CustomResult\WrappingHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -253,8 +259,6 @@
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DomainModels\PaymentDomain.cs" />
-    <Compile Include="Models\DomainModels\TariffDomain.cs" />
     <Compile Include="Models\episode.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -264,6 +268,7 @@
     <Compile Include="Models\genre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\genrepart.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\like.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
@@ -337,6 +342,10 @@
     <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
+    <Compile Include="Models\_Movie.cs" />
+    <Compile Include="Models\_Subscription.cs" />
+    <Compile Include="Models\_Tariff.cs" />
+    <Compile Include="Models\_User.cs" />
     <Compile Include="MySqlInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -894,11 +903,6 @@
     <Content Include="Views\Subsciption\Edit.cshtml" />
     <Content Include="Views\Subsciption\Index.cshtml" />
     <Content Include="Views\Subsciption\TariffSubscriptions.cshtml" />
-    <Content Include="Views\Tariff\Create.cshtml" />
-    <Content Include="Views\Tariff\Delete.cshtml" />
-    <Content Include="Views\Tariff\Details.cshtml" />
-    <Content Include="Views\Tariff\Edit.cshtml" />
-    <Content Include="Views\Tariff\Index.cshtml" />
     <Content Include="Views\Trailer\AddTrailerByVideoId.cshtml" />
     <Content Include="Views\Trailer\AddTrilerByVideoId.cshtml" />
     <Content Include="Views\Trailer\Create.cshtml" />
@@ -941,10 +945,6 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\genre.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
-    <Content Include="Views\Error\Error404.cshtml" />
-    <Content Include="Views\Error\Error403.cshtml" />
-    <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
     <Content Include="Views\Billing\Create.cshtml" />
     <Content Include="Views\Billing\Delete.cshtml" />
     <Content Include="Views\Billing\Details.cshtml" />
@@ -966,6 +966,21 @@
     <Content Include="Views\Video\StatisticsPartial.cshtml" />
     <Content Include="Views\Video\_SearchTab.cshtml" />
     <Content Include="Views\Video\_SubmissionTab.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\TopUpBalance.cshtml" />
+    <Content Include="Views\Teaser\Rotator.cshtml" />
+    <Content Include="Views\StatisticsBanner\Create.cshtml" />
+    <Content Include="Views\StatisticsBanner\Delete.cshtml" />
+    <Content Include="Views\StatisticsBanner\Details.cshtml" />
+    <Content Include="Views\StatisticsBanner\Edit.cshtml" />
+    <Content Include="Views\StatisticsBanner\Index.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Create.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Delete.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Details.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Edit.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Index.cshtml" />
+    <Content Include="Views\Error\Error401.cshtml" />
+    <Content Include="Views\Error\Error402.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

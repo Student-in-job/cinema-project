@@ -27,7 +27,7 @@ namespace OnlineCinemaProject.Models
         public int video_id { get; set; }
     
         public virtual ICollection<episode> episodes { get; set; }
-        public virtual ICollection<userseason> userseasons { get; set; }
         public virtual video video { get; set; }
+        public virtual ICollection<userseason> userseasons { get; set; }
     }
 }

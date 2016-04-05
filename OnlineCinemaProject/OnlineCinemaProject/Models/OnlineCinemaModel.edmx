@@ -65,6 +65,7 @@
           <Property Name="adv_id" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="show_amount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="countries">
           <Key>
@@ -1483,6 +1484,7 @@
           <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
           <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_banner" FromRole="banner" ToRole="statistics_banner" />
+          <Property Name="show_amount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="teaser">
           <Key>
@@ -2067,6 +2069,7 @@
           <EntitySetMapping Name="banners">
             <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
               <MappingFragment StoreEntitySet="banners">
+                <ScalarProperty Name="show_amount" ColumnName="show_amount" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="adv_id" ColumnName="adv_id" />

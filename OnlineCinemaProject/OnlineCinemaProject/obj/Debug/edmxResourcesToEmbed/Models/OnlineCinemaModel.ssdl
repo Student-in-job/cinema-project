@@ -60,6 +60,7 @@
     <Property Name="adv_id" Type="int" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
     <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="show_amount" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="countries">
     <Key>

@@ -556,6 +556,7 @@
     <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
     <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_banner" FromRole="banner" ToRole="statistics_banner" />
+    <Property Name="show_amount" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="teaser">
     <Key>

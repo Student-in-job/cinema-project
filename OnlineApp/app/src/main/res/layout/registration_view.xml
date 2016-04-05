@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/drawer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true">
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+		<include layout="@layout/actionbar"/>
+
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+			<ScrollView
+					android:id="@+id/content"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+
+				<LinearLayout
+						xmlns:app="http://schemas.android.com/apk/res-auto"
+						android:orientation="vertical"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content">
+
+					<FrameLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:padding="10dp"
+								android:layout_gravity="center"
+								android:scaleType="fitCenter"
+								android:background="@color/color_primary_light"/>
+
+						<android.support.design.widget.FloatingActionButton
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:id="@+id/take_photo"
+								android:visibility="gone"
+								android:layout_marginTop="234dp"
+								android:layout_marginRight="10dp"
+								android:layout_gravity="bottom|right"
+								app:elevation="4dp"
+								/>
+					</FrameLayout>
+
+					<LinearLayout
+							android:layout_marginTop="30dp"
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="top"
+								android:layout_marginTop="26dp"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<LinearLayout
+								android:orientation="vertical"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content">
+
+							<android.support.design.widget.TextInputLayout
+									android:id="@+id/name_wrapper"
+									app:errorTextAppearance="@style/ErrorText"
+									android:layout_marginLeft="10dp"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content">
+
+								<EditText
+										android:id="@+id/name"
+										android:hint="name"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:singleLine="true"/>
+							</android.support.design.widget.TextInputLayout>
+
+							<android.support.design.widget.TextInputLayout
+									android:id="@+id/last_name_wrapper"
+									app:errorTextAppearance="@style/ErrorText"
+									android:layout_marginLeft="10dp"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content">
+
+								<EditText
+										android:id="@+id/last_name"
+										android:hint="last name"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:singleLine="true"/>
+							</android.support.design.widget.TextInputLayout>
+
+							<!--<android.support.design.widget.TextInputLayout-->
+									<!--android:id="@+id/middle_name_wrapper"-->
+									<!--app:errorTextAppearance="@style/ErrorText"-->
+									<!--android:layout_marginLeft="10dp"-->
+									<!--android:layout_width="match_parent"-->
+									<!--android:layout_height="wrap_content">-->
+
+								<!--<EditText-->
+										<!--android:id="@+id/middle_name"-->
+										<!--android:layout_width="match_parent"-->
+										<!--android:layout_height="wrap_content"-->
+										<!--android:hint="@string/middle_name"-->
+										<!--android:paddingTop="@dimen/text_padding_top"-->
+										<!--android:paddingBottom="@dimen/text_padding_bottom"-->
+										<!--android:singleLine="true"/>-->
+							<!--</android.support.design.widget.TextInputLayout>-->
+
+						</LinearLayout>
+					</LinearLayout>
+
+					<LinearLayout
+							android:id="@+id/phone_view"
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="center_vertical"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<!--<LinearLayout-->
+								<!--android:layout_marginLeft="10dp"-->
+								<!--android:orientation="vertical"-->
+								<!--android:layout_width="match_parent"-->
+								<!--android:layout_height="wrap_content">-->
+
+							<!--<LinearLayout-->
+									<!--android:gravity="bottom"-->
+									<!--android:layout_width="match_parent"-->
+									<!--android:layout_height="wrap_content">-->
+
+								<!--<Spinner-->
+										<!--android:layout_gravity="bottom"-->
+										<!--android:id="@+id/code_spinner"-->
+										<!--style="@style/Base.Widget.AppCompat.Spinner.Underlined"-->
+										<!--android:layout_width="100dp"-->
+										<!--android:layout_height="wrap_content"/>-->
+
+								<!--<android.support.design.widget.TextInputLayout-->
+										<!--android:id="@+id/phone_wrapper"-->
+										<!--android:layout_width="match_parent"-->
+										<!--android:layout_height="wrap_content"-->
+										<!--android:layout_marginTop="2dp"-->
+										<!--android:layout_marginLeft="10dp"-->
+										<!--app:errorTextAppearance="@style/ErrorText">-->
+
+									<!--<EditText-->
+											<!--android:id="@+id/phone"-->
+											<!--android:layout_width="match_parent"-->
+											<!--android:layout_height="wrap_content"-->
+											<!--android:layout_gravity="bottom"-->
+											<!--android:hint="@string/phone_number"-->
+											<!--android:inputType="number"-->
+											<!--android:singleLine="true"-->
+											<!--android:maxLength="10"/>-->
+
+								<!--</android.support.design.widget.TextInputLayout>-->
+							<!--</LinearLayout>-->
+
+							<!--<TextView-->
+									<!--android:id="@+id/phone_error_message"-->
+									<!--android:layout_margin="5dp"-->
+									<!--android:visibility="gone"-->
+									<!--android:text="@string/no_phone_number"-->
+									<!--android:textColor="@color/error_text_color"-->
+									<!--android:gravity="left"-->
+									<!--android:layout_width="match_parent"-->
+									<!--android:layout_height="wrap_content"/>-->
+						<!--</LinearLayout>-->
+
+					</LinearLayout>
+
+					<LinearLayout
+							android:id="@+id/email_view"
+							android:layout_marginTop="14dp"
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="center_vertical"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<android.support.design.widget.TextInputLayout
+								android:id="@+id/mail_wrapper"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="10dp"
+								app:errorTextAppearance="@style/ErrorText">
+
+							<EditText
+									android:id="@+id/email"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:inputType="textEmailAddress"
+									android:hint="email"
+									android:singleLine="true"/>
+						</android.support.design.widget.TextInputLayout>
+					</LinearLayout>
+
+					<LinearLayout
+							android:id="@+id/psw_view"
+							android:layout_marginTop="14dp"
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="center_vertical"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<android.support.design.widget.TextInputLayout
+								android:id="@+id/psw_wrapper"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="10dp"
+								app:errorTextAppearance="@style/ErrorText">
+
+							<EditText
+									android:id="@+id/password"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:inputType="textEmailAddress"
+									android:hint="email"
+									android:singleLine="true"/>
+						</android.support.design.widget.TextInputLayout>
+					</LinearLayout>
+
+					<LinearLayout
+							android:id="@+id/date_view"
+							android:layout_marginTop="14dp"
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="center_vertical"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<!--<android.support.design.widget.TextInputLayout
+								android:id="@+id/birth_date_wrapper"
+								android:layout_marginLeft="10dp"
+								app:errorTextAppearance="@style/ErrorText"
+								android:paddingBottom="@dimen/text_padding_bottom"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content">
+
+							<EditText
+									android:id="@+id/birth_date"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:paddingTop="@dimen/text_padding_top"
+									android:paddingBottom="@dimen/text_padding_bottom"
+									android:clickable="false"
+									android:focusable="false"
+									android:editable="false"
+									android:hint="@string/your_birth_date"
+									android:singleLine="true"/>
+						</android.support.design.widget.TextInputLayout>
+					</LinearLayout>
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingTop="@dimen/text_padding_top"
+							android:paddingBottom="@dimen/text_padding_bottom"
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal">
+
+						<ImageView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_gravity="center_vertical"
+								android:src="@drawable/ic_map_marker"/>
+
+						<android.support.design.widget.TextInputLayout
+								android:id="@+id/city_wrapper"
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:layout_weight="1"
+								android:layout_marginLeft="10dp"
+								android:paddingBottom="@dimen/text_padding_bottom"
+								app:errorTextAppearance="@style/ErrorText">
+
+							<AutoCompleteTextView
+									android:id="@+id/city_actv"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:hint="@string/city"
+									android:singleLine="true"/>
+						</android.support.design.widget.TextInputLayout>
+
+						<ProgressBar
+								android:id="@+id/load_city"
+								android:visibility="gone"
+								android:layout_width="18dp"
+								android:layout_height="18dp"
+								android:layout_gravity="center_vertical"/>
+					</LinearLayout>
+
+					<LinearLayout
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="center_vertical"
+								android:src="@drawable/ic_key_variant_dark"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<android.support.design.widget.TextInputLayout
+								app:errorTextAppearance="@style/ErrorText"
+								android:layout_marginLeft="10dp"
+								android:id="@+id/password_wrapper"
+								android:paddingBottom="@dimen/text_padding_bottom"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content">
+
+							<EditText
+									android:id="@+id/password"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:paddingTop="@dimen/text_padding_top"
+									android:paddingBottom="@dimen/text_padding_bottom"
+									android:hint="@string/your_password"
+									android:inputType="textPassword"
+									android:singleLine="true"/>
+						</android.support.design.widget.TextInputLayout>
+					</LinearLayout>
+
+					<LinearLayout
+							android:layout_marginLeft="30dp"
+							android:layout_marginRight="16dp"
+							android:layout_marginBottom="30dp"
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
+
+						<ImageView
+								android:layout_gravity="center_vertical"
+								android:src="@drawable/ic_key_variant_dark"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"/>
+
+						<android.support.design.widget.TextInputLayout
+								android:id="@+id/confirm_password_wrapper"
+								android:layout_marginLeft="10dp"
+								app:errorTextAppearance="@style/ErrorText"
+								android:paddingBottom="@dimen/text_padding_bottom"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content">
+
+							<EditText
+									android:id="@+id/password_hint"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:paddingTop="@dimen/text_padding_top"
+									android:paddingBottom="@dimen/text_padding_bottom"
+									android:inputType="textPassword"
+									android:hint="@string/confirm_password"
+									android:singleLine="true"/>
+						</android.support.design.widget.TextInputLayout>-->
+					</LinearLayout>
+
+				</LinearLayout>
+			</ScrollView>
+
+			<ProgressBar
+					android:id="@+id/progress"
+					android:layout_gravity="center"
+					android:visibility="gone"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+		</FrameLayout>
+	</LinearLayout>
+	<Button
+			android:id="@+id/enter"
+			android:layout_below="@+id/login_view"
+			android:layout_alignParentRight="true"
+			android:layout_margin="20dp"
+			android:layout_alignParentBottom="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:theme="@style/WhiteButton"
+			android:padding="15dp"
+			android:textColor="@color/black"
+			android:text="register"/>
+
+</RelativeLayout>

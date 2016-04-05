@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.statistics_banner>
+    @using PagedList.Mvc;
+   
+ <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    @{
+        ViewBag.Title = "Statistics_banner";
+    }
+
+    <h2>Статистика баннеров</h2>
+
+    @using (Html.BeginForm("Index", "Statistics_banner", FormMethod.Get))
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
+
+    }
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Количество показов", "Index", new { sortOrder = ViewBag.show_amountSortParm })
+            </th>
+            <th>
+                Пользователь
+            </th>
+            <th>
+                @Html.ActionLink("Баннер", "Index", new { sortOrder = ViewBag.nameSortParm })
+            </th>
+            <th>
+                @Html.ActionLink("Дата показа", "Index", new { sortOrder = ViewBag.dateSortParm })
+            </th>
+
+            <th></th>
+        </tr>
+        
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.show_amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.aspnetuser.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.banner.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                   
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

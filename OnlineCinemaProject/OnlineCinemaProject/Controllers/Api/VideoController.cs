@@ -6,10 +6,12 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Routing;
+using Newtonsoft.Json;
 using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers.Api
@@ -31,10 +33,54 @@ namespace OnlineCinemaProject.Controllers.Api
     builder.EntitySet<movy>("movy"); 
     config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class VideoController : ODataController
+    public class VideoController : ApiController
     {
-        private OnlineCinemaEntities db = new OnlineCinemaEntities();
+        private OnlineCinemaEntities _db = new OnlineCinemaEntities();
+        //Get: api/video/get
+        [Route("api/video")]
+        public HttpResponseMessage GetVideo()
+        {
+            var videos = _db.videos.ToList();
 
+            string JsonString = Newtonsoft.Json.JsonConvert.SerializeObject(
+                videos, 
+                Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                });
+            //     string strJSON = JsonConvert.SerializeObject(banner,
+            //new EFNavigationPropertyConverter(), new JsonSerializerSettings
+            //{
+            //    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            //});
+
+            var response = new HttpResponseMessage();
+            response.Content = new StringContent(JsonString);
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return response;
+        }
+
+        //Get: api/video/get/5
+        public HttpResponseMessage GetVideoById(int id)
+        {
+            video videos = _db.videos.Find(id);
+
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(
+                videos,
+                Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                }
+                );
+
+            var response = new HttpResponseMessage { Content = new StringContent(jsonString) };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return response;
+        }
+
+        /*
         // GET odata/Video
         [Queryable]
         public IQueryable<video> GetVideo()
@@ -218,5 +264,7 @@ namespace OnlineCinemaProject.Controllers.Api
         {
             return db.videos.Count(e => e.id == key) > 0;
         }
+         */
     }
+
 }

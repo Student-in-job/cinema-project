@@ -182,6 +182,7 @@
     <EntitySetMapping Name="banners">
       <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
         <MappingFragment StoreEntitySet="banners">
+          <ScalarProperty Name="show_amount" ColumnName="show_amount" />
           <ScalarProperty Name="img_url" ColumnName="img_url" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="adv_id" ColumnName="adv_id" />
