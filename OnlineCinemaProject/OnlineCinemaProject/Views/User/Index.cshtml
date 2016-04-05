@@ -1,7 +1,9 @@
-﻿@model IEnumerable<OnlineCinemaProject.Models.aspnetuser>
+﻿
+@model IEnumerable<OnlineCinemaProject.Models.aspnetuser>
 
 @{
     ViewBag.Title = "Пользователи";
+    //List<aspnetrole> aspnetroles = ViewBag.roles;
 }
 
 <h2>Пользователи</h2>
@@ -39,6 +41,10 @@
         <th>
             @Html.DisplayName("Тариф")
         </th>
+
+        <th>
+            @Html.DisplayName("Роли")
+        </th>
         <th></th>
     </tr>
 
@@ -72,6 +78,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.tariff.name)
         </td>
+
+       
+        <td>
+            @foreach (var role in item.aspnetroles)
+            {
+                @role.Name <br/>
+            }
+        </td>
+
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Просмотреть", "Details", new { id=item.Id }) |

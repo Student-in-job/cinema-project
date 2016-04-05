@@ -42,7 +42,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<System.DateTime> JoinDate { get; set; }
         public Nullable<decimal> Balance { get; set; }
         public Nullable<int> TariffId { get; set; }
-    
+        
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<overview> overviews { get; set; }
         public virtual ICollection<aspnetrole> aspnetroles { get; set; }
@@ -53,6 +53,7 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
         public virtual tariff tariff { get; set; }
+
         public virtual ICollection<subscription> subscriptions { get; set; }
         public virtual ICollection<payment> payments { get; set; }
     }
