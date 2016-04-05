@@ -39,9 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNet.Highcharts">
-      <HintPath>..\packages\DotNet.Highcharts.4.0\lib\DotNet.Highcharts.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -206,9 +203,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
+    <Compile Include="Controllers\Api\BannerApiController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
     <Compile Include="Controllers\Api\RegistrationApiController.cs" />
     <Compile Include="Controllers\Api\TariffController.cs" />
+    <Compile Include="Controllers\Api\TeaserApiController.cs" />
+    <Compile Include="Controllers\Api\TiserApiController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
@@ -222,13 +222,15 @@
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
+    <Compile Include="Controllers\StatisticsBannerController.cs" />
+    <Compile Include="Controllers\StatisticsTeaserController.cs" />
     <Compile Include="Controllers\SubsciptionController.cs" />
     <Compile Include="Controllers\TeaserController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TrailerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="CustomResult\VideoResult.cs" />
+    <Compile Include="EFNavigationPropertyConverter .cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,13 +249,18 @@
     <Compile Include="Models\aspnetuser.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\aspnetuserclaim.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\aspnetuserlogin.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\banner.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DomainModels\TariffDomain.cs" />
     <Compile Include="Models\episode.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -274,6 +281,9 @@
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\movy.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_profiles.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OnlineCinemaModel.Context.cs">
@@ -300,6 +310,7 @@
     <Compile Include="Models\season.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StatisticBanner.cs" />
     <Compile Include="Models\statistics_banner.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -333,7 +344,6 @@
     <Compile Include="Models\videogenre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VideoModel.cs" />
     <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
@@ -589,10 +599,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
-    <Content Include="Content\font-awesome-4.5.0\css\font-awesome.css" />
-    <Content Include="Content\font-awesome-4.5.0\css\font-awesome.min.css" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\font-awesome-4.5.0\HELP-US-OUT.txt" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -617,70 +623,6 @@
       <DependentUpon>OnlineCinemaModel.edmx</DependentUpon>
       <LastGenOutput>OnlineCinemaModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\font-awesome-4.5.0\fonts\FontAwesome.otf" />
-    <Content Include="Content\font-awesome-4.5.0\less\animated.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\bordered-pulled.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\core.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\fixed-width.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\font-awesome.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\icons.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\larger.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\list.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\mixins.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\path.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\rotated-flipped.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\stacked.less" />
-    <Content Include="Content\font-awesome-4.5.0\less\variables.less" />
-    <Content Include="Content\font-awesome-4.5.0\scss\font-awesome.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_animated.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_bordered-pulled.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_core.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_fixed-width.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_icons.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_larger.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_list.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_mixins.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_path.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_rotated-flipped.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_stacked.scss" />
-    <Content Include="Content\font-awesome-4.5.0\scss\_variables.scss" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-all.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.src.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-blue.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-green.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-unica.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\gray.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid-light.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\sand-signika.js" />
-    <Content Include="Scripts\Highcharts-4.0.1\js\themes\skies.js" />
     <Content Include="Content\bootstrap-3.3.6\.editorconfig" />
     <Content Include="Content\bootstrap-3.3.6\.hound.yml" />
     <Content Include="Content\bootstrap-3.3.6\.travis.yml" />
@@ -814,6 +756,39 @@
     <Content Include="Content\bootstrap-3.3.6\test-infra\uncached-npm-install.sh" />
     <Content Include="Content\bootstrap-3.3.6\_config.yml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-all.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-blue.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-green.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-unica.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\gray.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid-light.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\sand-signika.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\skies.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -914,9 +889,14 @@
     <Content Include="Views\Video\MoviePartial.cshtml" />
     <Content Include="Views\Video\SeriesPartial.cshtml" />
     <Content Include="Views\Video\Watch.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\TopUp.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Advertiser\Create.cshtml" />
     <Content Include="Views\Advertiser\Delete.cshtml" />
     <Content Include="Views\Advertiser\Details.cshtml" />
@@ -936,30 +916,20 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\genre.cshtml" />
-    <Content Include="Views\Billing\Create.cshtml" />
-    <Content Include="Views\Billing\Delete.cshtml" />
-    <Content Include="Views\Billing\Details.cshtml" />
-    <Content Include="Views\Billing\Edit.cshtml" />
-    <Content Include="Views\Billing\Index.cshtml" />
-    <Content Include="Views\Billing\Tariffs.cshtml" />
-    <Content Include="Views\Video\VideoTrailers.cshtml" />
-    <Content Include="Views\Shared\Dashboard.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Video\CreateNew.cshtml" />
-    <Content Include="Views\Billing\Text.cshtml" />
-    <Content Include="Views\Errors\Error404.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
-    <Content Include="Views\User\Details.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Errors\Error401.cshtml" />
-    <Content Include="Views\Errors\Error402.cshtml" />
-    <Content Include="Views\Errors\Error403.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Error\Error403.cshtml" />
+    <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
+    <Content Include="Views\StatisticsBanner\Create.cshtml" />
+    <Content Include="Views\StatisticsBanner\Delete.cshtml" />
+    <Content Include="Views\StatisticsBanner\Details.cshtml" />
+    <Content Include="Views\StatisticsBanner\Edit.cshtml" />
+    <Content Include="Views\StatisticsBanner\Index.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Create.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Delete.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Details.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Edit.cshtml" />
+    <Content Include="Views\StatisticsTeaser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -994,7 +964,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:80</IISAppRootUrl>
+          <IISAppRootUrl>http://10.42.0.26:80</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
