@@ -47,6 +47,15 @@
             </div>
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.img_url, new { @class = "control-label col-md-2" })
+        </div>
+        <div class="editor-field">
+            <input id="ImagePath" title="Upload a product image" type="file" name="file" />
+            @Html.ValidationMessageFor(model => model.img_url)
+        </div>
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

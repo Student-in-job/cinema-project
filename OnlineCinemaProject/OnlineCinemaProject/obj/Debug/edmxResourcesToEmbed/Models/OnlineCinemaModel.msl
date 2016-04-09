@@ -9,6 +9,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="advertisers">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.advertiser">
+        <MappingFragment StoreEntitySet="advertiser">
+          <ScalarProperty Name="img_url" ColumnName="img_url" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="aspnetroles">
       <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetrole">
         <MappingFragment StoreEntitySet="aspnetroles">
@@ -17,10 +28,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="aspnetuserclaims">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetuserclaim">
+        <MappingFragment StoreEntitySet="aspnetuserclaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnetuserlogins">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetuserlogin">
+        <MappingFragment StoreEntitySet="aspnetuserlogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="aspnetusers">
       <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetuser">
         <MappingFragment StoreEntitySet="aspnetusers">
-          <ScalarProperty Name="TariffId" ColumnName="TariffId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -33,6 +62,21 @@
           <ScalarProperty Name="Sex" ColumnName="Sex" />
           <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
           <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="TariffId" ColumnName="TariffId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="banners">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
+        <MappingFragment StoreEntitySet="banners">
+          <ScalarProperty Name="show_amount" ColumnName="show_amount" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="start" ColumnName="start" />
+          <ScalarProperty Name="end" ColumnName="end" />
+          <ScalarProperty Name="payment" ColumnName="payment" />
+          <ScalarProperty Name="adv_id" ColumnName="adv_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="img_url" ColumnName="img_url" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -41,6 +85,16 @@
         <MappingFragment StoreEntitySet="countries">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="episodehistories">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.episodehistory">
+        <MappingFragment StoreEntitySet="episodehistory">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="episode_id" ColumnName="episode_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="watching_date" ColumnName="watching_date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -82,6 +136,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="moviehistories">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.moviehistory">
+        <MappingFragment StoreEntitySet="moviehistory">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="watching_date" ColumnName="watching_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="movies">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.movy">
+        <MappingFragment StoreEntitySet="movies">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+          <ScalarProperty Name="video_id" ColumnName="video_id" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="quality" ColumnName="quality" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="my_aspnet_profiles">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_profiles">
+        <MappingFragment StoreEntitySet="my_aspnet_profiles">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="valueindex" ColumnName="valueindex" />
+          <ScalarProperty Name="stringdata" ColumnName="stringdata" />
+          <ScalarProperty Name="binarydata" ColumnName="binarydata" />
+          <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="overviews">
       <EntityTypeMapping TypeName="OnlineCinemaModel.overview">
         <MappingFragment StoreEntitySet="overviews">
@@ -91,6 +178,18 @@
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="creation_date" ColumnName="creation_date" />
           <ScalarProperty Name="rating" ColumnName="rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payments">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.payment">
+        <MappingFragment StoreEntitySet="payments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="payment_type" ColumnName="payment_type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -105,10 +204,43 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="statistics_banner">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_banner">
+        <MappingFragment StoreEntitySet="statistics_banner">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="show_amount" ColumnName="show_amount" />
+          <ScalarProperty Name="id_banner" ColumnName="id_banner" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="statistics_teaser">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_teaser">
+        <MappingFragment StoreEntitySet="statistics_teaser">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_teasers" ColumnName="id_teasers" />
+          <ScalarProperty Name="id_users" ColumnName="id_users" />
+          <ScalarProperty Name="showAmount" ColumnName="showAmount" />
+          <ScalarProperty Name="dateShow" ColumnName="dateShow" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="subscriptions">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.subscription">
+        <MappingFragment StoreEntitySet="subscriptions">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="tariff_id" ColumnName="tariff_id" />
+          <ScalarProperty Name="start" ColumnName="start" />
+          <ScalarProperty Name="end" ColumnName="end" />
+          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tariffs">
       <EntityTypeMapping TypeName="OnlineCinemaModel.tariff">
         <MappingFragment StoreEntitySet="tariffs">
-          <ScalarProperty Name="active" ColumnName="active" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -116,6 +248,21 @@
           <ScalarProperty Name="price" ColumnName="price" />
           <ScalarProperty Name="adverticement_enabled" ColumnName="adverticement_enabled" />
           <ScalarProperty Name="new_films_enabled" ColumnName="new_films_enabled" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="teasers">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.teaser">
+        <MappingFragment StoreEntitySet="teaser">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="start" ColumnName="start" />
+          <ScalarProperty Name="end" ColumnName="end" />
+          <ScalarProperty Name="showAmount" ColumnName="showAmount" />
+          <ScalarProperty Name="payment" ColumnName="payment" />
+          <ScalarProperty Name="adv_id" ColumnName="adv_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="img_url" ColumnName="img_url" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -126,6 +273,26 @@
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="video_id" ColumnName="video_id" />
           <ScalarProperty Name="url" ColumnName="url" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usermovies">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.usermovy">
+        <MappingFragment StoreEntitySet="usermovies">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userseasons">
+      <EntityTypeMapping TypeName="OnlineCinemaModel.userseason">
+        <MappingFragment StoreEntitySet="userseasons">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="season_id" ColumnName="season_id" />
+          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -169,140 +336,5 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="advertisers">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.advertiser">
-        <MappingFragment StoreEntitySet="advertiser">
-          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="banners">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
-        <MappingFragment StoreEntitySet="banners">
-          <ScalarProperty Name="img_url" ColumnName="img_url" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="adv_id" ColumnName="adv_id" />
-          <ScalarProperty Name="payment" ColumnName="payment" />
-          <ScalarProperty Name="end" ColumnName="end" />
-          <ScalarProperty Name="start" ColumnName="start" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="teasers">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.teaser">
-        <MappingFragment StoreEntitySet="teaser">
-          <ScalarProperty Name="img_url" ColumnName="img_url" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="adv_id" ColumnName="adv_id" />
-          <ScalarProperty Name="payment" ColumnName="payment" />
-          <ScalarProperty Name="showAmount" ColumnName="showAmount" />
-          <ScalarProperty Name="end" ColumnName="end" />
-          <ScalarProperty Name="start" ColumnName="start" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="movies">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.movy">
-        <MappingFragment StoreEntitySet="movies">
-          <ScalarProperty Name="quality" ColumnName="quality" />
-          <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="video_id" ColumnName="video_id" />
-          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
-          <ScalarProperty Name="url" ColumnName="url" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="episodehistories">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.episodehistory">
-        <MappingFragment StoreEntitySet="episodehistory">
-          <ScalarProperty Name="watching_date" ColumnName="watching_date" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="episode_id" ColumnName="episode_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="usermovies">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.usermovy">
-        <MappingFragment StoreEntitySet="usermovies">
-          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
-          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="userseasons">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.userseason">
-        <MappingFragment StoreEntitySet="userseasons">
-          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
-          <ScalarProperty Name="season_id" ColumnName="season_id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="moviehistories">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.moviehistory">
-        <MappingFragment StoreEntitySet="moviehistory">
-          <ScalarProperty Name="watching_date" ColumnName="watching_date" />
-          <ScalarProperty Name="movie_id" ColumnName="movie_id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="statistics_banner">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_banner">
-        <MappingFragment StoreEntitySet="statistics_banner">
-          <ScalarProperty Name="id_user" ColumnName="id_user" />
-          <ScalarProperty Name="id_banner" ColumnName="id_banner" />
-          <ScalarProperty Name="show_amount" ColumnName="show_amount" />
-          <ScalarProperty Name="date" ColumnName="date" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="statistics_teaser">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_teaser">
-        <MappingFragment StoreEntitySet="statistics_teaser">
-          <ScalarProperty Name="dateShow" ColumnName="dateShow" />
-          <ScalarProperty Name="showAmount" ColumnName="showAmount" />
-          <ScalarProperty Name="id_users" ColumnName="id_users" />
-          <ScalarProperty Name="id_teasers" ColumnName="id_teasers" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="payments">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.payment">
-        <MappingFragment StoreEntitySet="payments">
-          <ScalarProperty Name="payment_type" ColumnName="payment_type" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
-          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="subscriptions">
-      <EntityTypeMapping TypeName="OnlineCinemaModel.subscription">
-        <MappingFragment StoreEntitySet="subscriptions">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
-          <ScalarProperty Name="end" ColumnName="end" />
-          <ScalarProperty Name="start" ColumnName="start" />
-          <ScalarProperty Name="tariff_id" ColumnName="tariff_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

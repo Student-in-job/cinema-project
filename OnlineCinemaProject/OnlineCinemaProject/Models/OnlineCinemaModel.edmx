@@ -20,6 +20,7 @@
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="phone_number" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="img_url" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="aspnetroles">
           <Key>
@@ -78,13 +79,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="start" Type="date" Nullable="false" />
-          <Property Name="end" Type="date" Nullable="false" />
-          <Property Name="payment" Type="double" Nullable="false" />
-          <Property Name="adv_id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="show_amount" Type="int" Nullable="false" />
+          <Property Name="start" Type="date" />
+          <Property Name="end" Type="date" />
+          <Property Name="payment" Type="double" />
+          <Property Name="adv_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="img_url" Type="varchar" MaxLength="45" />
+          <Property Name="show_amount" Type="int" />
         </EntityType>
         <EntityType Name="countries">
           <Key>
@@ -247,13 +248,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="start" Type="date" Nullable="false" />
-          <Property Name="end" Type="date" Nullable="false" />
+          <Property Name="start" Type="date" />
+          <Property Name="end" Type="date" />
           <Property Name="showAmount" Type="int" Nullable="false" />
-          <Property Name="payment" Type="double" Nullable="false" />
-          <Property Name="adv_id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="payment" Type="double" />
+          <Property Name="adv_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="img_url" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="trailers">
           <Key>
@@ -326,7 +327,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_adv_banner">
-          <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
+          <End Role="advertiser" Type="Self.advertiser" Multiplicity="0..1" />
           <End Role="banners" Type="Self.banners" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="advertiser">
@@ -392,7 +393,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_id_teaser">
-          <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
+          <End Role="advertiser" Type="Self.advertiser" Multiplicity="0..1" />
           <End Role="teaser" Type="Self.teaser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="advertiser">
@@ -1014,6 +1015,7 @@
           <Property Name="phone_number" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="banners" Relationship="Self.fk_adv_banner" FromRole="advertiser" ToRole="banners" />
           <NavigationProperty Name="teasers" Relationship="Self.fk_id_teaser" FromRole="advertiser" ToRole="teaser" />
+          <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="aspnetrole">
           <Key>
@@ -2039,6 +2041,7 @@
           <EntitySetMapping Name="advertisers">
             <EntityTypeMapping TypeName="OnlineCinemaModel.advertiser">
               <MappingFragment StoreEntitySet="advertiser">
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="email" ColumnName="email" />

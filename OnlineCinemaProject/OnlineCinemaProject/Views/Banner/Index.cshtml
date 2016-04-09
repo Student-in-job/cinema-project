@@ -1,24 +1,32 @@
-﻿@model IEnumerable<OnlineCinemaProject.Models.banner>
-                      @using PagedList.Mvc;
+﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.banner>
+@using PagedList.Mvc;
 
-                               <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-    @{
-        ViewBag.Title = "Banner";
-    }
+@{
+    ViewBag.Title = "Banner";
+}
 
-    <h2>Banner</h2>
+<h2>      </h2>
 
-    
-@*@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
-    {
-        <p>
-            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            <input type="submit" value="Search" />
-        </p>
 
-    }*@
-    <table class="table">
+@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="panel panel-success">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2><center>Баннеры</center></h2></div>
+    <table class="table table-striped table-bordered">
+
         <tr>
             <th>
                 @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
@@ -32,7 +40,8 @@
             <th>
                 payment
             </th>
-            <th> advertiser
+            <th>
+                advertiser
             </th>
             <th>
                 image
@@ -47,7 +56,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.name)
                 </td>
-                 <td>
+                <td>
                     @Html.DisplayFor(modelItem => item.start)
                 </td>
                 <td>
@@ -56,26 +65,28 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.payment)
                 </td>
-             
+
                 <td>
                     @Html.DisplayFor(modelItem => item.advertiser.name)
                 </td>
                 <td>
-    <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="200" height="200"/>
-</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    <center>
+                        <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="75" height="100" />
+                    </center>
                 </td>
+                <td><center>
+    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.id })</center>
+</td>
             </tr>
-        }   
+        }
 
     </table>
-                      @*<br />
-                      Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-                      @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+   

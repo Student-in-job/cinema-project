@@ -8,74 +8,76 @@ using System.Web;
 using System.Web.Mvc;
 using OnlineCinemaProject.Models;
 using PagedList;
+
 namespace OnlineCinemaProject.Controllers
 {
     [Authorize(Roles = "PRManager ")]
     public class StatisticsBannerController : Controller
     {
-      private readonly OnlineCinemaEntities db = new OnlineCinemaEntities();
-         public ActionResult Index(){
+        private readonly OnlineCinemaEntities db = new OnlineCinemaEntities();
+        //public ActionResult Index(){
         // GET: /StatisticsBanner/
-        //public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        //{
-            var statistics_banner = db.statistics_banner.Include(s => s.aspnetuser).Include(s => s.banner);
-            return View(statistics_banner.ToList());}
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            //    var statistics_banner = db.statistics_banner.Include(s => s.aspnetuser).Include(s => s.banner);
+            //    return View(statistics_banner.ToList());
+            //}
 
-        //    //    ViewBag.CurrentSort = sortOrder;
-        //    //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-        //    //    ViewBag.DateSortParm = sortOrder == "show_amount" ? "show_amount_desc" : "show_amount";
-        //    //    ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "banner.name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "show_amount" ? "show_amount_desc" : "show_amount";
+            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
 
 
-        //    //    if (searchString != null)
-        //    //    {
-        //    //        page = 1;
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        searchString = currentFilter;
-        //    //    }
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-        //    //    ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentFilter = searchString;
 
-        //    //    var statistic_banners = from s in db.statistic_banners.
-        //    //                            select s;
-        //    //    if (!String.IsNullOrEmpty(searchString))
-        //    //    {
-        //    //        statistic_banners = statistic_banners.Where(s => s.name.ToUpper().Contains(searchString.ToUpper()));
+            var statistics_banners = from s in db.statistics_banner
+                                     select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                statistics_banners = statistics_banners.Where(s => s.banner.name.Contains(searchString.ToUpper()));
 
-        //    //    }
-        //    //    switch (sortOrder)
-        //    //    {
-        //    //        case "name_desc":
-        //    //            statistic_banners = statistic_banners.OrderByDescending(s => s.name);
-        //    //            break;
-        //    //        case "show_amount":
-        //    //            statistic_banners = statistic_banners.OrderBy(s => s.show_amount);
-        //    //            break;
-        //    //        case "show_amount_desc":
-        //    //            statistic_banners = statistic_banners.OrderByDescending(s => s.show_amount);
-        //    //            break;
-        //    //        case "date":
-        //    //            statistic_banners = statistic_banners.OrderBy(s => s.date);
-        //    //            break;
-        //    //        case "date_desc":
-        //    //            statistic_banners = statistic_banners.OrderByDescending(s => s.date);
-        //    //            break;
-        //    //        default:  // Name ascending 
-        //    //            statistic_banners = statistic_banners.OrderBy(s => s.name);
-        //    //            break;
-        //    //    }
+            }
+            switch (sortOrder)
+            {
+                case "banner.name_desc":
+                    statistics_banners = statistics_banners.OrderByDescending(s => s.banner.name);
+                    break;
+                case "show_amount":
+                    statistics_banners = statistics_banners.OrderBy(s => s.show_amount);
+                    break;
+                case "show_amount_desc":
+                    statistics_banners = statistics_banners.OrderByDescending(s => s.show_amount);
+                    break;
+                case "date":
+                    statistics_banners = statistics_banners.OrderBy(s => s.date);
+                    break;
+                case "date_desc":
+                    statistics_banners = statistics_banners.OrderByDescending(s => s.date);
+                    break;
+                default:  // Name ascending 
+                    statistics_banners = statistics_banners.OrderBy(s => s.banner.name);
+                    break;
+            }
 
-        //    //    int pageSize = 3;
-        //    //    int pageNumber = (page ?? 1);
-        //    //    return View(statistic_banners.ToPagedList(pageNumber, pageSize));
-        //    //}
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(statistics_banners.ToPagedList(pageNumber, pageSize));
+        }
 
-        //}
-    }
-}
-// GET: /StatisticsBanner/Details/5
+
+
+
+        // GET: /StatisticsBanner/Details/5
         //public ActionResult Details(int? id)
         //{
         //    if (id == null)
@@ -152,39 +154,40 @@ namespace OnlineCinemaProject.Controllers
         //    return View(statistics_banner);
         //}
 
-        //// GET: /StatisticsBanner/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
+        //GET: /StatisticsBanner/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            statistics_banner statistics_banner = db.statistics_banner.Find(id);
+            if (statistics_banner == null)
+            {
+                return HttpNotFound();
+            }
+            return View(statistics_banner);
+        }
+
+        // POST: /StatisticsBanner/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            statistics_banner statistics_banner = db.statistics_banner.Find(id);
+            db.statistics_banner.Remove(statistics_banner);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //    protected override void Dispose(bool disposing)
         //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        if (disposing)
+        //        {
+        //            db.Dispose();
+        //        }
+        //        base.Dispose(disposing);
         //    }
-        //    statistics_banner statistics_banner = db.statistics_banner.Find(id);
-        //    if (statistics_banner == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(statistics_banner);
-        //}
+    }
 
-        //// POST: /StatisticsBanner/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    statistics_banner statistics_banner = db.statistics_banner.Find(id);
-        //    db.statistics_banner.Remove(statistics_banner);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-    //    protected override void Dispose(bool disposing)
-    //    {
-    //        if (disposing)
-    //        {
-    //            db.Dispose();
-    //        }
-    //        base.Dispose(disposing);
-    //    }
-    //}
-
+}

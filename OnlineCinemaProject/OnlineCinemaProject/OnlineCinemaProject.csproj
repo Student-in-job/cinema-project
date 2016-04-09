@@ -15,7 +15,7 @@
     <AssemblyName>OnlineCinemaProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -930,6 +930,8 @@
     <Content Include="Views\StatisticsTeaser\Details.cshtml" />
     <Content Include="Views\StatisticsTeaser\Edit.cshtml" />
     <Content Include="Views\StatisticsTeaser\Index.cshtml" />
+    <Content Include="Views\Advertiser\Personal_account.cshtml" />
+    <Content Include="Views\Shared\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -962,9 +964,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://10.42.0.26:80</IISAppRootUrl>
+          <IISUrl>http://localhost:16772/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

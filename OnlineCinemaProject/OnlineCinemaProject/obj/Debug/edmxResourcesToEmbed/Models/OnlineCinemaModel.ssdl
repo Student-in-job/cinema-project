@@ -15,6 +15,7 @@
     <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
     <Property Name="phone_number" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="img_url" Type="varchar" MaxLength="45" />
   </EntityType>
   <EntityType Name="aspnetroles">
     <Key>
@@ -22,6 +23,25 @@
     </Key>
     <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
     <Property Name="Name" Type="longtext" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnetuserclaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClaimType" Type="longtext" />
+    <Property Name="ClaimValue" Type="longtext" />
+    <Property Name="User_Id" Type="varchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnetuserlogins">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+    </Key>
+    <Property Name="UserId" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="LoginProvider" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="varchar" MaxLength="128" Nullable="false" />
   </EntityType>
   <EntityType Name="aspnetuserroles">
     <Key>
@@ -54,12 +74,13 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="start" Type="date" Nullable="false" />
-    <Property Name="end" Type="date" Nullable="false" />
-    <Property Name="payment" Type="double" Nullable="false" />
-    <Property Name="adv_id" Type="int" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
-    <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="start" Type="date" />
+    <Property Name="end" Type="date" />
+    <Property Name="payment" Type="double" />
+    <Property Name="adv_id" Type="int" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="img_url" Type="varchar" MaxLength="45" />
+    <Property Name="show_amount" Type="int" />
   </EntityType>
   <EntityType Name="countries">
     <Key>
@@ -130,6 +151,16 @@
     <Property Name="video_id" Type="int" Nullable="false" />
     <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="quality" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="my_aspnet_profiles">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="valueindex" Type="longtext" />
+    <Property Name="stringdata" Type="longtext" />
+    <Property Name="binarydata" Type="longblob" />
+    <Property Name="lastUpdatedDate" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="overviews">
     <Key>
@@ -212,13 +243,13 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="start" Type="date" Nullable="false" />
-    <Property Name="end" Type="date" Nullable="false" />
+    <Property Name="start" Type="date" />
+    <Property Name="end" Type="date" />
     <Property Name="showAmount" Type="int" Nullable="false" />
-    <Property Name="payment" Type="double" Nullable="false" />
-    <Property Name="adv_id" Type="int" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
-    <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="payment" Type="double" />
+    <Property Name="adv_id" Type="int" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="img_url" Type="varchar" MaxLength="45" />
   </EntityType>
   <EntityType Name="trailers">
     <Key>
@@ -291,7 +322,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_adv_banner">
-    <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
+    <End Role="advertiser" Type="Self.advertiser" Multiplicity="0..1" />
     <End Role="banners" Type="Self.banners" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="advertiser">
@@ -357,7 +388,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_id_teaser">
-    <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
+    <End Role="advertiser" Type="Self.advertiser" Multiplicity="0..1" />
     <End Role="teaser" Type="Self.teaser" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="advertiser">
@@ -712,6 +743,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="IdentityUserClaim_User">
+    <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="aspnetuserclaims" Type="Self.aspnetuserclaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnetusers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="aspnetuserclaims">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdentityUserLogin_User">
+    <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="aspnetuserlogins" Type="Self.aspnetuserlogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnetusers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="aspnetuserlogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="IdentityUserRole_Role">
     <End Role="aspnetroles" Type="Self.aspnetroles" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -744,6 +803,8 @@
     <EntitySet Name="actors" EntityType="Self.actors" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="advertiser" EntityType="Self.advertiser" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="aspnetroles" EntityType="Self.aspnetroles" Schema="onlinecinema" store:Type="Tables" />
+    <EntitySet Name="aspnetuserclaims" EntityType="Self.aspnetuserclaims" Schema="onlinecinema" store:Type="Tables" />
+    <EntitySet Name="aspnetuserlogins" EntityType="Self.aspnetuserlogins" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="aspnetuserroles" EntityType="Self.aspnetuserroles" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="banners" EntityType="Self.banners" Schema="onlinecinema" store:Type="Tables" />
@@ -755,6 +816,7 @@
     <EntitySet Name="manufacturer" EntityType="Self.manufacturer" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="moviehistory" EntityType="Self.moviehistory" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="movies" EntityType="Self.movies" Schema="onlinecinema" store:Type="Tables" />
+    <EntitySet Name="my_aspnet_profiles" EntityType="Self.my_aspnet_profiles" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="overviews" EntityType="Self.overviews" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="payments" EntityType="Self.payments" Schema="onlinecinema" store:Type="Tables" />
     <EntitySet Name="seasons" EntityType="Self.seasons" Schema="onlinecinema" store:Type="Tables" />
@@ -908,6 +970,14 @@
     <AssociationSet Name="id_users" Association="Self.id_users">
       <End Role="aspnetusers" EntitySet="aspnetusers" />
       <End Role="statistics_teaser" EntitySet="statistics_teaser" />
+    </AssociationSet>
+    <AssociationSet Name="IdentityUserClaim_User" Association="Self.IdentityUserClaim_User">
+      <End Role="aspnetusers" EntitySet="aspnetusers" />
+      <End Role="aspnetuserclaims" EntitySet="aspnetuserclaims" />
+    </AssociationSet>
+    <AssociationSet Name="IdentityUserLogin_User" Association="Self.IdentityUserLogin_User">
+      <End Role="aspnetusers" EntitySet="aspnetusers" />
+      <End Role="aspnetuserlogins" EntitySet="aspnetuserlogins" />
     </AssociationSet>
     <AssociationSet Name="IdentityUserRole_Role" Association="Self.IdentityUserRole_Role">
       <End Role="aspnetroles" EntitySet="aspnetroles" />

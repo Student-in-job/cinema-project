@@ -3,13 +3,19 @@
 //using System.Data;
 //using System.Data.Entity;
 //using System.Data.SqlClient;
+//using System.Globalization;
 //using System.Linq;
+//using System.Net.Mime;
+//using System.Reflection;
+//using System.Reflection.Emit;
+//using System.Runtime.Remoting.Metadata.W3cXsd2001;
 //using System.Web;
 //using System.Web.Mvc;
 //using DotNet.Highcharts;
 //using DotNet.Highcharts.Enums;
 //using DotNet.Highcharts.Helpers;
 //using DotNet.Highcharts.Options;
+//using Microsoft.Data.OData.Atom;
 //using MySql.Data.MySqlClient;
 //using OnlineCinemaProject.Models;
 //using OnlineCinemaProject.Models.ViewModels;
@@ -17,6 +23,19 @@
 
 //namespace OnlineCinemaProject.Controllers
 //{
+//    class GroupedRow : DbContext
+//    {
+//        public Decimal Sum { get; set; }
+//        public int Year { get; set; }
+//        public int Month { get; set; }
+//        public string MonthName
+//        {
+//            get
+//            {
+//                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(this.Month);
+//            }
+//        }
+//    }
 //    [Authorize(Roles = "BilingManager")]
 //    public class BillingController : Controller
 //    {
@@ -27,43 +46,62 @@
 
 //        public ActionResult Index()
 //        {
-//            //Create Series 1
-//            var series1 = new Series { Name = "Area Series 1" };
-//            Point[] series1Points =
-//                {
-//                    new Point() {X = 0.0, Y = 0.0},
-//                    new Point() {X = 10.0, Y = 0.0},
-//                    new Point() {X = 10.0, Y = 10.0},
-//                    new Point() {X = 0.0, Y = 10.0}
-//                };
-//            series1.Data = new Data(series1Points);
+//            //ICollection<GroupedRow> payments = db.payments
+//            //    .GroupBy(p => new
+//            //    {
+//            //        Month = p.payment_date.Month
+//            //    }).Select(t=>new GroupedRow
+//            //    {
+//            //        Month = t.Key.Month,
+//            //        Sum = t.Count()
+//            //    }).ToList();
 
-//            //Create Series 2
-//            var series2 = new Series { Name = "Area Series 1" };
-//            Point[] series2Points =
-//                {
-//                    new Point() {X = 5.0, Y = 5.0},
-//                    new Point() {X = 15.0, Y =5.0},
-//                    new Point() {X = 15.0, Y = 15.0},
-//                    new Point() {X = 5.0, Y = 15.0}
-//                };
-//            series2.Data = new Data(series2Points);
-
-//            //Create List of Series and Add both series to the collection
-//            var chartSeries = new List<Series> { series1, series2 };
-
-//            //Create chart Model
-//            var chart1 = new Highcharts("Chart1");
+////            string query = "";
+////            var paym = db.payments.Dy("SELECT MONTHNAME(payment_date), SUM(amount) FROM payments GROUP BY YEAR(payment_date), MONTH(payment_date)");
+////            var xDataMonths = groupedRows.Select(p => p.PaymentDate).ToArray();
+////            var yDataSumms = groupedRows.Select(p => p.Sum).ToArray();
+////            //Create Series 1
+////            var series1 = new Series {Name = "Area Series 1"};
+////            Point[] series1Points =
+////                {
+////                    new Point() {X = 0.0, Y = 0.0},
+////                    new Point() {X = 10.0, Y = 0.0},
+////                    new Point() {X = 10.0, Y = 10.0},
+////                    new Point() {X = 0.0, Y = 10.0}
+////                };
+////            series1.Data = new Data(series1Points);
+////
+////            //Create Series 2
+////            var series2 = new Series {Name = "Area Series 1"};
+////            Point[] series2Points =
+////                {
+////                    new Point() {X = 5.0, Y = 5.0},
+////                    new Point() {X = 15.0, Y =5.0},
+////                    new Point() {X = 15.0, Y = 15.0},
+////                    new Point() {X = 5.0, Y = 15.0}
+////                };
+////            series2.Data = new Data(series2Points);
+////
+////            //Create List of Series and Add both series to the collection
+////            var chartSeries = new List<Series> {series1, series2};
+////
+////            //Create chart Model
+////            var chart1 = new Highcharts("Chart1");
+//           /* 
 //            chart1
-//                .InitChart(new Chart() { DefaultSeriesType = ChartTypes.Area })
-//                .SetTitle(new Title() { Text = "Chart1" })
+//                .InitChart(new Chart() { DefaultSeriesType = ChartTypes.Line })
+//                .SetXAxis(new XAxis{Categories = xDataMonths})
+//                .SetYAxis(new YAxis{})
+//                .}SetTitle(new Title() { MediaTypeNames.Text = "График поступления денег за Год" })
 //                .SetSeries(chartSeries.ToArray());
 
 //            //pass Chart1Model using ViewBag
-//            ViewBag.Chart1Model = chart1;
+//            ViewBag.Chart1Model = chart1;*/
 
-//            return View(/*db.tariffs.ToList()*/chart1);
+//            return View(db.tariffs.ToList());
 //        }
+
+            
 
 //        public ActionResult Text()
 //        {
@@ -124,7 +162,7 @@
 //        public ActionResult Edit(int id = 0)
 //        {
 //            tariff tariff = db.tariffs.Find(id);
-
+            
 //            if (tariff == null)
 //            {
 //                return HttpNotFound();
@@ -191,9 +229,9 @@
 //            base.Dispose(disposing);
 //        }
 
-//        //        public ActionResult Subscribtions(int id)
-//        //        {
-//        //            return View("Subscribtion");
-//        //        }
+////        public ActionResult Subscribtions(int id)
+////        {
+////            return View("Subscribtion");
+////        }
 //    }
 //}

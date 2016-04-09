@@ -6,6 +6,8 @@ using System.Net;
 using System.Web.Mvc;
 using OnlineCinemaProject.Models;
 using PagedList;
+using System.Collections.Generic;
+using System.Web;
 
 namespace OnlineCinemaProject.Controllers
 {
@@ -89,13 +91,35 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,name,email,phone_number")] advertiser advertiser)
+        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number")] advertiser advertiser)
         {
-            if (ModelState.IsValid)
+           
+            //if (ModelState.IsValid)
+            //{
+            //    _db.advertisers.Add(advertiser);
+            //    _db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
+            try
             {
-                _db.advertisers.Add(advertiser);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    if (file != null)
+                    {
+                        file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                                              + file.FileName);
+                        advertiser.img_url = file.FileName;
+                    }
+                    _db.advertisers.Add(advertiser);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException dex)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator. \n" + dex.Message);
             }
 
             return View(advertiser);
@@ -104,10 +128,10 @@ namespace OnlineCinemaProject.Controllers
         // GET: /Advertiser/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             advertiser advertiser = _db.advertisers.Find(id);
             if (advertiser == null)
             {
@@ -121,10 +145,17 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,name,email,phone_number")] advertiser advertiser)
+        public ActionResult Edit(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number")] advertiser advertiser)
         {
+          
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                                          + file.FileName);
+                    advertiser.img_url = file.FileName;
+                }
                 _db.Entry(advertiser).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -174,5 +205,20 @@ public ActionResult Delete(int id)
             }
             base.Dispose(disposing);
         }
+        public ActionResult Personal_account(int id)
+        {
+            OnlineCinemaEntities db = new OnlineCinemaEntities();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            advertiser advertiser = db.advertisers.Find(id);
+            if (advertiser == null)
+            {
+                return HttpNotFound();
+            }
+                return View(advertiser);
+        }
+
     }
 }
