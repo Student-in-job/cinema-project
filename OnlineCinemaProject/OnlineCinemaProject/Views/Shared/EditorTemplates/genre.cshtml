@@ -1,0 +1,9 @@
+﻿@using CinemaProject.Models.ViewModels
+@model IncludedData
+<fieldset>
+    @Html.HiddenFor(x => x.id)
+    @Html.HiddenFor(x => x.name)
+    @Html.CheckBoxFor(x => x.Included)
+    @Html.LabelFor(x => x.name)
+</fieldset>
+  

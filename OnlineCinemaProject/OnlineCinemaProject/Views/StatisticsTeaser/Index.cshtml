@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.statistics_teaser>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Statistics_teaser";
+}
+
+<h2>   </h2>
+
+@using (Html.BeginForm("Index", "Statistics_teaser", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+
+}
+<div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2><center> Статистика тизеров </center></h2></div>
+    
+        <table class="table table-striped table-bordered ">
+            <tr >
+                <th>
+                    @Html.ActionLink("Количество показов", "Index", new { sortOrder = ViewBag.showAmountSortParm })
+                </th>
+                <th>
+                    Пользователь
+                </th>
+                <th>
+                    @Html.ActionLink("Тизер", "Index", new { sortOrder = ViewBag.nameSortParm })
+                </th>
+                <th>
+                    @Html.ActionLink("Дата показа", "Index", new { sortOrder = ViewBag.dateShowSortParm })
+                </th>
+
+                <th></th>
+            </tr>
+
+
+                        @foreach (var item in Model)
+            {
+                <tr >
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.showAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.aspnetuser.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.teaser.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dateShow)
+                    </td>
+                    <td>
+                        <center>
+                       @Html.ActionLink("Delete", "Delete", new { id = item.id })</center>
+                    </td>
+                </tr>
+            }
+
+</table>
+        </div>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

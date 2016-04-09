@@ -1,0 +1,60 @@
+﻿@model OnlineCinemaProject.Models.statistics_teaser
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>statistics_teaser</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id_teasers, "id_teasers", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("id_teasers", String.Empty)
+                @Html.ValidationMessageFor(model => model.id_teasers)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id_users, "id_users", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("id_users", String.Empty)
+                @Html.ValidationMessageFor(model => model.id_users)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.showAmount, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.showAmount)
+                @Html.ValidationMessageFor(model => model.showAmount)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dateShow, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dateShow)
+                @Html.ValidationMessageFor(model => model.dateShow)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
