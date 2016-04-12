@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OnlineCinemaProject.Models;
+using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers
 {
@@ -26,7 +27,7 @@ namespace OnlineCinemaProject.Controllers
              aspnetuser user = db.aspnetusers.Find(model.UserId);
              if (user != null)
              {
-                 user.TopUpBalance(model.Amount);
+                 UserUtils.TopUpBalance(model.Amount, user);
                  payment payment = new payment
                  {
                      aspnetuser = user,

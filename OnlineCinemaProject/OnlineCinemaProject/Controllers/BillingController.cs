@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -26,15 +27,8 @@ namespace OnlineCinemaProject.Controllers
     class GroupedRow : DbContext
     {
         public Decimal Sum { get; set; }
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public string MonthName
-        {
-            get
-            {
-                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(this.Month);
-            }
-        }
+        public int Months { get; set; }
+       
     }
     [Authorize(Roles = "BilingManager")]
     public class BillingController : Controller
@@ -46,18 +40,20 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Index()
         {
-            //ICollection<GroupedRow> payments = db.payments
-            //    .GroupBy(p => new
-            //    {
-            //        Month = p.payment_date.Month
-            //    }).Select(t=>new GroupedRow
-            //    {
-            //        Month = t.Key.Month,
-            //        Sum = t.Count()
-            //    }).ToList();
-
+            /*var dbRaw =
+                db.Database.SqlQuery<Object>(
+                    "SELECT MONTHNAME(payment_date) as [Months], SUM(amount) as [Sum] FROM payments GROUP BY MONTH(payment_date)");*/
+            /*ICollection<GroupedRow> payments = db.payments
+                .GroupBy(p => new
+                {
+                    Month = p.payment_date.Month
+                }).Select(t=>new GroupedRow
+                {
+                    Months = t.Key.Month,
+                    Sum = t.Count()
+                }).ToList();*/
 //            string query = "";
-//            var paym = db.payments.Dy("SELECT MONTHNAME(payment_date), SUM(amount) FROM payments GROUP BY YEAR(payment_date), MONTH(payment_date)");
+//            var paym = db.payments.SqlQuery("SELECT MONTHNAME(payment_date), SUM(amount) FROM payments GROUP BY YEAR(payment_date), MONTH(payment_date)").ToList();
 //            var xDataMonths = groupedRows.Select(p => p.PaymentDate).ToArray();
 //            var yDataSumms = groupedRows.Select(p => p.Sum).ToArray();
 //            //Create Series 1

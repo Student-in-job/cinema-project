@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace OnlineCinemaProject.Models
+namespace OnlineCinemaProject.Models.Utils
 {
-    /*public partial class subscription
+    public static class SubscriptionUtils
     {
-        public bool Active()
+        public static bool Active(subscription subscription)
         {
-            if (end > DateTime.Now)
+            if (subscription.end > DateTime.Now)
             {
                 return true;
             }
             return false;
         }
-    }*/
+    }
 }

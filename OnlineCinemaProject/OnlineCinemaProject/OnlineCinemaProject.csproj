@@ -49,6 +49,7 @@
     <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.JScript" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -207,12 +208,15 @@
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
     <Compile Include="Controllers\Api\BannerApiController.cs" />
+    <Compile Include="Controllers\Api\EpizodeController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
+    <Compile Include="Controllers\Api\MovieApiController.cs" />
     <Compile Include="Controllers\Api\RegistrationApiController.cs" />
-    <Compile Include="Controllers\Api\TariffController.cs" />
+    <Compile Include="Controllers\Api\SeasonController.cs" />
+    <Compile Include="Controllers\Api\TariffApiController.cs" />
     <Compile Include="Controllers\Api\TeaserApiController.cs" />
-    <Compile Include="Controllers\Api\TiserApiController.cs" />
-    <Compile Include="Controllers\Api\UserController.cs" />
+    <Compile Include="Controllers\Api\UserApiController.cs" />
+    <Compile Include="Controllers\Api\VideoApiController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
@@ -268,7 +272,6 @@
     <Compile Include="Models\genre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\genrepart.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\like.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
@@ -303,6 +306,11 @@
     <Compile Include="Models\payment.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Utils\SubscriptionUtils.cs" />
+    <Compile Include="Models\Utils\TariffUtils.cs" />
+    <Compile Include="Models\Utils\UserUtils.cs" />
+    <Compile Include="Models\Utils\VideoUtils.cs" />
+    <Compile Include="Models\ViewModels\ResponseModel.cs" />
     <Compile Include="Models\season.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -342,7 +350,7 @@
     <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
-    <Compile Include="Models\_Movie.cs" />
+    <Compile Include="Models\_Video.cs" />
     <Compile Include="Models\_Subscription.cs" />
     <Compile Include="Models\_Tariff.cs" />
     <Compile Include="Models\_User.cs" />

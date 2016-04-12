@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace OnlineCinemaProject.CustomResult
 {
@@ -27,6 +28,20 @@ namespace OnlineCinemaProject.CustomResult
             StatusCode = (int)statusCode;
             Result = result;
             ErrorMessage = errorMessage;
+        }
+    }
+
+    public static class Util
+    {
+        public static String GetJsonString(Object content)
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(
+                content,
+                Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                });
         }
     }
 }
