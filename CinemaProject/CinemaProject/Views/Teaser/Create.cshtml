@@ -1,0 +1,99 @@
+﻿@model CinemaProject.Models.teaser
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+<form action="" method="post" enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Teaser</h4>
+        @*<hr />
+            @Html.ValidationSummary(true)*@
+
+
+
+        <div class="editor-label">
+        @Html.LabelFor(model => model.id)
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.id)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.name)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.name)
+        @Html.ValidationMessageFor(model => model.name)
+
+    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.start, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.start)
+                @Html.ValidationMessageFor(model => model.start)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.end, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.end)
+                @Html.ValidationMessageFor(model => model.end)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.showAmount, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.showAmount)
+                @Html.ValidationMessageFor(model => model.showAmount)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.payment, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.payment)
+                @Html.ValidationMessageFor(model => model.payment)
+            </div>
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.adv_id)
+        </div>
+
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.adv_id, (SelectList)ViewBag.advlist)
+            @Html.ValidationMessageFor(model => model.adv_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.img_url)
+        </div>
+        <div class="editor-field">
+            <input id="ImagePath" title="Upload a product image" type="file" name="file" />
+            @Html.ValidationMessageFor(model => model.img_url)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+   </form>
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

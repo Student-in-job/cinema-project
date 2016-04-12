@@ -1,86 +1,95 @@
 ﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.teaser>
-    @using PagedList.Mvc;
-    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-    @{
-        ViewBag.Title = "Teaser";
-    }
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Teaser";
+}
 
-    <h2>Teaser</h2>
-
-   
-
-    @using (Html.BeginForm("Index", "Teaser", FormMethod.Get))
-    {
-        <p>
-            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            <input type="submit" value="Search" />
-        </p>
-    }
+<h2>     </h2>
 
 
-    <table class="table">
-        <tr>
 
-            <th>
-                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
-            </th>
-            <th>
-                @Html.ActionLink("start", "Index", new { sortOrder = ViewBag.startSortParm })
-            </th>
-            <th>
-                end
-            </th>
-            <th>
-                @Html.ActionLink("payment", "Index", new { sortOrder = ViewBag.paymentSortParm })
-            </th>
-           
-            <th>
-                advertiser
-            </th>
-            <th>
-                image
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.start)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.end)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.payment)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.showAmount)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.advertiser.name)
-                </td>
-
-                <td>
-                    <img src="~/uploads/@item.img_url" class="video-img-list" style="" />
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                </td>
-            </tr>
-        }
-
-    </table>
-    <br />
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+@using (Html.BeginForm("Index", "Teaser", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2><center>Тизеры</center></h2></div>
+
+    <table class="table table-striped table-bordered ">
+
+        
+            <tr>
+
+                <th>
+                    @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+                </th>
+                <th>
+                    @Html.ActionLink("start", "Index", new { sortOrder = ViewBag.startSortParm })
+                </th>
+                <th>
+                    end
+                </th>
+                <th>
+                    @Html.ActionLink("payment", "Index", new { sortOrder = ViewBag.paymentSortParm })
+                </th>
+
+                <th>
+                    advertiser
+                </th>
+                <th>
+                    image
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.start)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.end)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.payment)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.showAmount)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.advertiser.name)
+                    </td>
+
+                    <td>
+                        <center>
+                            <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="75" height="100" />
+                        </center>
+                    </td>
+                    <td><center>
+    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+</center>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        

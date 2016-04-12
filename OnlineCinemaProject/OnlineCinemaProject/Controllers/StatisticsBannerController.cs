@@ -24,7 +24,7 @@ namespace OnlineCinemaProject.Controllers
             //}
 
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "id_user_desc" : "";
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "banner.name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "show_amount" ? "show_amount_desc" : "show_amount";
             ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
 
@@ -44,13 +44,13 @@ namespace OnlineCinemaProject.Controllers
                                      select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                statistics_banners = statistics_banners.Where(s => s.id_user.ToUpper().Contains(searchString.ToUpper()));
+                statistics_banners = statistics_banners.Where(s => s.banner.name.Contains(searchString.ToUpper()));
 
             }
             switch (sortOrder)
             {
-                case "id_user_desc":
-                    statistics_banners = statistics_banners.OrderByDescending(s => s.id_user);
+                case "banner.name_desc":
+                    statistics_banners = statistics_banners.OrderByDescending(s => s.banner.name);
                     break;
                 case "show_amount":
                     statistics_banners = statistics_banners.OrderBy(s => s.show_amount);
@@ -65,7 +65,7 @@ namespace OnlineCinemaProject.Controllers
                     statistics_banners = statistics_banners.OrderByDescending(s => s.date);
                     break;
                 default:  // Name ascending 
-                    statistics_banners = statistics_banners.OrderBy(s => s.id_user);
+                    statistics_banners = statistics_banners.OrderBy(s => s.banner.name);
                     break;
             }
 

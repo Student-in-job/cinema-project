@@ -214,18 +214,17 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Rotator()
         {
             OnlineCinemaEntities db = new OnlineCinemaEntities();
-         
-            // string token = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
+            // string token = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
             //IEnumerable<string> headerValues;
-            //var id_user = string.Empty;
+            //var id_users = string.Empty;
             //if (Request.Headers.TryGetValues("token", out headerValues))
             //{
-            //    id_user = headerValues.FirstOrDefault();
+            //    id_users = headerValues.FirstOrDefault();
             //}
-            //SELECT teasers.img_url statistics_teaser from teasers where teasers.id not in (SELECT statistics_teaser.id_teasers from statistics_teaser WHERE statistics_teaser.id_user = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
+            //SELECT teasers.img_url statistics_teaser from teasers where teasers.id not in (SELECT statistics_teaser.id_teaser from statistics_teaser WHERE statistics_teaser.id_users = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
 
             string query = "SELECT * FROM teaser order by showAmount asc";
-
+            //var sb = null;
             var teaser = db.teasers.SqlQuery(query).ToList().First();
 
             var sb = db.statistics_teaser.Find(teaser.id);
@@ -248,8 +247,6 @@ namespace OnlineCinemaProject.Controllers
                 entry1.Property(e => e.dateShow).IsModified = true;
                 // other changed properties
                 db.SaveChanges();
-
-
             }
             else
             {
@@ -257,9 +254,10 @@ namespace OnlineCinemaProject.Controllers
                 sb.dateShow = DateTime.Now;
                 sb.id_teasers = teaser.id;
                 sb.showAmount = teaser.showAmount;
-                sb.id_users = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
+              //  sb.id_users = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
                 db.statistics_teaser.Add(sb);
                 db.SaveChanges();
+
             }
 
             return View(teaser);

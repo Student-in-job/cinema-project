@@ -33,47 +33,74 @@ within Flowplayer</em>
 <!-- player container--><a style="display: block; width: 660px; height: 350px;" id="player">
 </a><!-- Flowplayer installation and configuration -->
 <script type="text/javascript">
-flowplayer("player", "flowplayer.swf", {
-// configure the required plugins
-wmode: 'direct',
-plugins: {
-httpstreaming: {
-url: 'flashlsFlowPlayer.swf',
-hls_debug : false,
-hls_debug2 : false,
-hls_lowbufferlength : 3,
-hls_minbufferlength : -1,
-hls_maxbufferlength : 300,
-hls_startfromlevel : -1,
-hls_seekfromlevel : -1,
-hls_live_flushurlcache : false,
-hls_seekmode : "ACCURATE",
-hls_fragmentloadmaxretry : -1,
-hls_manifestloadmaxretry : -1,
-hls_capleveltostage : false,
-hls_maxlevelcappingmode : "downscale"
+var movie = "http://172.20.16.4/mobile/pursuit/pursuit_of_happYness.m3u8";
+function play(movieUrl){
+	flowplayer("player", "flowplayer.swf", {
+	// configure the required plugins
+		wmode: 'direct',
+		plugins: {
+		httpstreaming: {
+		url: 'flashlsFlowPlayer.swf',
+		hls_debug : false,
+		hls_debug2 : false,
+		hls_lowbufferlength : 3,
+		hls_minbufferlength : -1,
+		hls_maxbufferlength : 300,
+		hls_startfromlevel : -1,
+		hls_seekfromlevel : -1,
+		hls_live_flushurlcache : false,
+		hls_seekmode : "ACCURATE",
+		hls_fragmentloadmaxretry : -1,
+		hls_manifestloadmaxretry : -1,
+		hls_capleveltostage : false,
+		hls_maxlevelcappingmode : "downscale"
+		}
+	},
+	clip: {
+		accelerated: true,
+		url: movieUrl,
+		ipadUrl: movieUrl,
+		urlResolvers: "httpstreaming",
+		lang: "ru",
+		provider: "httpstreaming",
+		autoPlay: true,
+		autoBuffering: true
+		},
+	log: {
+		level: 'debug',
+		filter: 'org.flowplayer.controller.*'
+		}
+	}).ipad();
 }
-},
-clip: {
-accelerated: true,
-url: "http://172.20.16.4/mobile/pursuit/pursuit_of_happYness.m3u8",
-ipadUrl: "http://172.20.16.4/mobile/pursuit/pursuit_of_happYness.m3u8",
-urlResolvers: "httpstreaming",
-lang: "ru",
-provider: "httpstreaming",
-autoPlay: true,
-autoBuffering: true
-},
-log: {
-level: 'debug',
-filter: 'org.flowplayer.controller.*'
-}
-}).ipad();
+play(movie);
 </script></div>
 <p>
 This demonstrates a setup to play a VOD HLS stream within Flowplayer
 with a fallback to Html5 for Ipad.
 </p>
+<select id="userInput"> 
+<option value="http://172.20.16.4/mobile/pursuit/pursuit_of_happYness.m3u8">В погоне за счастьем</option>
+<option value="http://172.20.16.4/mobile/panda/panda.m3u8">Кунг фу панда 3</option>
+<option value="http://172.20.16.4/mobile/jane/jane.m3u8">Джейн Эйр</option>
+<option value="http://172.20.16.4/mobile/megamozg/megamind.m3u8">Мегамозг</option>
+<option value="http://172.20.16.4/mobile/rapuntzel/rapuntel.m3u8">Рапунцель</option>
+<option value="http://172.20.16.4/mobile/words/words.m3u8">Слова</option>
+<option value="http://172.20.16.4/mobile/papasha/papasha.m3u8">Папаша</option>
+<option value="http://172.20.16.4/mobile/protector/protector.m3u8">Защитник</option>
+<option value="http://172.20.16.4/mobile/super_kelinchak/super_kelinchak.m3u8">Супер невестка</option>
+<option value="http://172.20.16.4/mobile/inoy/inoy.m3u8">Иной</option>
+<option value="http://172.20.16.4/mobile/operaciya_i/operaciya_i.m3u8">Операция Ы</option>
+<option value="http://172.20.16.4/mobile/sogdiyona/sogdiyona.m3u8">Согдиана</option>
+<option value="http://172.20.16.4/mobile/ironiya_sudbi/ironiya_sudbi.m3u8">Ирония судьбы, или с легким паром</option>
+</select>
+<button onclick="userSubmit()">Load and Play</button><br>
+<script type="text/javascript">
+function userSubmit() {
+   var movie = document.getElementById('userInput').value;
+   //alert(url);
+   play(movie);
+}
+</script>
 </div>
 </div>
 </body></html>
