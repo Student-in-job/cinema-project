@@ -1,0 +1,16 @@
+﻿@model IEnumerable<OnlineCinemaProject.Models.trailer>
+           
+<div class="marketing">
+    <h3>Трейлер</h3>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-2">
+                <img class="img-thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                <h2>@Html.ActionLink("Смотреть", "Details", "Trailer", new {id = item.id}, new {@class = "btn-info "})</h2>
+            </div>
+        }
+    </div>
+</div>
+
