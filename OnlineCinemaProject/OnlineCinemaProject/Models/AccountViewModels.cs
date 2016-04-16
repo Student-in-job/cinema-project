@@ -69,7 +69,7 @@ namespace OnlineCinemaProject.Models
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
-        [Required]
+        
         [Display(Name = "Дата рождения")]
         public DateTime BirthDate { get; set; }
 

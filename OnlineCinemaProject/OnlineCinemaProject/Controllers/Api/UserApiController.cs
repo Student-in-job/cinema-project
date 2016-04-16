@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using MySql.Data.MySqlClient;
 using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 using OnlineCinemaProject.Models.Utils;
-
 namespace OnlineCinemaProject.Controllers.Api
 {
     public class UserApiController : ApiController
@@ -63,27 +64,15 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+//                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+                _userId = "ac1da694-6aee-4080-8c69-cac3342baada";
             }
-            var userseasons = _db.userseasons.Where(i => i.user_id == _userId).ToList();
-            var usermovies = _db.usermovies.Where(i => i.user_id == _userId).ToList();
+            var test = _db.usermovies.SqlQuery("SELECT * FROM usermovies WHERE user_id = @id", new MySqlParameter("id", _userId)).ToList();
+            //var usermovies = _db.usermovies.Where(i => i.user_id == _userId).ToList();//todo zapros neverniy
+            //var rrr = _db.usermovies.Where(i => i.user_id == _userId);
             List<Purchase.UserMovie> userMovies = new List<Purchase.UserMovie>();
-            List<Purchase.UserSeason> userSeasons = new List<Purchase.UserSeason>();
 
-            foreach (var item in userseasons)
-            {
-                userSeasons.Add(new Purchase.UserSeason
-                {
-                    id = item.id,
-                    seasonId = item.season_id,
-                    videoName = item.season.video.name,
-                    purchaseDate = item.payment.payment_date,
-                    videoImgUrl = item.season.video.img_url,
-                    price = item.payment.amount
-                    
-                });
-            }
-            foreach (var item in usermovies)
+            foreach (var item in test)
             {
                 userMovies.Add(new Purchase.UserMovie
                 {
@@ -99,8 +88,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
             Purchase purchase = new Purchase
             {
-                Usermovies = userMovies,
-                Userseasons = userSeasons
+                Usermovies = userMovies
             };
             return Request.CreateResponse(HttpStatusCode.OK, purchase); ;
         }
@@ -165,6 +153,7 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
             }
+            
 
             var user = _db.aspnetusers.Find(_userId);
             
