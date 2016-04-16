@@ -2,171 +2,24 @@
 @{
     ViewBag.Title = "Create";
 }
-<h2>Create</h2>
-<form action="" method="post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>video</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.name)
+<h2>Создать</h2>
+@using (Html.BeginForm("Create", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    Html.RenderPartial("_CreateOrUpdate", Model);
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Сохранить" class="btn btn-default" />
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.name)
-            @Html.ValidationMessageFor(model => model.name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.age_limit)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.age_limit)
-            @Html.ValidationMessageFor(model => model.age_limit)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.release_date)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.release_date)
-            @Html.ValidationMessageFor(model => model.release_date)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.details)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.details)
-            @Html.ValidationMessageFor(model => model.details)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.director)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.director)
-            @Html.ValidationMessageFor(model => model.director)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.type)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.type, new SelectList(new List<Object>
-            {
-                new {value = 0, text = "Фильм"},
-                new {value = 1, text = "Сериал"}
-            }, "value", "text", 2))
-            @Html.ValidationMessageFor(model => model.type)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.img_url)
-        </div>
-        <div class="editor-field">
-            <input id="ImagePath" title="Upload a product image" type="file" name="file"/>
-            @Html.ValidationMessageFor(model => model.img_url)
-        </div>
-        <div class="editor-label">
-            @Html.Label("Жанры")
-        </div>
-
-        <div class="editor-field">
-            <table>
-                <tr>
-                @{
-                    int cnt = 0;
-                    List<OnlineCinemaProject.Models.ViewModels.IncludedData> genres = ViewBag.Genres;
-
-                    foreach (var genre in genres)
-                    {
-                        if (cnt++%6 == 0)
-                        {
-                            @: </tr> <tr>
-                        }
-                        @: <td>
-                        <input type="checkbox" name="selectedGenres" value="@genre.id" @(Html.Raw(genre.Included ? "checked=\"checked\"" : ""))/>
-                        @genre.id
-                        @: @genre.Title
-                        @: </td>
-                    }
-                    @: </tr>
-                }
-            </table>
-        </div>
-
-        <div class="editor-label">
-            @Html.Label("В ролях")
-        </div>
-
-        <div class="editor-field">
-            <table>
-                <tr>
-                @{
-                    int count = 0;
-                    List<OnlineCinemaProject.Models.ViewModels.IncludedData> actors = ViewBag.Actors;
-
-                    foreach (var actor in actors)
-                    {
-                        if (count++%6 == 0)
-                        {
-                            @: </tr> <tr>
-                        }
-                        @: <td>
-                        <input type="checkbox" name="selectedActors" value="@actor.id" @(Html.Raw(actor.Included ? "checked=\"checked\"" : ""))/>
-                        @actor.id
-                        @: @actor.Title
-                        @: </td>
-                    }
-                    @: </tr>
-                }
-            </table>
-        </div>
-
-        <div class="editor-label">
-            @Html.Label("Страны")
-        </div>
-
-        <div class="editor-field">
-            <table>
-                <tr>
-                    @{
-                        int count1 = 0;
-                        List<OnlineCinemaProject.Models.ViewModels.IncludedData> countries = ViewBag.Countries;
-
-                        foreach (var country in countries)
-                        {
-                            if (count1++%6 == 0)
-                            {
-                                @: </tr> <tr>
-                            }
-                            @: <td> 
-                            <input type="checkbox" name="selectedCountries" value="@country.id" @(Html.Raw(country.Included ? "checked=\"checked\"" : ""))/>
-                            @country.id
-                            @:
-                            @country.Title
-                            @*@ country.id
-                            @:@ country.Title
-                            @: </td >*@
-                        }
-                        @: </tr>
-                    }
-                </table>
-            </div>
-
-        <p>
-            <input type="submit" value="Create"/>
-        </p>
-    </fieldset>
-</form>
-
-
+    </div>
+}
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Назад к списку", "Index")
 </div>
 
-@section Scripts {
+@section scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/kendo")
+}
+@section styles{
+    @Styles.Render("~/Content/kendo/css")
 }

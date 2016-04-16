@@ -1,40 +1,38 @@
-﻿@model IEnumerable<OnlineCinemaProject.Models.video>
+﻿@using OnlineCinemaProject.Models
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Фильмы и Сериалы";
 }
 
 <h2>Фильмы и Сериалы</h2>
+@(Html.Kendo().Grid<video>()
+      .Name("grid")
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Read(read => read.Action("Videos_read", "Video"))
+       )
+      .Columns(columns =>
+      {
+      columns.Bound(product => product.id).Hidden();
+      columns.Bound(product => product.img_url).Title(" ")
+        .ClientTemplate("<img data-src='holder.js/200x200' class='img-thumbnail' alt='200x200' src='../uploads/#:img_url#' data-holder-rendered='true' style='width: 200px; height: 200px;'>")
+        .Filterable(false)
+        .Sortable(false)
+        .Width(200);
+      columns.Bound(product => product.name).Title("Название");
+      columns.Bound(product => product.release_date).Title("Дата выхода").ClientTemplate("#= kendo.toString(release_date, 'yyyy-MM-dd') #").Width(100);
+      columns.Template(t => t.id).ClientTemplate("<a href='"+Url.Action("Edit") +"/#:id#'>Редактировать</a><br><a href='"+Url.Action("Details")+ "/#:id#'>Описание</a><br><a href='" + Url.Action("Delete") + "/#:id#'>Удалить</a><br>").Width(100);
+    })
+      .ToolBar(t => t.Template(@Html.ActionLink("Создать", "Create").ToHtmlString()))
+      .Pageable()
+      .Sortable()
+      .Filterable()
+)
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-@foreach (var item in Model)
-{
-    <hr class="featurette-divider"/>
-    <div class="row featurette">
-        <div class="col-md-3">
-            <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="~/uploads/@item.img_url" data-holder-rendered="true" style="width: 200px; height: 200px;">
-        </div>
-        <div class="col-md-6">
-            @{
-                if (item.type == 0)
-                {
-                    <h4>Фильм: @item.name</h4>
-                }
-                else
-                {
-                    <h4>Сериал: @item.name</h4>
-                }
-            }
-            <p> @Html.DisplayFor(modelItem => item.release_date)</p>
-        </div>
-        <div class="col-md-3">
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) <br />
-            @Html.ActionLink("Описание", "Details", new { id = item.id })<br />
-            @Html.ActionLink("Удалить", "Delete", new { id = item.id })<br />
-        </div>
 
-    </div>
+@section scripts{
+    @Scripts.Render("~/bundles/kendo")
 }
-
+@section styles{
+    @Styles.Render("~/Content/kendo/css")
+}

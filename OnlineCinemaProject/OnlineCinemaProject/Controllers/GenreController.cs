@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.Models;
 using PagedList;
 
@@ -152,6 +154,55 @@ namespace OnlineCinemaProject.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Genres_read([DataSourceRequest]DataSourceRequest request)
+        {
+            DataSourceResult result = db.genres.Select(v => new { v.name, v.id }).ToDataSourceResult(request);
+            return Json(result);
+        }
+
+        public ActionResult Genres_Create([DataSourceRequest]DataSourceRequest request, genre genre)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = db.genres.Add(new genre {id = genre.id, name = genre.name});
+                db.SaveChanges();
+                genre.id = entity.id;
+            }
+            return Json(new[] { genre }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Genres_Update([DataSourceRequest]DataSourceRequest request, genre genre)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new genre()
+                {
+                    id = genre.id,
+                    name = genre.name
+                };
+                db.genres.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new[] { genre }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Genres_Destroy([DataSourceRequest]DataSourceRequest request, genre genre)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new genre()
+                {
+                    id = genre.id,
+                    name = genre.name
+                };
+                db.genres.Attach(entity);
+                db.genres.Remove(entity);
+                db.SaveChanges();
+            }
+            return Json(new[] { genre }.ToDataSourceResult(request, ModelState));
         }
     }
 }

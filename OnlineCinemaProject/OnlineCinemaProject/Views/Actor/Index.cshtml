@@ -1,48 +1,42 @@
-﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.actor>
-@using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+﻿@using OnlineCinemaProject.Models
 @{
-    ViewBag.Title = "Actors";
+    ViewBag.Title = "Актеры";
 }
 
-<h2>Actors</h2>
+<h2>Актеры</h2>
+@(Html.Kendo().Grid<actor>()
+      .Name("grid")
+      .DataSource(dataSource => dataSource
+          .Ajax()
+           .Model(model =>
+            {
+                model.Id(genre => genre.id);
+            })
+          .Read(read => read.Action("Actors_read", "Actor"))
+          .Create(read => read.Action("Actors_Create", "Actor"))
+          .Update(read => read.Action("Actors_Update", "Actor"))
+          .Destroy(read => read.Action("Actors_Destroy", "Actor"))
+       )
+      .Columns(columns =>
+      {
+          columns.Bound(product => product.id).Hidden();
+          columns.Bound(product => product.name).Title("Название");
+          columns.Command(commands =>
+          {
+              commands.Edit();
+              commands.Destroy();
+          }).Width(250);
+      })
+      .ToolBar(t => t.Create())
+      .Pageable()
+      .Sortable()
+      .Filterable()
+)
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
-@using (Html.BeginForm("Index", "Actor", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+@section scripts{
+    @Scripts.Render("~/bundles/kendo")
 }
-<table>
-    <tr>
-        <th>
-            @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSortParm})
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.id })
-        </td>
-    </tr>
+@section styles{
+    @Styles.Render("~/Content/kendo/css")
 }
-
-</table>
-
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
