@@ -39,15 +39,14 @@ namespace OnlineCinemaProject.Controllers.Api
         [Queryable]
         public IQueryable<video> GetVideo()
         {
-            var video = db.videos;
-            return video;
+            return db.videos;
         }
 
         // GET odata/Video(5)
         [Queryable]
         public SingleResult<video> Getvideo([FromODataUri] int key)
         {
-            return SingleResult.Create(db.videos.Where(video => video.id == key).Include(c=>c.movies));
+            return SingleResult.Create(db.videos.Where(video => video.id == key));
         }
 
         // PUT odata/Video(5)
@@ -202,7 +201,7 @@ namespace OnlineCinemaProject.Controllers.Api
         [Queryable]
         public IQueryable<movy> Getmovies([FromODataUri] int key)
         {
-            return db.movies.Where(m => m.video_id == key);
+            return db.videos.Where(m => m.id == key).SelectMany(m => m.movies);
         }
 
         protected override void Dispose(bool disposing)

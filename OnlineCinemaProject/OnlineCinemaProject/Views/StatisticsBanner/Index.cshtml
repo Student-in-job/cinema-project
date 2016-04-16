@@ -5,8 +5,9 @@
     @{
         ViewBag.Title = "Statistics_banner";
     }
-<h2><center>      </center></h2>
-   
+
+    <h2>Статистика баннеров</h2>
+
     @using (Html.BeginForm("Index", "Statistics_banner", FormMethod.Get))
     {
         <p>
@@ -15,10 +16,7 @@
         </p>
 
     }
-<div class="panel panel-success">
-    <!-- Default panel contents -->
-    <div class="panel-heading"><h2><center> Статистика баннеров </center></h2></div>
-    <table class="table table-striped table-bordered">
+    <table class="table">
         <tr>
             <th>
                 @Html.ActionLink("Количество показов", "Index", new { sortOrder = ViewBag.show_amountSortParm })
@@ -35,7 +33,7 @@
 
             <th></th>
         </tr>
-
+        
 
         @foreach (var item in Model)
         {
@@ -45,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.show_amount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.aspnetuser.FirstName)
+                    @Html.DisplayFor(modelItem => item.aspnetuser.UserName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.banner.name)
@@ -54,15 +52,13 @@
                     @Html.DisplayFor(modelItem => item.date)
                 </td>
                 <td>
-                    <center>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                    </center>
+                   
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
                 </td>
             </tr>
         }
 
     </table>
-</div>
     <br />
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 

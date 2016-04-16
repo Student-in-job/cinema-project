@@ -88,4 +88,17 @@ namespace OnlineCinemaProject.Models
 
         
     }
+
+    public class TopUpViewModel
+    {
+        [Required]
+        [Display(Name = "Id пользователя")]
+        public string UserId { get; set; }
+
+        [Required]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Кол-во денег")]
+        public decimal Amount { get; set; }
+    }
+
 }

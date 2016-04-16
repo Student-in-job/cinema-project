@@ -37,6 +37,7 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.CurrentFilter = searchString;
 
             var genres = from s in db.genres select s;
+            
 
             if (!String.IsNullOrEmpty(searchString))
             {
