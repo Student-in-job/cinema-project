@@ -30,7 +30,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<aspnetrole> aspnetroles { get; set; }
         public virtual DbSet<aspnetuser> aspnetusers { get; set; }
         public virtual DbSet<banner> banners { get; set; }
-        public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<country> countries { get; set; }
         public virtual DbSet<episodehistory> episodehistories { get; set; }
         public virtual DbSet<episode> episodes { get; set; }
