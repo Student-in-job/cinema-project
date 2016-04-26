@@ -30,11 +30,15 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.accessibility.CaptioningManager;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.MediaController;
+import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.Toast;
 import com.android.online.app.Constants;
 import com.android.online.app.R;
-import com.android.online.app.model.Video;
+import com.android.online.app.model.ResponseObject;
+import com.android.online.app.model.VideoDataListWrapper;
 import com.android.online.app.model.wrapper.MovieListWrapper;
 import com.android.online.app.player.DemoPlayer;
 import com.android.online.app.player.EventLogger;
@@ -129,10 +133,8 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
   private String contentId;
   private String provider;
 
-  TextView name;
-  TextView details;
   private AudioCapabilitiesReceiver audioCapabilitiesReceiver;
-  private Video video;
+  private VideoDataListWrapper video;
 
   private boolean hasVideo;
   // Activity lifecycle
@@ -159,32 +161,50 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
 
     setContentView(R.layout.player_activity);
 
-    name = (TextView) findViewById(R.id.name);
-    details = (TextView) findViewById(R.id.details);
-
-
     video = Parcels.unwrap(getIntent().getParcelableExtra(Constants.VIDEO));
+
 
     videoService.getMovies(video.id, new Callback<MovieListWrapper>() {
       @Override
-      public void success(MovieListWrapper movieListWrapper, Response response) {
-        Intent intent = getIntent();
+      public void success(final MovieListWrapper movieListWrapper, Response response) {
+        final Intent intent = getIntent();
 //        contentUri = intent.getData();
-        if(movieListWrapper.hasMovies()) {
-          hasVideo = true;
-          contentUri = Uri.parse(movieListWrapper.movies.get(0).url);
-          contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA,
-              inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
-          contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
-          provider = intent.getStringExtra(PROVIDER_EXTRA);
-          configureSubtitleView();
-          if (player == null) {
-            if (!maybeRequestPermission()) {
-              preparePlayer(true);
+        if (movieListWrapper.hasMovies()) {
+          videoService.postShow(movieListWrapper.movies.get(0).id, new Callback<ResponseObject>() {
+            @Override
+            public void success(ResponseObject o, Response response) {
+              hasVideo = true;
+              switch (o.responseCode) {
+                case 1001:
+                  Toast.makeText(getApplicationContext(), o.responseMessage, Toast.LENGTH_SHORT).show();
+                  break;
+
+                case 1002:
+                  contentUri = Uri.parse(movieListWrapper.movies.get(0).url);
+                  contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA,
+                      inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
+                  contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
+                  provider = intent.getStringExtra(PROVIDER_EXTRA);
+                  configureSubtitleView();
+                  if (player == null) {
+                    if (!maybeRequestPermission()) {
+                      preparePlayer(true);
+                    }
+                  } else {
+                    player.setBackgrounded(false);
+                  }
+                  break;
+              }
+
             }
-          } else {
-            player.setBackgrounded(false);
-          }
+
+            @Override
+            public void failure(RetrofitError error) {
+              Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+
+            }
+          });
+
         } else {
           Toast.makeText(getApplicationContext(), "нет видео", Toast.LENGTH_SHORT).show();
         }
@@ -196,10 +216,11 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
       }
     });
 
-    name.setText(video.name);
-    details.setText(video.details);
 
-    View root = findViewById(R.id.video_frame);
+
+
+
+    View root = findViewById(R.id.root);
     root.setOnTouchListener(new OnTouchListener() {
       @Override
       public boolean onTouch(View view, MotionEvent motionEvent) {

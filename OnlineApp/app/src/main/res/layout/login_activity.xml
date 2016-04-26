@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_gravity="center"
-              android:background="@color/color_primary_dark"
+              android:background="@color/accent_material_light"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -85,6 +85,16 @@
 	</LinearLayout>
 	</LinearLayout>
 
+	<com.android.online.app.ui.BoldTextView
+			android:id="@+id/registration"
+			android:text="@string/registration"
+			android:textColor="@color/white"
+			android:textSize="18dp"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true"
+			android:padding="20dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
 	<Button
 			android:id="@+id/enter"
 			android:layout_below="@+id/login_view"

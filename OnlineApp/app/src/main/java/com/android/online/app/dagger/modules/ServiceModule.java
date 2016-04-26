@@ -1,6 +1,7 @@
 package com.android.online.app.dagger.modules;
 
 import com.android.online.app.service.LoginService;
+import com.android.online.app.service.ReviewService;
 import com.android.online.app.service.VideoService;
 import dagger.Module;
 import dagger.Provides;
@@ -23,5 +24,12 @@ public class ServiceModule {
   @SuppressWarnings("unused")
   VideoService provideVideoService(RestAdapter restAdapter) {
     return restAdapter.create(VideoService.class);
+  }
+
+  @Provides
+  @Singleton
+  @SuppressWarnings("unused")
+  ReviewService provideReviewService(RestAdapter restAdapter) {
+    return restAdapter.create(ReviewService.class);
   }
 }

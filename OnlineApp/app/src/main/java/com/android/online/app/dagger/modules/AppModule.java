@@ -10,13 +10,13 @@ import javax.inject.Singleton;
 @Singleton
 @Module(includes = ApiModule.class)
 public class AppModule {
-
+//1994-06-21T00:00:00
   @Provides
   @Singleton
   @SuppressWarnings("unused")
   public Gson provideGson() {
     return new GsonBuilder()
-        .setDateFormat("yyyy'-'MM'-'dd HH':'mm':'ss")
+        .setDateFormat("yyyy'-'MM'-'dd")
         .create();
   }
 

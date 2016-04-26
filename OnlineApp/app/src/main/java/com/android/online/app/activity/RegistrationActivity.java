@@ -10,6 +10,7 @@ import butterknife.OnClick;
 import com.android.online.app.R;
 import com.android.online.app.model.LoginModel;
 import com.android.online.app.service.RegisterModel;
+import com.android.online.app.util.Prefs;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -30,12 +31,14 @@ public class RegistrationActivity extends BaseActivity {
   @OnClick(R.id.enter)
   public void  onCLick() {
     RegisterModel registerModel = new RegisterModel();
-    registerModel.username = name.getText().toString();
-    registerModel.Email = name.getText().toString();
+    registerModel.UserName = name.getText().toString();
+    registerModel.Email = email.getText().toString();
     registerModel.LastName = lastName.getText().toString();
     registerModel.Password = password.getText().toString();
+    registerModel.ConfirmPassword = password.getText().toString();
     registerModel.FirstName = name.getText().toString();
-    registerModel.sex = 0;
+//    registerModel.BirthDate = Calendar.getInstance().getTime();
+    registerModel.Sex = 0;
 
     loginService.register(registerModel, new Callback<Object>() {
       @Override
@@ -49,7 +52,8 @@ public class RegistrationActivity extends BaseActivity {
         loginService.login(loginModel, new Callback<String>() {
           @Override
           public void success(String o, Response response) {
-            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+            Prefs.saveUserId(o);
+            startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
           }
 
           @Override
