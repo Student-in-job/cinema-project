@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.Models;
 using PagedList;
 
@@ -151,6 +153,55 @@ namespace OnlineCinemaProject.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Countries_read([DataSourceRequest]DataSourceRequest request)
+        {
+            DataSourceResult result = db.countries.Select(v => new { v.name, v.id }).ToDataSourceResult(request);
+            return Json(result);
+        }
+
+        public ActionResult Countries_Create([DataSourceRequest]DataSourceRequest request, country country)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = db.countries.Add(new country { id = country.id, name = country.name });
+                db.SaveChanges();
+                country.id = entity.id;
+            }
+            return Json(new[] { country }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Countries_Update([DataSourceRequest]DataSourceRequest request, country country)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new country()
+                {
+                    id = country.id,
+                    name = country.name
+                };
+                db.countries.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new[] { country }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Countries_Destroy([DataSourceRequest]DataSourceRequest request, country country)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new country()
+                {
+                    id = country.id,
+                    name = country.name
+                };
+                db.countries.Attach(entity);
+                db.countries.Remove(entity);
+                db.SaveChanges();
+            }
+            return Json(new[] { country }.ToDataSourceResult(request, ModelState));
         }
     }
 }

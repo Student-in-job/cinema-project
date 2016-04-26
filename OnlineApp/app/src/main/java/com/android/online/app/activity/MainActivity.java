@@ -1,56 +1,38 @@
 package com.android.online.app.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 import com.android.online.app.R;
-import com.android.online.app.adapter.SectionedGridRecyclerViewAdapter;
-import com.android.online.app.adapter.SimpleAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.android.online.app.fragment.MainVideoFragment;
 
 
 public class MainActivity extends MenuActivity {
 
-  @Bind(R.id.list)
-  RecyclerView mRecyclerView;
-  private SimpleAdapter mAdapter;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
-    //Your RecyclerView
-    mRecyclerView.setHasFixedSize(true);
-    mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    fragmentTransaction.replace(R.id.root, MainVideoFragment.newInstance());
+    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.commit();
 
-    //Your RecyclerView.Adapter
-    mAdapter = new SimpleAdapter(this);
+  }
 
-
-    //This is the code to provide a sectioned grid
-    List<SectionedGridRecyclerViewAdapter.Section> sections =
-        new ArrayList<SectionedGridRecyclerViewAdapter.Section>();
-
-    //Sections
-    sections.add(new SectionedGridRecyclerViewAdapter.Section(0,"Драма"));
-    sections.add(new SectionedGridRecyclerViewAdapter.Section(5,"Мультфильмы"));
-//    sections.add(new SectionedGridRecyclerViewAdapter.Section(12,"Section 3"));
-//    sections.add(new SectionedGridRecyclerViewAdapter.Section(14,"Section 4"));
-//    sections.add(new SectionedGridRecyclerViewAdapter.Section(20,"Section 5"));
-
-    //Add your adapter to the sectionAdapter
-    SectionedGridRecyclerViewAdapter.Section[] dummy = new SectionedGridRecyclerViewAdapter.Section[sections.size()];
-    SectionedGridRecyclerViewAdapter mSectionedAdapter = new
-        SectionedGridRecyclerViewAdapter(this, R.layout.section,
-        R.id.section_text, mRecyclerView, mAdapter);
-    mSectionedAdapter.setSections(sections.toArray(dummy));
-    //Apply this adapter to the RecyclerView
-    mRecyclerView.setAdapter(mSectionedAdapter);
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        if(mDrawerLayout.getDrawerLockMode(navigationView) == DrawerLayout.LOCK_MODE_UNLOCKED)
+        mDrawerLayout.openDrawer(navigationView);
+        break;
+    }
+    return super.onOptionsItemSelected(item);
 
   }
 

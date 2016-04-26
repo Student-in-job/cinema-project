@@ -46,7 +46,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
                 db.statistics_teaser.Attach(sb);
                 sb.dateShow = DateTime.Now;
-                sb.showAmount = teaser.showAmount;
+                sb.showAmount = (int?) teaser.showAmount;
                 var entry1 = db.Entry(sb);
                 entry1.Property(e => e.showAmount).IsModified = true;
                 entry1.Property(e => e.dateShow).IsModified = true;
@@ -60,7 +60,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 sb = new statistics_teaser();
                 sb.dateShow = DateTime.Now;
                 sb.id_teasers = teaser.id;
-                sb.showAmount = teaser.showAmount;
+                sb.showAmount = (int?) teaser.showAmount;
                 sb.id_users = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
                 db.statistics_teaser.Add(sb);
                 db.SaveChanges();

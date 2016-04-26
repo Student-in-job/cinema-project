@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.Models;
 using PagedList;
 
@@ -151,6 +153,55 @@ namespace OnlineCinemaProject.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Actors_read([DataSourceRequest]DataSourceRequest request)
+        {
+            DataSourceResult result = db.actors.Select(v => new { v.name, v.id }).ToDataSourceResult(request);
+            return Json(result);
+        }
+
+        public ActionResult Actors_Create([DataSourceRequest]DataSourceRequest request, actor actor)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = db.actors.Add(new actor { id = actor.id, name = actor.name });
+                db.SaveChanges();
+                actor.id = entity.id;
+            }
+            return Json(new[] { actor }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Actors_Update([DataSourceRequest]DataSourceRequest request, actor actor)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new actor()
+                {
+                    id = actor.id,
+                    name = actor.name
+                };
+                db.actors.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new[] { actor }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Actors_Destroy([DataSourceRequest]DataSourceRequest request, actor actor)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new actor()
+                {
+                    id = actor.id,
+                    name = actor.name
+                };
+                db.actors.Attach(entity);
+                db.actors.Remove(entity);
+                db.SaveChanges();
+            }
+            return Json(new[] { actor }.ToDataSourceResult(request, ModelState));
         }
     }
 }

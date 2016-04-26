@@ -29,8 +29,14 @@ namespace OnlineCinemaProject
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
+<<<<<<< HEAD
+                "~/Scripts/Highcharts-4.0.1/js/highcharts.js",
+                "~/Scripts/Highcharts-4.0.1/js/highcharts-*"));
+
+=======
                 "~/Scripts/Highcharts-4.0.1/js/highcharts.js"/*,
                 "~/Scripts/Highcharts-4.0.1/js/highcharts-*"*/));
+>>>>>>> faa7f4fc740b67c706f427a0b07b30fdf99fe2d1
         }
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+	<android.support.design.widget.TextInputLayout
+			android:layout_margin="20dp"
+			android:id="@+id/name_wrapper"
+			android:layout_marginLeft="10dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+		<EditText
+				android:id="@+id/ip"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/server_ip"
+				android:singleLine="true"/>
+	</android.support.design.widget.TextInputLayout>
+
+	<Button
+			android:id="@+id/save"
+			android:layout_gravity="bottom|right"
+			android:layout_margin="20dp"
+			android:text="save"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+</FrameLayout>
