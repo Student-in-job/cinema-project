@@ -19,6 +19,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="phone_number" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="aspnetroles">
@@ -281,6 +282,8 @@
           <Property Name="director" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
           <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="score" Type="decimal" Nullable="true" />
+          <Property Name="last_score_calc" Type="date" Nullable="true" />
         </EntityType>
         <Association Name="fk_actor_video">
           <End Role="actors" Type="Self.actors" Multiplicity="1">
@@ -1106,6 +1109,8 @@
           <Property Name="director" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="type" Type="Int32" Nullable="false" />
           <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="score" Type="Decimal" Nullable="true" />
+          <Property Name="last_score_calc" Type="DateTime" Nullable="true" />
           <NavigationProperty Name="likes" Relationship="Self.fk_like_video" FromRole="videos" ToRole="likes" />
           <NavigationProperty Name="manufacturers" Relationship="Self.fk_video_country" FromRole="videos" ToRole="manufacturer" />
           <NavigationProperty Name="overviews" Relationship="Self.fk_video_overview" FromRole="videos" ToRole="overviews" />
@@ -1468,6 +1473,7 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="phone_number" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="img_url" Type="String" Nullable="false" />
           <NavigationProperty Name="banners" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="advertiser" ToRole="banner" />
           <NavigationProperty Name="teasers" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="advertiser" ToRole="teaser" />
         </EntityType>
@@ -2045,6 +2051,8 @@
                 <ScalarProperty Name="director" ColumnName="director" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="last_score_calc" ColumnName="last_score_calc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2063,6 +2071,7 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

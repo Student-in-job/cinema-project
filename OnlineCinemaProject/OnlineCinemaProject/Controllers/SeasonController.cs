@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
@@ -147,6 +149,57 @@ namespace OnlineCinemaProject.Controllers
 
             ViewBag.video_id = new SelectList(db.videos, "id", "name", season.video_id);
             return View(season);
+        }
+
+
+        public ActionResult Seasons_read([DataSourceRequest]DataSourceRequest request, int videoId)
+        {
+            DataSourceResult result = db.seasons.Where(t => t.video_id == videoId).Select(v => new { v.release_date, v.id, v.name, v.price }).ToDataSourceResult(request);
+            return Json(result);
+        }
+
+        public ActionResult Seasons_create([DataSourceRequest]DataSourceRequest request, season season, int videoId)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = db.seasons.Add(new season {  video_id = videoId, release_date = season.release_date, price = season.price, name = season.name });
+                db.SaveChanges();
+                season.id = entity.id;
+            }
+            return Json(new[] { season }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Seasons_update([DataSourceRequest]DataSourceRequest request, season season)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new season()
+                {
+                    release_date = season.release_date,
+                    price = season.price,
+                    name = season.name,
+                    video_id = season.video_id
+                };
+                db.seasons.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new[] { season }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Seasons_destroy([DataSourceRequest]DataSourceRequest request, season season)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new season()
+                {
+                    id = season.id
+                };
+                db.seasons.Attach(entity);
+                db.seasons.Remove(entity);
+                db.SaveChanges();
+            }
+            return Json(new[] { season }.ToDataSourceResult(request, ModelState));
         }
     }
 }

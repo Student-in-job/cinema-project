@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 
@@ -165,6 +167,57 @@ namespace OnlineCinemaProject.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Movies_read([DataSourceRequest]DataSourceRequest request, int videoId)
+        {
+            DataSourceResult result = db.movies.Where(t => t.video_id == videoId).Select(v => new { v.url, v.id,v.creation_date,v.price,v.quality }).ToDataSourceResult(request);
+            return Json(result);
+        }
+
+        public ActionResult Movies_create([DataSourceRequest]DataSourceRequest request, movy movy, int videoId)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = db.movies.Add(new movy { url = movy.url, video_id = videoId, creation_date = movy.creation_date, price = movy.price, quality = movy.quality});
+                db.SaveChanges();
+                movy.id = entity.id;
+            }
+            return Json(new[] { movy }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Movies_update([DataSourceRequest]DataSourceRequest request, movy movy)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new movy()
+                {
+                    url = movy.url,
+                    creation_date = movy.creation_date,
+                    price = movy.price,
+                    quality = movy.quality,
+                    video_id = movy.video_id
+                };
+                db.movies.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new[] { movy }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Movies_destroy([DataSourceRequest]DataSourceRequest request, movy movy)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new movy()
+                {
+                    id = movy.id
+                };
+                db.movies.Attach(entity);
+                db.movies.Remove(entity);
+                db.SaveChanges();
+            }
+            return Json(new[] { movy }.ToDataSourceResult(request, ModelState));
         }
     }
 }

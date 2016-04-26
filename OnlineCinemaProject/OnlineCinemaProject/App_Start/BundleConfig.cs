@@ -29,6 +29,13 @@ namespace OnlineCinemaProject
             bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
                 "~/Scripts/Highcharts-4.0.1/js/highcharts.js"/*,
                 "~/Scripts/Highcharts-4.0.1/js/highcharts-*"*/));
+
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+                "~/Scripts/kendo/2016.1.112/kendo.all.min.js",
+                "~/Scripts/kendo/2016.1.112/kendo.aspnetmvc.min.js"));
+            bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
+               "~/Content/kendo/2016.1.112/kendo.common-bootstrap.min.css",
+               "~/Content/kendo/2016.1.112/kendo.bootstrap.min.css"));
         }
     }
 }

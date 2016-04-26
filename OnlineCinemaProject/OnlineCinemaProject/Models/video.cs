@@ -34,6 +34,8 @@ namespace OnlineCinemaProject.Models
         public string director { get; set; }
         public int type { get; set; }
         public string img_url { get; set; }
+        public Nullable<decimal> score { get; set; }
+        public Nullable<System.DateTime> last_score_calc { get; set; }
     
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<manufacturer> manufacturers { get; set; }

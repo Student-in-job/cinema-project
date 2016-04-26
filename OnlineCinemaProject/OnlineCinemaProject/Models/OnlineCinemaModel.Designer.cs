@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\OnlineCinemaProject\OnlineCinemaProject\OnlineCinemaProject\Models\OnlineCinemaModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\abc\Desktop\Новая папка (2)\cinema-project\OnlineCinemaProject\OnlineCinemaProject\Models\OnlineCinemaModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

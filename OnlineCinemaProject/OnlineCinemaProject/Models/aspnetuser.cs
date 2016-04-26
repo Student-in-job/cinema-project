@@ -52,12 +52,8 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<moviehistory> moviehistories { get; set; }
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
-<<<<<<< HEAD
-        public virtual ICollection<aspnetrole> aspnetroles { get; set; }
-=======
         public virtual tariff tariff { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
         public virtual ICollection<payment> payments { get; set; }
->>>>>>> bb516119c725d7fd0811252f8325fa991635ad23
     }
 }
