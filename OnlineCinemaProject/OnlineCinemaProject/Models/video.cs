@@ -16,14 +16,15 @@ namespace OnlineCinemaProject.Models
     {
         public video()
         {
+            this.comments = new HashSet<comment>();
             this.likes = new HashSet<like>();
             this.manufacturers = new HashSet<manufacturer>();
-            this.overviews = new HashSet<overview>();
+            this.movies = new HashSet<movy>();
             this.seasons = new HashSet<season>();
             this.trailers = new HashSet<trailer>();
             this.videoactors = new HashSet<videoactor>();
             this.videogenres = new HashSet<videogenre>();
-            this.movies = new HashSet<movy>();
+            this.overviews = new HashSet<overview>();
         }
     
         public int id { get; set; }
@@ -37,13 +38,14 @@ namespace OnlineCinemaProject.Models
         public Nullable<decimal> score { get; set; }
         public Nullable<System.DateTime> last_score_calc { get; set; }
     
+        public virtual ICollection<comment> comments { get; set; }
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<manufacturer> manufacturers { get; set; }
-        public virtual ICollection<overview> overviews { get; set; }
+        public virtual ICollection<movy> movies { get; set; }
         public virtual ICollection<season> seasons { get; set; }
         public virtual ICollection<trailer> trailers { get; set; }
         public virtual ICollection<videoactor> videoactors { get; set; }
         public virtual ICollection<videogenre> videogenres { get; set; }
-        public virtual ICollection<movy> movies { get; set; }
+        public virtual ICollection<overview> overviews { get; set; }
     }
 }

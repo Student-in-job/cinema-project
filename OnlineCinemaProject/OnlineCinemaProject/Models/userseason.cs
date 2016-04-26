@@ -20,7 +20,7 @@ namespace OnlineCinemaProject.Models
         public int payment_id { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
-        public virtual season season { get; set; }
         public virtual payment payment { get; set; }
+        public virtual season season { get; set; }
     }
 }

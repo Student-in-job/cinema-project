@@ -10,6 +10,8 @@ namespace OnlineCinemaProject
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -27,6 +29,11 @@ namespace OnlineCinemaProject
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
+<<<<<<< HEAD
+                "~/Scripts/Highcharts-4.0.1/js/highcharts.js",
+                "~/Scripts/Highcharts-4.0.1/js/highcharts-*"));
+
+=======
                 "~/Scripts/Highcharts-4.0.1/js/highcharts.js"/*,
                 "~/Scripts/Highcharts-4.0.1/js/highcharts-*"*/));
 

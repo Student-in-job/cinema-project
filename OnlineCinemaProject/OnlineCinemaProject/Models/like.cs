@@ -17,7 +17,7 @@ namespace OnlineCinemaProject.Models
         public int id { get; set; }
         public string user_id { get; set; }
         public int video_id { get; set; }
-        public bool like1 { get; set; }
+        public bool value { get; set; }
         public System.DateTime creation_date { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }

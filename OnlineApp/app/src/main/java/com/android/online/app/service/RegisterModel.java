@@ -1,12 +1,15 @@
 package com.android.online.app.service;
 
+import java.util.Date;
+
 public class RegisterModel {
 
-  public String username;
+  public String UserName;
+  public String Password;
+  public String ConfirmPassword;
   public String FirstName;
   public String LastName;
-  public String BirthDate;
-  public String Password;
+  public Date BirthDate;
   public String Email;
-  public int sex;
+  public int Sex;
 }

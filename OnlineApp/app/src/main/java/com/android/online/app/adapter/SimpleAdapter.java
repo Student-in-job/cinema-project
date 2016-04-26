@@ -1,41 +1,44 @@
 package com.android.online.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import com.android.online.app.Constants;
 import com.android.online.app.R;
+import com.android.online.app.activity.VideoActivity;
+import com.android.online.app.model.VideoDataListWrapper;
+import com.squareup.picasso.Picasso;
+import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
- */
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> {
-    private static final int COUNT = 3;
+    private static final int COUNT = 10;
 
     private final Context mContext;
-    private final List<Integer> mItems;
     private int mCurrentItemId = 0;
+  private List<VideoDataListWrapper> videos;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final TextView title;
+//       @Bind(R.id.title) TextView title;
+      @Bind(R.id.video_image) ImageView videoImage;
 
         public SimpleViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+          ButterKnife.bind(this, view);
         }
     }
 
-    public SimpleAdapter(Context context) {
+    public SimpleAdapter(Context context, List<VideoDataListWrapper> videos) {
         mContext = context;
-        mItems = new ArrayList<Integer>(COUNT);
-        for (int i = 0; i < COUNT; i++) {
-            addItem(i);
-        }
+     this.videos = videos;
+
     }
 
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,22 +48,31 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        holder.title.setText(mItems.get(position).toString());
+//        holder.title.setText(videos.get(position).name);
+      Picasso.with(mContext).load(Constants.BASE_URL + "/uploads/" + videos.get(position).poster).fit().centerInside().into(holder.videoImage);
+      holder.itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent mpdIntent = new Intent(mContext, VideoActivity.class)
+              .putExtra(Constants.VIDEO, Parcels.wrap(videos.get(position)));
+          mContext.startActivity(mpdIntent);
+        }
+      });
     }
 
-    public void addItem(int position) {
-        final int id = mCurrentItemId++;
-        mItems.add(position, id);
-        notifyItemInserted(position);
-    }
-
-    public void removeItem(int position) {
-        mItems.remove(position);
-        notifyItemRemoved(position);
-    }
+//    public void addItem(int position) {
+//        final int id = mCurrentItemId++;
+//        mItems.add(position, id);
+//        notifyItemInserted(position);
+//    }
+//
+//    public void removeItem(int position) {
+//        mItems.remove(position);
+//        notifyItemRemoved(position);
+//    }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return videos.size() > 6 ? 6 : videos.size();
     }
 }

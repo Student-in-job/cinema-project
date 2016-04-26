@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OnlineCinemaProject.Models.Utils
 {
-    public static class UserUtils
+    /*public static class UserUtils
     {
         public static bool CheckAccess(aspnetuser user, movy movie)
         {
@@ -90,5 +90,5 @@ namespace OnlineCinemaProject.Models.Utils
             }
             return true;
         }
-    }
+    }*/
 }

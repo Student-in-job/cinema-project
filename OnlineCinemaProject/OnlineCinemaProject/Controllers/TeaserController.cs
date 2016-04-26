@@ -222,13 +222,15 @@ namespace OnlineCinemaProject.Controllers
             //    id_users = headerValues.FirstOrDefault();
             //}
             //SELECT teasers.img_url statistics_teaser from teasers where teasers.id not in (SELECT statistics_teaser.id_teaser from statistics_teaser WHERE statistics_teaser.id_users = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
-
-            string query = "SELECT * FROM teaser order by showAmount asc";
-            //var sb = null;
+            string query = "SELECT * FROM teaser where active = '1' order by showAmount asc";
             var teaser = db.teasers.SqlQuery(query).ToList().First();
+            statistics_teaser sb = new statistics_teaser();
+            try
+            {
+                sb = db.statistics_teaser.Single(i => i.id_teasers == teaser.id);
+            } catch(Exception e) {
 
-            var sb = db.statistics_teaser.Find(teaser.id);
-
+            };
             db.teasers.Attach(teaser);
             teaser.showAmount = teaser.showAmount + 1;
             var entry = db.Entry(teaser);
@@ -236,12 +238,12 @@ namespace OnlineCinemaProject.Controllers
             // other changed properties
             db.SaveChanges();
 
-            if (sb != null)
+            if (sb.teaser != null)
             {
 
                 db.statistics_teaser.Attach(sb);
                 sb.dateShow = DateTime.Now;
-                sb.showAmount = teaser.showAmount;
+                sb.showAmount = (int?) teaser.showAmount;
                 var entry1 = db.Entry(sb);
                 entry1.Property(e => e.showAmount).IsModified = true;
                 entry1.Property(e => e.dateShow).IsModified = true;
@@ -253,8 +255,8 @@ namespace OnlineCinemaProject.Controllers
                 sb = new statistics_teaser();
                 sb.dateShow = DateTime.Now;
                 sb.id_teasers = teaser.id;
-                sb.showAmount = teaser.showAmount;
-              //  sb.id_users = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
+                sb.showAmount = (int?) teaser.showAmount;
+                sb.id_users = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
                 db.statistics_teaser.Add(sb);
                 db.SaveChanges();
 

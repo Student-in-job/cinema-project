@@ -1,21 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers
 {
      [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
-        private OnlineCinemaEntities db = new OnlineCinemaEntities();
+        private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
 [HttpGet]
          public ActionResult TopUpBalance()
@@ -25,10 +22,10 @@ namespace OnlineCinemaProject.Controllers
          [HttpPost]
          public ActionResult TopUpBalance(TopUpViewModel model)
          {
-             aspnetuser user = db.aspnetusers.Find(model.UserId);
+             aspnetuser user = _db.aspnetusers.Find(model.UserId);
              if (user != null)
              {
-                 UserUtils.TopUpBalance(model.Amount, user);
+                 user.TopUpBalance(model.Amount);
                  payment payment = new payment
                  {
                      aspnetuser = user,
@@ -37,9 +34,9 @@ namespace OnlineCinemaProject.Controllers
                      payment_type = true,
                      payment_date = DateTime.Now,
                  };
-                 db.payments.Add(payment);
-                 db.Entry(user).State = EntityState.Modified;
-                 db.SaveChanges();
+                 _db.payments.Add(payment);
+                 _db.Entry(user).State = EntityState.Modified;
+                 _db.SaveChanges();
                  ModelState.AddModelError("Ok", "Операция Успешно выполнена!");
                  return View();
              }
@@ -50,7 +47,7 @@ namespace OnlineCinemaProject.Controllers
         // GET: /User/
         public ActionResult Index()
         {
-            var aspnetusers = db.aspnetusers.Include(a => a.tariff);
+            var aspnetusers = _db.aspnetusers.Include(a => a.tariff);
             //var aspnetroles = db.aspnetroles.ToList();
             //ViewBag.roles = db.aspnetroles.Where(i => i.aspnetusers == aspnetuser).ToList();
             return View(aspnetusers.ToList());
@@ -63,7 +60,7 @@ namespace OnlineCinemaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            aspnetuser aspnetuser = db.aspnetusers.Find(id);
+            aspnetuser aspnetuser = _db.aspnetusers.Find(id);
             if (aspnetuser == null)
             {
                 return HttpNotFound();
@@ -72,7 +69,7 @@ namespace OnlineCinemaProject.Controllers
                 i.tariff == aspnetuser.tariff &&
                 i.aspnetuser == aspnetuser
                 ).ToList();*/
-            ViewBag.subscriptions = db.subscriptions.Where(i =>
+            ViewBag.subscriptions = _db.subscriptions.Where(i =>
                 i.tariff == aspnetuser.tariff &&
                 i.aspnetuser == aspnetuser
                 ).ToList();
@@ -82,7 +79,7 @@ namespace OnlineCinemaProject.Controllers
         // GET: /User/Create
         public ActionResult Create()
         {
-            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name");
+            ViewBag.TariffId = new SelectList(_db.tariffs, "id", "name");
             return View();
         }
 
@@ -95,12 +92,12 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.aspnetusers.Add(aspnetuser);
-                db.SaveChanges();
+                _db.aspnetusers.Add(aspnetuser);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
+            ViewBag.TariffId = new SelectList(_db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -111,12 +108,12 @@ namespace OnlineCinemaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            aspnetuser aspnetuser = db.aspnetusers.Find(id);
+            aspnetuser aspnetuser = _db.aspnetusers.Find(id);
             if (aspnetuser == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
+            ViewBag.TariffId = new SelectList(_db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -129,12 +126,12 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(aspnetuser).State = EntityState.Modified;
+                _db.Entry(aspnetuser).State = EntityState.Modified;
                 try
                 {
                     // Your code...
                     // Could also be before try if you know the exception occurs in SaveChanges
-                    db.SaveChanges();
+                    _db.SaveChanges();
                 }
                 catch (DbEntityValidationException e)
                 {
@@ -152,7 +149,7 @@ namespace OnlineCinemaProject.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.TariffId = new SelectList(db.tariffs, "id", "name", aspnetuser.TariffId);
+            ViewBag.TariffId = new SelectList(_db.tariffs, "id", "name", aspnetuser.TariffId);
             return View(aspnetuser);
         }
 
@@ -163,7 +160,7 @@ namespace OnlineCinemaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            aspnetuser aspnetuser = db.aspnetusers.Find(id);
+            aspnetuser aspnetuser = _db.aspnetusers.Find(id);
             if (aspnetuser == null)
             {
                 return HttpNotFound();
@@ -176,9 +173,9 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            aspnetuser aspnetuser = db.aspnetusers.Find(id);
-            db.aspnetusers.Remove(aspnetuser);
-            db.SaveChanges();
+            aspnetuser aspnetuser = _db.aspnetusers.Find(id);
+            _db.aspnetusers.Remove(aspnetuser);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -186,7 +183,7 @@ namespace OnlineCinemaProject.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -197,13 +194,13 @@ public ActionResult Profile(string id)
              {
                  return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
              }
-             aspnetuser aspnetuser = db.aspnetusers.Find(id);
+             aspnetuser aspnetuser = _db.aspnetusers.Find(id);
              if (aspnetuser == null)
              {
                  return HttpNotFound();
              }
              
-             ICollection<subscription> subscriptions = db.subscriptions.Where(i =>i.user_id == aspnetuser.Id).ToList();
+             ICollection<subscription> subscriptions = _db.subscriptions.Where(i =>i.user_id == aspnetuser.Id).ToList();
              ViewBag.subscriptions = subscriptions;
              return View(aspnetuser);
          }

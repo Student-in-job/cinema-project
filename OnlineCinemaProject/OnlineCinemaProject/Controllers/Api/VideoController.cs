@@ -162,12 +162,12 @@ namespace OnlineCinemaProject.Controllers.Api
             return db.videos.Where(m => m.id == key).SelectMany(m => m.manufacturers);
         }
 
-        // GET odata/Video(5)/overviews
+        /*// GET odata/Video(5)/overviews
         [Queryable]
         public IQueryable<overview> Getoverviews([FromODataUri] int key)
         {
             return db.videos.Where(m => m.id == key).SelectMany(m => m.overviews);
-        }
+        }*/
 
         // GET odata/Video(5)/seasons
         [Queryable]

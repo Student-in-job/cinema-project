@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -15,7 +14,27 @@ namespace OnlineCinemaProject.Controllers.Api
         readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
         IEnumerable<string> _headerValues;
         string _userId;
-        
+
+        [HttpGet]
+        [Route("api/tariff")]
+        public HttpResponseMessage GetTariffs()
+        {
+            var tariffs = _db.tariffs.Where(i => i.active == true).ToList();
+            var tiriffInfos = tariffs.Select(tariff => tariff.GetTariffInfo()).ToList();
+            return Request.CreateResponse(HttpStatusCode.OK, tiriffInfos);
+        }
+
+        [HttpGet]
+        [Route("api/tariff/{id}")]
+        public HttpResponseMessage GetTariffsById(int id)
+        {
+            var tariff = _db.tariffs.Single(i => i.active == true && i.id == id);
+            var tiriffInfo = tariff.GetTariffInfo();
+            return Request.CreateResponse(HttpStatusCode.OK, tiriffInfo);
+        }
+
+
+
         [HttpGet]
         [Route("api/tariff/subscribe/{tariffId}")]
         public HttpResponseMessage Subscribe(int tariffId)
@@ -32,12 +51,12 @@ namespace OnlineCinemaProject.Controllers.Api
             var user = _db.aspnetusers.Find(_userId);
             if (tariff == null || user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
             
-            if (!UserUtils.DrawMoney(tariff.price, user))
+            if (!user.DrawMoney(tariff.price))
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.LackOfMoney);
+                return Request.CreateResponse(HttpStatusCode.OK, Response.LackOfMoney);
             }
             payment payment = new payment
             {
@@ -64,7 +83,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
             _db.subscriptions.Add(subscription);
             _db.SaveChanges();
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.SubscriptionSacceeded);
+            return Request.CreateResponse(HttpStatusCode.OK, Response.SubscriptionSacceeded);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model OnlineCinemaProject.Models.banner
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create"; Layout = "~/Views/Shared/Dashboard.cshtml";
 }
 
 <h2>Create</h2>
@@ -46,7 +46,7 @@
 
             </div>
 
-            <div class="editor-label">
+            @*<div class="editor-label">
                 @Html.LabelFor(model => model.end)
             </div>
 
@@ -61,7 +61,7 @@
 
             <div class="editor-field">
                 @Html.EditorFor(model => model.payment)
-                @Html.ValidationMessageFor(model => model.payment)
+                @Html.ValidationMessageFor(model => model.payment)*@
 
             </div>
 

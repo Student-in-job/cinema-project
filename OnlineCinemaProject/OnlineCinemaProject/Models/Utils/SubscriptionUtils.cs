@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OnlineCinemaProject.Models.Utils
 {
-    public static class SubscriptionUtils
+    /*public static class SubscriptionUtils
     {
         public static bool Active(subscription subscription)
         {
@@ -15,5 +15,5 @@ namespace OnlineCinemaProject.Models.Utils
             }
             return false;
         }
-    }
+    }*/
 }

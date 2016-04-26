@@ -7,10 +7,11 @@
 	<application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:name=".App"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.ListExampleActivity"
+            android:name=".activity.SplashScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +21,11 @@
         </activity>
 
 		<activity android:name=".activity.PlayerActivity" android:configChanges="orientation|screenSize"/>
-		<activity android:name=".activity.MainActivity"/>
 		<activity android:name=".activity.LoginActivity"/>
+		<activity android:name=".activity.VideoActivity"/>
+		<activity android:name=".activity.RegistrationActivity"/>
+		<activity android:name=".activity.MainActivity"/>
+		<activity android:name=".activity.ReviewsActivity"/>
     </application>
 
 

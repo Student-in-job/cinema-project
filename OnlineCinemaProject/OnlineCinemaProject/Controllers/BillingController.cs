@@ -1,66 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Mime;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Web;
 using System.Web.Mvc;
 using DotNet.Highcharts;
 using DotNet.Highcharts.Enums;
 using DotNet.Highcharts.Helpers;
 using DotNet.Highcharts.Options;
-using Microsoft.Data.OData.Atom;
-using MySql.Data.MySqlClient;
 using OnlineCinemaProject.Models;
 using OnlineCinemaProject.Models.ViewModels;
-using PagedList;
+using OnlineCinemaProject.Utils;
 
 namespace OnlineCinemaProject.Controllers
 {
-    class GroupedRow : DbContext
-    {
-        public Decimal Sum { get; set; }
-        public int Months { get; set; }
-       
-    }
     [Authorize(Roles = "BilingManager")]
+    [SuppressMessage("ReSharper", "CoVariantArrayConversion")]
     public class BillingController : Controller
     {
-        private OnlineCinemaEntities db = new OnlineCinemaEntities();
+        private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
         //
         // GET: /tariff/
 
-        public ActionResult Index()
+        public ActionResult Statistics()
         {
-            /*var dbRaw =
-                db.Database.SqlQuery<Object>(
-                    "SELECT MONTHNAME(payment_date) as [Months], SUM(amount) as [Sum] FROM payments GROUP BY MONTH(payment_date)");*/
-            /*ICollection<GroupedRow> payments = db.payments
-                .GroupBy(p => new
+            var payments = _db.payments.Where(i => i.payment_date.Year == DateTime.Today.Year).ToList();
+            var chartValues = new Dictionary<string, decimal>();
+
+            foreach (var payment in payments)
+            {
+                var month = DateUtils.GetMonthName(payment.payment_date.Month);
+                var amount = payment.amount;
+                if (chartValues.ContainsKey(month))
                 {
-                    Month = p.payment_date.Month
-                }).Select(t=>new GroupedRow
+                    chartValues[month] += amount;
+                }
+                else
                 {
-                    Months = t.Key.Month,
-                    Sum = t.Count()
-                }).ToList();*/
-            
-            return View(db.tariffs.ToList());
+                    chartValues.Add(month, amount);
+                }
+            }
+
+            var chartDatas = chartValues.Keys.Select(value => new PaymentTotal
+            {
+                MonthName = value,
+                Total = chartValues[value]
+            }).ToList();
+
+            var xDataMonths = chartValues.Keys.ToArray();
+            var yDataCounts = chartDatas.Select(i => new object[] { i.Total }).ToArray();
+
+            var chart2 = new Highcharts("Chart2")
+                        .InitChart(new Chart { DefaultSeriesType = ChartTypes.Line,  })
+                        
+                        .SetTitle(new Title { Text = "Incoming payments per month" })
+                        .SetXAxis(new XAxis { Categories = xDataMonths })
+                        .SetYAxis(new YAxis { Title = new YAxisTitle { Text = "Amount of Money" } })
+                        .SetTooltip(new Tooltip
+                        {
+                            Enabled = true,
+                            Formatter = @"function() { return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y; }"
+                        })
+                        .SetPlotOptions(new PlotOptions
+                        {
+                            Line = new PlotOptionsLine
+                            {
+                                DataLabels = new PlotOptionsLineDataLabels
+                                {
+                                    Enabled = true
+                                },
+                                EnableMouseTracking = false
+                            }
+                        })
+                        .SetSeries(new[]
+                    {
+                        new Series {Name = "Hour", Data = new Data(yDataCounts)}
+                    });
+
+            ViewBag.Chart1Model = chart2;
+
+            return View();
         }
 
-            
 
-        public ActionResult Text()
+        //
+        // GET: /Tariff/
+        public ActionResult Tariffs()
         {
-            return View();
+            return View(_db.tariffs.ToList());
         }
 
         //
@@ -68,7 +96,7 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            tariff tariff = db.tariffs.Find(id);
+            tariff tariff = _db.tariffs.Find(id);
             if (tariff == null)
             {
                 return HttpNotFound();
@@ -91,7 +119,7 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(TariffViewModel tariffView)
         {
-            tariff tariff = new tariff
+            var tariff = new tariff
             {
                 name = tariffView.Name,
                 description = tariffView.Description,
@@ -103,11 +131,10 @@ namespace OnlineCinemaProject.Controllers
             };
             if (ModelState.IsValid)
             {
-                db.tariffs.Add(tariff);
-                db.SaveChanges();
+                _db.tariffs.Add(tariff);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(tariffView);
         }
 
@@ -116,8 +143,8 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            tariff tariff = db.tariffs.Find(id);
-            
+            tariff tariff = _db.tariffs.Find(id);
+
             if (tariff == null)
             {
                 return HttpNotFound();
@@ -145,11 +172,23 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tariff).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(tariff).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tariff);
+
+            TariffViewModel tariffView = new TariffViewModel
+            {
+                Id = tariff.id,
+                Name = tariff.name,
+                Description = tariff.description,
+                CreationDate = tariff.creation_date,
+                AdverticementEnabled = tariff.adverticement_enabled,
+                NewFilmsEnabled = tariff.new_films_enabled,
+                Price = tariff.price,
+                Subscriptions = tariff.subscriptions
+            };
+            return View(tariffView);
         }
 
         //
@@ -157,7 +196,7 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            tariff tariff = db.tariffs.Find(id);
+            tariff tariff = _db.tariffs.Find(id);
             if (tariff == null)
             {
                 return HttpNotFound();
@@ -172,21 +211,19 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tariff tariff = db.tariffs.Find(id);
-            db.tariffs.Remove(tariff);
-            db.SaveChanges();
+            tariff tariff = _db.tariffs.Find(id);
+            _db.tariffs.Remove(tariff);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
+       
+        
 
-//        public ActionResult Subscribtions(int id)
-//        {
-//            return View("Subscribtion");
-//        }
     }
 }

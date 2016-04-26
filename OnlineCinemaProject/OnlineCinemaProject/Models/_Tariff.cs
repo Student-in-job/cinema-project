@@ -5,8 +5,27 @@ using System.Web;
 
 namespace OnlineCinemaProject.Models
 {
-    /*public partial class tariff
+    public class TariffInfo
     {
+        public int id;
+        public string name;
+        public string description;
+        public decimal price;
+    }
+
+    public partial class tariff
+    {
+        public TariffInfo GetTariffInfo()
+        {
+            return new TariffInfo
+            {
+                id = id,
+                name = name,
+                description = description,
+                price = price
+            };
+        }
+
         public bool Includes(movy movie)
         {
             if (!new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
@@ -26,5 +45,5 @@ namespace OnlineCinemaProject.Models
             }
             return true;
         }
-    }*/
+    }
 }

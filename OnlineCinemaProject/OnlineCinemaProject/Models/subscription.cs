@@ -22,7 +22,7 @@ namespace OnlineCinemaProject.Models
         public string user_id { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
-        public virtual tariff tariff { get; set; }
         public virtual payment payment { get; set; }
+        public virtual tariff tariff { get; set; }
     }
 }

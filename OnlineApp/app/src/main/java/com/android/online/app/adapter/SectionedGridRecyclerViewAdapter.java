@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -99,19 +98,13 @@ public class SectionedGridRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
   }
 
   @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, int position) {
+  public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, final int position) {
     if (isSectionHeaderPosition(position)) {
       ((SectionViewHolder) sectionViewHolder).title.setText(mSections.get(position).title);
     } else {
       mBaseAdapter.onBindViewHolder(sectionViewHolder,
           sectionedPositionToPosition(position));
     }
-    sectionViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Toast.makeText(mContext, "click", Toast.LENGTH_LONG).show();
-      }
-    });
 
   }
 
