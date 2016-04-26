@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -33,12 +32,12 @@ namespace OnlineCinemaProject.Controllers.Api
 
             if (season == null || user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
 
-            if (!UserUtils.DrawMoney(season.price, user))
+            if (!user.DrawMoney(season.price))
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.LackOfMoney);
+                return Request.CreateResponse(HttpStatusCode.OK, Response.LackOfMoney);
             }
 
             payment payment = new payment
@@ -62,7 +61,7 @@ namespace OnlineCinemaProject.Controllers.Api
             _db.userseasons.Add(userseason);
             _db.SaveChanges();
 
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.SubscriptionSacceeded);
+            return Request.CreateResponse(HttpStatusCode.OK, Response.SubscriptionSacceeded);
         }
     }
 }

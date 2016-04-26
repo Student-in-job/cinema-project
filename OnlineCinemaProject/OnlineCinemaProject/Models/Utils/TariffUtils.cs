@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OnlineCinemaProject.Models.Utils
 {
-    public static class TariffUtils
+    /*public static class TariffUtils
     {
         public static bool Includes(movy movie, tariff tariff)
         {
@@ -26,5 +26,5 @@ namespace OnlineCinemaProject.Models.Utils
             }
             return true;
         }
-    }
+    }*/
 }

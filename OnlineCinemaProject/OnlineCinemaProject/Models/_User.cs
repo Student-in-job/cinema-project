@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web;
+// ReSharper disable All
 
 namespace OnlineCinemaProject.Models
 {
@@ -54,24 +56,38 @@ namespace OnlineCinemaProject.Models
         public List<MovieHistory> Moviehistories{ get; set; }
     }
 
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Profile
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Login { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public string Email { get; set; }
-        public int? Sex { get; set; }
-        public decimal? Balance { get; set; }
-        public int? tariffId { get; set; }
-        public string tariffName { get; set; }
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string login { get; set; }
+        public DateTime? birthDate { get; set; }
+        public string email { get; set; }
+        public int? sex { get; set; }
+        public decimal? balance { get; set; }
+
+        public SubscriptionInfo subscription;
     }
 
-    /*public partial class aspnetuser
+    public partial class aspnetuser
     {
         public string FullName()
         {
             return FirstName + " " + LastName;
+        }
+
+        public subscription GeSubscription()
+        {
+            foreach (var subscription in subscriptions)
+            {
+                if (subscription.Active())
+                {
+                    return subscription;
+                }
+            }
+            return null;
         }
 
         public bool CheckAccess(movy movie)
@@ -137,5 +153,5 @@ namespace OnlineCinemaProject.Models
             }
             return true;
         }
-    }*/
+    }
 }

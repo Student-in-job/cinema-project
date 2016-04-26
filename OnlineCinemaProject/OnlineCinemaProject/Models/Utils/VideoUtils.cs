@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OnlineCinemaProject.Models.Utils
 {
-    public static class VideoUtils
+    /*public static class VideoUtils
     {
         public static VideoInfo GetVideoInfo(video video)
         {
@@ -58,5 +58,5 @@ namespace OnlineCinemaProject.Models.Utils
             }
             return videoInfo;
         }
-    }
+    }*/
 }

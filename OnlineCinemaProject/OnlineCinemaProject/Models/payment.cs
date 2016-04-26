@@ -28,9 +28,9 @@ namespace OnlineCinemaProject.Models
         public string user_id { get; set; }
         public bool payment_type { get; set; }
     
+        public virtual aspnetuser aspnetuser { get; set; }
         public virtual ICollection<usermovy> usermovies { get; set; }
         public virtual ICollection<userseason> userseasons { get; set; }
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
     }
 }

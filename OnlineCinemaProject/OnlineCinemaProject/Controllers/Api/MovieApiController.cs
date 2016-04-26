@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -27,7 +26,7 @@ namespace OnlineCinemaProject.Controllers.Api
             movy movie = _db.movies.Find(movieId);
             if (movie == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
             if (_userId==null )
             {
@@ -41,10 +40,10 @@ namespace OnlineCinemaProject.Controllers.Api
             aspnetuser user = _db.aspnetusers.Find(_userId);
             if (user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
 
-            if (!UserUtils.CheckAccess( user, movie))
+            if (!user.CheckAccess(movie))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessDenied);
             }
@@ -56,7 +55,7 @@ namespace OnlineCinemaProject.Controllers.Api
             };
             _db.moviehistories.Add(moviehistory);
             _db.SaveChanges();
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.MovieAccessAllowed);
+            return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessAllowed);
         }
 
         [HttpGet]
@@ -77,12 +76,12 @@ namespace OnlineCinemaProject.Controllers.Api
 
             if (movie == null || user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
 
-            if (!UserUtils.DrawMoney(movie.price, user))
+            if (!user.DrawMoney(movie.price))
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.LackOfMoney);
+                return Request.CreateResponse(HttpStatusCode.OK, Response.LackOfMoney);
             }
 
             payment payment = new payment
@@ -106,7 +105,7 @@ namespace OnlineCinemaProject.Controllers.Api
             _db.usermovies.Add(userMovie);
             _db.SaveChanges();
 
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.SubscriptionSacceeded);
+            return Request.CreateResponse(HttpStatusCode.OK, Response.SubscriptionSacceeded);
 
         }
     }
