@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.EditText;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.OnClick;
 import com.android.online.app.R;
 import com.android.online.app.model.LoginModel;
+import com.android.online.app.util.Prefs;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -32,14 +34,22 @@ public class LoginActivity extends BaseActivity {
     loginService.login(loginModel, new Callback<String>() {
       @Override
       public void success(String o, Response response) {
-        startActivity(new Intent(LoginActivity.this, ListExampleActivity.class));
+        Prefs.saveUserId(o);
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
       }
 
       @Override
       public void failure(RetrofitError error) {
-
+        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
       }
     });
 
   }
+
+  @OnClick(R.id.registration)
+  public void onRegisterClicked() {
+    startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+}
+
 }

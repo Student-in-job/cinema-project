@@ -26,31 +26,25 @@ namespace OnlineCinemaProject.Models
         }
     
         public virtual DbSet<actor> actors { get; set; }
-        public virtual DbSet<advertiser> advertisers { get; set; }
         public virtual DbSet<aspnetrole> aspnetroles { get; set; }
-        public virtual DbSet<aspnetuserclaim> aspnetuserclaims { get; set; }
-        public virtual DbSet<aspnetuserlogin> aspnetuserlogins { get; set; }
         public virtual DbSet<aspnetuser> aspnetusers { get; set; }
         public virtual DbSet<country> countries { get; set; }
-        public virtual DbSet<episodehistory> episodehistories { get; set; }
         public virtual DbSet<episode> episodes { get; set; }
         public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<like> likes { get; set; }
         public virtual DbSet<manufacturer> manufacturers { get; set; }
-        public virtual DbSet<moviehistory> moviehistories { get; set; }
-        public virtual DbSet<movy> movies { get; set; }
-        public virtual DbSet<my_aspnet_profiles> my_aspnet_profiles { get; set; }
         public virtual DbSet<overview> overviews { get; set; }
-        public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<season> seasons { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<subscription> subscriptions { get; set; }
+=======
+>>>>>>> faa7f4fc740b67c706f427a0b07b30fdf99fe2d1
         public virtual DbSet<tariff> tariffs { get; set; }
         public virtual DbSet<trailer> trailers { get; set; }
-        public virtual DbSet<usermovy> usermovies { get; set; }
-        public virtual DbSet<userseason> userseasons { get; set; }
         public virtual DbSet<videoactor> videoactors { get; set; }
         public virtual DbSet<videogenre> videogenres { get; set; }
         public virtual DbSet<video> videos { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<C__migrationhistory> C__migrationhistory { get; set; }
         public virtual DbSet<my_aspnet_applications> my_aspnet_applications { get; set; }
         public virtual DbSet<my_aspnet_membership> my_aspnet_membership { get; set; }
@@ -67,5 +61,19 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<statistics_teaser> statistics_teaser { get; set; }
         public virtual DbSet<banner> banners { get; set; }
         public virtual DbSet<teaser> teasers { get; set; }
+=======
+        public virtual DbSet<advertiser> advertisers { get; set; }
+        public virtual DbSet<banner> banners { get; set; }
+        public virtual DbSet<teaser> teasers { get; set; }
+        public virtual DbSet<movy> movies { get; set; }
+        public virtual DbSet<episodehistory> episodehistories { get; set; }
+        public virtual DbSet<usermovy> usermovies { get; set; }
+        public virtual DbSet<userseason> userseasons { get; set; }
+        public virtual DbSet<moviehistory> moviehistories { get; set; }
+        public virtual DbSet<statistics_banner> statistics_banner { get; set; }
+        public virtual DbSet<statistics_teaser> statistics_teaser { get; set; }
+        public virtual DbSet<payment> payments { get; set; }
+        public virtual DbSet<subscription> subscriptions { get; set; }
+>>>>>>> faa7f4fc740b67c706f427a0b07b30fdf99fe2d1
     }
 }

@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OnlineCinemaProject.Models;
+using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers
 {
@@ -15,6 +16,36 @@ namespace OnlineCinemaProject.Controllers
     public class UserController : Controller
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
+
+[HttpGet]
+         public ActionResult TopUpBalance()
+         {
+             return View();
+         }
+         [HttpPost]
+         public ActionResult TopUpBalance(TopUpViewModel model)
+         {
+             aspnetuser user = db.aspnetusers.Find(model.UserId);
+             if (user != null)
+             {
+                 UserUtils.TopUpBalance(model.Amount, user);
+                 payment payment = new payment
+                 {
+                     aspnetuser = user,
+                     amount = model.Amount,
+                     title = "Пополнение баланса",
+                     payment_type = true,
+                     payment_date = DateTime.Now,
+                 };
+                 db.payments.Add(payment);
+                 db.Entry(user).State = EntityState.Modified;
+                 db.SaveChanges();
+                 ModelState.AddModelError("Ok", "Операция Успешно выполнена!");
+                 return View();
+             }
+             ModelState.AddModelError("Failed", "Неправильо введен Id пользователя.");
+             return View(model);
+         }
 
         // GET: /User/
         public ActionResult Index()
@@ -37,6 +68,14 @@ namespace OnlineCinemaProject.Controllers
             {
                 return HttpNotFound();
             }
+            /*ICollection<subscription> subscriptions = db.subscriptions.Where(i =>
+                i.tariff == aspnetuser.tariff &&
+                i.aspnetuser == aspnetuser
+                ).ToList();*/
+            ViewBag.subscriptions = db.subscriptions.Where(i =>
+                i.tariff == aspnetuser.tariff &&
+                i.aspnetuser == aspnetuser
+                ).ToList();
             return View(aspnetuser);
         }
 
@@ -151,5 +190,23 @@ namespace OnlineCinemaProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+public ActionResult Profile(string id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             aspnetuser aspnetuser = db.aspnetusers.Find(id);
+             if (aspnetuser == null)
+             {
+                 return HttpNotFound();
+             }
+             
+             ICollection<subscription> subscriptions = db.subscriptions.Where(i =>i.user_id == aspnetuser.Id).ToList();
+             ViewBag.subscriptions = subscriptions;
+             return View(aspnetuser);
+         }
+
     }
 }

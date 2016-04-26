@@ -1,6 +1,7 @@
 package com.android.online.app.dagger;
 
 import com.android.online.app.Constants;
+import com.android.online.app.util.Prefs;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
@@ -34,7 +35,7 @@ public class AppRestAdapter {
       @Override
       public void intercept(RequestFacade requestFacade) {
         requestFacade.addHeader("Accept", "application/json");
-//        requestFacade.addHeader("Authorization", account.getAccessToken());
+        requestFacade.addHeader("token", Prefs.getUserId());
       }
     };
   }

@@ -1,0 +1,54 @@
+﻿@model OnlineCinemaProject.Models.video
+<div class="featurette">
+    @{
+        if (Model.type == 0)
+        {
+            <h1> Фильм: @Html.DisplayFor(model => model.name)</h1>
+        }
+        else
+        {
+            <h1> Сериал: @Html.DisplayFor(model => model.name)</h1>
+        }
+    }
+
+</div>
+
+<div class="row featurette">
+    <div class="col-md-5">
+        <img class="featurette-image img-responsive center-block" src="~/uploads/@Model.img_url" class="video-img" />
+    </div>
+    <div class="col-md-7">
+
+        <div class="properties">
+            <span>
+                @Model.release_date.Year
+            </span>
+            <span>
+                @{
+                    foreach (var man in Model.manufacturers)
+                    {
+                        @man.country.name
+                    }
+                }
+            </span>
+            <span>
+                @{
+                    foreach (var videogenre in Model.videogenres)
+                    {
+                        @: <a style="text-decoration: none">
+                            @videogenre.genre.name
+                            @:,</a>
+                    }
+                }
+            </span>
+            <span>
+                Длительность
+            </span>
+        </div>
+        <p>Режиссер: @Model.director</p>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.details)
+        </div>
+
+    </div>
+</div>

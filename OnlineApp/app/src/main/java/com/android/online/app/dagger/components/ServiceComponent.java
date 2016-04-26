@@ -2,10 +2,12 @@ package com.android.online.app.dagger.components;
 
 
 import com.android.online.app.activity.BaseActivity;
+import com.android.online.app.activity.ReviewsActivity;
 import com.android.online.app.dagger.modules.AppModule;
 import com.android.online.app.dagger.modules.ServiceModule;
 import com.android.online.app.fragment.BaseFragment;
 import com.android.online.app.service.LoginService;
+import com.android.online.app.service.ReviewService;
 import com.android.online.app.service.VideoService;
 import com.google.gson.Gson;
 import dagger.Component;
@@ -18,6 +20,7 @@ import javax.inject.Singleton;
 public interface ServiceComponent {
 
   void inject(BaseActivity baseActivity);
+  void inject(ReviewsActivity baseActivity);
 
   void inject(BaseFragment baseFragment);
 
@@ -28,5 +31,7 @@ public interface ServiceComponent {
   LoginService loginService();
 
   VideoService videoService();
+
+  ReviewService reviewService();
 
 }

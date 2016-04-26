@@ -18,10 +18,8 @@ namespace OnlineCinemaProject.Models
         {
             this.videoactors = new HashSet<videoactor>();
         }
-    
         public int id { get; set; }
         public string name { get; set; }
-    
         public virtual ICollection<videoactor> videoactors { get; set; }
     }
 }

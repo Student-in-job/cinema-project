@@ -1,0 +1,225 @@
+﻿@using OnlineCinemaProject.Models
+@model OnlineCinemaProject.Models.aspnetuser
+
+@{
+    ViewBag.Title = "Профиль пользователя";
+    Layout = "~/Views/Shared/Dashboard.cshtml";
+}
+<div class="page-header">
+    <h2>Профиль пользователя</h2>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" data-holder-rendered="true" style="width: 200px; height: 200px;">
+    </div>
+    <div class="col-md-6">
+        <h3>@Model.FirstName</h3>
+        <p><strong>Логин: </strong>@Model.UserName</p>
+        <p><strong>Баланс: </strong>@Model.Balance</p>
+        <p><strong>Тариф: </strong>@Model.tariff.name</p>
+    </div>
+</div>
+
+@{
+    List<subscription> subscriptions = ViewBag.subscriptions;
+}
+<div class="row">
+
+
+    <div class="col-md-6">
+        <h4 class="sub-header">Подписки</h4>
+        @if (subscriptions.Count == 0)
+        {
+            <p>У пользователя нет подписки!</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Тариф</th>
+                    <th>Начало</th>
+                    <th>Конец</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var subscription in subscriptions)
+                {
+                    <tr>
+                        <td>@subscription.id</td>
+                        <td>@subscription.tariff.name</td>
+                        <td>@subscription.start</td>
+                        <td>@subscription.end</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <h4 class="sub-header">Платежи</h4>
+        @if (Model.payments.Count == 0)
+        {
+            <p>Пользователь пока не совершил ни одну платежную транзакцию!</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Сумма</th>
+                    <th>Дата</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var payment in Model.payments)
+                {
+                    <tr>
+                        <td>@payment.id</td>
+                        <td>@payment.title</td>
+                        <td>@payment.amount</td>
+                        <td>@payment.payment_date</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</div>
+<div class="row">
+
+
+    <div class="col-md-6">
+        <h4 class="sub-header">Оплаченные фильмы</h4>
+        @if (Model.usermovies.Count == 0)
+        {
+            <p>У ползователя нет оплаченных фильмов!</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название фильм</th>
+                    <th>Дата оплаты</th>
+                    <th>номер плотежа</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var usermovie in Model.usermovies)
+                {
+                    <tr>
+                        <td>@usermovie.id</td>
+                        <td>@usermovie.movy.video.name</td>
+                        <td>@usermovie.payment.payment_date</td>
+                        <td>@usermovie.payment_id</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <h4 class="sub-header">Оплаченные сериалы</h4>
+        @if (Model.userseasons.Count == 0)
+        {
+            <p>Нет ни одного оплаченного сериала</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название сериала</th>
+                    <th>Дата оплаты</th>
+                    <th>Номер плотежа</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var userseason in Model.userseasons)
+                {
+                    <tr>
+                        <td>@userseason.id</td>
+                        <td>@userseason.season.video.name сезон:@userseason.season.id</td>
+                        <td>@userseason.payment.payment_date</td>
+                        <td>@userseason.payment_id</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h4 class="sub-header">Просмотренные фильмы</h4>
+        @if (Model.moviehistories.Count == 0)
+        {
+            <p>Ничего не просмотрено</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Название фильм</th>
+                        <th>Дата просмотра</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var moviehistory in Model.moviehistories)
+                    {
+                        <tr>
+                            <td>@moviehistory.id</td>
+                            <td>@moviehistory.movy.video.name</td>
+                            <td>@moviehistory.watching_date</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <h4 class="sub-header">Просмотренные сериалы</h4>
+        @if (Model.episodehistories.Count == 0)
+        {
+            <p>Ничего не просмотрено</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Название сериала</th>
+                        <th>Дата просмотра</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var episodehistory in Model.episodehistories)
+                    {
+                        <tr>
+                            <td>@episodehistory.id</td>
+                            <td>@episodehistory.episode.season.video.name
+                                <br/> <strong>сезон:</strong> @episodehistory.episode.season.name  <strong>эпизод:</strong> @episodehistory.episode.name
+                            </td>
+                            <td>@episodehistory.watching_date</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</div>

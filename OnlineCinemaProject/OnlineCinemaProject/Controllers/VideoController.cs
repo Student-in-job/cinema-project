@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 using OnlineCinemaProject.Models.ViewModels;
@@ -17,12 +19,57 @@ namespace OnlineCinemaProject.Controllers
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
+        public ActionResult GetPartialView(string id)
+        {
+            switch (id)
+            {
+                case "details_tab":
+                    return PartialView("DetailsPartial");
+                case "actors_tab":
+                    return PartialView("ActorsPartial");
+                case "videos_tab":
+                    return PartialView("VideoContentPartial");
+                case "statistics_tab":
+                    return PartialView("StatisticsPartial");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult _SubmissionTab()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _SearchTab()
+        {
+            return PartialView();
+        }
+
+        public ActionResult ActrorsPartial()
+        {
+                    return PartialView("ActorsPartial");
+        }
+        public ActionResult DetailsPartial()
+        {
+                    return PartialView("DetailsPartial");
+        }
+        public ActionResult StatisticsPartial()
+        {
+                    return PartialView("StatisticsPartial");
+        }
+        public ActionResult ContentPartial()
+        {
+                    return PartialView("VideoContentPartial");
+        }
+
+
         //
         // GET: /Video/
 
         public ActionResult Index()
         {
-            return View(db.videos.ToList());
+            return View();
         }
 
         public ActionResult Watch(String videoUrl)
@@ -51,7 +98,7 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Create()
         {
             video video = new video();
-            PopulateIncludedVideoData(video);
+            video.release_date=DateTime.Now;
             return View(video);
         }
 
@@ -60,36 +107,36 @@ namespace OnlineCinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(video model, HttpPostedFileBase file, string[] selectedGenres, string[] selectedActors, string[] selectedCountries)
+        public ActionResult Create(video video, HttpPostedFileBase file, int[] genres, int[] actors, int[] countries)
         {
             if (ModelState.IsValid)
             {
                 if (file != null)
                 {
                     file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
-                                                          + file.FileName);
-                    model.img_url = file.FileName;
+                                + file.FileName);
+                    video.img_url = file.FileName;
                 }
-                db.videos.Add(model);
+                db.videos.Add(video);
                 db.SaveChanges();
-//                var LastVideo = db.videos.Last();
-
-
-                UpdateVideoGenres(selectedGenres, model);
-                UpdateVideoActors(selectedActors, model);
-                UpdateVideoCountries(selectedCountries, model);
-
-
-                db.Entry(model).State = EntityState.Modified;
+                UpdateVideoGenres(genres, video);
+                UpdateVideoActors(actors, video);
+                UpdateVideoCountries(countries, video);
+                db.Entry(video).State = EntityState.Modified;
                 db.SaveChanges();
-                
+
                 return RedirectToAction("Index");
             }
-            PopulateIncludedVideoData(model);
-            return View(model);
+            else
+            {
+                video.videoactors = db.actors.Where(t => actors.Contains(t.id)).ToList().Select(t => new videoactor() { actor = new actor { id = t.id, name = t.name }, video = video }).ToList();
+                video.videogenres = db.actors.Where(t => actors.Contains(t.id)).ToList().Select(t => new videogenre() { genre = new genre { id = t.id, name = t.name }, video = video }).ToList();
+                video.manufacturers = db.actors.Where(t => countries.Contains(t.id)).ToList().Select(t => new manufacturer() { country = new country { id = t.id, name = t.name }, video = video }).ToList();
+            }
+            return View(video);
         }
 
-        private void UpdateVideoActors(string[] selectedActors, video model)
+        private void UpdateVideoActors(int[] selectedActors, video model)
         {
             if (selectedActors == null)
             {
@@ -97,11 +144,11 @@ namespace OnlineCinemaProject.Controllers
                 return;
             }
 
-            var selectedActorsHS = new HashSet<string>(selectedActors);
+            var selectedActorsHS = new HashSet<int>(selectedActors);
             var videoActors = new HashSet<int>(model.videoactors.Select(c => c.actor_id));
             foreach (var actor in db.actors)
             {
-                if (selectedActorsHS.Contains(actor.id.ToString()))
+                if (selectedActorsHS.Contains(actor.id))
                 {
                     if (!videoActors.Contains(actor.id))
                     {
@@ -115,16 +162,12 @@ namespace OnlineCinemaProject.Controllers
                 {
                     if (videoActors.Contains(actor.id))
                     {
-                        var videoactor = new videoactor();
-                        videoactor.actor_id = actor.id;
-                        videoactor.video_id = model.id;
-                        model.videoactors.Remove(videoactor);
+                        model.videoactors.Remove(model.videoactors.FirstOrDefault(g => g.actor_id == actor.id));
                     }
                 }
             }
         }
-
-        private void UpdateVideoGenres(string[] selectedGenres, video model)
+        private void UpdateVideoGenres(int[] selectedGenres, video model)
         {
             if (selectedGenres == null)
             {
@@ -132,11 +175,11 @@ namespace OnlineCinemaProject.Controllers
                 return;
             }
 
-            var selectedGenresHS = new HashSet<string>(selectedGenres);
+            var selectedGenresHS = new HashSet<int>(selectedGenres);
             var videoGenres = new HashSet<int>(model.videogenres.Select(c => c.genre_id));
             foreach (var genre in db.genres)
             {
-                if (selectedGenresHS.Contains(genre.id.ToString()))
+                if (selectedGenresHS.Contains(genre.id))
                 {
                     if (!videoGenres.Contains(genre.id))
                     {
@@ -150,15 +193,12 @@ namespace OnlineCinemaProject.Controllers
                 {
                     if (videoGenres.Contains(genre.id))
                     {
-                        var videogenre = new videogenre();
-                        videogenre.genre_id = genre.id;
-                        videogenre.video_id = model.id;
-                        model.videogenres.Remove(videogenre);
+                        model.videogenres.Remove(model.videogenres.FirstOrDefault(g=>g.genre_id == genre.id));
                     }
                 }
             }
         }
-        private void UpdateVideoCountries(string[] selectedCountries, video model)
+        private void UpdateVideoCountries(int[] selectedCountries, video model)
         {
             if (selectedCountries == null)
             {
@@ -166,11 +206,11 @@ namespace OnlineCinemaProject.Controllers
                 return;
             }
 
-            var selectedCountriesHS = new HashSet<string>(selectedCountries);
+            var selectedCountriesHS = new HashSet<int>(selectedCountries);
             var videoCountries = new HashSet<int>(model.manufacturers.Select(c => c.country_id));
             foreach (var country in db.countries)
             {
-                if (selectedCountriesHS.Contains(country.id.ToString()))
+                if (selectedCountriesHS.Contains(country.id))
                 {
                     if (!videoCountries.Contains(country.id))
                     {
@@ -184,10 +224,7 @@ namespace OnlineCinemaProject.Controllers
                 {
                     if (videoCountries.Contains(country.id))
                     {
-                        var manufacturer = new manufacturer();
-                        manufacturer.country_id = country.id;
-                        manufacturer.video_id = model.id;
-                        model.manufacturers.Remove(manufacturer);
+                        model.manufacturers.Remove(model.manufacturers.FirstOrDefault(g => g.country_id == country.id));
                     }
                 }
             }
@@ -198,7 +235,11 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            video video = db.videos.Find(id);
+           video video = db.videos.Where(t=>t.id==id)
+                .Include("videoactors.actor")
+                .Include("videogenres.genre")
+                .Include("manufacturers.country")
+                .FirstOrDefault();
             if (video == null)
             {
                 return HttpNotFound();
@@ -212,20 +253,32 @@ namespace OnlineCinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(video video, HttpPostedFileBase file, string[] selectedGenres)
+        public ActionResult Edit(video video, HttpPostedFileBase file, int[] genres, int[] actors, int[] countries)
         {
-            UpdateVideoGenres(selectedGenres, video);
+            var modelStateErrors = this.ModelState.Keys.SelectMany(key => this.ModelState[key].Errors);
             if (ModelState.IsValid)
             {
                 if (file != null)
                 {
                     file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
-                                                          + file.FileName);
+                                + file.FileName);
                     video.img_url = file.FileName;
                 }
                 db.Entry(video).State = EntityState.Modified;
+                db.Entry(video).Collection(e => e.videoactors).Load();
+                db.Entry(video).Collection(e => e.videogenres).Load();
+                db.Entry(video).Collection(e => e.manufacturers).Load();
+                UpdateVideoGenres(genres, video);
+                UpdateVideoActors(actors, video);
+                UpdateVideoCountries(countries, video);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                video.videoactors = db.actors.Where(t => actors.Contains(t.id)).ToList().Select(t => new videoactor() { actor = new actor { id = t.id, name = t.name }, video = video }).ToList();
+                video.videogenres = db.actors.Where(t => actors.Contains(t.id)).ToList().Select(t => new videogenre() { genre = new genre { id = t.id, name = t.name }, video = video }).ToList();
+                video.manufacturers = db.actors.Where(t => countries.Contains(t.id)).ToList().Select(t => new manufacturer() { country = new country { id = t.id, name = t.name }, video = video }).ToList();
             }
             return View(video);
         }
@@ -321,29 +374,62 @@ namespace OnlineCinemaProject.Controllers
             PopulateIncludedVideoData(video);
             return View(video);
         }
-       /* [HttpPost]
-        public ActionResult CreateNew(video model, HttpPostedFileBase file,)
+        /* [HttpPost]
+         public ActionResult CreateNew(video model, HttpPostedFileBase file,)
+         {
+             if (ModelState.IsValid)
+             {
+                 if (file != null)
+                 {
+                     file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                                           + file.FileName);
+                     model.img_url = file.FileName;
+                 }
+                 db.videos.Add(model);
+                 db.SaveChanges();
+
+                 return RedirectToAction("Index");
+             }
+
+             return View(model);
+         }
+         [HttpPost]
+         public ActionResult SelectGenres(video video)
+         {
+             return View();
+         }*/
+
+        public ActionResult Videos_read([DataSourceRequest]DataSourceRequest request)
         {
-            if (ModelState.IsValid)
-            {
-                if (file != null)
-                {
-                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
-                                                          + file.FileName);
-                    model.img_url = file.FileName;
-                }
-                db.videos.Add(model);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-
-            return View(model);
+            DataSourceResult result = db.videos.Select(v => new { v.name, v.id, v.img_url, v.type, v.release_date }).ToDataSourceResult(request);
+            return Json(result);
         }
-        [HttpPost]
-        public ActionResult SelectGenres(video video)
+
+        public ContentResult UpdateScore(int id)
         {
-            return View();
-        }*/
+            var video = db.videos.FirstOrDefault(v => v.id == id);
+            if (video == null)
+            {
+                return Content("Invalid id");
+            }
+            video.score = ScoreCallculationJob.GetVideoScore(video, db);
+            video.last_score_calc = DateTime.Now;
+            db.SaveChanges();
+            return Content(video.score.ToString());
+        }
+
+        public ActionResult ScoreChart(int id)
+        {
+            var video = db.videos.FirstOrDefault(v => v.id == id);
+            if (video == null)
+            {
+                return Content("Invalid id");
+            }
+            var data =
+                video.overviews.GroupBy(t => t.rating)
+                    .Select(t => new ScoreModel { Score = Convert.ToInt32(t.Key), Count = t.Count() }).OrderBy(t=>t.Score)
+                    .ToList();
+            return Json(data);
+        }
     }
 }

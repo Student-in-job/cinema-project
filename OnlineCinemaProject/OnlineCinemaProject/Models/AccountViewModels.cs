@@ -69,7 +69,7 @@ namespace OnlineCinemaProject.Models
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
-        [Required]
+        
         [Display(Name = "Дата рождения")]
         public DateTime BirthDate { get; set; }
 
@@ -88,4 +88,17 @@ namespace OnlineCinemaProject.Models
 
         
     }
+
+    public class TopUpViewModel
+    {
+        [Required]
+        [Display(Name = "Id пользователя")]
+        public string UserId { get; set; }
+
+        [Required]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Кол-во денег")]
+        public decimal Amount { get; set; }
+    }
+
 }

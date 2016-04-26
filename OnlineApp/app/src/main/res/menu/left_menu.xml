@@ -7,17 +7,8 @@
 				android:id="@+id/watch_later"
 				android:icon="@drawable/ic_av_timer_black_36dp"
 				android:checkable="false"
-				android:title="@string/watch_later"/>
-		<item
-				android:id="@+id/my_order"
-				android:icon="@drawable/ic_shopping_basket_black_36dp"
-				android:checkable="false"
-				android:title="@string/my_orders"/>
-		<item
-				android:id="@+id/watches"
-				android:icon="@drawable/ic_launcher"
-				android:checkable="false"
-				android:title="@string/watches"/>
+				android:title="@string/favourites"/>
+
 
 	</group>
 	<group
@@ -40,6 +31,12 @@
 				android:icon="@drawable/ic_subscriptions_black_36dp"
 				android:checkable="false"
 				android:title="@string/tv_series"/>
+
+		<item
+				android:id="@+id/settings"
+				android:icon="@drawable/ic_subscriptions_black_36dp"
+				android:checkable="false"
+				android:title="@string/settings"/>
 
 
 	</group>

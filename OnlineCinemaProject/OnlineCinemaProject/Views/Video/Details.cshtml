@@ -3,12 +3,91 @@
 @model OnlineCinemaProject.Models.video
 
 @{
+    Layout = "~/Views/Shared/Dashboard.cshtml";
     ViewBag.Title = "Details";
 }
 
+@*<!-- Tab Buttons -->
+    <ul id="tabstrip" class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#_SubmissionTab" role="tab" data-toggle="tab">Submission</a></li>
+        <li><a href="#_SearchTab" role="tab" data-toggle="tab">Search</a></li>
+    </ul>
+
+    <!-- Tab Content Containers -->
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="_SubmissionTab">@Html.Partial("_SubmissionTab")</div>
+        <div class="tab-pane fade" id="_SearchTab"></div>
+    </div>
+
+
+
+    @section scripts {
+        <script>
+            $('#tabstrip a').click(function(e) {
+                e.preventDefault()
+                var tabID = $(this).attr("href").substr(1);
+                $(".tab-pane").each(function() {
+                    console.log("clearing " + $(this).attr("id") + " tab");
+                    $(this).empty();
+                });
+                //$("#" + tabID).load("/@ViewContext.RouteData.Values["controller"]/" + tabID)
+                $.ajax({
+                    url: this.href,
+                    cache: false,
+                    type: "get",
+                    dataType: "html",
+                    success: function(result) {
+                        $("#" + tabID).html(result);
+                    }
+
+                })
+                $(this).tab('show')
+            });
+        </script>
+    }*@
+@*<div id="tabs">
+        <ul id="tabstrip" class="nav nav-tabs nav-justified" role="tablist">
+            <li class="active"><a role="tab" data-toggle="tab" $1$class="tab" id="details_tab"#1# href="#1">Описание</a></li>
+            <li><a role="tab" data-toggle="tab" $1$class="tab" id="actors_tab"#1# href="#2">В ролях</a></li>
+            <li><a role="tab" data-toggle="tab" $1$class="tab" id="videos_tab"#1# href="#3">Контент</a></li>
+            <li><a role="tab" data-toggle="tab" $1$class="tab" id="statistics_tab"#1# href="#4">Статистика</a></li>
+        </ul>
+
+    </div>
+    <div id="tab-content">
+        <div class="tab-pane fade in active" id="DetailsPartial">@Html.Partial("DetailsPartial")</div>
+        <div class="tab-pane fade" id="ActrorsPartial"></div>
+        <div class="tab-pane fade" id="ContentPartial"></div>
+        <div class="tab-pane fade" id="StatisticsPartial"></div>
+        @#1#Html.Partial("DetailsPartial")#1#
+    </div>
+
+    <script>
+    $('#tabstrip a').click(function (e) {
+       e.preventDefault()
+       var tabID = $(this).attr("href").substr(1);
+       $(".tab-pane").each(function () {
+           $(this).empty();
+       });
+       $.ajax({
+            url: "/@ViewContext.RouteData.Values["controller"]/" + tabID,
+            cache: false,
+            type: "get",
+            dataType: "html",
+            success: function (result) {
+                $("#" + tabID).html(result);
+            }
+        });
+       $(this).tab('show')
+    });
+    </script>*@
+
+
+
+
+
 
 <div class="featurette">
-    <h1> Фильм: @Html.DisplayFor(model => model.name)</h1>
     @{
         if (Model.type == 0)
         {
@@ -20,10 +99,11 @@
         }
     }
 
-</div >
+</div>
+
 <div class="row featurette">
     <div class="col-md-5">
-        <img class="featurette-image img-responsive center-block" src="~/uploads/@Model.img_url" class="video-img"/>
+        <img class="featurette-image img-responsive center-block" src="~/uploads/@Model.img_url" class="video-img" />
     </div>
     <div class="col-md-7">
 
@@ -44,14 +124,25 @@
                     foreach (var videogenre in Model.videogenres)
                     {
                         @: <a style="text-decoration: none">
-                        @videogenre.genre.name
-                        @:,</a>
+                            @videogenre.genre.name
+                            @:, </a>
                     }
                 }
             </span>
             <span>
                 Длительность
             </span>
+            @{
+                int profit = 0;
+                foreach (var movie in Model.movies)
+                {
+                    profit = (int)(profit + movie.price * movie.usermovies.Count);
+                }
+            }
+
+
+            <h3> Доход за весь период: @profit</h3>
+
         </div>
         <p>Режиссер: @Model.director</p>
         <div class="display-field">
@@ -60,14 +151,14 @@
 
     </div>
 </div>
-<hr class="featurette-divider"/>
+<hr class="featurette-divider" />
 <div class="marketing">
     <div class="row">
         @foreach (var videoactor in Model.videoactors)
         {
             <div class="col-lg-2">
                 <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="60" height="60">
-                <h2>@Html.ActionLink(videoactor.actor.name, "Details", "Actor", new {id = videoactor.actor.id}, new {@class = "btn-link "})</h2>
+                <h2>@Html.ActionLink(videoactor.actor.name, "Details", "Actor", new { id = videoactor.actor.id }, new { @class = "btn-link " })</h2>
             </div>
         }
     </div>
@@ -78,15 +169,26 @@
     @if (Model.type == 0)
     {
         @Html.Partial("MoviePartial", Model.movies)
-        @Html.ActionLink("Добавить Видео", "AddSeasonByVideoId", "Season", new {id = @Model.id}, null)
+        @Html.ActionLink("Добавить Видео", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
     }
     else
     {
         @Html.Partial("SeriesPartial", Model.seasons)
-        @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new {id = @Model.id}, null)
+        @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
     }
-    <hr class="featurette-divider"/>
+    <hr class="featurette-divider" />
     @Html.Partial("VideoTrailers", Model.trailers)
     @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new { video_id = Model.id }, null)
 </div>
 
+@*<script type="text/javascript">
+        $(function() {
+            $('.tab').click(function() {
+                var id = this.id;
+
+                $.get('@Url.Content("GetPartialView")', { 'id': id }, function(data) {
+                    $('#partial').html(data);
+                });
+            });
+        });
+    </script>*@

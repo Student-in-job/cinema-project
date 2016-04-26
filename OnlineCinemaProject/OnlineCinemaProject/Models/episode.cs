@@ -24,7 +24,7 @@ namespace OnlineCinemaProject.Models
         public string url { get; set; }
         public int season_id { get; set; }
     
-        public virtual ICollection<episodehistory> episodehistories { get; set; }
         public virtual season season { get; set; }
+        public virtual ICollection<episodehistory> episodehistories { get; set; }
     }
 }
