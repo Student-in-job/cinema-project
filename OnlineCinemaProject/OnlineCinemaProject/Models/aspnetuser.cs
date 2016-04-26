@@ -26,9 +26,9 @@ namespace OnlineCinemaProject.Models
             this.usermovies = new HashSet<usermovy>();
             this.userseasons = new HashSet<userseason>();
             this.subscriptions = new HashSet<subscription>();
+            this.aspnetroles = new HashSet<aspnetrole>();
             this.statistics_banner = new HashSet<statistics_banner>();
             this.statistics_teaser = new HashSet<statistics_teaser>();
-            this.aspnetroles = new HashSet<aspnetrole>();
         }
     
         public string Id { get; set; }
@@ -44,7 +44,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<System.DateTime> JoinDate { get; set; }
         public Nullable<decimal> Balance { get; set; }
         public Nullable<int> TariffId { get; set; }
-        
+    
         public virtual ICollection<aspnetuserclaim> aspnetuserclaims { get; set; }
         public virtual ICollection<aspnetuserlogin> aspnetuserlogins { get; set; }
         public virtual ICollection<payment> payments { get; set; }
@@ -56,9 +56,8 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<userseason> userseasons { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
         public virtual tariff tariff { get; set; }
+        public virtual ICollection<aspnetrole> aspnetroles { get; set; }
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
-        public virtual tariff tariff { get; set; }
-
     }
 }

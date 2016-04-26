@@ -8,10 +8,10 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-
+    <link href="~/Content/gorizont.css" rel="stylesheet" type="text/css" /> 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,39 +19,82 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Онлайн Кинотеатр", "Index", "Home", null, new { @class = "navbar-brand" })
+               
             </div>
             <div class="navbar-collapse collapse">
-                <form class="navbar-form navbar-left">
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
-                </ul>
-                
-                @Html.Partial("_LoginPartial")
-            </div>
+               
+                <div class="container">
+
+                    <span id="red"></span>
+                    <span id="orange"></span>
+                    <span id="pink"></span>
+                    <span id="green"></span>
+                    <span id="blue"></span>
+                    <span id="indigo"></span>
+                    <span id="violet"></span>
+                    <span id="grey"></span>
+
+                  
+                    <ul id="nav">
+                        <li>
+                            <h2  style="color:#b0e0e6">Онлайн Кинотеатр</h2></li>
+                        <li>@Html.ActionLink("Главная", "Index", "Home")</li>
+                        <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
+                        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+
+
+
+                        <li>
+                            @Html.ActionLink("Фильмы", "#", "#")
+
+                            <ul class="subs">
+                                <li>@Html.ActionLink("Жанры", "#", "#")</li>
+                                <li>@Html.ActionLink("Год", "#", "#")</li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <form class="navbar-form navbar-left">
+                                <input type="text" class="form-control" placeholder="Search...">
+                            </form>
+                        </li>
+                        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                       
+                    </ul>
+                    <div class="colorScheme">
+                    <a href="#red" class="red"></a>
+                    <a href="#orange" class="orange"></a>
+                    <a href="#pink" class="pink"></a>
+                    <a href="#green" class="green"></a>
+                    <a href="#blue" class="blue"></a>
+                    <a href="#indigo" class="indigo"></a>
+                    <a href="#violet" class="violet"></a>
+                    <a href="#grey" class="grey"></a>
+                </div>
+                </div>
+
+                    @Html.Partial("_LoginPartial")
+                </div>
         </div>
     </div>
-<div class="container-fluid">
+@*<div class="container-fluid">*@
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-9">
             @RenderBody()
         </div>
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
             <div class="list-group">
-                <a href="#" class="list-group-item active">Link</a>
-                @*<a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>*@
+                @*<a href="#" class="list-group-item active">Link</a>
+    <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>
+     <a href="#" class="list-group-item">Link</a>*@
                 @if (User.IsInRole("Admin"))
                 {
                     @Html.ActionLink("Роли", "Index", "Roles",null ,new {@class="list-group-item"})

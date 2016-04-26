@@ -6,19 +6,49 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    
-    
-
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <link href="~/Content/drop_vert_menu.css" rel="stylesheet" type="text/css" />
     <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/dashboard.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript">
+        var id_menu = new Array('sub_menu_1', 'sub_menu_2', 'sub_menu_3');
+        startList = function allclose() {
+            for (i = 0; i < id_menu.length; i++) {
+                document.getElementById(id_menu[i]).style.display = "none";
+            }
+        }
+        function openMenu(id) {
+            for (i = 0; i < id_menu.length; i++) {
+                if (id != id_menu[i]) {
+                    document.getElementById(id_menu[i]).style.display = "none";
+                }
+            }
+            if (document.getElementById(id).style.display == "block") {
+                document.getElementById(id).style.display = "none";
+            } else {
+                document.getElementById(id).style.display = "block";
+            }
+        }
+        window.onload = startList;
+    </script>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    @*<nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>*@
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -28,11 +58,11 @@
             <div id="navbar" class="navbar-collapse collapse">
 
                 @*<ul class="nav navbar-nav navbar-right">
-                    $1$<li>@Html.ActionLink("Домашняя", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>#1#
-$1$                    <li>@Html.Partial("_LoginPartial")</li>#1#
-                </ul>*@
+                                        $1$<li>@Html.ActionLink("Домашняя", "Index", "Home")</li>
+                                        <li>@Html.ActionLink("О разработчиках", "About", "Home")</li>
+                                        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>#1#
+                    $1$                    <li>@Html.Partial("_LoginPartial")</li>#1#
+                                    </ul>*@
                 @Html.Partial("_LoginPartial")
                 <form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -40,58 +70,91 @@ $1$                    <li>@Html.Partial("_LoginPartial")</li>#1#
 
             </div>
         </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                @if (User.IsInRole("Admin"))
-                {
-                    <ul class="nav nav-sidebar">
-                        <li>@Html.ActionLink("Роли", "Index", "Roles")</li>
-                        <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                @*<div class="col-sm-3 col-md-2 sidebar">*@
+                    <ul class="drop_vert_menu">
+                        <div id="menu_body">
+                            @if (User.IsInRole("Admin"))
+                        {
+                                <ul>
+                                    <li>
+                                        <a href="#" onclick="openMenu('sub_menu_1');return(false)"><span>Администратор</span></a>
+                                        <ul class="nav nav-sidebar" id="sub_menu_1">
+                                            <li>@Html.ActionLink("Роли", "Index", "Roles")</li>
+                                            <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                        }
+                            @if (User.IsInRole("ContentManager"))
+                        {
+                            <ul>
+                                <li>
+                                    <a href="#" onclick="openMenu('sub_menu_2');return(false)"><span>Content-manager</span></a>
+                                    <ul class="nav nav-sidebar" id="sub_menu_2">
+                                        <li>@Html.ActionLink("Видео", "Index", "Video")</li>
+                                        <li>@Html.ActionLink("Жанры", "Index", "Genre")</li>
+                                        <li>@Html.ActionLink("Актеры", "Index", "Actor")</li>
+                                        <li>@Html.ActionLink("Страны", "Index", "Country")</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            }
+
+
+                            @if (User.IsInRole("PRManager"))
+                        {
+                                <ul>
+                                    <li>
+                                        <a href="#" onclick="openMenu('sub_menu_3');return(false)"><span>PR-manager</span></a>
+                                        <ul class="nav nav-sidebar" id="sub_menu_3">
+                                            <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
+                                            <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
+                                            <li>@Html.ActionLink("Ротатор баннеров", "Rotator", "Banner")</li>
+                                            <li>@Html.ActionLink("Ротатор тизеров", "Rotator", "Teaser")</li>
+                                            <li>@Html.ActionLink("Статистика баннеров", "Index", "StatisticsBanner")</li>
+                                            <li>@Html.ActionLink("Статистика тизеров", "Index", "StatisticsTeaser")</li>
+                                            <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                        }
+                            @if (User.IsInRole("BilingManager"))
+                        {
+                                <ul>
+                                    <li>
+                                        <a href="#" onclick="openMenu('sub_menu_4');return(false)"><span>Billing-manager</span></a>
+                                        <ul class="nav nav-sidebar" id="sub_menu_4">
+                                            <li>@Html.ActionLink("Тарифы", "Index", "Billing")</li>
+                                            <li>@Html.ActionLink("Биллинг", "#", "#")</li>
+                                        </ul>
+                                    </li>
+                                </ul>}
+                        </div>
                     </ul>
-                }
-                @if (User.IsInRole("ContentManager"))
-                {
-                    <ul class="nav nav-sidebar">
-                        <li>@Html.ActionLink("Видео", "Index", "Video")</li>
-                        <li>@Html.ActionLink("Жанры", "Index", "Genre")</li>
-                        <li>@Html.ActionLink("Актеры", "Index", "Actor")</li>
-                        <li>@Html.ActionLink("Страны", "Index", "Country")</li>
-                    </ul>
-                }
-                @if (User.IsInRole("PRManager"))
-                {
-                    <ul class="nav nav-sidebar">
-                        <li>@Html.ActionLink("Рекламодатель", "Index", "Advertiser")</li>
-                        <li>@Html.ActionLink("Баннеры", "Index", "Banner")</li>
-                        <li>@Html.ActionLink("Тизеры", "Index", "Teaser")</li>
-                    </ul>
-                }
-                @if (User.IsInRole("BilingManager"))
-                {
-                    <ul class="nav nav-sidebar">
-                        <li>@Html.ActionLink("Тарифы", "Index", "Billing")</li>
-                    </ul>
-                }
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                @RenderBody()
-            </div>
+
+                    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                        @RenderBody()
+                    </div>
+
+                </div>       
         </div>
-    </div>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="~/Content/bootstrap-3.3.6/dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="~/Content/bootstrap-3.3.6/docs/assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="~/Content/bootstrap-3.3.6/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        </div>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="~/Content/bootstrap-3.3.6/dist/js/bootstrap.min.js"></script>
+        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+        <script src="~/Content/bootstrap-3.3.6/docs/assets/js/vendor/holder.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="~/Content/bootstrap-3.3.6/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

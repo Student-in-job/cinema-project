@@ -20,13 +20,14 @@ namespace OnlineCinemaProject.Models
         }
     
         public int id { get; set; }
-        public System.DateTime start { get; set; }
-        public System.DateTime end { get; set; }
-        public double payment { get; set; }
-        public int adv_id { get; set; }
+        public Nullable<System.DateTime> start { get; set; }
+        public Nullable<System.DateTime> end { get; set; }
+        public Nullable<double> payment { get; set; }
+        public Nullable<int> adv_id { get; set; }
         public string name { get; set; }
         public string img_url { get; set; }
-        public int show_amount { get; set; }
+        public Nullable<long> show_amount { get; set; }
+        public Nullable<bool> active { get; set; }
     
         public virtual advertiser advertiser { get; set; }
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }

@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OnlineCinemaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__migrationhistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ContextKey" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Model" Type="longblob" Nullable="false" />
+          <Property Name="ProductVersion" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="actors">
           <Key>
             <PropertyRef Name="id" />
@@ -17,10 +27,11 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="phone_number" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="email" Type="varchar" MaxLength="45" />
+          <Property Name="phone_number" Type="varchar" MaxLength="45" />
           <Property Name="img_url" Type="varchar" MaxLength="45" />
+          <Property Name="password" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="aspnetroles">
           <Key>
@@ -85,7 +96,8 @@
           <Property Name="adv_id" Type="int" />
           <Property Name="name" Type="varchar" MaxLength="45" />
           <Property Name="img_url" Type="varchar" MaxLength="45" />
-          <Property Name="show_amount" Type="int" />
+          <Property Name="show_amount" Type="uint" />
+          <Property Name="active" Type="bool" />
         </EntityType>
         <EntityType Name="countries">
           <Key>
@@ -157,6 +169,66 @@
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="quality" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="my_aspnet_applications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="256" />
+          <Property Name="description" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="my_aspnet_membership">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="128" />
+          <Property Name="Comment" Type="varchar" MaxLength="255" />
+          <Property Name="Password" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordKey" Type="char" MaxLength="32" />
+          <Property Name="PasswordFormat" Type="tinyint" />
+          <Property Name="PasswordQuestion" Type="varchar" MaxLength="255" />
+          <Property Name="PasswordAnswer" Type="varchar" MaxLength="255" />
+          <Property Name="IsApproved" Type="bool" />
+          <Property Name="LastActivityDate" Type="datetime" Precision="0" />
+          <Property Name="LastLoginDate" Type="datetime" Precision="0" />
+          <Property Name="LastPasswordChangedDate" Type="datetime" Precision="0" />
+          <Property Name="CreationDate" Type="datetime" Precision="0" />
+          <Property Name="IsLockedOut" Type="bool" />
+          <Property Name="LastLockedOutDate" Type="datetime" Precision="0" />
+          <Property Name="FailedPasswordAttemptCount" Type="uint" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Precision="0" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="uint" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="my_aspnet_paths">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="pathId" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="path" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="loweredPath" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationallusers">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="pathId" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="pageSettings" Type="blob" Nullable="false" />
+          <Property Name="lastUpdatedDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationperuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="pathId" Type="varchar" MaxLength="36" />
+          <Property Name="userId" Type="int" />
+          <Property Name="pageSettings" Type="blob" Nullable="false" />
+          <Property Name="lastUpdatedDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="my_aspnet_profiles">
           <Key>
             <PropertyRef Name="userId" />
@@ -166,6 +238,67 @@
           <Property Name="stringdata" Type="longtext" />
           <Property Name="binarydata" Type="longblob" />
           <Property Name="lastUpdatedDate" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessioncleanup">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="LastRun" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="IntervalMinutes" Type="int" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessions">
+          <Key>
+            <PropertyRef Name="SessionId" />
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="SessionId" Type="varchar" MaxLength="191" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Expires" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="LockDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="LockId" Type="int" Nullable="false" />
+          <Property Name="Timeout" Type="int" Nullable="false" />
+          <Property Name="Locked" Type="bool" Nullable="false" />
+          <Property Name="SessionItems" Type="longblob" />
+          <Property Name="Flags" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sitemap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="512" />
+          <Property Name="Url" Type="varchar" MaxLength="512" />
+          <Property Name="Roles" Type="varchar" MaxLength="1000" />
+          <Property Name="ParentId" Type="int" />
+        </EntityType>
+        <EntityType Name="my_aspnet_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applicationId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="isAnonymous" Type="bool" Nullable="false" />
+          <Property Name="lastActivityDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="my_aspnet_usersinroles">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="roleId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="overviews">
           <Key>
@@ -250,11 +383,12 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="start" Type="date" />
           <Property Name="end" Type="date" />
-          <Property Name="showAmount" Type="int" Nullable="false" />
+          <Property Name="showAmount" Type="uint" />
           <Property Name="payment" Type="double" />
           <Property Name="adv_id" Type="int" />
           <Property Name="name" Type="varchar" MaxLength="45" />
           <Property Name="img_url" Type="varchar" MaxLength="45" />
+          <Property Name="active" Type="bool" />
         </EntityType>
         <EntityType Name="trailers">
           <Key>
@@ -805,6 +939,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OnlineCinemaModelStoreContainer">
+          <EntitySet Name="__migrationhistory" EntityType="Self.__migrationhistory" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="actors" EntityType="Self.actors" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="advertiser" EntityType="Self.advertiser" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="aspnetroles" EntityType="Self.aspnetroles" Schema="onlinecinema" store:Type="Tables" />
@@ -821,7 +956,18 @@
           <EntitySet Name="manufacturer" EntityType="Self.manufacturer" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="moviehistory" EntityType="Self.moviehistory" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="movies" EntityType="Self.movies" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_applications" EntityType="Self.my_aspnet_applications" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_membership" EntityType="Self.my_aspnet_membership" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_paths" EntityType="Self.my_aspnet_paths" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_personalizationallusers" EntityType="Self.my_aspnet_personalizationallusers" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_personalizationperuser" EntityType="Self.my_aspnet_personalizationperuser" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="my_aspnet_profiles" EntityType="Self.my_aspnet_profiles" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_roles" EntityType="Self.my_aspnet_roles" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_sessioncleanup" EntityType="Self.my_aspnet_sessioncleanup" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_sessions" EntityType="Self.my_aspnet_sessions" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_sitemap" EntityType="Self.my_aspnet_sitemap" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_users" EntityType="Self.my_aspnet_users" Schema="onlinecinema" store:Type="Tables" />
+          <EntitySet Name="my_aspnet_usersinroles" EntityType="Self.my_aspnet_usersinroles" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="overviews" EntityType="Self.overviews" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="payments" EntityType="Self.payments" Schema="onlinecinema" store:Type="Tables" />
           <EntitySet Name="seasons" EntityType="Self.seasons" Schema="onlinecinema" store:Type="Tables" />
@@ -1013,9 +1159,10 @@
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="phone_number" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="banners" Relationship="Self.fk_adv_banner" FromRole="advertiser" ToRole="banners" />
-          <NavigationProperty Name="teasers" Relationship="Self.fk_id_teaser" FromRole="advertiser" ToRole="teaser" />
           <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="banners" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="advertiser" ToRole="banner" />
+          <NavigationProperty Name="teasers" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="advertiser" ToRole="teaser" />
+          <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="aspnetrole">
           <Key>
@@ -1074,24 +1221,9 @@
           <NavigationProperty Name="userseasons" Relationship="Self.FkUserSeasons" FromRole="aspnetusers" ToRole="userseasons" />
           <NavigationProperty Name="subscriptions" Relationship="Self.FkUserSubscription" FromRole="aspnetusers" ToRole="subscriptions" />
           <NavigationProperty Name="tariff" Relationship="Self.FkUserTariff" FromRole="aspnetusers" ToRole="tariffs" />
-          <NavigationProperty Name="statistics_banner" Relationship="Self.id_user" FromRole="aspnetusers" ToRole="statistics_banner" />
-          <NavigationProperty Name="statistics_teaser" Relationship="Self.id_users" FromRole="aspnetusers" ToRole="statistics_teaser" />
           <NavigationProperty Name="aspnetroles" Relationship="Self.aspnetuserroles" FromRole="aspnetusers" ToRole="aspnetroles" />
-        </EntityType>
-        <EntityType Name="banner">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="start" Type="DateTime" Nullable="false" />
-          <Property Name="end" Type="DateTime" Nullable="false" />
-          <Property Name="payment" Type="Double" Nullable="false" />
-          <Property Name="adv_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="advertiser" Relationship="Self.fk_adv_banner" FromRole="banners" ToRole="advertiser" />
-          <NavigationProperty Name="statistics_banner" Relationship="Self.id_banner" FromRole="banners" ToRole="statistics_banner" />
-          <Property Name="show_amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_user" FromRole="aspnetuser" ToRole="statistics_banner" />
+          <NavigationProperty Name="statistics_teaser" Relationship="OnlineCinemaModel.id_users" FromRole="aspnetuser" ToRole="statistics_teaser" />
         </EntityType>
         <EntityType Name="country">
           <Key>
@@ -1229,30 +1361,6 @@
           <NavigationProperty Name="userseasons" Relationship="Self.fk_season_user" FromRole="seasons" ToRole="userseasons" />
           <NavigationProperty Name="video" Relationship="Self.fk_video__season" FromRole="seasons" ToRole="videos" />
         </EntityType>
-        <EntityType Name="statistics_banner">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="date" Type="DateTime" />
-          <Property Name="show_amount" Type="Int32" />
-          <Property Name="id_banner" Type="Int32" />
-          <Property Name="id_user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="aspnetuser" Relationship="Self.id_user" FromRole="statistics_banner" ToRole="aspnetusers" />
-          <NavigationProperty Name="banner" Relationship="Self.id_banner" FromRole="statistics_banner" ToRole="banners" />
-        </EntityType>
-        <EntityType Name="statistics_teaser">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_teasers" Type="Int32" />
-          <Property Name="id_users" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="showAmount" Type="Int32" />
-          <Property Name="dateShow" Type="DateTime" />
-          <NavigationProperty Name="aspnetuser" Relationship="Self.id_users" FromRole="statistics_teaser" ToRole="aspnetusers" />
-          <NavigationProperty Name="teaser" Relationship="Self.id_teasers" FromRole="statistics_teaser" ToRole="teaser" />
-        </EntityType>
         <EntityType Name="subscription">
           <Key>
             <PropertyRef Name="id" />
@@ -1281,21 +1389,6 @@
           <Property Name="active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="aspnetusers" Relationship="Self.FkUserTariff" FromRole="tariffs" ToRole="aspnetusers" />
           <NavigationProperty Name="subscriptions" Relationship="Self.fk_tariff_user" FromRole="tariffs" ToRole="subscriptions" />
-        </EntityType>
-        <EntityType Name="teaser">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="start" Type="DateTime" Nullable="false" />
-          <Property Name="end" Type="DateTime" Nullable="false" />
-          <Property Name="showAmount" Type="Int32" Nullable="false" />
-          <Property Name="payment" Type="Double" Nullable="false" />
-          <Property Name="adv_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="advertiser" Relationship="Self.fk_id_teaser" FromRole="teaser" ToRole="advertiser" />
-          <NavigationProperty Name="statistics_teaser" Relationship="Self.id_teasers" FromRole="teaser" ToRole="statistics_teaser" />
         </EntityType>
         <EntityType Name="trailer">
           <Key>
@@ -1383,30 +1476,6 @@
             </Principal>
             <Dependent Role="videoactors">
               <PropertyRef Name="actor_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_adv_banner">
-          <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
-          <End Role="banners" Type="Self.banner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="advertiser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="banners">
-              <PropertyRef Name="adv_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_id_teaser">
-          <End Role="advertiser" Type="Self.advertiser" Multiplicity="1" />
-          <End Role="teaser" Type="Self.teaser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="advertiser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="teaser">
-              <PropertyRef Name="adv_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1543,42 +1612,6 @@
             </Principal>
             <Dependent Role="aspnetusers">
               <PropertyRef Name="TariffId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_user">
-          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="0..1" />
-          <End Role="statistics_banner" Type="Self.statistics_banner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="statistics_banner">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_users">
-          <End Role="aspnetusers" Type="Self.aspnetuser" Multiplicity="0..1" />
-          <End Role="statistics_teaser" Type="Self.statistics_teaser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="statistics_teaser">
-              <PropertyRef Name="id_users" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="id_banner">
-          <End Role="banners" Type="Self.banner" Multiplicity="0..1" />
-          <End Role="statistics_banner" Type="Self.statistics_banner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="banners">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="statistics_banner">
-              <PropertyRef Name="id_banner" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1772,18 +1805,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="id_teasers">
-          <End Role="teaser" Type="Self.teaser" Multiplicity="0..1" />
-          <End Role="statistics_teaser" Type="Self.statistics_teaser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="teaser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="statistics_teaser">
-              <PropertyRef Name="id_teasers" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_tariff_user">
           <End Role="tariffs" Type="Self.tariff" Multiplicity="0..1" />
           <End Role="subscriptions" Type="Self.subscription" Multiplicity="*" />
@@ -1847,7 +1868,6 @@
           <EntitySet Name="aspnetuserclaims" EntityType="Self.aspnetuserclaim" />
           <EntitySet Name="aspnetuserlogins" EntityType="Self.aspnetuserlogin" />
           <EntitySet Name="aspnetusers" EntityType="Self.aspnetuser" />
-          <EntitySet Name="banners" EntityType="Self.banner" />
           <EntitySet Name="countries" EntityType="Self.country" />
           <EntitySet Name="episodehistories" EntityType="Self.episodehistory" />
           <EntitySet Name="episodes" EntityType="Self.episode" />
@@ -1860,11 +1880,8 @@
           <EntitySet Name="overviews" EntityType="Self.overview" />
           <EntitySet Name="payments" EntityType="Self.payment" />
           <EntitySet Name="seasons" EntityType="Self.season" />
-          <EntitySet Name="statistics_banner" EntityType="Self.statistics_banner" />
-          <EntitySet Name="statistics_teaser" EntityType="Self.statistics_teaser" />
           <EntitySet Name="subscriptions" EntityType="Self.subscription" />
           <EntitySet Name="tariffs" EntityType="Self.tariff" />
-          <EntitySet Name="teasers" EntityType="Self.teaser" />
           <EntitySet Name="trailers" EntityType="Self.trailer" />
           <EntitySet Name="usermovies" EntityType="Self.usermovy" />
           <EntitySet Name="userseasons" EntityType="Self.userseason" />
@@ -1874,14 +1891,6 @@
           <AssociationSet Name="fk_actor_video" Association="Self.fk_actor_video">
             <End Role="actors" EntitySet="actors" />
             <End Role="videoactors" EntitySet="videoactors" />
-          </AssociationSet>
-          <AssociationSet Name="fk_adv_banner" Association="Self.fk_adv_banner">
-            <End Role="advertiser" EntitySet="advertisers" />
-            <End Role="banners" EntitySet="banners" />
-          </AssociationSet>
-          <AssociationSet Name="fk_id_teaser" Association="Self.fk_id_teaser">
-            <End Role="advertiser" EntitySet="advertisers" />
-            <End Role="teaser" EntitySet="teasers" />
           </AssociationSet>
           <AssociationSet Name="IdentityUserClaim_User" Association="Self.IdentityUserClaim_User">
             <End Role="aspnetusers" EntitySet="aspnetusers" />
@@ -1926,18 +1935,6 @@
           <AssociationSet Name="FkUserTariff" Association="Self.FkUserTariff">
             <End Role="tariffs" EntitySet="tariffs" />
             <End Role="aspnetusers" EntitySet="aspnetusers" />
-          </AssociationSet>
-          <AssociationSet Name="id_user" Association="Self.id_user">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="statistics_banner" EntitySet="statistics_banner" />
-          </AssociationSet>
-          <AssociationSet Name="id_users" Association="Self.id_users">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="statistics_teaser" EntitySet="statistics_teaser" />
-          </AssociationSet>
-          <AssociationSet Name="id_banner" Association="Self.id_banner">
-            <End Role="banners" EntitySet="banners" />
-            <End Role="statistics_banner" EntitySet="statistics_banner" />
           </AssociationSet>
           <AssociationSet Name="fk_country_video" Association="Self.fk_country_video">
             <End Role="countries" EntitySet="countries" />
@@ -1999,10 +1996,6 @@
             <End Role="videos" EntitySet="videos" />
             <End Role="seasons" EntitySet="seasons" />
           </AssociationSet>
-          <AssociationSet Name="id_teasers" Association="Self.id_teasers">
-            <End Role="teaser" EntitySet="teasers" />
-            <End Role="statistics_teaser" EntitySet="statistics_teaser" />
-          </AssociationSet>
           <AssociationSet Name="fk_tariff_user" Association="Self.fk_tariff_user">
             <End Role="tariffs" EntitySet="tariffs" />
             <End Role="subscriptions" EntitySet="subscriptions" />
@@ -2023,7 +2016,306 @@
             <End Role="aspnetroles" EntitySet="aspnetroles" />
             <End Role="aspnetusers" EntitySet="aspnetusers" />
           </AssociationSet>
+          <EntitySet Name="C__migrationhistory" EntityType="OnlineCinemaModel.C__migrationhistory" />
+          <EntitySet Name="my_aspnet_applications" EntityType="OnlineCinemaModel.my_aspnet_applications" />
+          <EntitySet Name="my_aspnet_membership" EntityType="OnlineCinemaModel.my_aspnet_membership" />
+          <EntitySet Name="my_aspnet_paths" EntityType="OnlineCinemaModel.my_aspnet_paths" />
+          <EntitySet Name="my_aspnet_personalizationallusers" EntityType="OnlineCinemaModel.my_aspnet_personalizationallusers" />
+          <EntitySet Name="my_aspnet_personalizationperuser" EntityType="OnlineCinemaModel.my_aspnet_personalizationperuser" />
+          <EntitySet Name="my_aspnet_roles" EntityType="OnlineCinemaModel.my_aspnet_roles" />
+          <EntitySet Name="my_aspnet_sessioncleanup" EntityType="OnlineCinemaModel.my_aspnet_sessioncleanup" />
+          <EntitySet Name="my_aspnet_sessions" EntityType="OnlineCinemaModel.my_aspnet_sessions" />
+          <EntitySet Name="my_aspnet_sitemap" EntityType="OnlineCinemaModel.my_aspnet_sitemap" />
+          <EntitySet Name="my_aspnet_users" EntityType="OnlineCinemaModel.my_aspnet_users" />
+          <EntitySet Name="my_aspnet_usersinroles" EntityType="OnlineCinemaModel.my_aspnet_usersinroles" />
+          <EntitySet Name="statistics_banner" EntityType="OnlineCinemaModel.statistics_banner" />
+          <EntitySet Name="statistics_teaser" EntityType="OnlineCinemaModel.statistics_teaser" />
+          <AssociationSet Name="id_user" Association="OnlineCinemaModel.id_user">
+            <End Role="aspnetuser" EntitySet="aspnetusers" />
+            <End Role="statistics_banner" EntitySet="statistics_banner" />
+          </AssociationSet>
+          <AssociationSet Name="id_users" Association="OnlineCinemaModel.id_users">
+            <End Role="aspnetuser" EntitySet="aspnetusers" />
+            <End Role="statistics_teaser" EntitySet="statistics_teaser" />
+          </AssociationSet>
+          <EntitySet Name="banners" EntityType="OnlineCinemaModel.banner" />
+          <EntitySet Name="teasers" EntityType="OnlineCinemaModel.teaser" />
+          <AssociationSet Name="fk_adv_banner" Association="OnlineCinemaModel.fk_adv_banner">
+            <End Role="advertiser" EntitySet="advertisers" />
+            <End Role="banner" EntitySet="banners" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_teaser" Association="OnlineCinemaModel.fk_id_teaser">
+            <End Role="advertiser" EntitySet="advertisers" />
+            <End Role="teaser" EntitySet="teasers" />
+          </AssociationSet>
+          <AssociationSet Name="id_banner" Association="OnlineCinemaModel.id_banner">
+            <End Role="banner" EntitySet="banners" />
+            <End Role="statistics_banner" EntitySet="statistics_banner" />
+          </AssociationSet>
+          <AssociationSet Name="id_teasers" Association="OnlineCinemaModel.id_teasers">
+            <End Role="teaser" EntitySet="teasers" />
+            <End Role="statistics_teaser" EntitySet="statistics_teaser" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="C__migrationhistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_applications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_membership">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordKey" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordFormat" Type="SByte" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="LastActivityDate" Type="DateTime" />
+          <Property Name="LastLoginDate" Type="DateTime" />
+          <Property Name="LastPasswordChangedDate" Type="DateTime" />
+          <Property Name="CreationDate" Type="DateTime" />
+          <Property Name="IsLockedOut" Type="Boolean" />
+          <Property Name="LastLockedOutDate" Type="DateTime" />
+          <Property Name="FailedPasswordAttemptCount" Type="Int64" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int64" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="my_aspnet_paths">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="pathId" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="path" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="loweredPath" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationallusers">
+          <Key>
+            <PropertyRef Name="pathId" />
+          </Key>
+          <Property Name="pathId" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="pageSettings" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_personalizationperuser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="pathId" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="pageSettings" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessioncleanup">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="LastRun" Type="DateTime" Nullable="false" />
+          <Property Name="IntervalMinutes" Type="Int32" Nullable="false" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sessions">
+          <Key>
+            <PropertyRef Name="SessionId" />
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="SessionId" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
+          <Property Name="Expires" Type="DateTime" Nullable="false" />
+          <Property Name="LockDate" Type="DateTime" Nullable="false" />
+          <Property Name="LockId" Type="Int32" Nullable="false" />
+          <Property Name="Timeout" Type="Int32" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <Property Name="SessionItems" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Flags" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="my_aspnet_sitemap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Roles" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="my_aspnet_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applicationId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="isAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="lastActivityDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="my_aspnet_usersinroles">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="statistics_banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="show_amount" Type="Int32" />
+          <Property Name="id_banner" Type="Int32" />
+          <Property Name="id_user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.id_user" FromRole="statistics_banner" ToRole="aspnetuser" />
+          <NavigationProperty Name="banner" Relationship="OnlineCinemaModel.id_banner" FromRole="statistics_banner" ToRole="banner" />
+        </EntityType>
+        <EntityType Name="statistics_teaser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_teasers" Type="Int32" />
+          <Property Name="id_users" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="showAmount" Type="Int32" />
+          <Property Name="dateShow" Type="DateTime" />
+          <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.id_users" FromRole="statistics_teaser" ToRole="aspnetuser" />
+          <NavigationProperty Name="teaser" Relationship="OnlineCinemaModel.id_teasers" FromRole="statistics_teaser" ToRole="teaser" />
+        </EntityType>
+        <Association Name="id_user">
+          <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.statistics_banner" Role="statistics_banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetuser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="statistics_banner">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_users">
+          <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.statistics_teaser" Role="statistics_teaser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetuser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="statistics_teaser">
+              <PropertyRef Name="id_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start" Type="DateTime" />
+          <Property Name="end" Type="DateTime" />
+          <Property Name="payment" Type="Double" />
+          <Property Name="adv_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="show_amount" Type="Int64" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
+          <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_banner" FromRole="banner" ToRole="statistics_banner" />
+        </EntityType>
+        <EntityType Name="teaser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start" Type="DateTime" />
+          <Property Name="end" Type="DateTime" />
+          <Property Name="showAmount" Type="Int64" />
+          <Property Name="payment" Type="Double" />
+          <Property Name="adv_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="teaser" ToRole="advertiser" />
+          <NavigationProperty Name="statistics_teaser" Relationship="OnlineCinemaModel.id_teasers" FromRole="teaser" ToRole="statistics_teaser" />
+        </EntityType>
+        <Association Name="fk_adv_banner">
+          <End Type="OnlineCinemaModel.advertiser" Role="advertiser" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.banner" Role="banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advertiser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="banner">
+              <PropertyRef Name="adv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_teaser">
+          <End Type="OnlineCinemaModel.advertiser" Role="advertiser" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.teaser" Role="teaser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="advertiser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teaser">
+              <PropertyRef Name="adv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_banner">
+          <End Type="OnlineCinemaModel.banner" Role="banner" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.statistics_banner" Role="statistics_banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="banner">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="statistics_banner">
+              <PropertyRef Name="id_banner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="id_teasers">
+          <End Type="OnlineCinemaModel.teaser" Role="teaser" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.statistics_teaser" Role="statistics_teaser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teaser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="statistics_teaser">
+              <PropertyRef Name="id_teasers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2041,6 +2333,7 @@
           <EntitySetMapping Name="advertisers">
             <EntityTypeMapping TypeName="OnlineCinemaModel.advertiser">
               <MappingFragment StoreEntitySet="advertiser">
+                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2092,20 +2385,6 @@
                 <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="TariffId" ColumnName="TariffId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="banners">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
-              <MappingFragment StoreEntitySet="banners">
-                <ScalarProperty Name="show_amount" ColumnName="show_amount" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="start" ColumnName="start" />
-                <ScalarProperty Name="end" ColumnName="end" />
-                <ScalarProperty Name="payment" ColumnName="payment" />
-                <ScalarProperty Name="adv_id" ColumnName="adv_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="img_url" ColumnName="img_url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2233,28 +2512,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="statistics_banner">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_banner">
-              <MappingFragment StoreEntitySet="statistics_banner">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="show_amount" ColumnName="show_amount" />
-                <ScalarProperty Name="id_banner" ColumnName="id_banner" />
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="statistics_teaser">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_teaser">
-              <MappingFragment StoreEntitySet="statistics_teaser">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_teasers" ColumnName="id_teasers" />
-                <ScalarProperty Name="id_users" ColumnName="id_users" />
-                <ScalarProperty Name="showAmount" ColumnName="showAmount" />
-                <ScalarProperty Name="dateShow" ColumnName="dateShow" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="subscriptions">
             <EntityTypeMapping TypeName="OnlineCinemaModel.subscription">
               <MappingFragment StoreEntitySet="subscriptions">
@@ -2278,20 +2535,6 @@
                 <ScalarProperty Name="adverticement_enabled" ColumnName="adverticement_enabled" />
                 <ScalarProperty Name="new_films_enabled" ColumnName="new_films_enabled" />
                 <ScalarProperty Name="active" ColumnName="active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="teasers">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.teaser">
-              <MappingFragment StoreEntitySet="teaser">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="start" ColumnName="start" />
-                <ScalarProperty Name="end" ColumnName="end" />
-                <ScalarProperty Name="showAmount" ColumnName="showAmount" />
-                <ScalarProperty Name="payment" ColumnName="payment" />
-                <ScalarProperty Name="adv_id" ColumnName="adv_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="img_url" ColumnName="img_url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2365,6 +2608,198 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="C__migrationhistory">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.C__migrationhistory">
+              <MappingFragment StoreEntitySet="__migrationhistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_applications">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_applications">
+              <MappingFragment StoreEntitySet="my_aspnet_applications">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_membership">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_membership">
+              <MappingFragment StoreEntitySet="my_aspnet_membership">
+                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+                <ScalarProperty Name="LastLockedOutDate" ColumnName="LastLockedOutDate" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+                <ScalarProperty Name="PasswordKey" ColumnName="PasswordKey" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_paths">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_paths">
+              <MappingFragment StoreEntitySet="my_aspnet_paths">
+                <ScalarProperty Name="loweredPath" ColumnName="loweredPath" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="pathId" ColumnName="pathId" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_personalizationallusers">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_personalizationallusers">
+              <MappingFragment StoreEntitySet="my_aspnet_personalizationallusers">
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+                <ScalarProperty Name="pageSettings" ColumnName="pageSettings" />
+                <ScalarProperty Name="pathId" ColumnName="pathId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_personalizationperuser">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_personalizationperuser">
+              <MappingFragment StoreEntitySet="my_aspnet_personalizationperuser">
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+                <ScalarProperty Name="pageSettings" ColumnName="pageSettings" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="pathId" ColumnName="pathId" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_roles">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_roles">
+              <MappingFragment StoreEntitySet="my_aspnet_roles">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_sessioncleanup">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_sessioncleanup">
+              <MappingFragment StoreEntitySet="my_aspnet_sessioncleanup">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="IntervalMinutes" ColumnName="IntervalMinutes" />
+                <ScalarProperty Name="LastRun" ColumnName="LastRun" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_sessions">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_sessions">
+              <MappingFragment StoreEntitySet="my_aspnet_sessions">
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="SessionItems" ColumnName="SessionItems" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+                <ScalarProperty Name="LockId" ColumnName="LockId" />
+                <ScalarProperty Name="LockDate" ColumnName="LockDate" />
+                <ScalarProperty Name="Expires" ColumnName="Expires" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_sitemap">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_sitemap">
+              <MappingFragment StoreEntitySet="my_aspnet_sitemap">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_users">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_users">
+              <MappingFragment StoreEntitySet="my_aspnet_users">
+                <ScalarProperty Name="lastActivityDate" ColumnName="lastActivityDate" />
+                <ScalarProperty Name="isAnonymous" ColumnName="isAnonymous" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="applicationId" ColumnName="applicationId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="my_aspnet_usersinroles">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.my_aspnet_usersinroles">
+              <MappingFragment StoreEntitySet="my_aspnet_usersinroles">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statistics_banner">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_banner">
+              <MappingFragment StoreEntitySet="statistics_banner">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_banner" ColumnName="id_banner" />
+                <ScalarProperty Name="show_amount" ColumnName="show_amount" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statistics_teaser">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.statistics_teaser">
+              <MappingFragment StoreEntitySet="statistics_teaser">
+                <ScalarProperty Name="dateShow" ColumnName="dateShow" />
+                <ScalarProperty Name="showAmount" ColumnName="showAmount" />
+                <ScalarProperty Name="id_users" ColumnName="id_users" />
+                <ScalarProperty Name="id_teasers" ColumnName="id_teasers" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="banners">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
+              <MappingFragment StoreEntitySet="banners">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="show_amount" ColumnName="show_amount" />
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="adv_id" ColumnName="adv_id" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teasers">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.teaser">
+              <MappingFragment StoreEntitySet="teaser">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="adv_id" ColumnName="adv_id" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="showAmount" ColumnName="showAmount" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

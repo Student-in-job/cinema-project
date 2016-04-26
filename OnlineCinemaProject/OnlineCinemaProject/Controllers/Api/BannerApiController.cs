@@ -47,7 +47,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
                 db.statistics_banner.Attach(sb);
                 sb.date = DateTime.Now;
-                sb.show_amount = banner.show_amount;
+                sb.show_amount = (int?) banner.show_amount;
                 var entry1 = db.Entry(sb);
                 entry1.Property(e => e.show_amount).IsModified = true;
                 entry1.Property(e => e.date).IsModified = true;
@@ -61,7 +61,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 sb = new statistics_banner();
                 sb.date = DateTime.Now;
                 sb.id_banner = banner.id;
-                sb.show_amount = banner.show_amount;
+                sb.show_amount = (int?) banner.show_amount;
                 sb.id_user = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
                 db.statistics_banner.Add(sb);
                 db.SaveChanges();

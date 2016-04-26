@@ -15,7 +15,7 @@ namespace CinemaProject.Controllers
     [Authorize(Roles = "PRManager ")]
     public class BannerController : Controller
     {
-        private OnlineCinemaEntities db = new OnlineCinemaEntities();
+        private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
         // GET: /Banner/
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -35,7 +35,7 @@ namespace CinemaProject.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var banners = from s in db.banners
+            var banners = from s in _db.banners
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -70,7 +70,7 @@ namespace CinemaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            banner banner = db.banners.Find(id);
+            banner banner = _db.banners.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
@@ -81,8 +81,9 @@ namespace CinemaProject.Controllers
         // GET: /Banner/Create
         public ActionResult Create()
         {
+           
             //PopulateAdvertisersDropDownList();
-            ViewBag.advlist = new SelectList(db.advertisers, "id", "name");
+            ViewBag.advlist = new SelectList(_db.advertisers, "id", "name");
         //   return View();
             banner banner = new banner
             {
@@ -101,6 +102,7 @@ namespace CinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id, name, start, end, payment, adv_id")] banner banner)
         {
+            banner.show_amount = 0;
             try
             {
                 if (ModelState.IsValid)
@@ -111,8 +113,8 @@ namespace CinemaProject.Controllers
                                                               + file.FileName);
                         banner.img_url = file.FileName;
                     }
-                    db.banners.Add(banner);
-                    db.SaveChanges();
+                    _db.banners.Add(banner);
+                    _db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
@@ -122,7 +124,7 @@ namespace CinemaProject.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator. \n" + dex.Message );
             }
         //    PopulateAdvertisersDropDownList(banner.adv_id); 
-            ViewBag.advlist = new SelectList(db.advertisers, "id", "name");
+            ViewBag.advlist = new SelectList(_db.advertisers, "id", "name");
             return View(banner);
         }
 
@@ -133,12 +135,12 @@ namespace CinemaProject.Controllers
         public ActionResult Edit(int? id)
         {
             
-            banner banner = db.banners.Find(id);
+            banner banner = _db.banners.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
             }
-           ViewBag.advlist = new SelectList(db.advertisers, "id", "name");
+           ViewBag.advlist = new SelectList(_db.advertisers, "id", "name");
             return View(banner);
         }
 
@@ -158,8 +160,8 @@ namespace CinemaProject.Controllers
                                                           + file.FileName);
                     banner.img_url = file.FileName;
                 }
-                db.Entry(banner).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(banner).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(banner);
@@ -172,7 +174,7 @@ namespace CinemaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            banner banner = db.banners.Find(id);
+            banner banner = _db.banners.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
@@ -185,9 +187,9 @@ namespace CinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            banner banner = db.banners.Find(id);
-            db.banners.Remove(banner);
-            db.SaveChanges();
+            banner banner = _db.banners.Find(id);
+            _db.banners.Remove(banner);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -195,14 +197,14 @@ namespace CinemaProject.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         public ActionResult Rotator() 
         {
-            OnlineCinemaEntities db = new OnlineCinemaEntities();
+            
             // string token = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
             //IEnumerable<string> headerValues;
             //var id_user = string.Empty;
@@ -212,40 +214,48 @@ namespace CinemaProject.Controllers
             //}
             //SELECT banners.img_url statistics_banner from banners where banners.id not in (SELECT statistics_banner.id_banner from statistics_banner WHERE statistics_banner.id_user = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
 
-            string query = "SELECT * FROM banners order by show_amount asc";
- 
-            var banner = db.banners.SqlQuery(query).ToList().First();
-           
-            var sb = db.statistics_banner.Find(banner.id);
+            //string query = "SELECT * FROM banners order by show_amount asc";
+            string query = "SELECT * FROM banners where active = '1' order by show_amount asc";
+            var banner = _db.banners.SqlQuery(query).ToList().First();
+            statistics_banner sb = new statistics_banner();
+            try
+            {
+                sb = _db.statistics_banner.Single(i => i.id_banner == banner.id);
+            }
+            catch (Exception e)
+            {
+                //e.Data;
+            };
+            
 
-            db.banners.Attach(banner);
+            _db.banners.Attach(banner);
             banner.show_amount = banner.show_amount + 1;
-            var entry = db.Entry(banner);
+            var entry = _db.Entry(banner);
             entry.Property(e => e.show_amount).IsModified = true;
             // other changed properties
-            db.SaveChanges();
+            _db.SaveChanges();
 
-            if (sb != null) {
+            if (sb.banner!= null) {
 
-                        db.statistics_banner.Attach(sb);
+                        _db.statistics_banner.Attach(sb);
                         sb.date = DateTime.Now;
-                        sb.show_amount = banner.show_amount;
+                        sb.show_amount = (int?) banner.show_amount;
                        
-                    var entry1 = db.Entry(sb);
+                    var entry1 = _db.Entry(sb);
                         entry1.Property(e => e.show_amount).IsModified = true;
                         entry1.Property(e => e.date).IsModified = true;
                         // other changed properties
-                        db.SaveChanges();
+                        _db.SaveChanges();
                                       }
             else
             {
                 sb = new statistics_banner();
                 sb.date = DateTime.Now;
                 sb.id_banner = banner.id;
-                sb.show_amount = banner.show_amount;
+                sb.show_amount = (int?) banner.show_amount;
                 sb.id_user = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
-                db.statistics_banner.Add(sb);
-                db.SaveChanges();
+                _db.statistics_banner.Add(sb);
+                _db.SaveChanges();
                 
             }
             

@@ -1,7 +1,7 @@
 ﻿@model OnlineCinemaProject.Models.teaser
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit"; Layout = "~/Views/Shared/Dashboard.cshtml";
 }
 
 <h2>Edit</h2>
@@ -24,6 +24,19 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(m => m.start, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.start, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.end, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.end, new { @class = "form-control" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
             @Html.LabelFor(model => model.start, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.start)
@@ -37,7 +50,7 @@
                 @Html.EditorFor(model => model.end)
                 @Html.ValidationMessageFor(model => model.end)
             </div>
-        </div>
+        </div>*@
 
         @*<div class="form-group">
             @Html.LabelFor(model => model.showAmount, new { @class = "control-label col-md-2" })

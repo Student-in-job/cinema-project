@@ -3,7 +3,7 @@
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Statistics_teaser";
+    ViewBag.Title = "Statistics_teaser"; Layout = "~/Views/Shared/Dashboard.cshtml";
 }
 
 <h2>   </h2>
@@ -21,7 +21,7 @@
     <div class="panel-heading"><h2><center> Статистика тизеров </center></h2></div>
     
         <table class="table table-striped table-bordered ">
-            <tr >
+            
                 <th>
                     @Html.ActionLink("Количество показов", "Index", new { sortOrder = ViewBag.showAmountSortParm })
                 </th>

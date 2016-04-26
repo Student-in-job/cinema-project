@@ -261,6 +261,9 @@
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__migrationhistory.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\episode.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -283,7 +286,40 @@
     <Compile Include="Models\movy.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\my_aspnet_applications.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_membership.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_paths.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_personalizationallusers.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_personalizationperuser.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\my_aspnet_profiles.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_roles.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_sessioncleanup.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_sessions.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_sitemap.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_users.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\my_aspnet_usersinroles.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OnlineCinemaModel.Context.cs">
@@ -563,6 +599,7 @@
     <Content Include="Content\bootstrap-3.3.6\js\modal.js" />
     <Content Include="Content\bootstrap-3.3.6\js\popover.js" />
     <Content Include="Content\bootstrap-3.3.6\js\scrollspy.js" />
+    <Content Include="Content\bootstrap-3.3.6\js\slider.js" />
     <Content Include="Content\bootstrap-3.3.6\js\tab.js" />
     <Content Include="Content\bootstrap-3.3.6\js\tests\index.html" />
     <Content Include="Content\bootstrap-3.3.6\js\tests\unit\affix.js" />
@@ -599,6 +636,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
+    <Content Include="Content\drop_vert_menu.css" />
+    <Content Include="Content\gorizont.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -792,6 +831,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.12.3.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -932,6 +972,9 @@
     <Content Include="Views\StatisticsTeaser\Index.cshtml" />
     <Content Include="Views\Advertiser\Personal_account.cshtml" />
     <Content Include="Views\Shared\Dashboard.cshtml" />
+    <Content Include="Views\Advertiser\BannerStatistics.cshtml" />
+    <Content Include="Views\Advertiser\TeaserStatistics.cshtml" />
+    <Content Include="Views\Teaser\Rotator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -31,7 +31,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<aspnetuserclaim> aspnetuserclaims { get; set; }
         public virtual DbSet<aspnetuserlogin> aspnetuserlogins { get; set; }
         public virtual DbSet<aspnetuser> aspnetusers { get; set; }
-        public virtual DbSet<banner> banners { get; set; }
         public virtual DbSet<country> countries { get; set; }
         public virtual DbSet<episodehistory> episodehistories { get; set; }
         public virtual DbSet<episode> episodes { get; set; }
@@ -44,16 +43,29 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<overview> overviews { get; set; }
         public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<season> seasons { get; set; }
-        public virtual DbSet<statistics_banner> statistics_banner { get; set; }
-        public virtual DbSet<statistics_teaser> statistics_teaser { get; set; }
         public virtual DbSet<subscription> subscriptions { get; set; }
         public virtual DbSet<tariff> tariffs { get; set; }
-        public virtual DbSet<teaser> teasers { get; set; }
         public virtual DbSet<trailer> trailers { get; set; }
         public virtual DbSet<usermovy> usermovies { get; set; }
         public virtual DbSet<userseason> userseasons { get; set; }
         public virtual DbSet<videoactor> videoactors { get; set; }
         public virtual DbSet<videogenre> videogenres { get; set; }
         public virtual DbSet<video> videos { get; set; }
+        public virtual DbSet<C__migrationhistory> C__migrationhistory { get; set; }
+        public virtual DbSet<my_aspnet_applications> my_aspnet_applications { get; set; }
+        public virtual DbSet<my_aspnet_membership> my_aspnet_membership { get; set; }
+        public virtual DbSet<my_aspnet_paths> my_aspnet_paths { get; set; }
+        public virtual DbSet<my_aspnet_personalizationallusers> my_aspnet_personalizationallusers { get; set; }
+        public virtual DbSet<my_aspnet_personalizationperuser> my_aspnet_personalizationperuser { get; set; }
+        public virtual DbSet<my_aspnet_roles> my_aspnet_roles { get; set; }
+        public virtual DbSet<my_aspnet_sessioncleanup> my_aspnet_sessioncleanup { get; set; }
+        public virtual DbSet<my_aspnet_sessions> my_aspnet_sessions { get; set; }
+        public virtual DbSet<my_aspnet_sitemap> my_aspnet_sitemap { get; set; }
+        public virtual DbSet<my_aspnet_users> my_aspnet_users { get; set; }
+        public virtual DbSet<my_aspnet_usersinroles> my_aspnet_usersinroles { get; set; }
+        public virtual DbSet<statistics_banner> statistics_banner { get; set; }
+        public virtual DbSet<statistics_teaser> statistics_teaser { get; set; }
+        public virtual DbSet<banner> banners { get; set; }
+        public virtual DbSet<teaser> teasers { get; set; }
     }
 }
