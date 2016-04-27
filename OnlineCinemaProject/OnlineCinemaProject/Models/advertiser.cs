@@ -25,7 +25,6 @@ namespace OnlineCinemaProject.Models
         public string email { get; set; }
         public string phone_number { get; set; }
         public string img_url { get; set; }
-        public string password { get; set; }
     
         public virtual ICollection<banner> banners { get; set; }
         public virtual ICollection<teaser> teasers { get; set; }
