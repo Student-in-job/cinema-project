@@ -7,6 +7,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MySql.Data.MySqlClient;
 using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
@@ -175,7 +178,37 @@ namespace OnlineCinemaProject.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, profile);
         }
 
+        [HttpPost]
+        [Route("api/user/password")]
+        [ResponseType(typeof (ChangePassword))]
+        public HttpResponseMessage ChangePassword(ChangePassword changePassword)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+            }
 
+            if (Request.Headers.TryGetValues("token", out _headerValues))
+            {
+                _userId = _headerValues.FirstOrDefault();
+            }
+            if (_userId == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+            }
+            var user = _db.aspnetusers.Find(_userId);
+            if (user == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
+            }
+
+            UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+
+            userManager.RemovePassword(_userId);
+            userManager.AddPassword(_userId, changePassword.newPassword);
+
+            return Request.CreateResponse(HttpStatusCode.OK, Response.EmptyResponse);
+        }
 
     }
 }

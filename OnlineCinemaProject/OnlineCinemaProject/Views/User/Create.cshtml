@@ -1,4 +1,4 @@
-﻿@model OnlineCinemaProject.Models.aspnetuser
+﻿@model OnlineCinemaProject.Models.RegisterViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -13,9 +13,9 @@
     <div class="form-horizontal">
         <h4>aspnetuser</h4>
         <hr />
-        @Html.ValidationSummary(true)
+        @Html.ValidationSummary()
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Id)
@@ -72,9 +72,40 @@
                 @Html.EditorFor(model => model.Email)
                 @Html.ValidationMessageFor(model => model.Email)
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.BirthDate, new { @class = "datetime", type = "date" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = "E-mail" })<br />
+            </div>
+        </div>
+
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Sex)
@@ -104,6 +135,63 @@
                 @Html.DropDownList("TariffId", String.Empty)
                 @Html.ValidationMessageFor(model => model.TariffId)
             </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Sex, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Sex, new SelectList(new List<Object>
+                {
+                    new {value = 0, text = "Жен"},
+                    new {value = 1, text = "Муж"}
+                }, "value", "text", 2))
+            </div>
+        </div>
+
+
+        @*<div class="editor-label">
+            @Html.Label("Роли")
+        </div>*@
+
+        @*<div class="editor-field">
+            <table>
+                <tr>
+                    @{
+                      int cnt = 0;
+                      List<OnlineCinemaProject.Models.ViewModels.IncludedData> roles = ViewBag.Roles;
+
+    foreach (var role in roles)
+    {
+        if (cnt++ % 6 == 0)
+        
+        {
+            @:</tr> <tr>
+                        
+        }
+                        @:<td>
+                            <input type="checkbox" name="selectedRoles" value="@role.id" @(Html.Raw(role.Included ? "checked=\"checked\"" : "")) />
+                            @role.id
+                            @: @role.Title
+                            @: </td>
+                    }
+                    @:</tr>
+                    }
+                </table>
+            </div>*@
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
         </div>
 
         <div class="form-group">
@@ -117,3 +205,8 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

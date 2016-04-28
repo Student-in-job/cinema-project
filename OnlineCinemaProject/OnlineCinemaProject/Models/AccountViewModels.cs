@@ -101,4 +101,12 @@ namespace OnlineCinemaProject.Models
         public decimal Amount { get; set; }
     }
 
+    public class ChangePassword
+    {
+        [Required]
+        public string oldPassword { get; set; }
+        [Required]
+        public string newPassword { get; set; }
+    }
+
 }

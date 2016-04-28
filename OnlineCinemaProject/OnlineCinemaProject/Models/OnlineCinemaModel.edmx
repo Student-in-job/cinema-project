@@ -1203,7 +1203,6 @@
           <Property Name="JoinDate" Type="DateTime" />
           <Property Name="Balance" Type="Decimal" />
           <Property Name="TariffId" Type="Int32" />
-          <NavigationProperty Name="comments" Relationship="OnlineCinemaModel.Fk_User_Comment" FromRole="aspnetuser" ToRole="comment" />
           <NavigationProperty Name="payments" Relationship="OnlineCinemaModel.FkPaymentUser" FromRole="aspnetuser" ToRole="payment" />
           <NavigationProperty Name="episodehistories" Relationship="OnlineCinemaModel.FkUserEpisodeHistory" FromRole="aspnetuser" ToRole="episodehistory" />
           <NavigationProperty Name="likes" Relationship="OnlineCinemaModel.FkUserLikes" FromRole="aspnetuser" ToRole="like" />

@@ -39,7 +39,6 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_actor_video" />
         <AssociationConnector Association="OnlineCinemaModel.fk_adv_banner" />
         <AssociationConnector Association="OnlineCinemaModel.fk_id_teaser" />
-        <AssociationConnector Association="OnlineCinemaModel.Fk_User_Comment" />
         <AssociationConnector Association="OnlineCinemaModel.FkPaymentUser" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserEpisodeHistory" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserLikes" />
@@ -52,7 +51,6 @@
         <AssociationConnector Association="OnlineCinemaModel.id_user" />
         <AssociationConnector Association="OnlineCinemaModel.id_users" />
         <AssociationConnector Association="OnlineCinemaModel.id_banner" />
-        <AssociationConnector Association="OnlineCinemaModel.Fk_Video_Comment" />
         <AssociationConnector Association="OnlineCinemaModel.fk_country_video" />
         <AssociationConnector Association="OnlineCinemaModel.fk_episde_user" />
         <AssociationConnector Association="OnlineCinemaModel.fk_season_episode" />
@@ -62,7 +60,6 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_content_user" />
         <AssociationConnector Association="OnlineCinemaModel.fk_purchase_movie" />
         <AssociationConnector Association="OnlineCinemaModel.fk1_content_video" />
-        <AssociationConnector Association="OnlineCinemaModel.FkVideoOverview" />
         <AssociationConnector Association="OnlineCinemaModel.FkMoviePayment" />
         <AssociationConnector Association="OnlineCinemaModel.FkSeasonPayment" />
         <AssociationConnector Association="OnlineCinemaModel.FkSubscriptionPayment" />

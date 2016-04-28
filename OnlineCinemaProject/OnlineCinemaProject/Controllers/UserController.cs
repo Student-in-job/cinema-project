@@ -1,11 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
 using OnlineCinemaProject.Models;
+
+
+
+
+
+
+
+
 
 namespace OnlineCinemaProject.Controllers
 {
@@ -13,6 +26,18 @@ namespace OnlineCinemaProject.Controllers
     public class UserController : Controller
     {
         private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
+
+        public UserController()
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+        {
+        }
+
+        public UserController(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public UserManager<ApplicationUser> UserManager { get; private set; }
 
 [HttpGet]
          public ActionResult TopUpBalance()
@@ -88,17 +113,41 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,TariffId")] aspnetuser aspnetuser)
+        public async Task<ActionResult> Create(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _db.aspnetusers.Add(aspnetuser);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                var user = new ApplicationUser()
+                {
+                    UserName = model.UserName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    BirthDate = model.BirthDate,
+                    Email = model.Email,
+                    Sex = model.Sex,
+                    JoinDate = DateTime.Now,
+                    
+                };
 
-            ViewBag.TariffId = new SelectList(_db.tariffs, "id", "name", aspnetuser.TariffId);
-            return View(aspnetuser);
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "User");
+                    await SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "User");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+                //UpdateRoles(selectedRoles, model);
+                //db.Entry(model).State = EntityState.Modified;
+                //_db.SaveChanges();
+               // return RedirectToAction("Index");
+               // return View(model);
+            }
+            //PopulateIncludedUserData(model);
+            return View(model);
         }
 
         // GET: /User/Edit/5
@@ -124,6 +173,8 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="Id,UserName,PasswordHash,SecurityStamp,Discriminator,FirstName,LastName,BirthDate,Email,Sex,JoinDate,Balance,TariffId")] aspnetuser aspnetuser)
         {
+            
+           
             if (ModelState.IsValid)
             {
                 _db.Entry(aspnetuser).State = EntityState.Modified;
@@ -154,7 +205,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /User/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete( string id)
         {
             if (id == null)
             {
@@ -188,22 +239,39 @@ namespace OnlineCinemaProject.Controllers
             base.Dispose(disposing);
         }
 
-public ActionResult Profile(string id)
-         {
-             if (id == null)
-             {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-             }
-             aspnetuser aspnetuser = _db.aspnetusers.Find(id);
-             if (aspnetuser == null)
-             {
-                 return HttpNotFound();
-             }
+        public ActionResult Profile(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            aspnetuser aspnetuser = _db.aspnetusers.Find(id);
+            if (aspnetuser == null)
+            {
+                return HttpNotFound();
+            }
              
-             ICollection<subscription> subscriptions = _db.subscriptions.Where(i =>i.user_id == aspnetuser.Id).ToList();
-             ViewBag.subscriptions = subscriptions;
-             return View(aspnetuser);
-         }
+            ICollection<subscription> subscriptions = _db.subscriptions.Where(i =>i.user_id == aspnetuser.Id).ToList();
+            ViewBag.subscriptions = subscriptions;
+            return View(aspnetuser);
+        }
 
+        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        {
+            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            //AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+
+       
     }
 }
