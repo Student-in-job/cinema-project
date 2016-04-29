@@ -57,6 +57,7 @@
                 {
                     @Html.ActionLink("Роли", "Index", "Roles",null ,new {@class="list-group-item"})
                     @Html.ActionLink("Пользователи", "Index", "User", null, new { @class = "list-group-item" })
+                     @Html.ActionLink("System Monitor", "Index", "Cpu", null, new { @class = "list-group-item" })
                 }
                 @if (User.IsInRole("ContentManager"))
                 {
@@ -77,7 +78,7 @@
                 }
                 @if (User.IsInRole("BilingManager"))
                 {
-                    @Html.ActionLink("Тарифы", "Index", "Billing", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Новый рабочий стол", "Index", "Dashboard", null, new { @class = "list-group-item" })
                 }
 
             </div>

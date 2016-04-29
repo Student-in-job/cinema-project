@@ -48,6 +48,12 @@ namespace OnlineCinemaProject.Models
             ResponseCode = 1005,
             ResponseMessage = "И я тебя также"
         };
+        
+        public static Response WrongPassword = new Response
+        {
+            ResponseCode = 1007,
+            ResponseMessage = "Пароль не верный"
+        };
 
         public static Response EmptyResponse = new Response();
 

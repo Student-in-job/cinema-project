@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Пользователи";
-    //List<aspnetrole> aspnetroles = ViewBag.roles;
+    
 }
 
 <h2>Пользователи</h2>
@@ -41,6 +41,9 @@
         <th>
             @Html.DisplayName("Тариф")
         </th>
+        <th>
+            @Html.DisplayName("Статус")
+        </th>
 
         <th>
             @Html.DisplayName("Роли")
@@ -77,6 +80,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.tariff.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Block)
         </td>
 
        

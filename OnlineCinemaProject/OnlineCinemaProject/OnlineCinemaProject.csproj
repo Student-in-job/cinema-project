@@ -52,6 +52,12 @@
     <Reference Include="Kendo.Mvc.resources">
       <HintPath>..\telerik\Kendo.Mvc.resources.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -231,6 +237,8 @@
     <Compile Include="Controllers\ActorController.cs" />
     <Compile Include="Controllers\AdvertiserController.cs" />
     <Compile Include="Controllers\Api\BannerApiController.cs" />
+    <Compile Include="Controllers\Api\CpuInfoController.cs" />
+    <Compile Include="Controllers\Api\EditUserApiController.cs" />
     <Compile Include="Controllers\Api\EpizodeController.cs" />
     <Compile Include="Controllers\Api\HttpActionResult.cs" />
     <Compile Include="Controllers\Api\MovieApiController.cs" />
@@ -244,6 +252,7 @@
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\CpuController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EpisodeController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
@@ -266,6 +275,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\CpuInfo.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -287,6 +297,7 @@
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CpuInfoPostData.cs" />
     <Compile Include="Models\episode.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -1342,7 +1353,6 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\bootstrap-select.js.map" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.min.js" />
     <Content Include="Scripts\i18n\defaults-bg_BG.js" />
@@ -1405,8 +1415,7 @@
     <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -1419,6 +1428,10 @@
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.2.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2023,7 +2036,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
@@ -2091,10 +2103,8 @@
     <Content Include="Views\Video\MoviePartial.cshtml" />
     <Content Include="Views\Video\SeriesPartial.cshtml" />
     <Content Include="Views\Video\Watch.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Account\TopUp.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -2152,8 +2162,8 @@
     <Content Include="Views\StatisticsTeaser\Details.cshtml" />
     <Content Include="Views\StatisticsTeaser\Edit.cshtml" />
     <Content Include="Views\StatisticsTeaser\Index.cshtml" />
-    <Content Include="Views\Error\Error401.cshtml" />
-    <Content Include="Views\Error\Error402.cshtml" />
+    <Content Include="Views\Errors\Error401.cshtml" />
+    <Content Include="Views\Errors\Error402.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeNullable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTimeNullable.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
@@ -2284,6 +2294,11 @@
     <Content Include="Views\Video\_CreateOrUpdate.cshtml" />
     <Content Include="Views\Billing\Statistics.cshtml" />
     <Content Include="Views\Advertiser\Personal_account.cshtml" />
+    <Content Include="Views\Cpu\Index.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\Errors\Error403.cshtml" />
+    <Content Include="Views\Errors\Error404.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
