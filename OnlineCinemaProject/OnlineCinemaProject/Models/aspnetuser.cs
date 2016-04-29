@@ -42,6 +42,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<System.DateTime> JoinDate { get; set; }
         public Nullable<decimal> Balance { get; set; }
         public Nullable<int> TariffId { get; set; }
+        public Nullable<int> Block { get; set; }
     
         public virtual ICollection<payment> payments { get; set; }
         public virtual ICollection<episodehistory> episodehistories { get; set; }

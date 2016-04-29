@@ -86,12 +86,19 @@ namespace OnlineCinemaProject.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    if (user.Block == 0)
+                    {
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Извините , но вы заблокированы");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Неправильный логин или пароль");
                 }
             }
 
@@ -123,7 +130,8 @@ namespace OnlineCinemaProject.Controllers
                     BirthDate = model.BirthDate,
                     Email = model.Email,
                     Sex =  model.Sex,
-                    JoinDate = DateTime.Now
+                    JoinDate = DateTime.Now,
+                    Block = 0
                     
                 };
                 
@@ -131,6 +139,7 @@ namespace OnlineCinemaProject.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "User");
+                    
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }

@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Sex, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Sex, new SelectList(new List<Object>
                 {
@@ -72,6 +72,18 @@
                     new {value = 1, text = "Муж"}
                 }, "value", "text", 2))
                 @Html.ValidationMessageFor(model => model.Sex)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Block, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Block, new SelectList(new List<Object>
+                {
+                    new {value = 0, text = "Активный"},
+                    new {value = 1, text = "Блокированный"}
+                }, "value", "text", 2))
+                @Html.ValidationMessageFor(model => model.Block)
             </div>
         </div>
 

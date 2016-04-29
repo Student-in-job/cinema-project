@@ -20,6 +20,7 @@ namespace OnlineCinemaProject.Models
         public int Sex { get; set; }
         public int Balance { get; set; }
         public DateTime JoinDate { get; set; }
+        public int Block { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

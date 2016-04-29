@@ -294,9 +294,6 @@
     <Compile Include="Models\banner.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\comment.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>

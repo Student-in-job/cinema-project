@@ -16,7 +16,6 @@ namespace OnlineCinemaProject.Models
     {
         public video()
         {
-            this.comments = new HashSet<comment>();
             this.likes = new HashSet<like>();
             this.manufacturers = new HashSet<manufacturer>();
             this.movies = new HashSet<movy>();
@@ -38,7 +37,6 @@ namespace OnlineCinemaProject.Models
         public Nullable<decimal> score { get; set; }
         public Nullable<System.DateTime> last_score_calc { get; set; }
     
-        public virtual ICollection<comment> comments { get; set; }
         public virtual ICollection<like> likes { get; set; }
         public virtual ICollection<manufacturer> manufacturers { get; set; }
         public virtual ICollection<movy> movies { get; set; }
