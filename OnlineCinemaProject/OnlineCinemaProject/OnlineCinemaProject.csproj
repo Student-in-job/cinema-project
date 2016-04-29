@@ -15,7 +15,7 @@
     <AssemblyName>OnlineCinemaProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -284,9 +284,6 @@
     <Compile Include="Models\banner.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\comment.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\country.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -379,6 +376,7 @@
     <Compile Include="Models\ViewModels\ScoreModel.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
+    <Compile Include="Models\_Payment.cs" />
     <Compile Include="Models\_Video.cs" />
     <Compile Include="Models\_Subscription.cs" />
     <Compile Include="Models\_Tariff.cs" />
@@ -2318,7 +2316,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:16772/</IISUrl>
+          <IISUrl>http://localhost/OnlineCinemaProject</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:80/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

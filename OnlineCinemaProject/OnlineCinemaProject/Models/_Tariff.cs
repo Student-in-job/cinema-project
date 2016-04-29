@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
+// ReSharper disable All
 namespace OnlineCinemaProject.Models
 {
     public class TariffInfo
@@ -22,13 +19,13 @@ namespace OnlineCinemaProject.Models
                 id = id,
                 name = name,
                 description = description,
-                price = price
+                price = (decimal) price
             };
         }
 
         public bool Includes(movy movie)
         {
-            if (!new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
+            if ((bool) !new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
             {
                 //todo check if film is a prmier
                 return true;
@@ -38,7 +35,7 @@ namespace OnlineCinemaProject.Models
         
         public bool Includes(season season)
         {
-            if (!new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
+            if ((bool) !new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
             {
                 //todo check if season is a prmier
                 return true;

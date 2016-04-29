@@ -69,16 +69,6 @@
           <Property Name="show_amount" Type="int" />
           <Property Name="active" Type="bool" />
         </EntityType>
-        <EntityType Name="comments">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_id" Type="varchar" MaxLength="255" />
-          <Property Name="video_id" Type="int" />
-          <Property Name="value" Type="text" />
-          <Property Name="creation_date" Type="datetime" Precision="0" />
-        </EntityType>
         <EntityType Name="countries">
           <Key>
             <PropertyRef Name="id" />
@@ -217,13 +207,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="description" Type="longtext" Nullable="false" />
-          <Property Name="creation_date" Type="date" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="adverticement_enabled" Type="bool" Nullable="false" />
-          <Property Name="new_films_enabled" Type="bool" Nullable="false" />
-          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="description" Type="longtext" />
+          <Property Name="creation_date" Type="date" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="adverticement_enabled" Type="bool" />
+          <Property Name="new_films_enabled" Type="bool" />
+          <Property Name="active" Type="bool" />
         </EntityType>
         <EntityType Name="teaser">
           <Key>
@@ -449,18 +439,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_User_Comment">
-          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="0..1" />
-          <End Role="comments" Type="Self.comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetusers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="comments">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_video_ season">
           <End Role="videos" Type="Self.videos" Multiplicity="1" />
           <End Role="seasons" Type="Self.seasons" Multiplicity="*" />
@@ -483,18 +461,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="videoactors">
-              <PropertyRef Name="video_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_Video_Comment">
-          <End Role="videos" Type="Self.videos" Multiplicity="0..1" />
-          <End Role="comments" Type="Self.comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="videos">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="comments">
               <PropertyRef Name="video_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -792,7 +758,6 @@
           <EntitySet Name="aspnetuserroles" EntityType="Self.aspnetuserroles" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="banners" EntityType="Self.banners" Schema="online-cinema" store:Type="Tables" />
-          <EntitySet Name="comments" EntityType="Self.comments" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="countries" EntityType="Self.countries" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="episodehistory" EntityType="Self.episodehistory" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="episodes" EntityType="Self.episodes" Schema="online-cinema" store:Type="Tables" />
@@ -863,10 +828,6 @@
             <End Role="tariffs" EntitySet="tariffs" />
             <End Role="subscriptions" EntitySet="subscriptions" />
           </AssociationSet>
-          <AssociationSet Name="Fk_User_Comment" Association="Self.Fk_User_Comment">
-            <End Role="aspnetusers" EntitySet="aspnetusers" />
-            <End Role="comments" EntitySet="comments" />
-          </AssociationSet>
           <AssociationSet Name="fk_video_ season" Association="Self.fk_video_ season">
             <End Role="videos" EntitySet="videos" />
             <End Role="seasons" EntitySet="seasons" />
@@ -874,10 +835,6 @@
           <AssociationSet Name="fk_video_actor" Association="Self.fk_video_actor">
             <End Role="videos" EntitySet="videos" />
             <End Role="videoactors" EntitySet="videoactors" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_Video_Comment" Association="Self.Fk_Video_Comment">
-            <End Role="videos" EntitySet="videos" />
-            <End Role="comments" EntitySet="comments" />
           </AssociationSet>
           <AssociationSet Name="fk_video_country" Association="Self.fk_video_country">
             <End Role="videos" EntitySet="videos" />
@@ -982,7 +939,6 @@
           <EntitySet Name="aspnetroles" EntityType="OnlineCinemaModel.aspnetrole" />
           <EntitySet Name="aspnetusers" EntityType="OnlineCinemaModel.aspnetuser" />
           <EntitySet Name="banners" EntityType="OnlineCinemaModel.banner" />
-          <EntitySet Name="comments" EntityType="OnlineCinemaModel.comment" />
           <EntitySet Name="countries" EntityType="OnlineCinemaModel.country" />
           <EntitySet Name="episodehistories" EntityType="OnlineCinemaModel.episodehistory" />
           <EntitySet Name="episodes" EntityType="OnlineCinemaModel.episode" />
@@ -1016,10 +972,6 @@
           <AssociationSet Name="fk_id_teaser" Association="OnlineCinemaModel.fk_id_teaser">
             <End Role="advertiser" EntitySet="advertisers" />
             <End Role="teaser" EntitySet="teasers" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_User_Comment" Association="OnlineCinemaModel.Fk_User_Comment">
-            <End Role="aspnetuser" EntitySet="aspnetusers" />
-            <End Role="comment" EntitySet="comments" />
           </AssociationSet>
           <AssociationSet Name="FkPaymentUser" Association="OnlineCinemaModel.FkPaymentUser">
             <End Role="aspnetuser" EntitySet="aspnetusers" />
@@ -1068,10 +1020,6 @@
           <AssociationSet Name="id_banner" Association="OnlineCinemaModel.id_banner">
             <End Role="banner" EntitySet="banners" />
             <End Role="statistics_banner" EntitySet="statistics_banner" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_Video_Comment" Association="OnlineCinemaModel.Fk_Video_Comment">
-            <End Role="video" EntitySet="videos" />
-            <End Role="comment" EntitySet="comments" />
           </AssociationSet>
           <AssociationSet Name="fk_country_video" Association="OnlineCinemaModel.fk_country_video">
             <End Role="country" EntitySet="countries" />
@@ -1203,7 +1151,6 @@
           <Property Name="JoinDate" Type="DateTime" />
           <Property Name="Balance" Type="Decimal" />
           <Property Name="TariffId" Type="Int32" />
-          <NavigationProperty Name="comments" Relationship="OnlineCinemaModel.Fk_User_Comment" FromRole="aspnetuser" ToRole="comment" />
           <NavigationProperty Name="payments" Relationship="OnlineCinemaModel.FkPaymentUser" FromRole="aspnetuser" ToRole="payment" />
           <NavigationProperty Name="episodehistories" Relationship="OnlineCinemaModel.FkUserEpisodeHistory" FromRole="aspnetuser" ToRole="episodehistory" />
           <NavigationProperty Name="likes" Relationship="OnlineCinemaModel.FkUserLikes" FromRole="aspnetuser" ToRole="like" />
@@ -1232,18 +1179,6 @@
           <Property Name="active" Type="Boolean" />
           <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
           <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_banner" FromRole="banner" ToRole="statistics_banner" />
-        </EntityType>
-        <EntityType Name="comment">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="video_id" Type="Int32" />
-          <Property Name="value" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="creation_date" Type="DateTime" />
-          <NavigationProperty Name="aspnetuser" Relationship="OnlineCinemaModel.Fk_User_Comment" FromRole="comment" ToRole="aspnetuser" />
-          <NavigationProperty Name="video" Relationship="OnlineCinemaModel.Fk_Video_Comment" FromRole="comment" ToRole="video" />
         </EntityType>
         <EntityType Name="country">
           <Key>
@@ -1414,13 +1349,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <Property Name="creation_date" Type="DateTime" Nullable="false" />
-          <Property Name="price" Type="Decimal" Nullable="false" />
-          <Property Name="adverticement_enabled" Type="Boolean" Nullable="false" />
-          <Property Name="new_films_enabled" Type="Boolean" Nullable="false" />
-          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="creation_date" Type="DateTime" />
+          <Property Name="price" Type="Decimal" />
+          <Property Name="adverticement_enabled" Type="Boolean" />
+          <Property Name="new_films_enabled" Type="Boolean" />
+          <Property Name="active" Type="Boolean" />
           <NavigationProperty Name="aspnetusers" Relationship="OnlineCinemaModel.FkUserTariff" FromRole="tariff" ToRole="aspnetuser" />
           <NavigationProperty Name="subscriptions" Relationship="OnlineCinemaModel.fk_tariff_user" FromRole="tariff" ToRole="subscription" />
         </EntityType>
@@ -1508,7 +1443,6 @@
           <Property Name="img_url" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="score" Type="Decimal" />
           <Property Name="last_score_calc" Type="DateTime" />
-          <NavigationProperty Name="comments" Relationship="OnlineCinemaModel.Fk_Video_Comment" FromRole="video" ToRole="comment" />
           <NavigationProperty Name="likes" Relationship="OnlineCinemaModel.fk_like_video" FromRole="video" ToRole="like" />
           <NavigationProperty Name="manufacturers" Relationship="OnlineCinemaModel.fk_video_country" FromRole="video" ToRole="manufacturer" />
           <NavigationProperty Name="movies" Relationship="OnlineCinemaModel.fk1_content_video" FromRole="video" ToRole="movy" />
@@ -1553,18 +1487,6 @@
             </Principal>
             <Dependent Role="teaser">
               <PropertyRef Name="adv_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_User_Comment">
-          <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="0..1" />
-          <End Type="OnlineCinemaModel.comment" Role="comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="aspnetuser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1709,18 +1631,6 @@
             </Principal>
             <Dependent Role="statistics_banner">
               <PropertyRef Name="id_banner" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_Video_Comment">
-          <End Type="OnlineCinemaModel.video" Role="video" Multiplicity="0..1" />
-          <End Type="OnlineCinemaModel.comment" Role="comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="video">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="video_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2045,17 +1955,6 @@
                 <ScalarProperty Name="payment" ColumnName="payment" />
                 <ScalarProperty Name="end" ColumnName="end" />
                 <ScalarProperty Name="start" ColumnName="start" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="comments">
-            <EntityTypeMapping TypeName="OnlineCinemaModel.comment">
-              <MappingFragment StoreEntitySet="comments">
-                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="video_id" ColumnName="video_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -10,8 +10,6 @@ namespace OnlineCinemaProject.Models
         public string tariffName;
         public DateTime? start;
         public DateTime? end;
-
-
     }
 
     public partial class subscription

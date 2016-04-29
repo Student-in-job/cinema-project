@@ -16,7 +16,6 @@ namespace OnlineCinemaProject.Models
     {
         public aspnetuser()
         {
-            this.comments = new HashSet<comment>();
             this.payments = new HashSet<payment>();
             this.episodehistories = new HashSet<episodehistory>();
             this.likes = new HashSet<like>();
@@ -44,7 +43,6 @@ namespace OnlineCinemaProject.Models
         public Nullable<decimal> Balance { get; set; }
         public Nullable<int> TariffId { get; set; }
     
-        public virtual ICollection<comment> comments { get; set; }
         public virtual ICollection<payment> payments { get; set; }
         public virtual ICollection<episodehistory> episodehistories { get; set; }
         public virtual ICollection<like> likes { get; set; }
