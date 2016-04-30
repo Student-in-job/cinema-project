@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="OnlineCinemaModel.statistics_banner" Width="1.5" PointX="5.25" PointY="14.75" />
         <EntityTypeShape EntityType="OnlineCinemaModel.statistics_teaser" Width="1.5" PointX="8.25" PointY="18.75" />
         <EntityTypeShape EntityType="OnlineCinemaModel.subscription" Width="1.5" PointX="7.5" PointY="23.125" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.tariff" Width="1.5" PointX="0.75" PointY="14.5" />
         <EntityTypeShape EntityType="OnlineCinemaModel.teaser" Width="1.5" PointX="6" PointY="2.375" />
         <EntityTypeShape EntityType="OnlineCinemaModel.trailer" Width="1.5" PointX="3.75" PointY="3.125" />
         <EntityTypeShape EntityType="OnlineCinemaModel.usermovy" Width="1.5" PointX="7.5" PointY="27.25" />
@@ -43,7 +42,6 @@
         <AssociationConnector Association="OnlineCinemaModel.FkUserOwnMovies" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserSeasons" />
         <AssociationConnector Association="OnlineCinemaModel.FkUserSubscription" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserTariff" />
         <AssociationConnector Association="OnlineCinemaModel.id_user" />
         <AssociationConnector Association="OnlineCinemaModel.id_users" />
         <AssociationConnector Association="OnlineCinemaModel.id_banner" />
@@ -63,11 +61,13 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_season_user" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video__season" />
         <AssociationConnector Association="OnlineCinemaModel.id_teasers" />
-        <AssociationConnector Association="OnlineCinemaModel.fk_tariff_user" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_trailer" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_actor" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_genre" />
         <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.tariff" Width="1.5" PointX="0.75" PointY="18" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserTariff" />
+        <AssociationConnector Association="OnlineCinemaModel.fk_tariff_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

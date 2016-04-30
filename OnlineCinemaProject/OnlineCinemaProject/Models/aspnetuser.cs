@@ -52,9 +52,9 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<usermovy> usermovies { get; set; }
         public virtual ICollection<userseason> userseasons { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
-        public virtual tariff tariff { get; set; }
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
         public virtual ICollection<aspnetrole> aspnetroles { get; set; }
+        public virtual tariff tariff { get; set; }
     }
 }
