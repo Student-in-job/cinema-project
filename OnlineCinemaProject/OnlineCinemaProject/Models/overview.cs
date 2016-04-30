@@ -15,10 +15,10 @@ namespace OnlineCinemaProject.Models
     public partial class overview
     {
         public int id { get; set; }
-        public int video_id { get; set; }
+        public Nullable<int> video_id { get; set; }
         public string user_id { get; set; }
-        public System.DateTime creation_date { get; set; }
-        public float rating { get; set; }
+        public Nullable<System.DateTime> creation_date { get; set; }
+        public Nullable<float> rating { get; set; }
         public string comment { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }

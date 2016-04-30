@@ -1,6 +1,4 @@
-﻿@using System.Diagnostics.Eventing.Reader
-@model System.Collections.Generic.List<OnlineCinemaProject.Models.tariff>
-
+﻿@model IEnumerable<OnlineCinemaProject.Models.tariff>
 @{
     ViewBag.Title = "Тарифы";
     Layout = "../Shared/_Dashboard.cshtml";
@@ -60,6 +58,14 @@
                                 colspan="1"
                                 aria-label="Status: activate to sort column ascending"
                                 style="width: 125px;">Статус</th>
+                            <th class="sorting"
+                                role="columnheader"
+                                tabindex="0"
+                                aria-controls="DataTables_Table_0"
+                                rowspan="1"
+                                colspan="1"
+                                aria-label="Status: activate to sort column ascending"
+                                style="width: 125px;">Подписчики</th>
                             <th
                                 class="sorting"
                                 role="columnheader"
@@ -75,12 +81,14 @@
                         <tbody role="alert" aria-live="polite" aria-relevant="all">
                     @foreach (var item in Model)
                     {
+                        var count = item.subscriptions.Count;
+                        
                         <tr class="odd">
                             <td class=" sorting_1">@item.name</td>
                             <td class="center ">@item.creation_date</td>
-                            <td class="center ">@item.price сум</td>
+                            <td class="center ">@count сум</td>
                             <td class="center ">
-                                @if (item.active)
+                                @if ((bool) item.active)
                                 {
                                     <span class="label label-success">Active</span>
                                 }
@@ -89,14 +97,15 @@
                                     <span class="label label-default">Inactive</span>
                                 }
                             </td>
+                            <td class="center ">@item. сум</td>
                             <td class="center ">
-                                <a class="btn btn-success" href="@Url.Action("Details", new {id = item.id})">
+                                <a class="btn btn-success" href="@Url.Action("Details", new {item.id})">
                                     <i class="fa fa-search-plus "></i>
                                 </a>
-                                <a class="btn btn-info" href="@Url.Action("Edit", new {id = item.id})">
+                                <a class="btn btn-info" href="@Url.Action("Edit", new {item.id})">
                                     <i class="fa fa-edit "></i>
                                 </a>
-                                <a class="btn btn-danger" href="@Url.Action("Delete", new {id = item.id})">
+                                <a class="btn btn-danger" href="@Url.Action("Delete", new {item.id})">
                                     <i class="fa fa-trash-o "></i>
                                 </a>
                             </td>
@@ -110,6 +119,16 @@
     </div><!--/col-->
 
 </div><!--/row-->
+
+<div class="row">
+    <div class="col-md-6 ">
+        @( (DotNet.Highcharts.Highcharts)ViewBag.Subscribers)
+    </div>
+    <div class="col-md-6 ">
+        @( (DotNet.Highcharts.Highcharts)ViewBag.Subscribers)
+    </div>
+</div>
+
 
 <div class="modal fade" id="addTariff">
     <div class="modal-dialog">
@@ -128,3 +147,4 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+

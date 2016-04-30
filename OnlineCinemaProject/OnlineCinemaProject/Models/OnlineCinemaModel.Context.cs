@@ -44,7 +44,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<statistics_banner> statistics_banner { get; set; }
         public virtual DbSet<statistics_teaser> statistics_teaser { get; set; }
         public virtual DbSet<subscription> subscriptions { get; set; }
-        public virtual DbSet<tariff> tariffs { get; set; }
         public virtual DbSet<teaser> teasers { get; set; }
         public virtual DbSet<trailer> trailers { get; set; }
         public virtual DbSet<usermovy> usermovies { get; set; }
@@ -52,5 +51,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<videoactor> videoactors { get; set; }
         public virtual DbSet<videogenre> videogenres { get; set; }
         public virtual DbSet<video> videos { get; set; }
+        public virtual DbSet<tariff> tariffs { get; set; }
     }
 }

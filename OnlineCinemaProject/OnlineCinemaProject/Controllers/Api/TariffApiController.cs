@@ -54,14 +54,14 @@ namespace OnlineCinemaProject.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
             
-            if (!user.DrawMoney(tariff.price))
+            if (!user.DrawMoney((decimal) tariff.price))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, Response.LackOfMoney);
             }
             payment payment = new payment
             {
                 aspnetuser = user,
-                amount = tariff.price,
+                amount = (decimal) tariff.price,
                 title = "Подписка на тариф " + tariff.name,
                 payment_type = false,
                 payment_date = DateTime.Now,
