@@ -53,9 +53,8 @@ namespace OnlineCinemaProject.Controllers
                     }
                 }
             }
-
-
-            return "error";
+            
+            return null;
         }
 
         // PUT api/<controller>/5
