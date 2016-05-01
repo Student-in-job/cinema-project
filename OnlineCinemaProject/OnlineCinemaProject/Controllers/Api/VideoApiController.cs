@@ -125,6 +125,15 @@ namespace OnlineCinemaProject.Controllers.Api
         [ResponseType(typeof(overview))]
         public HttpResponseMessage OverView(overview overview)
         {
+            if (Request.Headers.TryGetValues("token", out _headerValues))
+            {
+                _userId = _headerValues.FirstOrDefault();
+            }
+            if (_userId == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+            }
+            overview.user_id = _userId;
             overview.creation_date = DateTime.Now;
             if (!ModelState.IsValid)
             {
