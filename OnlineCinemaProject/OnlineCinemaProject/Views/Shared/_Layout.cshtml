@@ -57,7 +57,11 @@
                 {
                     @Html.ActionLink("Роли", "Index", "Roles",null ,new {@class="list-group-item"})
                     @Html.ActionLink("Пользователи", "Index", "User", null, new { @class = "list-group-item" })
-                     @Html.ActionLink("System Monitor", "Index", "Cpu", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("System Monitor", "Index", "Cpu", null, new { @class = "list-group-item" })
+                     @Html.ActionLink("Резервное копирование", "Index", "Backup", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Восстановление", "Index", "Restore", null, new { @class = "list-group-item" })
+                   
+                    
                 }
                 @if (User.IsInRole("ContentManager"))
                 {

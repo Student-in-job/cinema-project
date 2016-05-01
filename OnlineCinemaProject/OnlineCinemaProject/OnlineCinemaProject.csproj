@@ -71,12 +71,16 @@
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.3\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="MySqlBackup">
+      <HintPath>..\packages\MySqlBackup.NET.2.0.9.4\lib\net45\MySqlBackup.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -249,6 +253,7 @@
     <Compile Include="Controllers\Api\UserApiController.cs" />
     <Compile Include="Controllers\Api\VideoApiController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
+    <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
@@ -260,6 +265,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginApiController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\RestoreController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
     <Compile Include="Controllers\StatisticsBannerController.cs" />
@@ -2131,17 +2137,10 @@
     <Content Include="Views\Billing\Delete.cshtml" />
     <Content Include="Views\Billing\Details.cshtml" />
     <Content Include="Views\Billing\Edit.cshtml" />
-    <Content Include="Views\Billing\Index.cshtml" />
     <Content Include="Views\Billing\Tariffs.cshtml" />
     <Content Include="Views\Video\VideoTrailers.cshtml" />
     <Content Include="Views\Shared\Dashboard.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Video\CreateNew.cshtml" />
-    <Content Include="Views\Billing\Text.cshtml" />
     <Content Include="Views\Video\DetailsPartial.cshtml" />
     <Content Include="Views\Video\ActorsPartial.cshtml" />
     <Content Include="Views\Video\VideoContentPartial.cshtml" />
@@ -2298,6 +2297,8 @@
     <Content Include="Views\Errors\Error403.cshtml" />
     <Content Include="Views\Errors\Error404.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Backup\Index.cshtml" />
+    <Content Include="Views\Restore\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
