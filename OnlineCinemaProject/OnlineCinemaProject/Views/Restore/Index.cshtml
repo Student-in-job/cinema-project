@@ -9,6 +9,17 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+
+    @using (Html.BeginForm("Upload", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @(Html.Kendo().Upload()
+        .Name("file")
+        .Multiple(false)
+        .Events(x => x.Success(@<text>function(e) { /*your event handler code*/ )}</text>))
+        )
+        <button type="submit">Ok</button>
+    }
+
 </head>
 <body>
     <div> 

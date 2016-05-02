@@ -11,10 +11,22 @@ namespace OnlineCinemaProject.Controllers
     {
         //
         // GET: /Restore/
-        public ActionResult Index()
+        public ActionResult Index(HttpPostedFileBase file)
         {
-            string constring = "server=localhost;User Id=root;password=22312tuit;database=online-cinema;";
-            string file = "D:\\online-cinema.sql";
+            string constring = "server=localhost;User Id=root;password=22312tuit;Persist Security Info=True;database=online-cinema";
+            string fileName = "D:\\online-cinema.sql";
+
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                                          + file.FileName);
+                   
+                }
+              
+                return RedirectToAction("Index");
+            }
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -23,7 +35,7 @@ namespace OnlineCinemaProject.Controllers
                     {
                         cmd.Connection = conn;
                         conn.Open();
-                        mb.ImportFromFile(file);
+                        mb.ImportFromFile(fileName);
                         conn.Close();
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,8 +14,17 @@ namespace OnlineCinemaProject.Controllers
         // GET: /Backup/
         public ActionResult Index()
         {
-            string constring = "server=localhost;User Id=root;password=22312tuit;database=online-cinema;";
-            string file = "D:\\online-cinema.sql";
+            string constring = "server=localhost;User Id=root;password=22312tuit;Persist Security Info=True;database=online-cinema";
+            string file = "D:\\Diplomka\\OnlineCinemaProject\\Backup\\online-cinema.sql" ;
+
+            string newFileName =
+                  Path.Combine(Path.GetDirectoryName(file)
+                , string.Concat(Path.GetFileNameWithoutExtension(file)
+                               , DateTime.Now.ToString("_yyyy_MM_dd_HH_mm_ss")
+                               , Path.GetExtension(file)
+                               )
+                );
+
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -23,12 +33,11 @@ namespace OnlineCinemaProject.Controllers
                     {
                         cmd.Connection = conn;
                         conn.Open();
-                        mb.ExportToFile(file);
+                        mb.ExportToFile(newFileName);
                         conn.Close();
                     }
                 }
             }
-
             return View();
         }
     }

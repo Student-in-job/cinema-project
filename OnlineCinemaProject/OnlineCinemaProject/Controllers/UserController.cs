@@ -13,13 +13,6 @@ using Microsoft.Owin.Security;
 using OnlineCinemaProject.Models;
 
 
-
-
-
-
-
-
-
 namespace OnlineCinemaProject.Controllers
 {
      [Authorize(Roles = "Admin")]
