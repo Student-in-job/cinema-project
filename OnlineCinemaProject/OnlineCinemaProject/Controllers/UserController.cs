@@ -5,12 +5,15 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using OnlineCinemaProject.Models;
+using WebMatrix.WebData;
 
 
 namespace OnlineCinemaProject.Controllers
@@ -265,6 +268,8 @@ namespace OnlineCinemaProject.Controllers
         }
 
 
-       
+
+         
+
     }
 }

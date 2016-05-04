@@ -16,8 +16,8 @@ namespace OnlineCinemaProject.Models
     {
         public tariff()
         {
-            this.aspnetusers = new HashSet<aspnetuser>();
             this.subscriptions = new HashSet<subscription>();
+            this.aspnetusers = new HashSet<aspnetuser>();
         }
     
         public int id { get; set; }
@@ -29,7 +29,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<bool> new_films_enabled { get; set; }
         public Nullable<bool> active { get; set; }
     
-        public virtual ICollection<aspnetuser> aspnetusers { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
+        public virtual ICollection<aspnetuser> aspnetusers { get; set; }
     }
 }

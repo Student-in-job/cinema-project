@@ -55,7 +55,7 @@ namespace OnlineCinemaProject.Controllers.Api
                     Email = model.Email,
                     Sex = model.Sex,
                     JoinDate = DateTime.Now,
-                    Block = 0
+                    Block = false
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

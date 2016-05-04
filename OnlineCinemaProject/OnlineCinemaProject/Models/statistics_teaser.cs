@@ -20,7 +20,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<int> showAmount { get; set; }
         public Nullable<System.DateTime> dateShow { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual teaser teaser { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
     }
 }

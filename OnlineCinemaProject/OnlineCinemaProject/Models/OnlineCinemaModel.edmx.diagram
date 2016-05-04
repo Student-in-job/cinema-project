@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="OnlineCinemaModel.actor" Width="1.5" PointX="6.5" PointY="40.125" />
         <EntityTypeShape EntityType="OnlineCinemaModel.advertiser" Width="1.5" PointX="0.75" PointY="24.75" />
         <EntityTypeShape EntityType="OnlineCinemaModel.aspnetrole" Width="1.5" PointX="0.75" PointY="11.125" />
-        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="3" PointY="13" />
         <EntityTypeShape EntityType="OnlineCinemaModel.banner" Width="1.5" PointX="3" PointY="24.375" />
         <EntityTypeShape EntityType="OnlineCinemaModel.country" Width="1.5" PointX="6.5" PointY="37.125" />
         <EntityTypeShape EntityType="OnlineCinemaModel.episodehistory" Width="1.5" PointX="8.25" PointY="11.875" />
@@ -34,16 +33,6 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_actor_video" />
         <AssociationConnector Association="OnlineCinemaModel.fk_adv_banner" />
         <AssociationConnector Association="OnlineCinemaModel.fk_id_teaser" />
-        <AssociationConnector Association="OnlineCinemaModel.FkPaymentUser" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserEpisodeHistory" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserLikes" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserMovies" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserOverview" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserOwnMovies" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserSeasons" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserSubscription" />
-        <AssociationConnector Association="OnlineCinemaModel.id_user" />
-        <AssociationConnector Association="OnlineCinemaModel.id_users" />
         <AssociationConnector Association="OnlineCinemaModel.id_banner" />
         <AssociationConnector Association="OnlineCinemaModel.fk_country_video" />
         <AssociationConnector Association="OnlineCinemaModel.fk_episde_user" />
@@ -64,10 +53,21 @@
         <AssociationConnector Association="OnlineCinemaModel.fk_video_trailer" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_actor" />
         <AssociationConnector Association="OnlineCinemaModel.fk_video_genre" />
-        <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" />
         <EntityTypeShape EntityType="OnlineCinemaModel.tariff" Width="1.5" PointX="0.75" PointY="18" />
-        <AssociationConnector Association="OnlineCinemaModel.FkUserTariff" />
         <AssociationConnector Association="OnlineCinemaModel.fk_tariff_user" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.aspnetuser" Width="1.5" PointX="3" PointY="13" />
+        <AssociationConnector Association="OnlineCinemaModel.FkPaymentUser" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserEpisodeHistory" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserLikes" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserMovies" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserOverview" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserOwnMovies" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserSeasons" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserSubscription" />
+        <AssociationConnector Association="OnlineCinemaModel.FkUserTariff" />
+        <AssociationConnector Association="OnlineCinemaModel.id_user" />
+        <AssociationConnector Association="OnlineCinemaModel.id_users" />
+        <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

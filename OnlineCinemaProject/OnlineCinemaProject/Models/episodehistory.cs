@@ -19,7 +19,7 @@ namespace OnlineCinemaProject.Models
         public string user_id { get; set; }
         public System.DateTime watching_date { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual episode episode { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
     }
 }

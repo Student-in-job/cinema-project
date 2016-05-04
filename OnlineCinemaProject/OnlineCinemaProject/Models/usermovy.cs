@@ -19,8 +19,8 @@ namespace OnlineCinemaProject.Models
         public int movie_id { get; set; }
         public int payment_id { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual movy movy { get; set; }
         public virtual payment payment { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
     }
 }

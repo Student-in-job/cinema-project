@@ -70,7 +70,15 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Sex)
+            @if (item.Sex == 1)
+            {
+                @:Муж
+            }
+            else
+            {
+                @:Жен
+                
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.JoinDate)
@@ -82,10 +90,14 @@
             @Html.DisplayFor(modelItem => item.tariff.name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Block)
-        </td>
-
-       
+            @if (item.Block == false)
+            {
+               @:Активный
+            }
+             else
+            {
+               @:Блокированный
+            }                   
         <td>
             @foreach (var role in item.aspnetroles)
             {

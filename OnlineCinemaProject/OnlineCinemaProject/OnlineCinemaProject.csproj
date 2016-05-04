@@ -2299,6 +2299,8 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Backup\Index.cshtml" />
     <Content Include="Views\Restore\Index.cshtml" />
+    <Content Include="Views\Account\LostPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

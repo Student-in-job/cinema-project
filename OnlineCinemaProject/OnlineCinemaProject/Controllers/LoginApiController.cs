@@ -43,7 +43,7 @@ namespace OnlineCinemaProject.Controllers
                 var user =  UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
-                    if (user.Block == 0)
+                    if (user.Block == false)
                     {
                         return user.Id;
                     }

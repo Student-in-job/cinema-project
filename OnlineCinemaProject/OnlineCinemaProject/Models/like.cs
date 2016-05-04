@@ -20,7 +20,7 @@ namespace OnlineCinemaProject.Models
         public bool value { get; set; }
         public System.DateTime creation_date { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual video video { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<int> id_banner { get; set; }
         public string id_user { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual banner banner { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
     }
 }

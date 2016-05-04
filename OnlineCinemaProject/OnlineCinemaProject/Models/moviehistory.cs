@@ -19,7 +19,7 @@ namespace OnlineCinemaProject.Models
         public int movie_id { get; set; }
         public System.DateTime watching_date { get; set; }
     
-        public virtual aspnetuser aspnetuser { get; set; }
         public virtual movy movy { get; set; }
+        public virtual aspnetuser aspnetuser { get; set; }
     }
 }
