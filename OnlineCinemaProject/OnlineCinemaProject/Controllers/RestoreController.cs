@@ -13,7 +13,7 @@ namespace OnlineCinemaProject.Controllers
         // GET: /Restore/
         public ActionResult Index(string url)
         {
-            string constring = "server=localhost;User Id=root;password=22312tuit;Persist Security Info=True;database=online-cinema";
+            string constring = "server=localhost;User Id=root;password=qwerty1234;Persist Security Info=True;database=online-cinema";
            /* string fileName = "D:\\online-cinema.sql"*/;
 
             
