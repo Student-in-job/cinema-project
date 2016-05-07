@@ -12,17 +12,12 @@
     <!-- start: CSS -->
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
     <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/style.min.css" rel="stylesheet">
     <link href="~/Content/retina.min.css" rel="stylesheet">
-    
-    <!-- start: Favicon and Touch Icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://bootstrapmaster.com/live/simpliq2/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://bootstrapmaster.com/live/simpliq2/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://bootstrapmaster.com/live/simpliq2/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="http://bootstrapmaster.com/live/simpliq2/assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="http://bootstrapmaster.com/live/simpliq2/assets/ico/favicon.png">
     <!-- end: Favicon and Touch Icons -->
 
     <style type="text/css">
@@ -219,7 +214,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="avatar"><img src="./SimpliQ - Flat &amp; Responsive Bootstrap Admin Template_files/avatar.jpg" alt="Avatar"></span>
+                                    <span class="avatar"><img src="" alt="Avatar"></span>
                                     <span class="header">
                                         <span class="from">
                                             Łukasz Holeczek
@@ -235,7 +230,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="avatar"><img src="./SimpliQ - Flat &amp; Responsive Bootstrap Admin Template_files/avatar2.jpg" alt="Avatar"></span>
+                                    <span class="avatar"><img src="" alt="Avatar"></span>
                                     <span class="header">
                                         <span class="from">
                                             Megan Abott
@@ -251,7 +246,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="avatar"><img src="./SimpliQ - Flat &amp; Responsive Bootstrap Admin Template_files/avatar3.jpg" alt="Avatar"></span>
+                                    <span class="avatar"><img src="" alt="Avatar"></span>
                                     <span class="header">
                                         <span class="from">
                                             Kate Ross
@@ -267,7 +262,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="avatar"><img src="./SimpliQ - Flat &amp; Responsive Bootstrap Admin Template_files/avatar4.jpg" alt="Avatar"></span>
+                                    <span class="avatar"><img src="" alt="Avatar"></span>
                                     <span class="header">
                                         <span class="from">
                                             Julie Blank
@@ -283,7 +278,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span class="avatar"><img src="./SimpliQ - Flat &amp; Responsive Bootstrap Admin Template_files/avatar5.jpg" alt="Avatar"></span>
+                                    <span class="avatar"><img src="" alt="Avatar"></span>
                                     <span class="header">
                                         <span class="from">
                                             Jane Sanders
@@ -419,19 +414,17 @@
         </div><!--/.row-->
     </footer>
 
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         window.jQuery || document.write("<script src='assets/js/jquery-2.1.0.min.js'>" + "<" + "/script>");
-    </script>
+    </script>*@
     
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquery-ui")
-    @Scripts.Render("~/bundles/bootstrap")
+    
     <script type="text/javascript" src="~/Scripts/core.min.js"></script>
     <script type="text/javascript" src="~/Scripts/custom.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
     @RenderSection("scripts", required: false)
+    @RenderSection("styles", required: false)
 
-    <textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; transition: none; height: 0px !important; min-height: 0px !important; width: 878.438px; font-family: Lato, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: 20px;" class="autosizejs"></textarea>
 </body>
 <script src="chrome-extension://ocggccaacacpienfcgmgcihoombokbbj/pages/client/hiddencapture-inject.js"></script>
 </html>

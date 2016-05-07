@@ -1,31 +1,694 @@
-﻿@{
+﻿@using OnlineCinemaProject.Controllers
+@using OnlineCinemaProject.Models
+@{
+    Layout = "~/Views/Shared/AMovie.cshtml";
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+<!-- Slider -->
+<div class="bannercontainer" style="overflow: visible;">
+    <div class="banner revslider-initialised tp-simpleresponsive" id="revslider-83" style="height: 500px;">
+        <ul style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: 500px;">
+            <li data-transition="fade" data-slotamount="7" class="slide" data-slide="Rush." style="width: 100%; height: 100%; overflow: hidden; visibility: visible; left: 0px; top: 0px; z-index: 18; opacity: 1;">
+                <div class="slotholder" style="width: 100%; height: 100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
+                    <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="images/slides/first-slide.jpg" data-src="images/slides/first-slide.jpg" style="width: 100%; height: 100%; opacity: 0; position: relative; background-image: url(&quot;images/slides/first-slide.jpg&quot;); background-color: rgba(0, 0, 0, 0); background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"></div>
+                </div>
+                <div class="caption slide__name margin-slider tp-caption start splitted" data-x="right" data-y="80" data-splitin="chars" data-elementdelay="0.1" data-speed="700" data-start="1400" data-easing="easeOutBack" data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:0;transformOrigin:50% 50%;" data-frames="{ typ :lines;
+                                                 elementdelay :0.1;
+                                                 start:1650;
+                                                 speed:500;
+                                                 ease:Power3.easeOut;
+                                                 animation:x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:1;transformPerspective:600;transformOrigin:50% 50%;
+                                                 },
+                                                 { typ :lines;
+                                                 elementdelay :0.1;
+                                                 start:2150;
+                                                 speed:500;
+                                                 ease:Power3.easeOut;
+                                                 animation:x:0;y:0;z:0;rotationX:00;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:1;transformPerspective:600;transformOrigin:50% 50%;
+                                                 }
+                                                 " data-splitout="lines" data-endelementdelay="0.1" data-customout="x:-230;y:0;z:0;rotationX:0;rotationY:0;rotationZ:90;scaleX:0.2;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%" data-endspeed="500" data-end="8400" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 114px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 80px; left: 1050.5px; top: 80px; visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1);">
+                    <div class="tp-splitted" style="display: block; text-align: left; position: relative; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1);">
+                        <div style="position: relative; display: inline-block;" class="tp-splitted">
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">
+                            </div>
+                        </div>
+                        <div style="position: relative; display: inline-block;" class="tp-splitted">
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">R</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">U</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">S</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">H</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tp-splitted" style="display: block; text-align: left; position: relative; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1);">
+                        <div style="position: relative; display: inline-block;" class="tp-splitted"> </div>
+                    </div>
+                </div>
+                <div class="caption slide__time margin-slider sfr str tp-caption start" data-x="right" data-hoffset="-243" data-y="186" data-speed="300" data-start="2100" data-easing="easeOutBack" data-endspeed="300" data-end="8700" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 974.5px; top: 186px; visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 50, 0, 0, 1);">
+                    From
+                </div>
+                <div class="caption slide__date margin-slider lfb ltb tp-caption start" data-x="right" data-hoffset="-149" data-y="186" data-speed="500" data-start="2400" data-easing="Power4.easeOut" data-endspeed="400" data-end="8200" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 1021.5px; top: 186px; visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 560, 0, 1);">
+                    October 18
+                </div>
+                <div class="caption slide__time margin-slider sfr str tp-caption start" data-x="right" data-hoffset="-113" data-y="186" data-speed="300" data-start="2100" data-easing="easeOutBack" data-endspeed="300" data-end="8700" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 1118.5px; top: 186px; visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 50, 0, 0, 1);">
+                    - till
+                </div>
+                <div class="caption slide__date margin-slider lfb ltb tp-caption start" data-x="right" data-y="186" data-speed="500" data-start="2800" data-easing="Power4.easeOut" data-endspeed="400" data-end="8200" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 1150.5px; top: 186px; visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 560, 0, 1);">
+                    November 01
+                </div>
+                <div class="caption slide__text margin-slider customin customout tp-caption start" data-x="right" data-y="250" data-customin="x:0;y:100;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:1;scaleY:3;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:0% 0%;" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-speed="400" data-start="3000" data-endspeed="400" data-end="8000" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 21px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 13px; left: 685.5px; top: 250px; visibility: visible; opacity: 0; transform: matrix3d(0.75, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
+                    Two-time Academy Award winner Ron Howard, teams once again with fellow two-time Academy<br> Award nominee, writer Peter Morgan , on Rush, a spectacular big-screen re-creation of the merciless<br> 1970s rivalry between James Hunt and Niki Lauda.
+                </div>
+                <div class="caption margin-slider skewfromright customout  tp-caption start" data-x="right" data-y="324" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-speed="400" data-start="3300" data-easing="Power4.easeOut" data-endspeed="300" data-end="7700" data-endeasing="Power4.easeOut" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 20px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 14px; left: 1014.5px; top: 324px; visibility: visible; opacity: 0; transform: matrix3d(0.75, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
+                    <a href="http://amovie.gozha.net/#" class="slide__link">check out cinemas &amp; time</a>
+                </div>
+            </li>
+            <li data-transition="fade" data-slotamount="7" class="slide fading-slide" data-slide="Travel worldwide.
+Create trip film." style="width: 100%; height: 100%; overflow: hidden; visibility: visible; left: 0px; top: 0px; z-index: 20; opacity: 1;">
+                <div class="slotholder" style="width: 100%; height: 100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
+                    <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="images/bg-video.jpg" data-src="images/bg-video.jpg" style="width: 100%; height: 100%; opacity: 1; position: relative; background-image: url(&quot;images/bg-video.jpg&quot;); background-color: rgba(0, 0, 0, 0); background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"></div>
+                </div>
+                <div class="caption slide__video tp-caption start" data-x="0" data-y="0" data-autoplay="true" style="font-size: 14px; padding: 0px; margin: 0px; border: 0px; line-height: 20px; height: 1080px; left: 89.5px; top: 0px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);">
+                    <div class="html5vid videoisplaying" style="position: relative; top: 0px; left: 0px; width: auto; height: auto">
+                        <video class="media-element HasListener" autoplay="autoplay" preload="" loop="loop" muted="" src="video/TravelIs.mp4" style="display: block; width: 1920px; height: 1080px;">
+                            <source type="video/webm" src="video/TravelIs.webm">
+                            <source type="video/mp4" src="video/TravelIs.mp4">
+                            <source type="video/ogg" src="video/TravelIs.ogv">
+                        </video>
+                        <div class="tp-video-play-button">
+                            <i class="revicon-right-dir"></i>
+                            <div class="tp-revstop"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="caption slide__name slide__name--smaller tp-caption start splitted" data-x="left" data-y="160" data-splitin="chars" data-elementdelay="0.1" data-speed="700" data-start="1400" data-easing="easeOutBack" data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:0;transformOrigin:50% 50%;" data-frames="{ typ :lines;
+                                                 elementdelay :0.1;
+                                                 start:1650;
+                                                 speed:500;
+                                                 ease:Power3.easeOut;
+                                                 animation:x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:1;transformPerspective:600;transformOrigin:50% 50%;
+                                                 },
+                                                 { typ :lines;
+                                                 elementdelay :0.1;
+                                                 start:2150;
+                                                 speed:500;
+                                                 ease:Power3.easeOut;
+                                                 animation:x:0;y:0;z:0;rotationX:00;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:1;transformPerspective:600;transformOrigin:50% 50%;
+                                                 }
+                                                 " data-splitout="lines" data-endelementdelay="0.1" data-customout="x:-230;y:0;z:0;rotationX:0;rotationY:0;rotationZ:90;scaleX:0.2;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%" data-endspeed="500" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 85px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 60px; left: 89.5px; top: 160px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1);">
+                    <div class="tp-splitted" style="display: block; text-align: center; position: relative; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1);">
+                        <div style="position: relative; display: inline-block;" class="tp-splitted">
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">
+                            </div>
+                        </div>
+                        <div style="position: relative; display: inline-block;" class="tp-splitted">
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">T</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">r</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">a</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">v</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">e</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">l</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">,</div>
+                        </div>
+                        <div style="position: relative; display: inline-block;" class="tp-splitted">
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">A</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">d</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">m</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">i</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">r</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">e</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">,</div>
+                        </div>
+                        <div style="position: relative; display: inline-block;" class="tp-splitted">
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">R</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">e</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">m</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">e</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">m</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">b</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">e</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">r</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">.</div>
+                            <div style="position: relative; display: inline-block; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);" class="tp-splitted">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tp-splitted" style="display: block; text-align: center; position: relative; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00166, 0, 0, 0, 1);">
+                        <div style="position: relative; display: inline-block;" class="tp-splitted"> </div>
+                    </div>
+                </div>
+                <div class="caption slide__time position-center postion-place--one sfr stl tp-caption start" data-x="left" data-y="242" data-speed="300" data-start="2100" data-easing="easeOutBack" data-endspeed="300" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px 0px 0px -90px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 89.5px; top: 242px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);">
+                    From
+                </div>
+                <div class="caption slide__date position-center postion-place--two lfb ltb tp-caption start" data-x="left" data-y="242" data-speed="500" data-start="2400" data-easing="Power4.easeOut" data-endspeed="400" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px 0px 0px -32px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 89.5px; top: 242px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);">
+                    April 18
+                </div>
+                <div class="caption slide__time position-center postion-place--three sfr stl tp-caption start" data-x="left" data-y="242" data-speed="300" data-start="2100" data-easing="easeOutBack" data-endspeed="300" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px 0px 0px 20px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 89.5px; top: 242px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);">
+                    - till
+                </div>
+                <div class="caption slide__date position-center postion-place--four lfb ltb tp-caption start" data-x="left" data-y="242" data-speed="500" data-start="2800" data-easing="Power4.easeOut" data-endspeed="400" data-endeasing="Back.easeIn" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 0px; border-width: 0px; margin: 0px 0px 0px 70px; padding: 0px; letter-spacing: 0px; font-size: 18px; left: 89.5px; top: 242px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);">
+                    May 01
+                </div>
+                <div class="caption lfb slider-wrap-btn ltb tp-caption start" data-x="left" data-y="310" data-speed="400" data-start="3300" data-easing="Power4.easeOut" data-endspeed="500" data-endeasing="Power4.easeOut" style="transition: all 0s ease 0s; min-height: 0px; min-width: 0px; line-height: 20px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-size: 14px; left: 89.5px; top: 310px; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.0025, 0, 0, 0, 1);">
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger btn--wide slider--btn">learn more</a>
+                </div>
+            </li>
+            <li data-transition="fade" data-slotamount="7" class="slide" data-slide="Stop wishing.
+Start doing." style="width: 100%; height: 100%; overflow: hidden; visibility: visible; left: 0px; top: 0px; z-index: 18; opacity: 0;">
+                <div class="slotholder" style="width: 100%; height: 100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
+                    <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="images/slides/next-slide.jpg" data-src="images/slides/next-slide.jpg" style="width: 100%; height: 100%; opacity: 0; background-image: url(&quot;images/slides/next-slide.jpg&quot;); background-color: rgba(0, 0, 0, 0); background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"></div>
+                </div>
+                <div class="caption slide__name slide__name--smaller slide__name--specific customin customout tp-caption start" data-x="left" data-y="160" data-customin="x:0;y:0;z:0;rotationX:90;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:200;transformOrigin:50% 0%;" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-speed="700" data-start="1400" data-easing="easeOutBack" data-endspeed="500" data-end="8600" data-endeasing="Back.easeIn">
+                    Stop <span class="highlight">wishing.</span> Start <span class="highlight">doing.</span>
+                </div>
+                <div class="caption slide__descript customin customout tp-caption start" data-x="left" data-y="240" data-customin="x:0;y:0;z:0;rotationX:90;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:200;transformOrigin:50% 0%;" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-speed="700" data-start="2000" data-endspeed="500" data-end="8400" data-endeasing="Back.easeIn">
+                    find your best match movie with A.MOVIE
+                </div>
+                <div class="caption lfb customout slider-wrap-btn tp-caption start" data-x="left" data-y="310" data-speed="500" data-start="2800" data-easing="Power4.easeOut" data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;" data-endspeed="400" data-end="8000" data-endeasing="Power4.easeOut">
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger slider--btn">check out movies</a>
+                </div>
+            </li>
+        </ul>
+        <div class="tp-loader spinner0" style="visibility: hidden; opacity: 0;">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+        <div class="tp-bannertimer" style="visibility: hidden; width: 0%;"></div>
+    </div>
+    <div style="position: absolute; top: 250px; margin-top: -17px; left: 0px;" class="tp-leftarrow tparrows default"><span class="slider__info">Rush.</span></div>
+    <div style="position: absolute; top: 250px; margin-top: -17px; right: 0px;" class="tp-rightarrow tparrows default">
+        <span class="slider__info">
+            Stop wishing.
+            Start doing.
+        </span>
+    </div>
 </div>
+<!--end slider -->
+<!-- Main content -->
+<section class="container">
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-sm-12">
+        <div class="mega-select-present mega-select-top mega-select--full">
+            <div class="mega-select-marker">
+                <div class="marker-indecator location" style="display: block;">
+                    <p class="select-marker">
+                        <span>movie to watch now</span> <br>in your city
+                    </p>
+                </div>
+                <div class="marker-indecator cinema" style="display: none;">
+                    <p class="select-marker">
+                        <span>find your </span> <br>cinema
+                    </p>
+                </div>
+                <div class="marker-indecator film-category" style="display: none;">
+                    <p class="select-marker">
+                        <span>find movie due to </span> <br> your mood
+                    </p>
+                </div>
+                <div class="marker-indecator actors" style="display: none;">
+                    <p class="select-marker">
+                        <span> like particular stars</span> <br>find them
+                    </p>
+                </div>
+                <div class="marker-indecator director" style="display: none;">
+                    <p class="select-marker">
+                        <span>admire personalities - find </span> <br>by director
+                    </p>
+                </div>
+                <div class="marker-indecator country" style="display: none;">
+                    <p class="select-marker">
+                        <span>search for movie from certain </span> <br>country?
+                    </p>
+                </div>
+            </div>
+            <div class="mega-select pull-right">
+                <span class="mega-select__point">Search by</span>
+                <ul class="mega-select__sort">
+                    <li class="filter-wrap"><a href="http://amovie.gozha.net/#" class="mega-select__filter filter--active" data-filter="location">Location</a></li>
+                    <li class="filter-wrap"><a href="http://amovie.gozha.net/#" class="mega-select__filter" data-filter="cinema">Cinema</a></li>
+                    <li class="filter-wrap"><a href="http://amovie.gozha.net/#" class="mega-select__filter" data-filter="film-category">Category</a></li>
+                    <li class="filter-wrap"><a href="http://amovie.gozha.net/#" class="mega-select__filter" data-filter="actors">Actors</a></li>
+                    <li class="filter-wrap"><a href="http://amovie.gozha.net/#" class="mega-select__filter" data-filter="director">Director</a></li>
+                    <li class="filter-wrap"><a href="http://amovie.gozha.net/#" class="mega-select__filter" data-filter="country">Country</a></li>
+                </ul>
+                <input name="search-input" type="text" class="select__field">
+
+                <div class="select__btn">
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger location" style="display: inline-block;">find <span class="hidden-exrtasm">your city</span></a>
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger cinema" style="display: none;">find <span class="hidden-exrtasm">suitable cimema</span></a>
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger film-category" style="display: none;">find <span class="hidden-exrtasm">best category</span></a>
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger actors" style="display: none;">find <span class="hidden-exrtasm">talented actors</span></a>
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger director" style="display: none;">find <span class="hidden-exrtasm">favorite director</span></a>
+                    <a href="http://amovie.gozha.net/#" class="btn btn-md btn--danger country" style="display: none;">find <span class="hidden-exrtasm">produced country</span></a>
+                </div>
+                <div class="select__dropdowns">
+                    <ul class="select__group location active-dropdown" style="display: block; z-index: -1;">
+                        <li class="select__variant" data-value="London">London</li>
+                        <li class="select__variant" data-value="New York">New York</li>
+                        <li class="select__variant" data-value="Paris">Paris</li>
+                        <li class="select__variant" data-value="Berlin">Berlin</li>
+                        <li class="select__variant" data-value="Moscow">Moscow</li>
+                        <li class="select__variant" data-value="Minsk">Minsk</li>
+                        <li class="select__variant" data-value="Warsawa">Warsawa</li>
+                    </ul>
+                    <ul class="select__group cinema" style="display: none;">
+                        <li class="select__variant" data-value="Cineworld">Cineworld</li>
+                        <li class="select__variant" data-value="Empire">Empire</li>
+                        <li class="select__variant" data-value="Everyman">Everyman</li>
+                        <li class="select__variant" data-value="Odeon">Odeon</li>
+                        <li class="select__variant" data-value="Picturehouse">Picturehouse</li>
+                    </ul>
+                    <ul class="select__group film-category" style="display: none;">
+                        <li class="select__variant" data-value="Children&#39;s">Children's</li>
+                        <li class="select__variant" data-value="Comedy">Comedy</li>
+                        <li class="select__variant" data-value="Drama">Drama</li>
+                        <li class="select__variant" data-value="Fantasy">Fantasy</li>
+                        <li class="select__variant" data-value="Horror">Horror</li>
+                        <li class="select__variant" data-value="Thriller">Thriller</li>
+                    </ul>
+                    <ul class="select__group actors" style="display: none;">
+                        <li class="select__variant" data-value="Leonardo DiCaprio">Leonardo DiCaprio</li>
+                        <li class="select__variant" data-value="Johnny Depp">Johnny Depp</li>
+                        <li class="select__variant" data-value="Jack Nicholson">Jack Nicholson</li>
+                        <li class="select__variant" data-value="Robert De Niro">Robert De Niro</li>
+                        <li class="select__variant" data-value="Morgan Freeman">Morgan Freeman</li>
+                        <li class="select__variant" data-value="Jim Carrey">Jim Carrey</li>
+                        <li class="select__variant" data-value="Adam Sandler">Adam Sandler</li>
+                        <li class="select__variant" data-value="Ben Stiller">Ben Stiller</li>
+                    </ul>
+                    <ul class="select__group director" style="display: none;">
+                        <li class="select__variant" data-value="Steven Spielberg">Steven Spielberg</li>
+                        <li class="select__variant" data-value="Martin Scorsese">Martin Scorsese</li>
+                        <li class="select__variant" data-value="Guy Ritchie">Guy Ritchie</li>
+                        <li class="select__variant" data-value="Christopher Nolan">Christopher Nolan</li>
+                        <li class="select__variant" data-value="Tim Burton">Tim Burton</li>
+                    </ul>
+                    <ul class="select__group country" style="display: none;">
+                        <li class="select__variant" data-value="USA">USA</li>
+                        <li class="select__variant" data-value="Germany">Germany</li>
+                        <li class="select__variant" data-value="Australia">Australia</li>
+                        <li class="select__variant" data-value="UK">UK</li>
+                        <li class="select__variant" data-value="Japan">Japan</li>
+                        <li class="select__variant" data-value="Serbia">Serbia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-sm-8 col-md-9">
+            <h2 id="target" class="page-heading heading--outcontainer page-header">Cериалы</h2>
+        </div>
+        @*<aside class="col-sm-4 col-md-3">
+            <h2 class="page-heading heading--outcontainer">Жанры</h2>
+        </aside>*@
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-8 col-md-9">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                        <li role="presentation" class="active"><a href="#newSerial" aria-controls="newSerial" role="tab" data-toggle="tab">Новое</a></li>
+                        <li role="presentation"><a href="#popSerial" aria-controls="popSerial" role="tab" data-toggle="tab">Популярное</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="padding: 0">
+                        <div role="tabpanel" class="tab-pane active" id="newSerial">@Html.Partial("NewMovie", (List<video>)ViewBag.NewFilm)</div>
+                        <div role="tabpanel" class="tab-pane" id="popSerial">@Html.Partial("NewMovie", (List<video>)ViewBag.PopularFilm)</div>
+                    </div>
+
+                </div>
+                
+            </div>
+
+
+            <aside class="col-sm-4 col-md-3">
+                <div class="sitebar first-banner--left">
+
+                    @*<ul class="nav-link" style="margin-top: 0; padding-top: 0;">
+                        @foreach (var item in (List<genre>) ViewBag.Genres)
+                        {
+                            <li><a href="#" class="nav-link__item">@item.name</a></li>
+                        }
+                    </ul>*@
+
+                    <div class="category category--discuss category--count marginb-sm mobile-category ls-cat">
+                        <h3 class="category__title">Все Жанры @*<br><span class="title-edition">discussed posts</span>*@</h3>
+                        <ul>
+                            @foreach (var item in (List<genre>)ViewBag.Genres)
+                            {
+                                <li><a href="#" class="category__item">@item.name</a></li>
+                            }
+                            
+                        </ul>
+                    </div>
+
+                    @*<div class="banner-wrap first-banner--left">
+                        <img alt="banner" src="./AMovie_files/sale.jpg">
+                    </div>
+                    <div class="banner-wrap">
+                        <img alt="banner" src="./AMovie_files/sport.jpg">
+                    </div>
+                    <div class="banner-wrap banner-wrap--last">
+                        <img alt="banner" src="./AMovie_files/boots.jpg">
+                    </div>*@
+
+
+                </div>
+            </aside>
+            
+        </div>
+    </div>
+    <h2 id="target" class="page-heading heading--outcontainer page-header" >Фильмы</h2>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-8 col-md-9">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                        <li role="presentation" class="active"><a href="#newMovies" aria-controls="newMovies" role="tab" data-toggle="tab">Новые</a></li>
+                        <li role="presentation"><a href="#popFilms" aria-controls="popFilms" role="tab" data-toggle="tab">Популярное</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="padding: 0">
+                        <div role="tabpanel" class="tab-pane active" id="newMovies">@Html.Partial("NewMovie", (List<video>)ViewBag.NewSerial)</div>
+                        <div role="tabpanel" class="tab-pane" id="popFilms">@Html.Partial("NewMovie", (List<video>)ViewBag.PopularSerial)</div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <aside class="col-sm-4 col-md-3">
+                <div class="sitebar first-banner--left">
+                    <div class="banner-wrap first-banner--left">
+                        <img alt="banner" src="./AMovie_files/sale.jpg">
+                    </div>
+                    <div class="banner-wrap">
+                        <img alt="banner" src="./AMovie_files/sport.jpg">
+                    </div>
+                    <div class="banner-wrap banner-wrap--last">
+                        <img alt="banner" src="./AMovie_files/boots.jpg">
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+@*<!-- Carousel
+    ================================================== -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    @{
+        List<video> items = ViewBag.Slider;
+        var counter = 0;
+    }
+    <ol class="carousel-indicators">
+        @foreach (var item in items)
+        {
+            if (counter == 0)
+            {
+                <li data-target="#myCarousel" data-slide-to="@counter" class="active"></li>
+                counter++;
+            }
+            else
+            {
+                <li data-target="#myCarousel" data-slide-to="@counter"></li>
+                counter++;
+            }
+        }
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+        @{
+            counter = 0;
+        }
+        @foreach (var item in items)
+        {
+            if (counter == 0)
+            {
+                <div class="item active">
+                    <img class="first-slide" src="~/uploads/@item.img_url" alt="First slide">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>@item.name</h1>
+                        </div>
+                    </div>
+                </div>
+                counter++;
+            }
+            else
+            {
+                <div class="item">
+                    <img class="first-slide" src="@item.img_url" alt="First slide">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>@item.name</h1>
+                        </div>
+                    </div>
+                </div>
+                counter++;
+            }
+        }
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div><!-- /.carousel -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Фильм</h1>
+        </div>
+
+        <div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Новое</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Популярное</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">@Html.Partial("NewMovie", (List<video>)ViewBag.NewFilm)</div>
+                <div role="tabpanel" class="tab-pane" id="profile">@Html.Partial("PopularFilms", (List<video>)ViewBag.PopularFilm)</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Сериалы</h1>
+        </div>
+
+        <div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                <li role="presentation" class="active"><a href="#new_serial" aria-controls="home" role="tab" data-toggle="tab">Новое</a></li>
+                <li role="presentation"><a href="#popular_serial" aria-controls="profile" role="tab" data-toggle="tab">Популярное</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="new_serial">@Html.Partial("NewSerials", (List<video>) ViewBag.NewSerial)</div>
+                <div role="tabpanel" class="tab-pane" id="popular_serial">@Html.Partial("PopularSerials", (List<video>) ViewBag.PopularSerial)</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        $1$<div class="col-sm-8 col-md-9">#1#
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--dark movie--test--left">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time8.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">Gravity (2013)  </a>
+                    <p class="movie__time">91 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Sci-Fi</a> | <a href="http://amovie.gozha.net/#">Thriller</a> | <a href="http://amovie.gozha.net/#">Drama</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">4.1</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--light movie--test--left">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time1.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">The Hobbit: The Desolation of Smaug (2013)  </a>
+                    <p class="movie__time">169 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Adventure</a> | <a href="http://amovie.gozha.net/#">Fantasy</a> | <a href="http://amovie.gozha.net/#">Drama</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">5.0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--light movie--test--right">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time9.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">The Hunger Games: Catching Fire (2013)   </a>
+                    <p class="movie__time">146 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Action</a> | <a href="http://amovie.gozha.net/#">Adventure</a> | <a href="http://amovie.gozha.net/#">Sci-Fi</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">4.9</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--dark movie--test--right">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time10.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">Thor: The Dark World (2013) </a>
+                    <p class="movie__time">112 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Action</a> | <a href="http://amovie.gozha.net/#">Adventure</a> | <a href="http://amovie.gozha.net/#">Fantasy</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">5.0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--dark movie--test--left">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time11.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">World War Z (2013)  </a>
+                    <p class="movie__time">116 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Action</a> | <a href="http://amovie.gozha.net/#">Adventure</a> | <a href="http://amovie.gozha.net/#">Horror</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">4.1</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--light movie--test--left">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time12.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">Prisoners (2013) </a>
+                    <p class="movie__time">153 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Crime</a> | <a href="http://amovie.gozha.net/#">Thriller</a> | <a href="http://amovie.gozha.net/#">Drama</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">5.0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--light movie--test--right">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time13.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">This Is the End (2013)   </a>
+                    <p class="movie__time">107 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Comedy</a> | <a href="http://amovie.gozha.net/#">Fantasy</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">4.9</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            <!-- Movie variant with time -->
+            <div class="movie movie--test movie--test--dark movie--test--right">
+                <div class="movie__images">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie-beta__link">
+                        <img alt="" src="./AMovie_files/movie-time14.jpg">
+                    </a>
+                </div>
+                <div class="movie__info">
+                    <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">The Internship (2013)  </a>
+                    <p class="movie__time">112 min</p>
+                    <p class="movie__option"><a href="http://amovie.gozha.net/#">Comedy</a></p>
+
+                    <div class="movie__rate">
+                        <div class="score" style="cursor: pointer; width: 130px;"><img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;<img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;<img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;<img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;<img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous"><input type="hidden" name="score"></div>
+                        <span class="movie__rating">5.0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+
+            
+       $1$ </div>#1#
+    </div>
+</div>*@

@@ -23,6 +23,7 @@ namespace OnlineCinemaProject.Utils
         {
             return users.Where(item => item.Balance != null).Sum(item => (double) item.Balance);
         }
+
     }
 
     public class PaymentTotal

@@ -31,7 +31,7 @@ namespace OnlineCinemaProject.Models
                     var checkTime = DateTime.Now.AddMinutes(-Interval);
                     var videoToUpdate =
                         context.videos.Where(
-                            video => (!video.last_score_calc.HasValue || video.last_score_calc < checkTime) && video.overviews.Any(o => o.creation_date > video.last_score_calc)).ToList();
+                            video => (!video.last_score_calc.HasValue || video.last_score_calc < checkTime) && video.reviews.Any(o => o.creation_date > video.last_score_calc)).ToList();
                     foreach (var video in videoToUpdate)
                     {
                         video.score = GetVideoScore(video, context);
@@ -48,10 +48,10 @@ namespace OnlineCinemaProject.Models
         public static decimal GetVideoScore(video video, OnlineCinemaEntities context)
         {
             // see http://www.kinopoisk.ru/top/#formula
-            var score = from vote in video.overviews
-                let averegeForVideo = video.overviews.Average(v => v.rating)
-                let averageTotal = context.overviews.Average(v => v.rating)
-                let votesCount = video.overviews.Count
+            var score = from vote in video.reviews
+                let averegeForVideo = video.reviews.Average(v => v.rating)
+                let averageTotal = context.reviews.Average(v => v.rating)
+                let votesCount = video.reviews.Count
                 select
                     votesCount*averageTotal/(votesCount + MinimalVoteLimit) +
                     MinimalVoteLimit*averageTotal/(votesCount + MinimalVoteLimit);

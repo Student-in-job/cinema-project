@@ -1,0 +1,364 @@
+﻿@using Microsoft.AspNet.Identity
+@using OnlineCinemaProject.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>@ViewBag.Title</title>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AMovie/css/style.css" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <!-- Mobile menu -->
+    <link href="~/Content/AMovie/css/gozha-nav.css" rel="stylesheet">
+    <!-- Select -->
+    <link href="~/Content/AMovie/css/jquery.selectbox.css" rel="stylesheet">
+    <!-- REVOLUTION BANNER CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="~/Content/AMovie/css/settings.css" media="screen">
+
+    <!-- Custom -->
+    <link href="~/Content/AMovie/css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" charset="utf-8" async="" src="~/Content/AMovie/js/button.71000885400e222c3c0eec823f8f93f0.js"></script>
+
+    <script src="~/scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/scripts/mediaelement-and-player.min.js"></script>
+    <link rel="stylesheet" href="~/Content/player.css" />
+    <style>
+        .auzorithe a:hover, .auzorithe a:focus {
+            background-color: #000000;
+        }
+
+    </style>
+</head>
+<!-- NAVBAR
+================================================== -->
+<body>
+    @{
+        List<genre> genres = ViewBag.Genres;
+    }
+
+<div class="wrapper">
+
+<!-- Header section -->
+<header class="header-wrapper header-wrapper--home">
+    <div class="container">
+        <!-- Logo link-->
+        <a href="#" class="logo">
+            <img alt="logo" src="~/Content/AMovie/images/logo.png">
+        </a>
+
+        <!-- Main website navigation-->
+        <nav id="navigation-box">
+            <!-- Toggle for mobile menu mode -->
+            <a href="#" id="navigation-toggle">
+                <span class="menu-icon">
+                            <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
+                                <span class="lines"></span>
+                            </span>
+                        </span>
+            </a>
+
+            <!-- Link navigation -->
+            <ul id="navigation">
+                <li>
+                    <span class="sub-nav-toggle plus"></span>
+                    <a href="#">О Нас</a>
+                    <ul>
+                        <li class="menu__nav-item"><a href="@Url.Action("About", "Home")">О проекте</a></li>
+                        <li class="menu__nav-item"><a href="@Url.Action("About", "Home")">Для рекламодателей</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="sub-nav-toggle plus"></span>
+                    <a href="http://amovie.gozha.net/#">Фильмы</a>
+                    <ul class="mega-menu container">
+                        <li class="col-md-3 mega-menu__coloum">
+                            <h4 class="mega-menu__heading">Жанры</h4>
+                            <ul class="mega-menu__list">
+
+                                @{
+                                    int counter = 0;
+                                    foreach (var genre in (List<genre>) ViewBag.Genres)
+                                    {
+
+                                        if (counter == 8)
+                                        {
+                                            counter = 0;
+                                            @:</ul></li><li class="col-md-3 mega-menu__coloum mega-menu__coloum--outheading"><ul class="mega-menu__list">
+                                        }
+                                        counter++;
+                                        <li class="mega-menu__nav-item"><a href="#">@genre.name</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+
+                </li>
+                <li>
+                    <span class="sub-nav-toggle plus"></span>
+                    <a href="http://amovie.gozha.net/#">Сериалы</a>
+                    <ul class="mega-menu container">
+                        <li class="col-md-3 mega-menu__coloum">
+                            <h4 class="mega-menu__heading">Жанры</h4>
+                            <ul class="mega-menu__list">
+
+                                @{
+                                    int counter2 = 0;
+                                    foreach (var genre in (List<genre>) ViewBag.Genres)
+                                    {
+
+                                        if (counter2 == 8)
+                                        {
+                                            counter2 = 0;
+
+                                            @:</ul></li><li class="col-md-3 mega-menu__coloum mega-menu__coloum--outheading"><ul class="mega-menu__list">
+                                        }
+                                        counter2++;
+                                        <li class="mega-menu__nav-item"><a href="#">@genre.name</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+        <div class="control-panel">
+            @{
+                bool isAuzorithed = HttpContext.Current.User.Identity.IsAuthenticated;
+                if (isAuzorithed)
+                {
+            <!-- Additional header buttons / Auth and direct link to booking-->
+
+                    <div class="auth auth--home">
+                        <div class="auth__show">
+                            <span class="auth__image"><img alt="" src="~/uploads/avatar_placeholder.png"></span>
+                        </div>
+                        <a href="#" class="btn btn--sign btn--singin">
+                            @User.Identity.Name
+                        </a>
+                        <ul class="auth__function">
+                            <li><a href="@Url.Action("Profile", "Home", new { @User.Identity.Name })" class="auth__function-item">Кабинет</a></li>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm",/* @class = "navbar-right"*/ }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="auth__function-item">Выйти</a></li>
+                            }
+                        </ul>
+                    </div>
+                    @*<a href="http://amovie.gozha.net/#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a>*@
+
+                }
+                if (!isAuzorithed)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("Register", "Account")" id="registerLink" class="auzorithe" style="color:#BCB3B6">Регистрация</a>
+                        <li><a href="@Url.Action("Login", "Account")"  id="loginLink" class="auzorithe" style="color:#BCB3B6">Войти</a>
+                    </ul>
+                }
+            }
+        </div>
+    </div>
+</header>
+    @RenderBody()
+
+<div class="clearfix"></div>
+<footer class="footer-wrapper">
+    <section class="container">
+        <div class="col-xs-4 col-md-2 footer-nav">
+            <ul class="nav-link">
+                <li><a href="http://amovie.gozha.net/#" class="nav-link__item">Cities</a></li>
+                <li><a href="http://amovie.gozha.net/movie-list-left.html" class="nav-link__item">Movies</a></li>
+                <li><a href="http://amovie.gozha.net/trailer.html" class="nav-link__item">Trailers</a></li>
+                <li><a href="http://amovie.gozha.net/rates-left.html" class="nav-link__item">Rates</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-4 col-md-2 footer-nav">
+            <ul class="nav-link">
+                <li><a href="http://amovie.gozha.net/coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                <li><a href="http://amovie.gozha.net/cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                <li><a href="http://amovie.gozha.net/offers.html" class="nav-link__item">Best offers</a></li>
+                <li><a href="http://amovie.gozha.net/news-left.html" class="nav-link__item">News</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-4 col-md-2 footer-nav">
+            <ul class="nav-link">
+                <li><a href="http://amovie.gozha.net/#" class="nav-link__item">Terms of use</a></li>
+                <li><a href="http://amovie.gozha.net/gallery-four.html" class="nav-link__item">Gallery</a></li>
+                <li><a href="http://amovie.gozha.net/contact.html" class="nav-link__item">Contacts</a></li>
+                <li><a href="http://amovie.gozha.net/page-elements.html" class="nav-link__item">Shortcodes</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="footer-info">
+                <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
+                <div class="social">
+                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-facebook"></a>
+                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-twitter"></a>
+                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-vk"></a>
+                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-instagram"></a>
+                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-tumblr"></a>
+                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-pinterest"></a>
+                </div>
+
+                <div class="clearfix"></div>
+                <p class="copy">© A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+            </div>
+        </div>
+    </section>
+</footer>
+</div>
+    <!-- open/close -->
+    <div class="overlay overlay-hugeinc">
+
+        <section class="container">
+            <div class="col-sm-4 col-sm-offset-4">
+                <button type="button" class="overlay-close">Close</button>
+                <form id="login-form" class="login" method="get" novalidate="">
+                    <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+                    <div class="social social--colored">
+                        <a href="http://amovie.gozha.net/#" class="social__variant fa fa-facebook"></a>
+                        <a href="http://amovie.gozha.net/#" class="social__variant fa fa-twitter"></a>
+                        <a href="http://amovie.gozha.net/#" class="social__variant fa fa-tumblr"></a>
+                    </div>
+                    <p class="login__tracker">or</p>
+
+                    <div class="field-wrap">
+                        <input type="email" placeholder="Email" name="user-email" class="login__input">
+                        <input type="password" placeholder="Password" name="user-password" class="login__input">
+                        <span class="checkbox" style="background-position: 0px 0px;"></span><input type="checkbox" id="#informed" class="login__check styled">
+                        <label for="#informed" class="login__check-info">remember me</label>
+                    </div>
+
+                    <div class="login__control">
+                        <button type="submit" class="btn btn-md btn--warning btn--wider">sign in</button>
+                        <a href="http://amovie.gozha.net/#" class="login__tracker form__tracker">Forgot password?</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <!-- JavaScript-->
+    <!-- jQuery 1.9.1-->
+    <script src="~/Content/AMovie/js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/external/jquery-1.10.1.min.js"><\/script>')</script>
+    <!-- Migrate -->
+    <script src="~/Content/AMovie/js/jquery-migrate-1.2.1.min.js"></script>
+    <!-- Bootstrap 3-->
+    <script src="~/Content/AMovie/js/bootstrap.min.js"></script>
+    <!-- jQuery REVOLUTION Slider -->
+    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.revolution.min.js"></script>
+    <!-- Mobile menu -->
+    <script src="~/Content/AMovie/js/jquery.mobile.menu.js"></script>
+    <!-- Select -->
+    <script src="~/Content/AMovie/js/jquery.selectbox-0.2.min.js"></script>
+    <!-- Stars rate -->
+    <script src="~/Content/AMovie/js/jquery.raty.js"></script>
+
+    <!-- Form element -->
+    <script src="~/Content/AMovie/js/form-element.js"></script>
+    <style type="text/css">
+        input.styled {
+            display: none;
+        }
+
+        select.styled {
+            position: relative;
+            width: 190px;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            z-index: 5;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+    </style>
+    <!-- Form validation -->
+    <script src="~/Content/AMovie/js/form.js"></script>
+    <!-- Twitter feed -->
+    <script src="~/Content/AMovie/js/twitterfeed.js"></script>
+    <!-- Custom -->
+    <script src="~/Content/AMovie/js/custom.js"></script><div class="top-scroll" style="display: block;"><a href="http://amovie.gozha.net/#"></a></div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            init_Home();
+            $('.auth__show').click(function (e) {
+                e.preventDefault();
+                $('.auth__function').toggleClass('open-function');
+            });
+
+            $('.btn--singin').click(function (e) {
+                e.preventDefault();
+                $('.auth__function').toggleClass('open-function')
+            });
+        });
+    </script>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    @RenderSection("scripts", required: false)
+    @RenderSection("styles", required: false)
+
+    <!-- jQuery REVOLUTION Slider -->
+    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.revolution.min.js"></script>
+    <!-- Mobile menu -->
+    <script src="~/Content/AMovie/js/jquery.mobile.menu.js"></script>
+    <!-- Select -->
+    <script src="~/Content/AMovie/js/jquery.selectbox-0.2.min.js"></script>
+    <!-- Stars rate -->
+    <script src="~/Content/AMovie/js/jquery.raty.js"></script>
+
+    <!-- Form element -->
+    <script src="~/Content/AMovie/js/form-element.js"></script>
+    <style type="text/css">
+        input.styled {
+            display: none;
+        }
+
+        select.styled {
+            position: relative;
+            width: 190px;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            z-index: 5;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+    </style>
+  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            init_Home();
+        });
+    </script>
+
+
+</body>
+</html>

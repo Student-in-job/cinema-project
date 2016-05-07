@@ -23,7 +23,7 @@ namespace OnlineCinemaProject.Models
             };
         }
 
-        public bool Includes(movy movie)
+        public bool Includes(file file)
         {
             if ((bool) !new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
             {
@@ -33,7 +33,7 @@ namespace OnlineCinemaProject.Models
             return true;
         }
         
-        public bool Includes(season season)
+        /*public bool Includes(season season)
         {
             if ((bool) !new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
             {
@@ -41,6 +41,6 @@ namespace OnlineCinemaProject.Models
                 return true;
             }
             return true;
-        }
+        }*/
     }
 }

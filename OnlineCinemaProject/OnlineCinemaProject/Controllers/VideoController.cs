@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,51 +17,6 @@ namespace OnlineCinemaProject.Controllers
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
-        public ActionResult GetPartialView(string id)
-        {
-            switch (id)
-            {
-                case "details_tab":
-                    return PartialView("DetailsPartial");
-                case "actors_tab":
-                    return PartialView("ActorsPartial");
-                case "videos_tab":
-                    return PartialView("VideoContentPartial");
-                case "statistics_tab":
-                    return PartialView("StatisticsPartial");
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult _SubmissionTab()
-        {
-            return PartialView();
-        }
-
-        public ActionResult _SearchTab()
-        {
-            return PartialView();
-        }
-
-        public ActionResult ActrorsPartial()
-        {
-                    return PartialView("ActorsPartial");
-        }
-        public ActionResult DetailsPartial()
-        {
-                    return PartialView("DetailsPartial");
-        }
-        public ActionResult StatisticsPartial()
-        {
-                    return PartialView("StatisticsPartial");
-        }
-        public ActionResult ContentPartial()
-        {
-                    return PartialView("VideoContentPartial");
-        }
-
-
         //
         // GET: /Video/
 
@@ -76,8 +29,6 @@ namespace OnlineCinemaProject.Controllers
         {
             return new VideoResult(videoUrl);
         }
-
-       
 
         //
         // GET: /Video/Details/5
@@ -399,9 +350,26 @@ namespace OnlineCinemaProject.Controllers
              return View();
          }*/
 
-        public ActionResult Videos_read([DataSourceRequest]DataSourceRequest request)
+        public ActionResult Videos_read([DataSourceRequest]DataSourceRequest request, int? genre, int? actor, int? country)
         {
-            DataSourceResult result = db.videos.Select(v => new { v.name, v.id, v.img_url, v.type, v.release_date }).ToDataSourceResult(request);
+            DataSourceResult result = db.videos
+                .Include("videogenre.genre")
+                .Include("videoactor.actor")
+                .Include("videogenre.genre")
+                .Where(
+                    v=>
+                        (!genre.HasValue || v.videogenres.Any(g=>g.genre_id==genre.Value))&&
+                        (!actor.HasValue || v.videoactors.Any(g=>g.actor_id== actor.Value))&&
+                        (!country.HasValue || v.manufacturers.Any(g=>g.country_id== country.Value))
+                )
+                .Select(v => new 
+            {
+                    v.name, v.id, v.img_url, v.type, v.release_date,
+                    videogenres = v.videogenres.Select(t=>new {genre = new  { t.genre.name} }),
+                    videoactors = v.videoactors.Select(t=>new {actor = new  { t.actor.name} }),
+                    manufacturers = v.manufacturers.Select(t=>new { country = new  { t.country.name} })
+              
+            }).ToDataSourceResult(request);
             return Json(result);
         }
 
@@ -426,7 +394,7 @@ namespace OnlineCinemaProject.Controllers
                 return Content("Invalid id");
             }
             var data =
-                video.overviews.GroupBy(t => t.rating)
+                video.reviews.GroupBy(t => t.rating)
                     .Select(t => new ScoreModel { Score = Convert.ToInt32(t.Key), Count = t.Count() }).OrderBy(t=>t.Score)
                     .ToList();
             return Json(data);

@@ -1,0 +1,8 @@
+﻿@model string
+
+@(
+
+Html.TextAreaFor(m => m,5,40,new {@class= "k-textbox" })
+
+)
+@Html.ValidationMessageFor(m => m)

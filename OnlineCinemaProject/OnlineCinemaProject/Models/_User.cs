@@ -7,14 +7,38 @@ using System.Web;
 
 namespace OnlineCinemaProject.Models
 {
-
-    public class Purchase
+    public class HistoryModel
     {
-        public class UserMovie
+        public int id { get; set; }
+        public string videoImgUrl { get; set; }
+        public int fileId { get; set; }
+        public string videoName { get; set; }
+        public System.DateTime watchingDate { get; set; }
+    }
+
+    /*public class PurchaseModel
+    {
+        public int id { get; set; }
+        public string videoImgUrl { get; set; }
+        public int fileId { get; set; }
+        public string videoName { get; set; }
+        public System.DateTime purchaseDate { get; set; }
+        public decimal price { get; set; }
+    }*/
+
+     public class Purchase
+     {
+         public Purchase()
+         {
+             Userseasons = new List<UserSeason>();
+             Usermovies = new List<UserMovie>();
+         }
+
+         public class UserMovie
         {
             public int id { get; set; }
             public string videoImgUrl { get; set; }
-            public int movieId { get; set; }
+            public int fileId { get; set; }
             public string videoName { get; set; }
             public System.DateTime purchaseDate { get; set; }
             public decimal price { get; set; }
@@ -24,6 +48,7 @@ namespace OnlineCinemaProject.Models
         {
             public int id { get; set; }
             public string videoImgUrl { get; set; }
+            public int seasonNunber { get; set; }
             public int seasonId { get; set; }
             public string videoName { get; set; }
             public System.DateTime purchaseDate { get; set; }
@@ -32,7 +57,7 @@ namespace OnlineCinemaProject.Models
         public List<UserSeason> Userseasons { get; set; }
         public List<UserMovie> Usermovies{ get; set; }
     }
-    public class History
+    /*public class History
     {
         public class MovieHistory
         {
@@ -54,7 +79,7 @@ namespace OnlineCinemaProject.Models
 
         public List<EpisodeHistory> Episodehistories { get; set; }
         public List<MovieHistory> Moviehistories{ get; set; }
-    }
+    }*/
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Profile
@@ -78,7 +103,7 @@ namespace OnlineCinemaProject.Models
             return FirstName + " " + LastName;
         }
 
-        public subscription GeSubscription()
+        public subscription GetSubscription()
         {
             foreach (var subscription in subscriptions)
             {
@@ -90,32 +115,60 @@ namespace OnlineCinemaProject.Models
             return null;
         }
 
-        public bool CheckAccess(movy movie)
+        public bool CheckAccess(file file)
         {
-            if (movie.price == 0)// если фильм бесплатный то даем добро для просмотра
+            if (file.video.type == video.SERIAL)
             {
-                return true;
+                if (file.season.price == 0)// если фильм бесплатный то даем добро для просмотра
+                {
+                    return true;
+                }
+                if (checkPurchases(file))
+                {
+                    return true;
+                }
             }
-            if (HasMovie(movie))
+            if (file.video.type == video.MOVIE)
             {
-                return true;
+                if (file.price == 0) // если фильм бесплатный то даем добро для просмотра
+                {
+                    return true;
+                }
+                if (checkPurchases(file))
+                {
+                    return true;
+                }
             }
-            return subscriptions.Any(subscription => subscription.Active() && subscription.tariff.Includes(movie));
+            return subscriptions.Any(subscription => subscription.Active() && subscription.tariff.Includes(file));
         }
 
-        public bool CheckAccess(episode episode)
+        /*public bool CheckAccess(episode episode)
         {
-            if (episode.season.price == 0)// если фильм бесплатный то даем добро для просмотра
-            {
-                return true;
-            }
-            if (HasMovie(episode))
-            {
-                return true;
-            }
+            
             return subscriptions.Any(subscription => subscription.Active() && subscription.tariff.Includes(episode.season));
+        }*/
+
+        public bool checkPurchases(file file)
+        {
+            if (file.video.type == video.SERIAL)
+            {
+                if (userseasons.Count(i => i.season_id == file.season.id) != 0)
+                {
+                    return true;
+                }
+            }
+            if (file.video.type == video.MOVIE)
+            {
+                if (purchases.Count(i => i.file_id == file.id) != 0)
+                {
+                    return true;
+                }    
+            }
+            
+            return false;
         }
-        public bool HasMovie(movy movie)
+
+        /*public bool HasMovie(movy movie)
         {
             if (usermovies.Count(i => i.movie_id == movie.id) != 0)//Если фильм уже куплен то даем добро для просмотра
             {
@@ -131,7 +184,7 @@ namespace OnlineCinemaProject.Models
                 return true;
             }
             return false;
-        }
+        }*/
 
         public void TopUpBalance(decimal amount)
         {

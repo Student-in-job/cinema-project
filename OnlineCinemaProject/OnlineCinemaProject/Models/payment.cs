@@ -16,9 +16,9 @@ namespace OnlineCinemaProject.Models
     {
         public payment()
         {
-            this.usermovies = new HashSet<usermovy>();
-            this.userseasons = new HashSet<userseason>();
+            this.purchases = new HashSet<purchase>();
             this.subscriptions = new HashSet<subscription>();
+            this.userseasons = new HashSet<userseason>();
         }
     
         public int id { get; set; }
@@ -29,8 +29,8 @@ namespace OnlineCinemaProject.Models
         public bool payment_type { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
-        public virtual ICollection<usermovy> usermovies { get; set; }
-        public virtual ICollection<userseason> userseasons { get; set; }
+        public virtual ICollection<purchase> purchases { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
+        public virtual ICollection<userseason> userseasons { get; set; }
     }
 }

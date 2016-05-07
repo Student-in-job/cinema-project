@@ -16,17 +16,16 @@ namespace OnlineCinemaProject.Models
     {
         public aspnetuser()
         {
+            this.histories = new HashSet<history>();
+            this.purchases = new HashSet<purchase>();
             this.payments = new HashSet<payment>();
             this.episodehistories = new HashSet<episodehistory>();
-            this.likes = new HashSet<like>();
-            this.moviehistories = new HashSet<moviehistory>();
-            this.overviews = new HashSet<overview>();
-            this.usermovies = new HashSet<usermovy>();
-            this.userseasons = new HashSet<userseason>();
+            this.reviews = new HashSet<review>();
             this.subscriptions = new HashSet<subscription>();
             this.statistics_banner = new HashSet<statistics_banner>();
             this.statistics_teaser = new HashSet<statistics_teaser>();
             this.aspnetroles = new HashSet<aspnetrole>();
+            this.userseasons = new HashSet<userseason>();
         }
     
         public string Id { get; set; }
@@ -42,19 +41,18 @@ namespace OnlineCinemaProject.Models
         public Nullable<System.DateTime> JoinDate { get; set; }
         public Nullable<decimal> Balance { get; set; }
         public Nullable<int> TariffId { get; set; }
-        public Nullable<int> Block { get; set; }
+        public Nullable<bool> Block { get; set; }
     
+        public virtual ICollection<history> histories { get; set; }
+        public virtual ICollection<purchase> purchases { get; set; }
         public virtual ICollection<payment> payments { get; set; }
         public virtual ICollection<episodehistory> episodehistories { get; set; }
-        public virtual ICollection<like> likes { get; set; }
-        public virtual ICollection<moviehistory> moviehistories { get; set; }
-        public virtual ICollection<overview> overviews { get; set; }
-        public virtual ICollection<usermovy> usermovies { get; set; }
-        public virtual ICollection<userseason> userseasons { get; set; }
+        public virtual ICollection<review> reviews { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }
+        public virtual tariff tariff { get; set; }
         public virtual ICollection<statistics_banner> statistics_banner { get; set; }
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
         public virtual ICollection<aspnetrole> aspnetroles { get; set; }
-        public virtual tariff tariff { get; set; }
+        public virtual ICollection<userseason> userseasons { get; set; }
     }
 }

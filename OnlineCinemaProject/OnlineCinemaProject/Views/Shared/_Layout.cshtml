@@ -9,7 +9,15 @@
     @Scripts.Render("~/bundles/highcharts")
     <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @RenderSection("styles", required: false)
+<!--
+<script src="~/scripts/jquery-2.2.3.min.js"></script>
+<script src="~/scripts/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="~/Content/player.css"/>
+    -->
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -57,7 +65,11 @@
                 {
                     @Html.ActionLink("Роли", "Index", "Roles",null ,new {@class="list-group-item"})
                     @Html.ActionLink("Пользователи", "Index", "User", null, new { @class = "list-group-item" })
-                     @Html.ActionLink("System Monitor", "Index", "Cpu", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("System Monitor", "Index", "Cpu", null, new { @class = "list-group-item" })
+                     @Html.ActionLink("Резервное копирование", "Index", "Backup", null, new { @class = "list-group-item" })
+                    @Html.ActionLink("Восстановление", "Index", "Restore", null, new { @class = "list-group-item" })
+                   
+                    
                 }
                 @if (User.IsInRole("ContentManager"))
                 {
@@ -90,10 +102,5 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    @RenderSection("styles", required: false)
 </body>
 </html>

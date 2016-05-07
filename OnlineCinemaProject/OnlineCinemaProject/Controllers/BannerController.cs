@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using OnlineCinemaProject.Models;
 using PagedList;
 
@@ -262,6 +263,57 @@ namespace CinemaProject.Controllers
             return View(banner);
 
            
+        }
+        
+        public ActionResult RotatorRoma()
+        {
+
+            string query = "SELECT * FROM banners where active = '1' order by show_amount asc";
+            var banner = _db.banners.Where(i=>i.active == true).OrderBy(i=>i.show_amount).ToList().First();
+            statistics_banner sb = new statistics_banner();
+            try
+            {
+                sb = _db.statistics_banner.Single(i => i.id_banner == banner.id && i.id_user==User.Identity.GetUserId());
+            }
+            catch (Exception e)
+            {
+                //e.Data;
+            };
+
+
+            _db.banners.Attach(banner);
+            banner.show_amount = banner.show_amount + 1;
+            var entry = _db.Entry(banner);
+            entry.Property(e => e.show_amount).IsModified = true;
+            // other changed properties
+            _db.SaveChanges();
+
+            if (sb.banner != null)
+            {
+
+                _db.statistics_banner.Attach(sb);
+                sb.date = DateTime.Now;
+                sb.show_amount = (int?)banner.show_amount;
+
+                var entry1 = _db.Entry(sb);
+                entry1.Property(e => e.show_amount).IsModified = true;
+                entry1.Property(e => e.date).IsModified = true;
+                // other changed properties
+                _db.SaveChanges();
+            }
+            else
+            {
+                sb = new statistics_banner();
+                sb.date = DateTime.Now;
+                sb.id_banner = banner.id;
+                sb.show_amount = (int?)banner.show_amount;
+                sb.id_user = User.Identity.GetUserId();
+                _db.statistics_banner.Add(sb);
+                _db.SaveChanges();
+
+            }
+
+            return Json(banner.img_url, JsonRequestBehavior.AllowGet);
         }
         
     }

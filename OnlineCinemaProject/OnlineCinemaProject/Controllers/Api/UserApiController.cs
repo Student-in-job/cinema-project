@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using MySql.Data.MySqlClient;
 using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
+// ReSharper disable All
 namespace OnlineCinemaProject.Controllers.Api
 {
     public class UserApiController : ApiController
@@ -25,7 +22,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
         [HttpGet]
         [Route("api/user/topup/{amount}")]
-        public HttpResponseMessage TopUpBalance(decimal amount)
+        public JSendResponse TopUpBalance(decimal amount)
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -33,12 +30,12 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
             }
             var user = _db.aspnetusers.Find(_userId);
             if (user == null)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return JSendResponse.errorResponse(Error.UserNotFound());
             }
 
             user.TopUpBalance(amount);
@@ -54,12 +51,12 @@ namespace OnlineCinemaProject.Controllers.Api
             _db.payments.Add(payment);
             _db.Entry(user).State = EntityState.Modified;
             _db.SaveChanges();
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.EmptyResponse); ;
+            return JSendResponse.succsessResponse();
         }
 
         [HttpGet]
         [Route("api/user/purchases")]
-        public HttpResponseMessage GetUserPurchase()
+        public JSendResponse GetUserPurchases()
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -67,38 +64,49 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                //                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
-                _userId = "ac1da694-6aee-4080-8c69-cac3342baada";
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
             }
-            var test = _db.usermovies.SqlQuery("SELECT * FROM usermovies WHERE user_id = @id", new MySqlParameter("id", _userId)).ToList();
-            //var usermovies = _db.usermovies.Where(i => i.user_id == _userId).ToList();//todo zapros neverniy
-            //var rrr = _db.usermovies.Where(i => i.user_id == _userId);
-            List<Purchase.UserMovie> userMovies = new List<Purchase.UserMovie>();
 
-            foreach (var item in test)
+
+            
+            var userMovies = _db.purchases.Where(i => i.user_id == _userId).ToList();//todo zapros neverniy
+            var userSeasons = _db.userseasons.Where(i => i.user_id == _userId).ToList();//todo zapros neverniy
+            
+            Purchase purchaseModels = new Purchase();
+
+            foreach (var userMovie in userMovies)
             {
-                userMovies.Add(new Purchase.UserMovie
+                purchaseModels.Usermovies.Add(new Purchase.UserMovie
+                {
+                    id = userMovie.id,
+                    videoImgUrl = userMovie.file.video.img_url,
+                    videoName = userMovie.file.video.name,
+                    price = (decimal) userMovie.file.price,
+                    fileId = (int) userMovie.file_id,
+                    purchaseDate = (DateTime) userMovie.purchase_date
+                });
+            }
+
+            foreach (var item in userSeasons)
+            {
+                purchaseModels.Userseasons.Add(new Purchase.UserSeason
                 {
                     id = item.id,
-                    movieId = item.movie_id,
-                    videoName = item.movy.video.name,
+                    seasonNunber = (int) item.season.season_number,
+                    seasonId = (int) item.season.id,
+                    videoName = item.season.video.name,
                     purchaseDate = item.payment.payment_date,
-                    videoImgUrl = item.movy.video.img_url,
+                    videoImgUrl = item.season.video.img_url,
                     price = item.payment.amount
                 });
             }
 
-
-            Purchase purchase = new Purchase
-            {
-                Usermovies = userMovies
-            };
-            return Request.CreateResponse(HttpStatusCode.OK, purchase); ;
+            return JSendResponse.succsessResponse(purchaseModels);
         }
 
         [HttpGet]
         [Route("api/user/history")]
-        public HttpResponseMessage GetUserHistory()
+        public JSendResponse GetUserHistory()
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -106,42 +114,25 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
             }
-            var moviehistories = _db.moviehistories.Where(i => i.user_id == _userId).ToList();
-            var episodehistories = _db.episodehistories.Where(i => i.user_id == _userId).ToList();
-            List<History.MovieHistory> movieHistories = new List<History.MovieHistory>();
-            List<History.EpisodeHistory> episodeHistories = new List<History.EpisodeHistory>();
+            var history = _db.histories.Where(i => i.user_id == _userId).ToList();
+            List<HistoryModel> historyModels = new List<HistoryModel>();
+            
 
-            foreach (var item in moviehistories)
+            foreach (var item in history)
             {
-                movieHistories.Add(new History.MovieHistory
+                historyModels.Add(new HistoryModel
                 {
                     id = item.id,
-                    movieId = item.movie_id,
-                    videoName = item.movy.video.name,
-                    watchingDate = item.watching_date,
-                    videoImgUrl = item.movy.video.img_url
+                    fileId = (int) item.file_id,
+                    videoName = item.file.video.name,
+                    watchingDate = (DateTime) item.watching_time,
+                    videoImgUrl = item.file.video.img_url
                 });
             }
-            foreach (var item in episodehistories)
-            {
-                episodeHistories.Add(new History.EpisodeHistory
-                {
-                    id = item.id,
-                    episodeId = item.episode_id,
-                    videoName = item.episode.season.video.name,
-                    watchingDate = item.watching_date,
-                    videoImgUrl = item.episode.season.video.img_url
-                });
-            }
-            History history = new History
-            {
-                Moviehistories = movieHistories,
-                Episodehistories = episodeHistories
-            };
 
-            return Request.CreateResponse(HttpStatusCode.OK, history);
+            return JSendResponse.succsessResponse(history);
         }
 
         [HttpGet]
@@ -171,9 +162,9 @@ namespace OnlineCinemaProject.Controllers.Api
                 login = user.UserName
             };
 
-            if (user.GeSubscription() != null)
+            if (user.GetSubscription() != null)
             {
-                profile.subscription = user.GeSubscription().GetSubscriptionInfo(); ;
+                profile.subscription = user.GetSubscription().GetSubscriptionInfo(); ;
             }
             return Request.CreateResponse(HttpStatusCode.OK, profile);
         }
@@ -181,11 +172,11 @@ namespace OnlineCinemaProject.Controllers.Api
         [HttpPost]
         [Route("api/user/password")]
         [ResponseType(typeof (ChangePassword))]
-        public HttpResponseMessage ChangePassword(ChangePassword changePassword)
+        public JSendResponse ChangePassword(ChangePassword changePassword)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                JSendResponse.errorResponse(Error.ModelStateInvalidError());
             }
 
             if (Request.Headers.TryGetValues("token", out _headerValues))
@@ -194,12 +185,12 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+                JSendResponse.errorResponse(Error.UnAuthrizedUserError());
             }
             var user = _db.aspnetusers.Find(_userId);
             if (user == null)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
+                JSendResponse.errorResponse(Error.UserNotFound());
             }
 
             UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
@@ -207,7 +198,7 @@ namespace OnlineCinemaProject.Controllers.Api
             userManager.RemovePassword(_userId);
             userManager.AddPassword(_userId, changePassword.newPassword);
 
-            return Request.CreateResponse(HttpStatusCode.OK, Response.EmptyResponse);
+            return JSendResponse.succsessResponse();
         }
 
     }

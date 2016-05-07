@@ -1,33 +1,138 @@
 ﻿@using OnlineCinemaProject.Models
+@using OnlineCinemaProject.Models.ViewModels
 
 @{
     ViewBag.Title = "Фильмы и Сериалы";
 }
 
 <h2>Фильмы и Сериалы</h2>
-@(Html.Kendo().Grid<video>()
+<section>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.Label("Жанр", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @{
+                    Html.Kendo().DropDownList()
+                        .Name("genres")
+                        .DataTextField("name")
+                        .DataValueField("id")
+                        .Filter("contains")
+                        .AutoBind(false)
+                        .OptionLabel("Выберите жанр")
+                        .Events(e=>e.Change("rebindGrid"))
+                       .DataSource(source => source.Custom().Type("aspnetmvc-ajax").Transport(transport => { transport.Read("Genres_read", "Genre"); }).Schema(schema => { schema.Data("Data").Total("Total"); })).Render();
+                }
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Страна", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @{
+                    Html.Kendo().DropDownList()
+                        .Name("countries")
+                        .DataTextField("name")
+                        .DataValueField("id")
+                        .Filter("contains")
+                        .AutoBind(false)
+                        .OptionLabel("Выберите страну")
+                        .Events(e => e.Change("rebindGrid"))
+                        .DataSource(source => source.Custom().Type("aspnetmvc-ajax").Transport(transport => { transport.Read("Countries_read", "Country"); }).Schema(schema => { schema.Data("Data").Total("Total"); })).Render();
+                }
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Актер", new { @class = "control-label col-md-2" })
+            <div class="col-sm-10">
+                @{
+                    Html.Kendo().DropDownList()
+                        .Name("actors")
+                        .DataTextField("name")
+                        .DataValueField("id")
+                        .Filter("contains")
+                        .AutoBind(false)
+                        .OptionLabel("Выберите актера")
+                        .Events(e => e.Change("rebindGrid"))
+                        .DataSource(source => source.Custom().Type("aspnetmvc-ajax").Transport(transport => { transport.Read("Actors_read", "Actor"); }).Schema(schema => { schema.Data("Data").Total("Total"); })).Render();
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@*@(Html.Kendo().Grid<VideoGridModel>()
       .Name("grid")
       .DataSource(dataSource => dataSource
           .Ajax()
-          .Read(read => read.Action("Videos_read", "Video"))
+          .Read(read => read.Action("Videos_read", "Video").Data("addAdditionalFilter"))
        )
       .Columns(columns =>
       {
-      columns.Bound(product => product.id).Hidden();
-      columns.Bound(product => product.img_url).Title(" ")
-        .ClientTemplate("<img data-src='holder.js/200x200' class='img-thumbnail' alt='200x200' src='../uploads/#:img_url#' data-holder-rendered='true' style='width: 200px; height: 200px;'>")
-        .Filterable(false)
-        .Sortable(false)
-        .Width(200);
-      columns.Bound(product => product.name).Title("Название");
-      columns.Bound(product => product.release_date).Title("Дата выхода").ClientTemplate("#= kendo.toString(release_date, 'yyyy-MM-dd') #").Width(100);
-      columns.Template(t => t.id).ClientTemplate("<a href='"+Url.Action("Edit") +"/#:id#'>Редактировать</a><br><a href='"+Url.Action("Details")+ "/#:id#'>Описание</a><br><a href='" + Url.Action("Delete") + "/#:id#'>Удалить</a><br>").Width(100);
-    })
+          columns.Bound(product => product.id).Hidden();
+          columns.Bound(product => product.img_url).Title(" ")
+            .ClientTemplate("<img data-src='holder.js/200x200' class='img-thumbnail' alt='200x200' src='../uploads/#:img_url#' data-holder-rendered='true' style='width: 200px; height: 200px;'>")
+            .Filterable(false)
+            .Sortable(false)
+            .Width(200);
+          columns.Bound(product => product.name).Title("Название");
+          columns.Bound(product => product.release_date).Title("Дата выхода").ClientTemplate("#= kendo.toString(release_date, 'yyyy-MM-dd') #").Width(100);
+          columns.Bound(p=>p.Genre).Title("Жанры").Width(100).ClientTemplate("#: printEntityArray(data.videogenres,'genre') #").Sortable(false);
+          columns.Bound(product => product.Country).Title("Страны").Width(100).ClientTemplate("#: printEntityArray(data.manufacturers,'country') #").Sortable(false);
+          columns.Bound(product => product.Actor).Title("Актеры").Width(100).ClientTemplate("#: printEntityArray(data.videoactors,'actor') #").Sortable(false);
+          columns.Template(t => t.id).ClientTemplate("<a href='"+Url.Action("Edit") +"/#:id#'>Редактировать</a><br><a href='"+Url.Action("Details")+ "/#:id#'>Описание</a><br><a href='" + Url.Action("Delete") + "/#:id#'>Удалить</a><br>").Width(100);
+      })
+      .ToolBar(t =>t.Template(@Html.ActionLink("Создать", "Create").ToHtmlString()))
+      .Pageable()
+      .Sortable()
+      )*@
+@(Html.Kendo().Grid<VideoGridModel>()
+      .Name("grid")
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Read(read => read.Action("Videos_read", "Video").Data("addAdditionalFilter"))
+       )
+      .Columns(columns =>
+      {
+          columns.Bound(product => product.id).Hidden();
+          columns.Bound(product => product.img_url).Title(" ")
+            .ClientTemplate("<img data-src='holder.js/200x200' class='img-thumbnail' alt='200x200' src='../uploads/#:img_url#' data-holder-rendered='true' style='width: 200px; height: 200px;'>")
+            .Filterable(false)
+            .Sortable(false)
+            .Width(200);
+          columns.Bound(product => product.name).Title("Название");
+          columns.Bound(product => product.release_date).Title("Дата выхода").ClientTemplate("#= kendo.toString(release_date, 'yyyy-MM-dd') #").Width(100);
+          columns.Bound(product => product.score).Title("Рейтинг").Width(100);
+          columns.Bound(p => p.Genre).Title("Жанры").Width(100).ClientTemplate("#: printEntityArray(data.videogenres,'genre') #").Sortable(false).Filterable(false);
+          columns.Bound(product => product.Country).Title("Страны").Width(100).ClientTemplate("#: printEntityArray(data.manufacturers,'country') #").Sortable(false).Filterable(false);
+          columns.Bound(product => product.Actor).Title("Актеры").Width(100).ClientTemplate("#: printEntityArray(data.videoactors,'actor') #").Sortable(false).Filterable(false);
+          columns.Template(t => t.id).ClientTemplate("<a href='" + Url.Action("Edit") + "/#:id#'>Редактировать</a><br><a href='" + Url.Action("Details") + "/#:id#'>Описание</a><br><a href='" + Url.Action("Delete") + "/#:id#'>Удалить</a><br>").Width(100);
+      })
       .ToolBar(t => t.Template(@Html.ActionLink("Создать", "Create").ToHtmlString()))
       .Pageable()
       .Sortable()
       .Filterable()
 )
+<script>
+    function printEntityArray(array,name) {
+        var result = '';
+        for (var i = 0; i < array.length; i++) {
+            result +=array[i][name].name+" ";
+        }
+        return result;
+    }
+
+    function addAdditionalFilter(e) {
+        return  {
+            genre:$("#genres").val(),
+            actor: $("#actors").val(),
+            country: $("#countries").val()
+        };
+    }
+
+    function rebindGrid() {
+        $("#grid").data('kendoGrid').dataSource.read();
+    }
+
+
+</script>
 
 
 @section scripts{

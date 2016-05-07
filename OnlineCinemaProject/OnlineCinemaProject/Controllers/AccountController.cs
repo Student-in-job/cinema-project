@@ -89,6 +89,16 @@ namespace OnlineCinemaProject.Controllers
                     if (user.Block == 0)
                     {
                         await SignInAsync(user, model.RememberMe);
+                        var userRoles = user.Roles.ToList();
+                        foreach (var identityUserRole in userRoles)
+                        {
+                            var role = identityUserRole.Role.Name;
+                            if(role == "BillingManager" || role == "ContentManager" || role == "Admin" || role == "PRManager")
+                            {
+                                returnUrl = Url.Action("Index", "Dashboard");
+                            }
+                            
+                        }
                         return RedirectToLocal(returnUrl);
                     }
                     else

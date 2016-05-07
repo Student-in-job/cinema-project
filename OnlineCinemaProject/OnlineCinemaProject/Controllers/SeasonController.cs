@@ -154,7 +154,7 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Seasons_read([DataSourceRequest]DataSourceRequest request, int videoId)
         {
-            DataSourceResult result = db.seasons.Where(t => t.video_id == videoId).Select(v => new { v.release_date, v.id, v.name, v.price }).ToDataSourceResult(request);
+            DataSourceResult result = db.seasons.Where(t => t.video_id == videoId).Select(v => new { v.release_date, v.id, v.title, v.price }).ToDataSourceResult(request);
             return Json(result);
         }
 
@@ -162,7 +162,7 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var entity = db.seasons.Add(new season {  video_id = videoId, release_date = season.release_date, price = season.price, name = season.name });
+                var entity = db.seasons.Add(new season { video_id = videoId, release_date = season.release_date, price = season.price, title = season.title });
                 db.SaveChanges();
                 season.id = entity.id;
             }
@@ -177,7 +177,7 @@ namespace OnlineCinemaProject.Controllers
                 {
                     release_date = season.release_date,
                     price = season.price,
-                    name = season.name,
+                    title = season.title,
                     video_id = season.video_id
                 };
                 db.seasons.Attach(entity);

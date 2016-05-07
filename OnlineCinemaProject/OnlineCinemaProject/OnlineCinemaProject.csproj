@@ -240,7 +240,6 @@
     <Compile Include="Controllers\Api\CpuInfoController.cs" />
     <Compile Include="Controllers\Api\EditUserApiController.cs" />
     <Compile Include="Controllers\Api\EpizodeController.cs" />
-    <Compile Include="Controllers\Api\HttpActionResult.cs" />
     <Compile Include="Controllers\Api\MovieApiController.cs" />
     <Compile Include="Controllers\Api\RegistrationApiController.cs" />
     <Compile Include="Controllers\Api\SeasonController.cs" />
@@ -249,6 +248,7 @@
     <Compile Include="Controllers\Api\UserApiController.cs" />
     <Compile Include="Controllers\Api\VideoApiController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
@@ -259,7 +259,7 @@
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginApiController.cs" />
-    <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
     <Compile Include="Controllers\StatisticsBannerController.cs" />
@@ -270,6 +270,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="CustomResult\ApiResponce.cs" />
+    <Compile Include="CustomResult\JSendResponse.cs" />
     <Compile Include="CustomResult\VideoResult.cs" />
     <Compile Include="CustomResult\WrappingHandler.cs" />
     <Compile Include="Global.asax.cs">
@@ -298,26 +299,20 @@
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CpuInfoPostData.cs" />
-    <Compile Include="Models\episode.cs">
+    <Compile Include="Models\episodehistory.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\episodehistory.cs">
+    <Compile Include="Models\file.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\genre.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\history.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\like.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\manufacturer.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\moviehistory.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\movy.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OnlineCinemaModel.Context.cs">
@@ -335,21 +330,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OnlineCinemaModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\overview.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\payment.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\purchase.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\review.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ScoreCallculationJob.cs" />
+    <Compile Include="Models\season.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\userseason.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Utils\SubscriptionUtils.cs" />
     <Compile Include="Models\Utils\TariffUtils.cs" />
     <Compile Include="Models\Utils\UserUtils.cs" />
     <Compile Include="Models\Utils\VideoUtils.cs" />
+    <Compile Include="Models\ViewModels\CommentModel.cs" />
+    <Compile Include="Models\ViewModels\MovieModel.cs" />
+    <Compile Include="Models\ViewModels\OverviewModel.cs" />
     <Compile Include="Models\ViewModels\ResponseModel.cs" />
-    <Compile Include="Models\season.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\statistics_banner.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -365,15 +369,6 @@
     <Compile Include="Models\teaser.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\trailer.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\usermovy.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\userseason.cs">
-      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\video.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -386,7 +381,9 @@
     <Compile Include="Models\ViewModels\IncludedData.cs" />
     <Compile Include="Models\ViewModels\ScoreModel.cs" />
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
+    <Compile Include="Models\ViewModels\VideoGridModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
+    <Compile Include="Models\_File.cs" />
     <Compile Include="Models\_Video.cs" />
     <Compile Include="Models\_Subscription.cs" />
     <Compile Include="Models\_Tariff.cs" />
@@ -397,6 +394,104 @@
     <Compile Include="Utils\PaymentChart.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AMovie\css\Br4zPzq6_en.css" />
+    <Content Include="Content\AMovie\css\font-awesome.css" />
+    <Content Include="Content\AMovie\css\gozha-nav.css" />
+    <Content Include="Content\AMovie\css\Hkp3TFwcmPT.css" />
+    <Content Include="Content\AMovie\css\jquery.selectbox.css" />
+    <Content Include="Content\AMovie\css\settings.css" />
+    <Content Include="Content\AMovie\css\style.css" />
+    <Content Include="Content\AMovie\fonts\SIL Open Font License.txt" />
+    <Content Include="Content\AMovie\images - Copy\24Q4cOSO_normal.jpg" />
+    <Content Include="Content\AMovie\images - Copy\7ytrPp_c_normal.jpg" />
+    <Content Include="Content\AMovie\images - Copy\apple-store.svg" />
+    <Content Include="Content\AMovie\images - Copy\auth.png" />
+    <Content Include="Content\AMovie\images - Copy\boots.jpg" />
+    <Content Include="Content\AMovie\images - Copy\bra.jpg" />
+    <Content Include="Content\AMovie\images - Copy\google-play.svg" />
+    <Content Include="Content\AMovie\images - Copy\logo.png" />
+    <Content Include="Content\AMovie\images - Copy\movie-sample1.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-sample2.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-sample3.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-sample4.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-sample5.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-sample6.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time1.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time10.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time11.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time12.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time13.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time14.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time8.jpg" />
+    <Content Include="Content\AMovie\images - Copy\movie-time9.jpg" />
+    <Content Include="Content\AMovie\images - Copy\post-annual.jpg" />
+    <Content Include="Content\AMovie\images - Copy\post-awards.jpg" />
+    <Content Include="Content\AMovie\images - Copy\post-thor.jpg" />
+    <Content Include="Content\AMovie\images - Copy\r9uL4jWU_normal.png" />
+    <Content Include="Content\AMovie\images - Copy\sale.jpg" />
+    <Content Include="Content\AMovie\images - Copy\sport.jpg" />
+    <Content Include="Content\AMovie\images - Copy\star-off.svg" />
+    <Content Include="Content\AMovie\images - Copy\star-on.svg" />
+    <Content Include="Content\AMovie\images - Copy\windows-store.svg" />
+    <Content Include="Content\AMovie\images\24Q4cOSO_normal.jpg" />
+    <Content Include="Content\AMovie\images\7ytrPp_c_normal.jpg" />
+    <Content Include="Content\AMovie\images\apple-store.svg" />
+    <Content Include="Content\AMovie\images\auth.png" />
+    <Content Include="Content\AMovie\images\boots.jpg" />
+    <Content Include="Content\AMovie\images\bra.jpg" />
+    <Content Include="Content\AMovie\images\google-play.svg" />
+    <Content Include="Content\AMovie\images\logo.png" />
+    <Content Include="Content\AMovie\images\movie-img1.jpg" />
+    <Content Include="Content\AMovie\images\movie-img2.jpg" />
+    <Content Include="Content\AMovie\images\movie-img3.jpg" />
+    <Content Include="Content\AMovie\images\movie-img4.jpg" />
+    <Content Include="Content\AMovie\images\movie-img5.jpg" />
+    <Content Include="Content\AMovie\images\movie-img6.jpg" />
+    <Content Include="Content\AMovie\images\movie-sample1.jpg" />
+    <Content Include="Content\AMovie\images\movie-sample2.jpg" />
+    <Content Include="Content\AMovie\images\movie-sample3.jpg" />
+    <Content Include="Content\AMovie\images\movie-sample4.jpg" />
+    <Content Include="Content\AMovie\images\movie-sample5.jpg" />
+    <Content Include="Content\AMovie\images\movie-sample6.jpg" />
+    <Content Include="Content\AMovie\images\movie-time1.jpg" />
+    <Content Include="Content\AMovie\images\movie-time10.jpg" />
+    <Content Include="Content\AMovie\images\movie-time11.jpg" />
+    <Content Include="Content\AMovie\images\movie-time12.jpg" />
+    <Content Include="Content\AMovie\images\movie-time13.jpg" />
+    <Content Include="Content\AMovie\images\movie-time14.jpg" />
+    <Content Include="Content\AMovie\images\movie-time8.jpg" />
+    <Content Include="Content\AMovie\images\movie-time9.jpg" />
+    <Content Include="Content\AMovie\images\post-annual.jpg" />
+    <Content Include="Content\AMovie\images\post-awards.jpg" />
+    <Content Include="Content\AMovie\images\post-thor.jpg" />
+    <Content Include="Content\AMovie\images\r9uL4jWU_normal.png" />
+    <Content Include="Content\AMovie\images\sale.jpg" />
+    <Content Include="Content\AMovie\images\sport.jpg" />
+    <Content Include="Content\AMovie\images\star-off.svg" />
+    <Content Include="Content\AMovie\images\star-on.svg" />
+    <Content Include="Content\AMovie\images\windows-store.svg" />
+    <Content Include="Content\AMovie\js\bootstrap.min.js" />
+    <Content Include="Content\AMovie\js\button.71000885400e222c3c0eec823f8f93f0.js" />
+    <Content Include="Content\AMovie\js\custom.js" />
+    <Content Include="Content\AMovie\js\form-element.js" />
+    <Content Include="Content\AMovie\js\form.js" />
+    <Content Include="Content\AMovie\js\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Content\AMovie\js\jquery.min.js" />
+    <Content Include="Content\AMovie\js\jquery.mobile.menu.js" />
+    <Content Include="Content\AMovie\js\jquery.raty.js" />
+    <Content Include="Content\AMovie\js\jquery.selectbox-0.2.min.js" />
+    <Content Include="Content\AMovie\js\jquery.themepunch.plugins.min.js" />
+    <Content Include="Content\AMovie\js\jquery.themepunch.revolution.min.js" />
+    <Content Include="Content\AMovie\js\kz1sMA2MmR1.js" />
+    <Content Include="Content\AMovie\js\modernizr.custom.js" />
+    <Content Include="Content\AMovie\js\MvMUyXTyvI-.js" />
+    <Content Include="Content\AMovie\js\twitterfeed.js" />
+    <Content Include="Content\AMovie\js\VEdOQ-F-D1m.js" />
+    <Content Include="Content\AMovie\js\veIoVuaXs9o.js" />
+    <Content Include="Content\AMovie\js\VXcANLwwL5J.js" />
+    <Content Include="Content\AMovie\js\widgets.js" />
+    <Content Include="Content\AMovie\js\y97Ig99UVTs.js" />
+    <Content Include="Content\bigplay.svg" />
     <Content Include="Content\bootstrap-3.3.6\.gitattributes" />
     <Content Include="Content\bootstrap-3.3.6\.gitignore" />
     <Content Include="Content\bootstrap-3.3.6\dist\css\bootstrap-theme.css" />
@@ -641,15 +736,12 @@
     <Content Include="Content\bootstrap-3.3.6\js\transition.js" />
     <Content Include="Content\bootstrap-3.3.6\package.js" />
     <Content Include="Content\bootstrap-3.3.6\test-infra\requirements.txt" />
-    <Content Include="Content\bootstrap-rtl.css" />
-    <Content Include="Content\bootstrap-rtl.min.css" />
-    <Content Include="Content\bootstrap-select.css" />
-    <Content Include="Content\bootstrap-select.min.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-3.3.6\dist\css\bootstrap-rtl.css" />
+    <Content Include="Content\bootstrap-3.3.6\dist\css\bootstrap-rtl.min.css" />
+    <Content Include="Content\bootstrap-3.3.6\dist\css\bootstrap-select.css" />
+    <Content Include="Content\bootstrap-3.3.6\dist\css\bootstrap-select.min.css" />
+    <Content Include="Content\carousel.css" />
+    <Content Include="Content\controls.svg" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\drop_vert_menu.css" />
     <Content Include="Content\font-awesome-4.5.0\css\font-awesome.css" />
@@ -992,10 +1084,10 @@
     <Content Include="Content\kendo\2016.1.112\Uniform\sprite_2x.png" />
     <Content Include="Content\kendo\2016.1.112\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\2016.1.112\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Content\loading.gif" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\player.css" />
     <Content Include="Content\retina.min.css" />
-    <Content Include="Content\sb-admin-rtl.css" />
-    <Content Include="Content\sb-admin.css" />
     <Content Include="Content\style.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -1034,10 +1126,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\background.png" />
+    <Content Include="Scripts\bigplay.fw.png" />
+    <Content Include="Scripts\bigplay.png" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ClientAccessPolicy.xml" />
     <EntityDeploy Include="Models\OnlineCinemaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OnlineCinemaModel.Designer.cs</LastGenOutput>
@@ -1086,8 +1182,14 @@
     <Content Include="Content\font-awesome-4.5.0\scss\_rotated-flipped.scss" />
     <Content Include="Content\font-awesome-4.5.0\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.5.0\scss\_variables.scss" />
+    <Content Include="Scripts\controls-ted.png" />
+    <Content Include="Scripts\controls-wmp-bg.png" />
+    <Content Include="Scripts\controls-wmp.png" />
+    <Content Include="Scripts\controls.fw.png" />
+    <Content Include="Scripts\controls.png" />
     <Content Include="Scripts\core.min.js" />
     <Content Include="Scripts\custom.min.js" />
+    <Content Include="Scripts\flashmediaelement.swf" />
     <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.src.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.js" />
@@ -1346,12 +1448,10 @@
     <Content Include="Content\bootstrap-3.3.6\test-infra\s3_cache.py" />
     <Content Include="Content\bootstrap-3.3.6\test-infra\uncached-npm-install.sh" />
     <Content Include="Content\bootstrap-3.3.6\_config.yml" />
-    <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.6\dist\css\bootstrap-select.css.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Scripts\bootstrap-select.js.map" />
+    <Content Include="Scripts\hls_streams.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.min.js" />
     <Content Include="Scripts\i18n\defaults-bg_BG.js" />
@@ -1417,6 +1517,14 @@
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Content\AMovie\fonts\css" />
+    <Content Include="Content\AMovie\fonts\css%281%29" />
+    <Content Include="Content\AMovie\fonts\Aleo-Bold.otf" />
+    <Content Include="Content\AMovie\fonts\Aleo-BoldItalic.otf" />
+    <Content Include="Content\AMovie\fonts\Aleo-Italic.otf" />
+    <Content Include="Content\AMovie\fonts\Aleo-Light.otf" />
+    <Content Include="Content\AMovie\fonts\Aleo-LightItalic.otf" />
+    <Content Include="Content\AMovie\fonts\Aleo-Regular.otf" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.2.2-vsdoc.js" />
     <Content Include="Scripts\jquery-2.2.2.js" />
@@ -2015,10 +2123,68 @@
     <Content Include="Scripts\kendo\2016.1.112\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\2016.1.112\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\kendo\2016.1.112\pako_deflate.min.js" />
+    <Content Include="Scripts\mediaelement-and-player.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="uploads\120430.gif" />
+    <Content Include="uploads\130309.gif" />
+    <Content Include="uploads\1400069225_poster-580639.jpg" />
+    <Content Include="uploads\140104.gif" />
+    <Content Include="uploads\1402333764_poster-84049.jpg" />
+    <Content Include="uploads\1414778569_poster-405608.jpg" />
+    <Content Include="uploads\1419755573_poster-104938.jpg" />
+    <Content Include="uploads\1436188788_poster-427878.jpg" />
+    <Content Include="uploads\1438872246_poster-530.jpg" />
+    <Content Include="uploads\1442220572_poster-687595.jpg" />
+    <Content Include="uploads\1454350562_poster-692865.jpg" />
+    <Content Include="uploads\1454472363_poster-103734.jpg" />
+    <Content Include="uploads\1523.jpg" />
+    <Content Include="uploads\18233792280660268811.gif" />
+    <Content Include="uploads\2.jpg" />
+    <Content Include="uploads\2015-01-31 %281%29.jpg" />
+    <Content Include="uploads\2015-01-31.jpg" />
+    <Content Include="uploads\20150413_140310.jpg" />
+    <Content Include="uploads\20150803_122840.jpg" />
+    <Content Include="uploads\2aprel.jpg" />
+    <Content Include="uploads\5.jpg" />
+    <Content Include="uploads\760px-Write-an-Essay-Introduction-Step-1.jpg" />
+    <Content Include="uploads\9c5862a0107bd775e95a25f60a5f5ea3.png" />
+    <Content Include="uploads\a70422c02fab0f8daa1d51f3558355c1.jpg" />
+    <Content Include="uploads\afera.jpg" />
+    <Content Include="uploads\app.jpg" />
+    <Content Include="uploads\avatar_placeholder.png" />
+    <Content Include="uploads\ca878584ed6edaa80707c29609e66a20.gif" />
+    <Content Include="uploads\dnevniki-vampira.png" />
+    <Content Include="uploads\embarcadero_190x280_till25_5494326.jpg" />
+    <Content Include="uploads\gods_of_egypt.jpg" />
+    <Content Include="uploads\Home Page.html" />
+    <Content Include="uploads\Home Page_files\bootstrap.js" />
+    <Content Include="uploads\Home Page_files\bootstrap.min.css" />
+    <Content Include="uploads\Home Page_files\carousel.css" />
+    <Content Include="uploads\Home Page_files\core.min.js" />
+    <Content Include="uploads\Home Page_files\custom.min.js" />
+    <Content Include="uploads\Home Page_files\font-awesome.min.css" />
+    <Content Include="uploads\Home Page_files\jquery-2.2.2.js" />
+    <Content Include="uploads\Home Page_files\jquery-2.2.3.js" />
+    <Content Include="uploads\Home Page_files\jquery-migrate-1.2.1.min.js" />
+    <Content Include="uploads\Home Page_files\jquery-ui-1.11.4.js" />
+    <Content Include="uploads\Home Page_files\modernizr-2.6.2.js" />
+    <Content Include="uploads\Home Page_files\respond.js" />
+    <Content Include="uploads\Home Page_files\The Huntsman.jpg" />
+    <Content Include="uploads\images %281%29.jpg" />
+    <Content Include="uploads\images %283%29.jpg" />
+    <Content Include="uploads\images %284%29.jpg" />
+    <Content Include="uploads\images.jpg" />
+    <Content Include="uploads\images25.jpg" />
+    <Content Include="uploads\mrHolms.jpg" />
+    <Content Include="uploads\mstitel.jpg" />
+    <Content Include="uploads\The Huntsman.jpg" />
+    <Content Include="uploads\uyvhbjnk.jpg" />
+    <Content Include="uploads\vampire diaries.jpg" />
+    <Content Include="uploads\Отряд самоубийц.jpg" />
+    <Content Include="uploads\Слова.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2069,12 +2235,12 @@
     <Content Include="Views\Genre\Details.cshtml" />
     <Content Include="Views\Genre\Edit.cshtml" />
     <Content Include="Views\Genre\Index.cshtml" />
-    <Content Include="Views\Movie\AddMovieByVideoId.cshtml" />
-    <Content Include="Views\Movie\Create.cshtml" />
-    <Content Include="Views\Movie\Delete.cshtml" />
-    <Content Include="Views\Movie\Details.cshtml" />
-    <Content Include="Views\Movie\Edit.cshtml" />
-    <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\File\AddFileByVideoId.cshtml" />
+    <Content Include="Views\File\Create.cshtml" />
+    <Content Include="Views\File\Delete.cshtml" />
+    <Content Include="Views\File\Details.cshtml" />
+    <Content Include="Views\File\Edit.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
     <Content Include="Views\Season\AddSeasonByVideoId.cshtml" />
     <Content Include="Views\Season\Create.cshtml" />
     <Content Include="Views\Season\Delete.cshtml" />
@@ -2131,7 +2297,6 @@
     <Content Include="Views\Billing\Delete.cshtml" />
     <Content Include="Views\Billing\Details.cshtml" />
     <Content Include="Views\Billing\Edit.cshtml" />
-    <Content Include="Views\Billing\Index.cshtml" />
     <Content Include="Views\Billing\Tariffs.cshtml" />
     <Content Include="Views\Video\VideoTrailers.cshtml" />
     <Content Include="Views\Shared\Dashboard.cshtml" />
@@ -2140,14 +2305,9 @@
     <Content Include="Views\Test\Details.cshtml" />
     <Content Include="Views\Test\Edit.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Video\CreateNew.cshtml" />
     <Content Include="Views\Billing\Text.cshtml" />
     <Content Include="Views\Video\DetailsPartial.cshtml" />
-    <Content Include="Views\Video\ActorsPartial.cshtml" />
-    <Content Include="Views\Video\VideoContentPartial.cshtml" />
     <Content Include="Views\Video\StatisticsPartial.cshtml" />
-    <Content Include="Views\Video\_SearchTab.cshtml" />
-    <Content Include="Views\Video\_SubmissionTab.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\User\TopUpBalance.cshtml" />
     <Content Include="Views\Teaser\Rotator.cshtml" />
@@ -2298,9 +2458,28 @@
     <Content Include="Views\Errors\Error403.cshtml" />
     <Content Include="Views\Errors\Error404.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Video\FilePartial.cshtml" />
+    <Content Include="Views\Shared\_UserPage.cshtml" />
+    <Content Include="Views\Home\NewMovie.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.CommentRating.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.CommentText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.UserId.cshtml" />
+    <Content Include="Views\Home\PopularFilms.cshtml" />
+    <Content Include="Views\Home\PopularSerials.cshtml" />
+    <Content Include="Views\Home\NewSerials.cshtml" />
+    <Content Include="Views\Home\Video.cshtml" />
+    <Content Include="Views\Shared\AMovie.cshtml" />
+    <Content Include="uploads\Home Page_files\browserLink" />
+    <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Home\_PaymentsPartial.cshtml" />
+    <Content Include="Views\Home\_HistoryPartial.cshtml" />
+    <Content Include="Views\Home\_UserSerialsPartial.cshtml" />
+    <Content Include="Views\Home\_UserFilmsPartial.cshtml" />
+    <Content Include="Views\Home\_SeasonsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Application\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -16,8 +16,8 @@ namespace OnlineCinemaProject.Models
     {
         public int id { get; set; }
         public string user_id { get; set; }
-        public int season_id { get; set; }
-        public int payment_id { get; set; }
+        public Nullable<int> season_id { get; set; }
+        public Nullable<int> payment_id { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
         public virtual payment payment { get; set; }
