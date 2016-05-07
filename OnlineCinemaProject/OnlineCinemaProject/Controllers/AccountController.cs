@@ -1,13 +1,17 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using OnlineCinemaProject.Models;
+using WebMatrix.WebData;
 
 namespace OnlineCinemaProject.Controllers
 {
@@ -86,7 +90,7 @@ namespace OnlineCinemaProject.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
-                    if (user.Block == 0)
+                    if (user.Block == false)
                     {
                         await SignInAsync(user, model.RememberMe);
                         var userRoles = user.Roles.ToList();
@@ -137,14 +141,13 @@ namespace OnlineCinemaProject.Controllers
                     UserName = model.UserName , 
                     FirstName = model.FirstName, 
                     LastName = model.LastName,
-                    BirthDate = model.BirthDate,
                     Email = model.Email,
+                    BirthDate = model.BirthDate,
                     Sex =  model.Sex,
                     JoinDate = DateTime.Now,
-                    Block = 0
-                    
+                    Block = false
                 };
-                
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -163,6 +166,17 @@ namespace OnlineCinemaProject.Controllers
             return View(model);
         }
 
+       // [HttpPost]
+        public JsonResult DoesUserEmailExist(string email)
+        {
+
+            //var user = Membership.GetUserNameByEmail(Email);
+
+            //return Json(user == null);
+            var model = db.aspnetusers;
+            // Returns "false" (i.e., "not valid") if a user with the specified email address already exists. 
+            return Json(!model.Any(it => it.Email == email), JsonRequestBehavior.AllowGet);
+        }
         //
         // POST: /Account/Disassociate
         [HttpPost]
@@ -368,6 +382,117 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return PartialView("_RemoveAccountPartial", linkedAccounts);
         }
+
+
+
+        // GET: Account/LostPassword
+        [AllowAnonymous]
+        public ActionResult LostPassword()
+        {
+            return View();
+        }
+
+        // POST: Account/LostPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult LostPassword(LostPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MembershipUser user;
+                using (var context = new ApplicationDbContext())
+                {
+                    var foundUserName = (from u in context.Users
+                                         where u.Email == model.Email
+                                         select u.UserName).FirstOrDefault();
+                    if (foundUserName != null)
+                    {
+                        user = Membership.GetUser(foundUserName.ToString());
+                    }
+                    else
+                    {
+                        user = null;
+                    }
+                }
+                if (user != null)
+                {
+                    // Generae password token that will be used in the email link to authenticate user
+                    var token = WebSecurity.GeneratePasswordResetToken(user.UserName);
+                    // Generate the html link sent via email
+                    string resetLink = "<a href='"
+                       + Url.Action("ResetPassword", "Account", new { rt = token }, "http")
+                       + "'>Reset Password Link</a>";
+
+                    // Email stuff
+                    string subject = "Reset your password for asdf.com";
+                    string body = "You link: " + resetLink;
+                    string from = "wolkodaw_9504@mail.ru";
+
+                    MailMessage message = new MailMessage(from, model.Email);
+                    message.Subject = subject;
+                    message.Body = body;
+                    SmtpClient client = new SmtpClient();
+
+                    // Attempt to send the email
+                    try
+                    {
+                        client.Send(message);
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                    }
+                }
+                else // Email not found
+                {
+                    /* Note: You may not want to provide the following information
+                    * since it gives an intruder information as to whether a
+                    * certain email address is registered with this website or not.
+                    * If you're really concerned about privacy, you may want to
+                    * forward to the same "Success" page regardless whether an
+                    * user was found or not. This is only for illustration purposes.
+                    */
+                    ModelState.AddModelError("", "No user found by that email.");
+                }
+            }
+
+            /* You may want to send the user to a "Success" page upon the successful
+            * sending of the reset email link. Right now, if we are 100% successful
+            * nothing happens on the page. :P
+            */
+            return View(model);
+        }
+
+        // GET: /Account/ResetPassword
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string rt)
+        {
+            ResetPasswordModel model = new ResetPasswordModel();
+            model.ReturnToken = rt;
+            return View(model);
+        }
+
+        // POST: /Account/ResetPassword
+[HttpPost]
+[AllowAnonymous]
+[ValidateAntiForgeryToken]
+public ActionResult ResetPassword(ResetPasswordModel model)
+   {
+   if (ModelState.IsValid)
+   {
+      bool resetResponse = WebSecurity.ResetPassword(model.ReturnToken, model.Password);
+      if (resetResponse)
+      {
+         ViewBag.Message = "Successfully Changed";
+      }
+      else
+      {
+         ViewBag.Message = "Something went horribly wrong!";
+      }
+   }
+return View(model);
+}
 
         protected override void Dispose(bool disposing)
         {

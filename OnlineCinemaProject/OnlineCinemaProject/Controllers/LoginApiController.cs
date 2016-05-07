@@ -38,12 +38,13 @@ namespace OnlineCinemaProject.Controllers
         // POST api/<controller>
         public String Post([FromBody]LoginViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                 var user =  UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
-                    if (user.Block == 0)
+                    if (user.Block == false)
                     {
                         return user.Id;
                     }
