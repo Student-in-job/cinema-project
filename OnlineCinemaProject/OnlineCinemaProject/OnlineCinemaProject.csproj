@@ -297,6 +297,9 @@
     <Compile Include="Models\aspnetuser.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\backup.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\banner.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
@@ -2298,7 +2301,6 @@
     <Content Include="Views\Errors\Error404.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Backup\Index.cshtml" />
-    <Content Include="Views\Restore\Index.cshtml" />
     <Content Include="Views\Account\LostPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>

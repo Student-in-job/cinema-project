@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace OnlineCinemaProject.Models
 {
@@ -25,7 +26,7 @@ namespace OnlineCinemaProject.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -58,7 +59,7 @@ namespace OnlineCinemaProject.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Повторите пароль")]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -76,6 +77,7 @@ namespace OnlineCinemaProject.Models
         [Required]
         [EmailAddress(ErrorMessage = "Вы неправильно ввели E-mail адрес")]
         [Display(Name = "Электронная почта")]
+        [Remote("DoesUserEmailExist", "Account",  ErrorMessage = "Email address already exists. Please enter a different Email address.")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Email { get; set; }
         
@@ -83,9 +85,7 @@ namespace OnlineCinemaProject.Models
         [Display(Name = "Ваш пол")]
         public int Sex { get; set; }
 
-        
-
-
+   
         
     }
 
@@ -128,7 +128,7 @@ namespace OnlineCinemaProject.Models
         [Required]
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "New password and confirmation does not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "New password and confirmation does not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -136,5 +136,7 @@ namespace OnlineCinemaProject.Models
     }
 
    
+
+
 
 }

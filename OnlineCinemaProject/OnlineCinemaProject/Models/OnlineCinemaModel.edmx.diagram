@@ -68,6 +68,7 @@
         <AssociationConnector Association="OnlineCinemaModel.id_user" />
         <AssociationConnector Association="OnlineCinemaModel.id_users" />
         <AssociationConnector Association="OnlineCinemaModel.aspnetuserroles" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.backup" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

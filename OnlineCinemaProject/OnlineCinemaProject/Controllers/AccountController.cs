@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Net.Mail;
@@ -130,14 +131,13 @@ namespace OnlineCinemaProject.Controllers
                     UserName = model.UserName , 
                     FirstName = model.FirstName, 
                     LastName = model.LastName,
-                    BirthDate = model.BirthDate,
                     Email = model.Email,
+                    BirthDate = model.BirthDate,
                     Sex =  model.Sex,
                     JoinDate = DateTime.Now,
                     Block = false
-                    
                 };
-                
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -156,6 +156,17 @@ namespace OnlineCinemaProject.Controllers
             return View(model);
         }
 
+       // [HttpPost]
+        public JsonResult DoesUserEmailExist(string email)
+        {
+
+            //var user = Membership.GetUserNameByEmail(Email);
+
+            //return Json(user == null);
+            var model = db.aspnetusers;
+            // Returns "false" (i.e., "not valid") if a user with the specified email address already exists. 
+            return Json(!model.Any(it => it.Email == email), JsonRequestBehavior.AllowGet);
+        }
         //
         // POST: /Account/Disassociate
         [HttpPost]
@@ -354,7 +365,7 @@ namespace OnlineCinemaProject.Controllers
             return View();
         }
 
-        //[ChildActionOnly]
+        [ChildActionOnly]
         public ActionResult RemoveAccountList()
         {
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
@@ -406,7 +417,7 @@ namespace OnlineCinemaProject.Controllers
                     // Email stuff
                     string subject = "Reset your password for asdf.com";
                     string body = "You link: " + resetLink;
-                    string from = "donotreply@asdf.com";
+                    string from = "wolkodaw_9504@mail.ru";
 
                     MailMessage message = new MailMessage(from, model.Email);
                     message.Subject = subject;

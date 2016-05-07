@@ -52,5 +52,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<video> videos { get; set; }
         public virtual DbSet<tariff> tariffs { get; set; }
         public virtual DbSet<aspnetuser> aspnetusers { get; set; }
+        public virtual DbSet<backup> backups { get; set; }
     }
 }
