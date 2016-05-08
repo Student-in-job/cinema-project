@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using OnlineCinemaProject.Models;
 
@@ -41,7 +38,7 @@ namespace OnlineCinemaProject.Controllers
             return View(video);
         }
 
-        public ActionResult Profile(string name)
+        public ActionResult UserCabinet(string name)
         {
             aspnetuser aspnetuser = DataContext.aspnetusers.Single(i=>i.UserName == name);
             if (aspnetuser == null)

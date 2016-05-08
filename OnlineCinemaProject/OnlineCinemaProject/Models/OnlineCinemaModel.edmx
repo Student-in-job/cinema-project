@@ -56,6 +56,15 @@
           <Property Name="TariffId" Type="int" />
           <Property Name="Block" Type="bool" />
         </EntityType>
+        <EntityType Name="backup">
+          <Key>
+            <PropertyRef Name="id_backup" />
+          </Key>
+          <Property Name="id_backup" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="longtext" />
+          <Property Name="Way" Type="longtext" />
+          <Property Name="Date_Backup" Type="datetime" Precision="0" />
+        </EntityType>
         <EntityType Name="banners">
           <Key>
             <PropertyRef Name="id" />
@@ -698,6 +707,7 @@
           <EntitySet Name="aspnetroles" EntityType="Self.aspnetroles" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="aspnetuserroles" EntityType="Self.aspnetuserroles" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" Schema="online-cinema" store:Type="Tables" />
+          <EntitySet Name="backup" EntityType="Self.backup" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="banners" EntityType="Self.banners" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="countries" EntityType="Self.countries" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="episodehistory" EntityType="Self.episodehistory" Schema="online-cinema" store:Type="Tables" />
@@ -1008,6 +1018,7 @@
             <End Role="season" EntitySet="seasons" />
             <End Role="userseason" EntitySet="userseasons" />
           </AssociationSet>
+          <EntitySet Name="backups" EntityType="OnlineCinemaModel.backup" />
         </EntityContainer>
         <EntityType Name="actor">
           <Key>
@@ -1728,6 +1739,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="backup">
+          <Key>
+            <PropertyRef Name="id_backup" />
+          </Key>
+          <Property Name="id_backup" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="Way" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Backup" Type="DateTime" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2016,6 +2036,16 @@
                 <ScalarProperty Name="season_id" ColumnName="season_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="backups">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.backup">
+              <MappingFragment StoreEntitySet="backup">
+                <ScalarProperty Name="Date_Backup" ColumnName="Date_Backup" />
+                <ScalarProperty Name="Way" ColumnName="Way" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id_backup" ColumnName="id_backup" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

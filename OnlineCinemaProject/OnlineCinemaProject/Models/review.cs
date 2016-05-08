@@ -21,7 +21,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<float> rating { get; set; }
         public string comment { get; set; }
     
-        public virtual video video { get; set; }
         public virtual aspnetuser aspnetuser { get; set; }
+        public virtual video video { get; set; }
     }
 }

@@ -61,6 +61,7 @@
         <AssociationConnector Association="OnlineCinemaModel.FkUserSeasons" />
         <AssociationConnector Association="OnlineCinemaModel.FkSeasonPayment" />
         <AssociationConnector Association="OnlineCinemaModel.fk_season_user" />
+        <EntityTypeShape EntityType="OnlineCinemaModel.backup" Width="1.5" PointX="8.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

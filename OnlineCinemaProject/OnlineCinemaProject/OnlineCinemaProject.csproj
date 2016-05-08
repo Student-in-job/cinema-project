@@ -78,6 +78,9 @@
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySqlBackup">
+      <HintPath>..\packages\MySqlBackup.NET.2.0.9.4\lib\net45\MySqlBackup.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -249,6 +252,7 @@
     <Compile Include="Controllers\Api\VideoApiController.cs" />
     <Compile Include="Controllers\Api\VideoController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
@@ -260,6 +264,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginApiController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\OverviewController.cs" />
+    <Compile Include="Controllers\RestoreController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeasonController.cs" />
     <Compile Include="Controllers\StatisticsBannerController.cs" />
@@ -290,6 +296,9 @@
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnetuser.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\backup.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\banner.cs">
@@ -2159,20 +2168,6 @@
     <Content Include="uploads\dnevniki-vampira.png" />
     <Content Include="uploads\embarcadero_190x280_till25_5494326.jpg" />
     <Content Include="uploads\gods_of_egypt.jpg" />
-    <Content Include="uploads\Home Page.html" />
-    <Content Include="uploads\Home Page_files\bootstrap.js" />
-    <Content Include="uploads\Home Page_files\bootstrap.min.css" />
-    <Content Include="uploads\Home Page_files\carousel.css" />
-    <Content Include="uploads\Home Page_files\core.min.js" />
-    <Content Include="uploads\Home Page_files\custom.min.js" />
-    <Content Include="uploads\Home Page_files\font-awesome.min.css" />
-    <Content Include="uploads\Home Page_files\jquery-2.2.2.js" />
-    <Content Include="uploads\Home Page_files\jquery-2.2.3.js" />
-    <Content Include="uploads\Home Page_files\jquery-migrate-1.2.1.min.js" />
-    <Content Include="uploads\Home Page_files\jquery-ui-1.11.4.js" />
-    <Content Include="uploads\Home Page_files\modernizr-2.6.2.js" />
-    <Content Include="uploads\Home Page_files\respond.js" />
-    <Content Include="uploads\Home Page_files\The Huntsman.jpg" />
     <Content Include="uploads\images %281%29.jpg" />
     <Content Include="uploads\images %283%29.jpg" />
     <Content Include="uploads\images %284%29.jpg" />
@@ -2183,7 +2178,12 @@
     <Content Include="uploads\The Huntsman.jpg" />
     <Content Include="uploads\uyvhbjnk.jpg" />
     <Content Include="uploads\vampire diaries.jpg" />
+    <Content Include="uploads\Заир.JPG" />
+    <Content Include="uploads\Иван.JPG" />
+    <Content Include="uploads\Лиля.jpg" />
     <Content Include="uploads\Отряд самоубийц.jpg" />
+    <Content Include="uploads\Рома.JPG" />
+    <Content Include="uploads\Севиля.jpg" />
     <Content Include="uploads\Слова.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2300,12 +2300,6 @@
     <Content Include="Views\Billing\Tariffs.cshtml" />
     <Content Include="Views\Video\VideoTrailers.cshtml" />
     <Content Include="Views\Shared\Dashboard.cshtml" />
-    <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Billing\Text.cshtml" />
     <Content Include="Views\Video\DetailsPartial.cshtml" />
     <Content Include="Views\Video\StatisticsPartial.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
@@ -2469,13 +2463,14 @@
     <Content Include="Views\Home\NewSerials.cshtml" />
     <Content Include="Views\Home\Video.cshtml" />
     <Content Include="Views\Shared\AMovie.cshtml" />
-    <Content Include="uploads\Home Page_files\browserLink" />
-    <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Home\UserCabinet.cshtml" />
     <Content Include="Views\Home\_PaymentsPartial.cshtml" />
     <Content Include="Views\Home\_HistoryPartial.cshtml" />
     <Content Include="Views\Home\_UserSerialsPartial.cshtml" />
     <Content Include="Views\Home\_UserFilmsPartial.cshtml" />
     <Content Include="Views\Home\_SeasonsPartial.cshtml" />
+    <Content Include="Views\Backup\Index.cshtml" />
+    <Content Include="uploads\app-debug.apk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

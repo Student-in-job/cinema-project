@@ -153,7 +153,7 @@
                             @User.Identity.Name
                         </a>
                         <ul class="auth__function">
-                            <li><a href="@Url.Action("Profile", "Home", new { @User.Identity.Name })" class="auth__function-item">Кабинет</a></li>
+                            <li><a href="@Url.Action("UserCabinet", "Home", new { @User.Identity.Name })" class="auth__function-item">Кабинет</a></li>
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm",/* @class = "navbar-right"*/ }))
                             {
                                 @Html.AntiForgeryToken()
