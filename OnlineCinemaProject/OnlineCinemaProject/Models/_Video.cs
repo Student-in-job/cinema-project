@@ -65,6 +65,7 @@ namespace OnlineCinemaProject.Models
         public string author;
         public string authorId;
         public string comment;
+        public double rating;
         public DateTime? creationDate;
     }
 
@@ -140,6 +141,7 @@ namespace OnlineCinemaProject.Models
                         author = comment.aspnetuser.FullName(),
                         authorId = comment.aspnetuser.Id,
                         comment = comment.comment,
+                        rating = (double) comment.rating,
                         creationDate = comment.creation_date
                     });
                 }
@@ -226,6 +228,7 @@ namespace OnlineCinemaProject.Models
                         author = comment.aspnetuser.FullName(),
                         authorId = comment.aspnetuser.Id,
                         comment = comment.comment,
+                        rating = (double)comment.rating,
                         creationDate = comment.creation_date
                     });
                 }
@@ -323,6 +326,7 @@ namespace OnlineCinemaProject.Models
                         author = comment.aspnetuser.FullName(),
                         authorId = comment.aspnetuser.Id,
                         comment = comment.comment,
+                        rating = (double)comment.rating,
                         creationDate = comment.creation_date
                     });
                 }

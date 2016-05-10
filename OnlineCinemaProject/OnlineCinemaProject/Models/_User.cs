@@ -16,6 +16,7 @@ namespace OnlineCinemaProject.Models
         public System.DateTime watchingDate { get; set; }
     }
 
+
     /*public class PurchaseModel
     {
         public int id { get; set; }

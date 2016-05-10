@@ -186,6 +186,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 aspnetuser = user,
                 file = file,
                 payment = payment,
+                purchase_date = DateTime.Now
             };
             _db.purchases.Add(purchase);
                 

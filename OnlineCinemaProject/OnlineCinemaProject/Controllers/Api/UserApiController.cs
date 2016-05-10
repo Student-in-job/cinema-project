@@ -104,6 +104,40 @@ namespace OnlineCinemaProject.Controllers.Api
             return JSendResponse.succsessResponse(purchaseModels);
         }
 
+        [Route("api/user/subscription")]
+        public JSendResponse GetUserSubscription()
+        {
+            if (Request.Headers.TryGetValues("token", out _headerValues))
+            {
+                _userId = _headerValues.FirstOrDefault();
+            }
+            if (_userId == null)
+            {
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
+            }
+
+            var subs = _db.subscriptions.Where(i => i.user_id == _userId).OrderBy(i=>i.start).ToList();
+            foreach (var item in subs)
+            {
+                if (!item.Active())
+                {
+                    subs.Remove(item);
+                    if (subs.Count == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            SubscriptionInfo info = new SubscriptionInfo();
+            
+
+            return JSendResponse.succsessResponse(subs.FirstOrDefault().GetSubscriptionInfo());
+            
+
+        }
+
+
         [HttpGet]
         [Route("api/user/history")]
         public JSendResponse GetUserHistory()
@@ -132,7 +166,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 });
             }
 
-            return JSendResponse.succsessResponse(history);
+            return JSendResponse.succsessResponse(historyModels);
         }
 
         [HttpGet]

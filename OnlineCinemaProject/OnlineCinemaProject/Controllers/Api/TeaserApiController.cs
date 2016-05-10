@@ -20,12 +20,12 @@ namespace OnlineCinemaProject.Controllers.Api
             db.Configuration.ProxyCreationEnabled = false;
          
             // string token = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
-            //IEnumerable<string> headerValues;
-            //var id_user = string.Empty;
-            //if (Request.Headers.TryGetValues("token", out headerValues))
-            //{
-            //    id_user = headerValues.FirstOrDefault();
-            //}
+            IEnumerable<string> headerValues;
+            var id_user = string.Empty;
+            if (Request.Headers.TryGetValues("token", out headerValues))
+            {
+                id_user = headerValues.FirstOrDefault();
+            }
             //SELECT teasers.img_url statistics_teaser from teasers where teasers.id not in (SELECT statistics_teaser.id_teasers from statistics_teaser WHERE statistics_teaser.id_user = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
 
             string query = "SELECT * FROM teaser order by showAmount asc";
@@ -61,7 +61,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 sb.dateShow = DateTime.Now;
                 sb.id_teasers = teaser.id;
                 sb.showAmount = (int?) teaser.showAmount;
-                sb.id_users = "a9fe59b2-8d88-4bef-87f3-a081bcce6632";
+                sb.id_users = id_user;
                 db.statistics_teaser.Add(sb);
                 db.SaveChanges();
             }

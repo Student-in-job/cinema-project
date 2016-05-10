@@ -348,7 +348,7 @@ Start doing." style="width: 100%; height: 100%; overflow: hidden; visibility: vi
                         <ul>
                             @foreach (var item in (List<genre>)ViewBag.Genres)
                             {
-                                <li><a href="#" class="category__item">@item.name</a></li>
+                                <li><a href="@Url.Action("VideoByGenre", new{item.id})" class="category__item">@item.name</a></li>
                             }
                             
                         </ul>

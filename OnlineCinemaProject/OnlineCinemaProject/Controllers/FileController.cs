@@ -225,15 +225,15 @@ namespace OnlineCinemaProject.Controllers
             return Json(result);
         }
 
-        public ActionResult Trailers_create([DataSourceRequest]DataSourceRequest request, file trailer, int videoId)
+        public ActionResult Trailers_create([DataSourceRequest]DataSourceRequest request, file modelFile, int videoId)
         {
             if (ModelState.IsValid)
             {
-                var entity = db.files.Add(new file{ video_id = videoId, url = trailer.url, title = trailer.title, trailer = true, creation_date = DateTime.Now});
+                var entity = db.files.Add(new file { video_id = videoId, url = modelFile.url, title = modelFile.title, trailer = true, creation_date = DateTime.Now });
                 db.SaveChanges();
-                trailer.id = entity.id;
+                modelFile.id = entity.id;
             }
-            return Json(new[] { trailer }.ToDataSourceResult(request, ModelState));
+            return Json(new[] { modelFile }.ToDataSourceResult(request, ModelState));
         }
 
         public ActionResult Trailers_update([DataSourceRequest]DataSourceRequest request, file trailer)
