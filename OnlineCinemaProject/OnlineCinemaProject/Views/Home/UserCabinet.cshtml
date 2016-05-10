@@ -1,0 +1,79 @@
+﻿@using OnlineCinemaProject.Models
+@model aspnetuser
+
+@{
+    ViewBag.Title = Model.UserName;
+    Layout = "~/Views/Shared/AMovie.cshtml";
+}
+
+<section class="container">
+    <div class="col-sm-8 col-md-9">
+        <div class="movie">
+            <h2 class="page-heading">Личный кабинет</h2>
+            <div class="movie__info">
+                <div class="col-sm-4 col-md-3 movie-mobile">
+                    <div class="movie__images">
+                        <span class="movie__rating"></span>
+                        <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" data-holder-rendered="true" style="width: 200px; height: 200px;">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-8">
+                    <p class="movie__option"><strong>Имя: </strong> @Model.FirstName</p>
+                    <p class="movie__option"><strong>Фамилия: </strong> @Model.LastName</p>
+                    <p class="movie__option"><strong>Логин: </strong>@Model.UserName</p>
+                    <p class="movie__option"><strong>Дата рождения: </strong>@Model.BirthDate</p>
+                    <p class="movie__option"><strong>Баланс: </strong>@Model.Balance</p>
+
+
+
+                    <div class="movie__btns">
+                        <a href="#" class="btn btn-md btn--warning">Редактировать</a>
+                        <a href="#" class="watchlist">Пополнить баланс</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"></h1>
+                </div>
+
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                        <li role="presentation" class="active"><a href="#payments" aria-controls="payments" role="tab" data-toggle="tab">Платежи</a></li>
+                        <li role="presentation"><a href="#watch_history" aria-controls="watch_history" role="tab" data-toggle="tab">История просмотров</a></li>
+                        <li role="presentation"><a href="#my_serials" aria-controls="my_serials" role="tab" data-toggle="tab">Сериалы</a></li>
+                        <li role="presentation"><a href="#my_films" aria-controls="my_films" role="tab" data-toggle="tab">Фильмы</a></li>
+                        <li role="presentation"><a href="#my_subscriptions" aria-controls="my_films" role="tab" data-toggle="tab">Подписки</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="payments">@Html.Partial("_PaymentsPartial",Model.payments)</div>
+                        <div role="tabpanel" class="tab-pane" id="watch_history">@Html.Partial("_HistoryPartial", Model.histories)</div>
+                        <div role="tabpanel" class="tab-pane" id="my_serials">@Html.Partial("_UserSerialsPartial", Model.userseasons)</div>
+                        <div role="tabpanel" class="tab-pane" id="my_films">@Html.Partial("_UserFilmsPartial", Model.purchases)</div>
+                        <div role="tabpanel" class="tab-pane" id="my_subscriptions">@Html.Partial("_UserSubscriptionsPartial", (List<subscription>)ViewBag.subscriptions)</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <aside class="col-sm-4 col-md-3">
+        <div class="sitebar">
+            <div class="banner-wrap">
+                <img id="firstBanner" alt="banner" src="">
+            </div>
+            
+        </div>
+    </aside>
+</section>
+            

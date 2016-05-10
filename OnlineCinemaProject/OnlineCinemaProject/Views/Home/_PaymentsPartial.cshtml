@@ -1,0 +1,32 @@
+﻿@model ICollection<OnlineCinemaProject.Models.payment>
+           
+    
+    @if (Model.Count== 0)
+    {
+        <p>Пользователь пока не совершил ни одну платежную транзакцию!</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Сумма</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var payment in Model)
+                {
+                    <tr>
+                        <td>@payment.id</td>
+                        <td>@payment.title</td>
+                        <td>@payment.amount</td>
+                        <td>@payment.payment_date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+  

@@ -1,0 +1,55 @@
+﻿@using OnlineCinemaProject.Models
+@model ICollection<subscription>
+@if (Model.Count == 0)
+{
+    <p>У вас нет подписок!</p>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название тарифа</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usermovie in (List<tariff>)ViewBag.tariffs)
+            {
+                <tr>
+                    <td>@usermovie.name</td>
+                    <td>@usermovie.price</td>
+                    <td>
+                        <a href="@Url.Action()">Подписаться</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Название тарифа</th>
+                <th>Дата начала</th>
+                <th>Дата конца</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usermovie in Model)
+            {
+                <tr>
+                    <td>@usermovie.id</td>
+                    <td>@usermovie.tariff.name</td>
+                    <td>@usermovie.start</td>
+                    <td>@usermovie.end</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+

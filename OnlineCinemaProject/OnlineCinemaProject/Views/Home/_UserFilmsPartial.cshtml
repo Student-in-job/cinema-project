@@ -1,0 +1,31 @@
+﻿@using OnlineCinemaProject.Models
+@model ICollection<purchase>
+    @if (Model.Count == 0)
+    {
+        <p>У ползователя нет оплаченных фильмов!</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название фильм</th>
+                    <th>Дата оплаты</th>
+                    <th>номер плотежа</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usermovie in Model)
+                {
+                    <tr>x`
+                        <td>@usermovie.id</td>
+                        <td>@usermovie.file.video.name</td>
+                        <td>@usermovie.payment.payment_date</td>
+                        <td>@usermovie.payment_id</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
