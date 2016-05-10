@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:orientation="vertical"
+		android:layout_gravity="center"
+		android:background="@color/black"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+	<include layout="@layout/actionbar"/>
+
+	<RelativeLayout
               android:orientation="vertical"
               android:layout_gravity="center"
-              android:background="@color/accent_material_light"
+              android:background="@color/black"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -85,7 +96,7 @@
 	</LinearLayout>
 	</LinearLayout>
 
-	<com.android.online.app.ui.BoldTextView
+	<com.ognev.online.app.ui.BoldTextView
 			android:id="@+id/registration"
 			android:text="@string/registration"
 			android:textColor="@color/white"
@@ -102,8 +113,9 @@
 			android:layout_margin="20dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:theme="@style/WhiteButton"
+			android:background="@color/white"
 			android:padding="15dp"
 			android:textColor="@color/black"
 			android:text="@string/singin"/>
 </RelativeLayout>
+</LinearLayout>

@@ -53,7 +53,7 @@
 
 
 				<TextView
-						android:text="Серафим Ильич"
+						android:id="@+id/name"
 						android:textSize="28sp"
 						android:layout_marginLeft="10dp"
 						android:layout_marginBottom="?attr/actionBarSize"

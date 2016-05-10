@@ -65,11 +65,30 @@
 
 			<TextView
 					android:id="@+id/genre"
-					android:text="Блокбастер ,2015 год"
+					android:text="Блокбастер, 2015 год"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"/>
 
-		<com.android.online.app.ui.MediumTextView
+
+	<TextView
+					android:id="@+id/rating"
+					android:layout_marginTop="20dp"
+					android:text="Рэйтинг 4.5"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+
+			<TextView
+					android:id="@+id/trailer"
+					android:layout_marginTop="10dp"
+					android:textColor="@color/accent_material_light"
+					android:paddingTop="10dp"
+					android:paddingBottom="10dp"
+					android:paddingRight="10dp"
+					android:text="Смотреть трейлер"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+
+		<com.ognev.online.app.ui.MediumTextView
 				android:id="@+id/details"
 				android:layout_marginTop="10dp"
 				android:text="@string/video_desc"
@@ -99,7 +118,7 @@
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content">
 				<TextView
-						android:text="Серафим Ильич"
+						android:id="@+id/name"
 						android:layout_marginLeft="6dp"
 						android:textColor="@color/black"
 						android:textSize="18sp"
@@ -120,6 +139,7 @@
 
 
 			<TextView
+					android:id="@+id/comments_tv"
 					android:text="Комментарии"
 					android:layout_marginTop="10dp"
 					android:textColor="@color/black"

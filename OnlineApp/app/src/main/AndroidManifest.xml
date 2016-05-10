@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.online.app" >
+    package="com.ognev.online.app" >
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:name=".App"
+        android:name="com.ognev.online.app.App"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.SplashScreen"
+            android:name="com.ognev.online.app.activity.SplashScreen"
+            android:launchMode="singleTask"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,13 +21,24 @@
             </intent-filter>
         </activity>
 
-		<activity android:name=".activity.PlayerActivity" android:configChanges="orientation|screenSize"/>
-		<activity android:name=".activity.LoginActivity"/>
-		<activity android:name=".activity.VideoActivity"/>
-		<activity android:name=".activity.RegistrationActivity"/>
-		<activity android:name=".activity.MainActivity"/>
-		<activity android:name=".activity.ReviewsActivity"/>
-    </application>
+		<activity android:name="com.ognev.online.app.activity.PlayerActivity" android:configChanges="orientation|screenSize"/>
+		<activity android:name="com.ognev.online.app.activity.LoginActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.VideoActivity" />
+		<activity android:name="com.ognev.online.app.activity.RegistrationActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.MainActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.ReviewsActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.TariffActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.SerialActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.SeasonActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.PlayerEpisodeActivity" android:launchMode="singleTask"/>
+		<activity android:name="com.ognev.online.app.activity.TeaserActivity" android:launchMode="singleTask"/>
+
+		<receiver android:name="com.ognev.online.app.ui.TeaserReceiver">
+			<intent-filter>
+				<action android:name="taiser"/>
+			</intent-filter>
+		</receiver>
+	</application>
 
 
 

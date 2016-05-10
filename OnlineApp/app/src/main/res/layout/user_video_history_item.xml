@@ -14,7 +14,7 @@
 			android:layout_marginLeft="10dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
-	<com.android.online.app.ui.BoldTextView
+	<com.ognev.online.app.ui.BoldTextView
 			android:id="@+id/video_name"
 			android:text="asdafkjnd"
 			android:textSize="20sp"
