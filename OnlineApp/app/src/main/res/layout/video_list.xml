@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:orientation="vertical"
+             android:background="@color/milky"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+		<fr.ganfra.materialspinner.MaterialSpinner
+				android:id="@+id/genre_spinner"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="16dp"
+				app:ms_multiline="false"
+				app:ms_hint="@string/all_genres"
+				app:ms_enableFloatingLabel="false"
+				app:ms_enableErrorLabel="false"
+				app:ms_floatingLabelText="floating label"
+				app:ms_baseColor="@color/color_primary_light"
+				app:ms_highlightColor="@color/red"
+				app:ms_errorColor="@color/material_login_register_color"
+				app:ms_thickness="1px"
+				app:ms_hintColor="@color/indicator"
+				app:ms_arrowColor="@color/indicator"
+				app:ms_arrowSize="16dp"
+				app:ms_alignLabels="false"
+				app:ms_floatingLabelColor="@color/color_primary"/>
+	<android.support.v7.widget.RecyclerView
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			android:id="@+id/list"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+	</LinearLayout>
+
+	<ProgressBar
+			android:id="@+id/progress"
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+</FrameLayout>

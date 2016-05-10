@@ -29,6 +29,7 @@ android:layout_height="wrap_content">
 
 
 	<RatingBar
+			android:id="@+id/rate"
 			android:rating="2.0"
 			android:progress="2"
 			android:numStars="5"

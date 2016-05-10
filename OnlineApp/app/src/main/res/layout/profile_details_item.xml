@@ -25,7 +25,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"/>
 
-			<com.android.online.app.ui.MediumTextView
+			<com.ognev.online.app.ui.MediumTextView
 					android:id="@+id/key"
 					android:text="First name"
 					android:layout_width="match_parent"
