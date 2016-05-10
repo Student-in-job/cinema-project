@@ -1,7 +1,11 @@
-﻿@model OnlineCinemaProject.Models.video
+﻿@using OnlineCinemaProject.Models
+@using OnlineCinemaProject.Models.ViewModels
+@model OnlineCinemaProject.Models.video
 @Html.AntiForgeryToken()
 @Html.HiddenFor(model => model.id)
 @Html.HiddenFor(model => model.img_url)
+@Html.HiddenFor(model => model.score)
+@Html.HiddenFor(model => model.last_score_calc)
 @Html.ValidationSummary()
 <div class="form-horizontal">
     <div class="form-group">
@@ -39,6 +43,17 @@
             @Html.ValidationMessageFor(model => model.release_date)
         </div>
     </div>
+    @if (Model.id > 0)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.score, "Рейтинг", new {@class = "control-label col-md-2"})
+            <div class="col-sm-10">
+                <span class="rating-display">@Html.DisplayFor(model => model.score)</span>
+                @Html.Kendo().Button().Name("refresh-rating").Icon("refresh").Events(e => e.Click("updateRating"))
+                @Html.Kendo().Button().Name("show-rating").Icon("dimension").Events(e => e.Click("showRating"))
+            </div>
+        </div>
+    }
     <div class="form-group">
         @Html.LabelFor(model => model.img_url, "Изображение", new {@class = "control-label col-md-2"})
         <div class="col-sm-10">
@@ -53,7 +68,7 @@
             {
                 i.Add().Value("0").Text("Фильм");
                 i.Add().Value("1").Text("Сериал");
-            })
+            }).Events(e => e.Change("SetBlockVisibility"))
             @Html.ValidationMessageFor(model => model.type)
         </div>
     </div>
@@ -103,7 +118,205 @@
         </div>
     </div>
 </div>
+@if (Model.id > 0)
+{
+    <section>
+        <h2>Трейлеры</h2>
+        @(Html.Kendo().Grid<file>()
+              .Name("tailers")
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Model(model =>
+                  {
+                      model.Id(entity => entity.id);
+                      model.Field(f => f.video_id).Editable(false);
+                  })
+                  .Read(read => read.Action("Trailers_read", "File", new {videoId = Model.id}))
+                  .Create(read => read.Action("Trailers_create", "File", new { videoId = Model.id }))
+                  .Update(read => read.Action("Trailers_update", "File", new { videoId = Model.id }))
+                  .Destroy(read => read.Action("Trailers_destroy", "File", new { videoId = Model.id }))
+              )
+              .Columns(columns =>
+              {
+                  columns.Bound(trailer => trailer.id).Hidden();
+                  columns.Bound(trailer => trailer.title).Title("Название");
+                  columns.Bound(trailer => trailer.url).Title("Файл")
+                      .ClientTemplate("<video width='320' height='240'><source src='../../uploads/#:url#' type='video/mp4'></video> ")
+                      .Filterable(false)
+                      .Sortable(false)
+                      .Width(200);
+                  columns.Command(commands =>
+                  {
+                      commands.Edit();
+                      commands.Destroy();
+                  }).Width(250);
+              })
+              .ToolBar(t => t.Create())
+              .Sortable()
+              .Filterable())
+    </section>
+    <section id="movies-container" style='@(Model.type == 1 ? "display:none" : string.Empty)'>
+        <h2>Фильмы</h2>
+        @(Html.Kendo().Grid<file>()
+              .Name("movies")
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Model(model => { model.Id(entity => entity.id); })
+                  .Read(read => read.Action("Files_read", "File", new { videoId = Model.id }))
+                  .Create(read => read.Action("Files_create", "File", new { videoId = Model.id }))
+                  .Update(read => read.Action("Files_update", "File", new { videoId = Model.id }))
+                  .Destroy(read => read.Action("Files_destroy", "File", new { videoId = Model.id }))
+              )
+              .Columns(columns =>
+              {
+                  columns.Bound(movie => movie.id).Hidden();
+                  columns.Bound(movie => movie.creation_date).Title("Дата добавления").ClientTemplate("#= kendo.toString(creation_date, 'yyyy-MM-dd') #").Width(100).EditorTemplateName("DateTimeNullable");
+                  columns.Bound(movie => movie.price).Title("Стоимость");
+                  columns.Bound(movie => movie.quality).Title("Качество");
+                  columns.Bound(movie => movie.url).Title("Файл")
+                      .ClientTemplate("<video width='320' height='240'><source src='../../uploads/#:url#' type='video/mp4'></video> ")
+                      .Filterable(false)
+                      .Sortable(false)
+                      .Width(200);
+                  columns.Command(commands =>
+                  {
+                      commands.Edit();
+                      commands.Destroy();
+                  }).Width(250);
+              })
+              .ToolBar(t => t.Create())
+              .Sortable()
+              .Filterable()
+              )
+    </section>
+    <section id="seasons-container" style='@(Model.type == 0 ? "display:none" : string.Empty)'>
+        <h2>Сезоны</h2>
+        @(Html.Kendo().Grid<season>()
+              .Name("seasons")
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Model(model => { model.Id(entity => entity.id); })
+                  .Read(read => read.Action("Seasons_read", "Season", new {videoId = Model.id}))
+                  .Create(read => read.Action("Seasons_create", "Season", new {videoId = Model.id}))
+                  .Update(read => read.Action("Seasons_update", "Season", new {videoId = Model.id}))
+                  .Destroy(read => read.Action("Seasons_destroy", "Season", new {videoId = Model.id}))
+              )
+              .Columns(columns =>
+              {
+                  columns.Bound(trailer => trailer.id).Hidden();
+                  columns.Bound(movie => movie.release_date).Title("Дата выхода").ClientTemplate("#= release_date ? kendo.toString(release_date, 'yyyy-MM-dd') :'' #").Width(100).EditorTemplateName("DateTimeNullable");
+                  columns.Bound(movie => movie.price).Title("Стоимость");
+                  columns.Bound(movie => movie.title).Title("Название");
+                  columns.Bound(movie => movie.season_number).Title("№ сезона");
+                  columns.Command(commands =>
+                  {
+                      commands.Edit();
+                      commands.Destroy();
+                  }).Width(250);
+              })
+              .ToolBar(t => t.Create())
+              .ClientDetailTemplateId("season-episodes")
+              .Events(e => e.DataBound("function() {this.expandRow(this.tbody.find(\"tr.k-master-row\"));}"))
+              .Sortable()
+              .Filterable()
+              )
+    </section>
+    <script id="season-episodes" type="text/kendo-tmpl">
+        @(Html.Kendo().Grid<file>()
+              .Name("season#=id#")
+              .Columns(columns =>
+              {
+                  columns.Bound(o => o.title).Title("Название");
+                  columns.Bound(o => o.url).Title("Файл").ClientTemplate("<video width='320' height='240'><source src='../../uploads/\\#:url\\#' type='video/mp4'></video> ")
+                      .Filterable(false)
+                      .Sortable(false)
+                      .Width(200);
+                  columns.Command(commands =>
+                  {
+                      commands.Edit();
+                      commands.Destroy();
+                  }).Width(250);
+              })
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Model(model => { model.Id(entity => entity.id); })
+                  .Read(read => read.Action("Episodes_read", "Episode", new {seasondId = "#=id#"}))
+                  .Create(read => read.Action("Episodes_create", "Episode", new {seasondId = "#=id#"}))
+                  .Update(read => read.Action("Episodes_update", "Episode", new {seasondId = "#=id#"}))
+                  .Destroy(read => read.Action("Episodes_destroy", "Episode", new {seasondId = "#=id#"}))
+              )
+              .ToolBar(t => t.Create())
+              .Sortable()
+              .ToClientTemplate())
+    </script>
+    <section>
+        <h2>Комментарии</h2>
+        @(Html.Kendo().Grid<CommentModel>()
+              .Name("comments")
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Model(model =>
+                  {
+                      model.Id(entity => entity.id);
+                      model.Field(f => f.video_id).Editable(false);
+                  })
+                  .Read(read => read.Action("Comments_read", "Overview", new { videoId = Model.id }))
+                  .Create(read => read.Action("Comments_create", "Overview", new { videoId = Model.id }))
+                  .Update(read => read.Action("Comments_update", "Overview", new { videoId = Model.id }))
+                  .Destroy(read => read.Action("Comments_destroy", "Overview", new { videoId = Model.id }))
+              )
+              .Columns(columns =>
+              {
+                  columns.Bound(comment => comment.id).Hidden();
+                  columns.Bound(comment => comment.user).Title("Пользователь").ClientTemplate("#=  $kendoHtmlEncode(data.user==null?'':user.name)   #").Filterable(false).EditorTemplateName("Comment.UserId");
+                  columns.Bound(comment => comment.comment).Title("Комментарий").EditorTemplateName("Comment.CommentText");
+                  columns.Bound(comment => comment.rating).Title("Оценка").EditorTemplateName("Comment.CommentRating");
+                  columns.Bound(movie => movie.creation_date).Title("Дата создания").ClientTemplate("#= creation_date ? kendo.toString(creation_date, 'yyyy-MM-dd') :'' #").Width(150).EditorTemplateName("DateTimeNullable");
+                  columns.Command(commands =>
+                  {
+                      commands.Edit();
+                      commands.Destroy();
+                  }).Width(250);
+              })
+              .ToolBar(t => t.Create())
+              .Editable(editable => editable.Mode(GridEditMode.InLine))
+              .Scrollable()
+              .Sortable()
+              .Pageable()
+              .Filterable())
+    </section>
+}
+
+@(Html.Kendo().Window()
+      .Name("rating-chart-window")
+      .Title("Распределение оценок")
+      .Content(
+          Html.Kendo().Chart<ScoreModel>()
+              .Name("score-chart")
+              .Title("Распределение оценок")
+              .DataSource(ds => ds.Read(read => read.Action("ScoreChart", "Video", new {Model.id})))
+              .Series(series => { series.Column(m => m.Count).Name("Кол-во голосов"); })
+              .CategoryAxis(axis => axis
+                  .Categories(m => m.Score)
+                  .Labels(labels => labels.Rotation(-90))
+                  .MajorGridLines(lines => lines.Visible(false))
+              )
+              .ValueAxis(axis => axis.Numeric()
+                  .Labels(labels => labels.Format("{0:N0}"))
+                  .Line(line => line.Visible(false))
+              )
+              .Tooltip(tooltip => tooltip
+                  .Visible(true)
+                  .Format("{0:N0}")
+              ).ToHtmlString()).Draggable().Resizable().Width(500).Actions(actions => actions.Minimize().Maximize().Close()).Visible(false)
+      )
+
+
 <script type="text/javascript">
+    kendo.culture("ru-RU");
+    kendo.ui.validator.rules.mvcdate = function (input) {
+        return !input.is("[data-val-date]") || input.val() === "" || kendo.parseDate(input.val(), "dd.mm.yyyy") !== null;
+    };
     $(document).ready(function () {
         jQuery.validator.addMethod(
             'date',
@@ -113,11 +326,11 @@
                 };
                 var result = false;
                 try {
-                            var date = kendo.parseDate(value, "dd.MM.yyyy");
+                    var date = kendo.parseDate(value, "dd.MM.yyyy");
                     result = true;
-                            if(!date){
-                                result = false;
-                            }
+                    if (!date) {
+                        result = false;
+                    }
                 } catch (err) {
                     result = false;
                 }
@@ -126,4 +339,21 @@
             ''
         );
     });
+  
+    function SetBlockVisibility() {
+        $("#movies-container").toggle();
+        $("#seasons-container").toggle();
+    }
+
+    function updateRating(e) {
+        e.preventDefault();
+        $.post("@Url.Action("UpdateScore")", { id: "@Model.id" }).done(function(data) {
+            $(".rating-display").html(data);
+        });
+    }
+
+    function showRating(e) {
+        e.preventDefault();
+        $("#rating-chart-window").data("kendoWindow").center().open();
+    }
 </script>

@@ -44,21 +44,24 @@ namespace OnlineCinemaProject.Controllers.Api
 
             if (sb != null)
             {
+
                 db.statistics_banner.Attach(sb);
                 sb.date = DateTime.Now;
-                sb.show_amount = banner.show_amount;
+                sb.show_amount = (int?) banner.show_amount;
                 var entry1 = db.Entry(sb);
                 entry1.Property(e => e.show_amount).IsModified = true;
                 entry1.Property(e => e.date).IsModified = true;
                 // other changed properties
                 db.SaveChanges();
+
+
             }
             else
             {
                 sb = new statistics_banner();
                 sb.date = DateTime.Now;
                 sb.id_banner = banner.id;
-                sb.show_amount = banner.show_amount;
+                sb.show_amount = (int?) banner.show_amount;
                 sb.id_user = id_user;
                 db.statistics_banner.Add(sb);
                 db.SaveChanges();

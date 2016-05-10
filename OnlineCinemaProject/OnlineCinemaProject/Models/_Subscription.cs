@@ -1,11 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+// ReSharper disable All
 
 namespace OnlineCinemaProject.Models
 {
-    /*public partial class subscription
+    public class SubscriptionInfo
+    {
+        public int id;
+        public int? tariffId;
+        public string tariffName;
+        public DateTime? start;
+        public DateTime? end;
+    }
+
+    public partial class subscription
     {
         public bool Active()
         {
@@ -15,5 +22,18 @@ namespace OnlineCinemaProject.Models
             }
             return false;
         }
-    }*/
+
+        public SubscriptionInfo GetSubscriptionInfo()
+        {
+            return new SubscriptionInfo
+            {
+                id = id,
+                end = end,
+                start = start,
+                tariffId = tariff_id,
+                tariffName = tariff.name
+
+            };
+        }
+    }
 }

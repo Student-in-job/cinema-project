@@ -1,7 +1,94 @@
 ﻿@{
     ViewBag.Title = "About";
+    Layout = "~/Views/Shared/AMovie.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<style>
+    .round {
+        border-radius: 100px; /* Радиус скругления */
+        border: 0px solid; /* Параметры рамки */
+        box-shadow: 0 0 7px #666; /* Параметры тени */
+    }
+    .class1 {
+        padding-left: 40px;
+        padding-right: 40px;
+
+    }
+</style>
+<div class="row" style="padding-top: 30px">
+    <h1 style="text-align: center;">Заголовок</h1>
+    <div class="row" style="text-align: center;">
+        <div class=" col-xs-5 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/Заир.jpg" class="round" alt="" width="200" height="200">
+                <h2>Олимов Заир</h2>
+                <p> Разработка клиентской части Android-приложение "Illusion"</p>
+                <p> +998909159324</p>
+                <p>Email: zair407@gmail.com</p>
+            </div>
+
+        </div>
+        <div class="col-xs-5 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/Рома.jpg" class="round" alt="" width="200" height="200">
+                <h2>Арыскалиев Рамазан</h2>
+                <p>Разработка бильнговой системы для онлайн-кинотеатра "Illusion"</p>
+                <p>тел.+998913959334</p>
+                <p>Email: ramazan.333a@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="col-xs-5 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/Лиля.jpg" class="round" alt="" width="200" height="200">
+                <h3>Мазитова Лилия</h3>
+                <p> Разработка системы для управления рекламным контентом для онлайн-кинотеатра "Illusion"</p>
+                <p>тел.+998935718543</p>
+                <p>Email: Lilya.mazitova@gmail.com</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="row " style="text-align: center;">
+
+        <div class="col-xs-7 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/Иван.JPG" class="round" alt="" width="200" height="200">
+                <h3>Белявский Иван</h3>
+                <h5> Разработка системы администрирования для онлайн-кинотеатра "Illusion"</h5>
+                <p>тел.+9989</p>
+                <p>Email: ivan.belyavskiy1993@gmail.com</p>
+            </div>
+        </div>
+        <div class="col-xs-7 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/Севиля.jpg" class="round" alt="" width="200" height="200">
+                <h3>Насибова Севиль</h3>
+                <p> Разработка системы для управления контентом для онлайн-кинотеатра "Illusion"</p>
+                <p>тел.+998909437742</p>
+                <p>Email: Nsevilya92@gmail.com</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="row " style="text-align: center;">
+        <h1 style="text-align: center;">Руководители проекта</h1>
+        <div class="col-xs-7 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/" class="round" alt="" width="200" height="200">
+                <h3>Пак Виталий Станиславович</h3>
+                <p>тел.+998909437742</p>
+                <p>Email: pak-vitalik@inbox.ru</p>
+            </div>
+        </div>
+
+        <div class="col-xs-7 col-sm-4 placeholder">
+            <div class="class1">
+                <img src="~/uploads/" class="round" alt="" width="200" height="200">
+                <h3>Когай Валерий Николаевич</h3>
+                <p>+998974104972</p>
+                <p>Email: kvnjul@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</div>

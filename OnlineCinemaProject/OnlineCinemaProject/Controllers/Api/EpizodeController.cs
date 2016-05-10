@@ -1,11 +1,11 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -22,7 +22,7 @@ namespace OnlineCinemaProject.Controllers.Api
             var episode = _db.episodes.Find(episodeId);
             if (episode == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -40,10 +40,10 @@ namespace OnlineCinemaProject.Controllers.Api
             var user = _db.aspnetusers.Find(_userId);
             if (user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return Request.CreateResponse(HttpStatusCode.NotFound, Response.EmptyResponse);
             }
 
-            if (!UserUtils.CheckAccess(user,episode))
+            if (!user.CheckAccess(episode))
             {
                 return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessDenied);
             }
@@ -57,7 +57,8 @@ namespace OnlineCinemaProject.Controllers.Api
 
             _db.episodehistories.Add(episodehistory);
             _db.SaveChanges();
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.MovieAccessAllowed);
+            return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessAllowed);
         }
     }
 }
+*/

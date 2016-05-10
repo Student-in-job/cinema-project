@@ -5,8 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -15,10 +15,30 @@ namespace OnlineCinemaProject.Controllers.Api
         readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
         IEnumerable<string> _headerValues;
         string _userId;
-        
+
+        [HttpGet]
+        [Route("api/tariff")]
+        public JSendResponse GetTariffs()
+        {
+            var tariffs = _db.tariffs.Where(i => i.active == true).ToList();
+            var tiriffInfos = tariffs.Select(tariff => tariff.GetTariffInfo()).ToList();
+            return JSendResponse.succsessResponse(tiriffInfos);
+        }
+
+        [HttpGet]
+        [Route("api/tariff/{id}")]
+        public JSendResponse GetTariffsById(int id)
+        {
+            var tariff = _db.tariffs.Single(i => i.active == true && i.id == id);
+            var tiriffInfo = tariff.GetTariffInfo();
+             return JSendResponse.succsessResponse(tiriffInfo);
+        }
+
+
+
         [HttpGet]
         [Route("api/tariff/subscribe/{tariffId}")]
-        public HttpResponseMessage Subscribe(int tariffId)
+        public JSendResponse Subscribe(int tariffId)
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -26,23 +46,23 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+                return JSendResponse.succsessResponse(Error.UnAuthrizedUserError());
             }
             var tariff = _db.tariffs.Find(tariffId);
             var user = _db.aspnetusers.Find(_userId);
             if (tariff == null || user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return JSendResponse.errorResponse(Error.UserNotFound());
             }
             
-            if (!UserUtils.DrawMoney(tariff.price, user))
+            if (!user.DrawMoney((decimal) tariff.price))
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.LackOfMoney);
+                return JSendResponse.errorResponse(Error.LackOfMoney());
             }
             payment payment = new payment
             {
                 aspnetuser = user,
-                amount = tariff.price,
+                amount = (decimal) tariff.price,
                 title = "Подписка на тариф " + tariff.name,
                 payment_type = false,
                 payment_date = DateTime.Now,
@@ -64,7 +84,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
             _db.subscriptions.Add(subscription);
             _db.SaveChanges();
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.SubscriptionSacceeded);
+            return JSendResponse.succsessResponse();
         }
     }
 }

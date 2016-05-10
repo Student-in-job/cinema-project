@@ -1,0 +1,11 @@
+﻿@model OnlineCinemaProject.Models.ViewModels.UserViewModel
+
+@(Html.Kendo().DropDownListFor(m => m)
+        .AutoBind(false)
+        .OptionLabel("Выберите пользователя...")
+        .DataTextField("name")
+        .DataValueField("user_id")
+        .AutoBind(false)
+        .DataSource(source => source.Custom().Type("aspnetmvc-ajax").Transport(transport => { transport.Read("Users_read", "Overview"); }).Schema(schema => { schema.Data("Data").Total("Total"); }))
+)
+@Html.ValidationMessageFor(m => m)

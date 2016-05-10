@@ -1,10 +1,12 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
@@ -147,5 +149,54 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.season_id = new SelectList(db.seasons, "id", "name", episode.season_id);
             return View(episode);
         }
+
+        public ActionResult Episodes_read([DataSourceRequest]DataSourceRequest request, int seasondId)
+        {
+            DataSourceResult result = db.episodes.Where(t => t.season_id == seasondId).Select(v => new { v.url, v.id, v.name }).ToDataSourceResult(request);
+            return Json(result);
+        }
+
+        public ActionResult Episodes_create([DataSourceRequest]DataSourceRequest request, episode episode, int seasondId)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = db.episodes.Add(new episode { url = episode.url, season_id = seasondId, name = episode.name});
+                db.SaveChanges();
+                episode.id = entity.id;
+            }
+            return Json(new[] { episode }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Episodes_update([DataSourceRequest]DataSourceRequest request, episode episode)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new episode()
+                {
+                    url = episode.url,
+                    season_id = episode.season_id,
+                    name = episode.name
+                };
+                db.episodes.Attach(entity);
+                db.Entry(entity).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new[] { episode }.ToDataSourceResult(request, ModelState));
+        }
+
+        public ActionResult Episodes_destroy([DataSourceRequest]DataSourceRequest request, episode episode)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new episode()
+                {
+                    id = episode.id
+                };
+                db.episodes.Attach(entity);
+                db.episodes.Remove(entity);
+                db.SaveChanges();
+            }
+            return Json(new[] { episode }.ToDataSourceResult(request, ModelState));
+        }
     }
-}
+}*/

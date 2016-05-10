@@ -9,6 +9,12 @@ namespace OnlineCinemaProject.Models
     {
         public int ResponseCode { get; set; }
         public string ResponseMessage { get; set; }
+        public static Response CommentAdded = new Response
+        {
+            ResponseCode = 1006,
+            ResponseMessage = "Коментарии успешно добавлены"
+        };
+
         public static Response SubscriptionSacceeded = new Response
         {
             ResponseCode = 1004,
@@ -36,6 +42,17 @@ namespace OnlineCinemaProject.Models
         {
             ResponseCode = 1002,
             ResponseMessage = "Доступ к фильму разрешен"
+        };
+        public static Response LikeSucceeded = new Response
+        {
+            ResponseCode = 1005,
+            ResponseMessage = "И я тебя также"
+        };
+        
+        public static Response WrongPassword = new Response
+        {
+            ResponseCode = 1007,
+            ResponseMessage = "Пароль не верный"
         };
 
         public static Response EmptyResponse = new Response();

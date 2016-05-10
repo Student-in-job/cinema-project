@@ -23,11 +23,11 @@ namespace OnlineCinemaProject.Models
         public int id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
-        public System.DateTime creation_date { get; set; }
-        public decimal price { get; set; }
-        public bool adverticement_enabled { get; set; }
-        public bool new_films_enabled { get; set; }
-        public bool active { get; set; }
+        public Nullable<System.DateTime> creation_date { get; set; }
+        public Nullable<decimal> price { get; set; }
+        public Nullable<bool> adverticement_enabled { get; set; }
+        public Nullable<bool> new_films_enabled { get; set; }
+        public Nullable<bool> active { get; set; }
     
         public virtual ICollection<aspnetuser> aspnetusers { get; set; }
         public virtual ICollection<subscription> subscriptions { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +10,6 @@ namespace OnlineCinemaProject.Models.ViewModels
     {
         public VideoViewModel()
         {
-            this.likes = new HashSet<like>();
             this.overviews = new HashSet<overview>();
             this.countries = new HashSet<country>();
             this.actors = new HashSet<actor>();
@@ -30,10 +29,9 @@ namespace OnlineCinemaProject.Models.ViewModels
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
     
-        public ICollection<like> likes { get; set; }
         public ICollection<overview> overviews { get; set; }
         public ICollection<country> countries { get; set; }
         public ICollection<actor> actors { get; set; }
         public ICollection<genre> genres { get; set; }
     }
-}
+}*/

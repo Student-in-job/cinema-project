@@ -1,0 +1,6 @@
+﻿@model int?
+
+@(
+Html.Kendo().IntegerTextBoxFor(m => m).Min(0).Max(5)
+)
+@Html.ValidationMessageFor(m => m)

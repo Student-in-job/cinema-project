@@ -96,7 +96,7 @@
 
     <div class="col-md-6">
         <h4 class="sub-header">Оплаченные фильмы</h4>
-        @if (Model.usermovies.Count == 0)
+        @if (Model.purchases.Count == 0)
         {
             <p>У ползователя нет оплаченных фильмов!</p>
         }
@@ -112,11 +112,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var usermovie in Model.usermovies)
+                @foreach (var usermovie in Model.purchases)
                 {
                     <tr>
                         <td>@usermovie.id</td>
-                        <td>@usermovie.movy.video.name</td>
+                        <td>@usermovie.file.video.name</td>
                         <td>@usermovie.payment.payment_date</td>
                         <td>@usermovie.payment_id</td>
                     </tr>
@@ -161,8 +161,8 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <h4 class="sub-header">Просмотренные фильмы</h4>
-        @if (Model.moviehistories.Count == 0)
+        <h4 class="sub-header">История просмотра</h4>
+        @if (Model.histories.Count == 0)
         {
             <p>Ничего не просмотрено</p>
         }
@@ -177,49 +177,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var moviehistory in Model.moviehistories)
+                    @foreach (var moviehistory in Model.histories)
                     {
                         <tr>
                             <td>@moviehistory.id</td>
-                            <td>@moviehistory.movy.video.name</td>
-                            <td>@moviehistory.watching_date</td>
+                            <td>@moviehistory.file.video.name</td>
+                            <td>@moviehistory.watching_time</td>
                         </tr>
                     }
                 </tbody>
             </table>
         }
-
+        <div>
+            @Html.ActionLink("Изменить пароль", "Manage", "Account")
+        </div>
+        <div>
+            @Html.ActionLink("Удалить аккаунт", "RemoveAccountList", "Account")
+        </div>
     </div>
-    <div class="col-md-6">
-        <h4 class="sub-header">Просмотренные сериалы</h4>
-        @if (Model.episodehistories.Count == 0)
-        {
-            <p>Ничего не просмотрено</p>
-        }
-        else
-        {
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Название сериала</th>
-                        <th>Дата просмотра</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var episodehistory in Model.episodehistories)
-                    {
-                        <tr>
-                            <td>@episodehistory.id</td>
-                            <td>@episodehistory.episode.season.video.name
-                                <br/> <strong>сезон:</strong> @episodehistory.episode.season.name  <strong>эпизод:</strong> @episodehistory.episode.name
-                            </td>
-                            <td>@episodehistory.watching_date</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-
-    </div>
+    
 </div>

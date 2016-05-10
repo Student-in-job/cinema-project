@@ -16,17 +16,18 @@ namespace OnlineCinemaProject.Models
     {
         public season()
         {
-            this.episodes = new HashSet<episode>();
+            this.files = new HashSet<file>();
             this.userseasons = new HashSet<userseason>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
-        public decimal price { get; set; }
+        public string title { get; set; }
+        public Nullable<decimal> price { get; set; }
         public Nullable<System.DateTime> release_date { get; set; }
-        public int video_id { get; set; }
+        public Nullable<int> video_id { get; set; }
+        public Nullable<int> season_number { get; set; }
     
-        public virtual ICollection<episode> episodes { get; set; }
+        public virtual ICollection<file> files { get; set; }
         public virtual video video { get; set; }
         public virtual ICollection<userseason> userseasons { get; set; }
     }

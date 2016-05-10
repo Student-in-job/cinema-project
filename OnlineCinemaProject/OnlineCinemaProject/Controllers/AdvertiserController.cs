@@ -9,6 +9,7 @@ using PagedList;
 using System.Collections.Generic;
 using System.Web;
 
+
 namespace OnlineCinemaProject.Controllers
 {
     [Authorize(Roles = "PRManager")]
@@ -82,7 +83,8 @@ namespace OnlineCinemaProject.Controllers
 
         // GET: /Advertiser/Create
         public ActionResult Create()
-        {
+        { 
+           
             return View();
         }
 
@@ -91,7 +93,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number")] advertiser advertiser)
+        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number,password")] advertiser advertiser)
         {
            
             //if (ModelState.IsValid)
@@ -145,15 +147,14 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number")] advertiser advertiser)
+        public ActionResult Edit(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number,password")] advertiser advertiser)
         {
           
             if (ModelState.IsValid)
             {
                 if (file != null)
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
-                                                          + file.FileName);
+                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/") + file.FileName);
                     advertiser.img_url = file.FileName;
                 }
                 _db.Entry(advertiser).State = EntityState.Modified;
@@ -207,18 +208,88 @@ public ActionResult Delete(int id)
         }
         public ActionResult Personal_account(int id)
         {
-            OnlineCinemaEntities db = new OnlineCinemaEntities();
+            var allStatistcs = _db.statistics_banner;
+            var banners = _db.banners.Where(i=>i.adv_id == id);
+            var advStatistics = from a in allStatistcs join b in banners on a.id_banner equals b.id select a;
+           
+
+            var allStatistcs2 = _db.statistics_teaser;
+            var teasers = _db.teasers.Where(i => i.adv_id == id);
+            var advStatistics2 = from n in allStatistcs2 join t in teasers on n.id_teasers equals t.id select n;
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            advertiser advertiser = db.advertisers.Find(id);
+            advertiser advertiser = _db.advertisers.Find(id);
             if (advertiser == null)
             {
                 return HttpNotFound();
             }
-                return View(advertiser);
+
+             ViewBag.statistics = advStatistics.ToList();
+            ViewBag.statistics2 = advStatistics2.ToList();
+            return View(advertiser);
         }
 
-    }
-}
+        public ActionResult TeaserStatistics(int id)
+        {
+            return View(_db.statistics_teaser.Where(i => i.id_teasers == id).ToList());
+        }
+        public ActionResult BannerStatistics(int id)
+        {
+            return View(_db.statistics_banner.Where(i => i.id_banner == id).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult ActivateBanners(int id, List<int> args)
+        {
+            var banners = _db.banners.Where(i => i.adv_id == id).ToList();
+            int counter = 0;
+            foreach (var banner in banners)
+            {
+                banner.active = false;
+                if (args != null)
+                {
+                    foreach (var i in args)
+                    {
+                        if (banner.id == i)
+                        {
+                            banner.active = true;
+                        }
+                    }
+                }
+                _db.Entry(banner).State = EntityState.Modified;
+                _db.SaveChanges();
+
+            }
+            return Json(true);
+        }
+
+        public ActionResult ActivateTeasers(int id, List<int> args)
+        {
+            var teasers = _db.teasers.Where(i => i.adv_id == id).ToList();
+            int counter = 0;
+            foreach (var teaser in teasers)
+            {
+                teaser.active = false;
+                if (args != null)
+                {
+                    foreach (var i in args)
+                    {
+                        if (teaser.id == i)
+                        {
+                            teaser.active = true;
+                        }
+                    }
+                }
+                _db.Entry(teaser).State = EntityState.Modified;
+                _db.SaveChanges();
+
+            }
+            return Json(true);
+        }
+      
+      } 
+
+}    

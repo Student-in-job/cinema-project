@@ -1,0 +1,12 @@
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\CpuInfoClient.exe.config
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\CpuInfoClient.exe
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\CpuInfoClient.pdb
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\Newtonsoft.Json.dll
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\Microsoft.AspNet.SignalR.Core.xml
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Debug\Newtonsoft.Json.xml
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\obj\Debug\CpuInfoClient.csprojResolveAssemblyReference.cache
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\obj\Debug\CpuInfoClient.exe
+D:\Diplomka\OnlineCinemaProject\CpuInfoClient\obj\Debug\CpuInfoClient.pdb

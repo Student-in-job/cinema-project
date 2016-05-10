@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Web;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Routing;
 using System.Web.Mvc;
 using System.Web.Optimization;
-using OnlineCinemaProject.Controllers;
+using FluentScheduler;
+using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject
 {
@@ -18,7 +19,7 @@ namespace OnlineCinemaProject
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+            JobManager.AddJob<ScoreCallculationJob>(schedule => schedule.ToRunNow().AndEvery(ScoreCallculationJob.Interval).Minutes());
         }
 
 

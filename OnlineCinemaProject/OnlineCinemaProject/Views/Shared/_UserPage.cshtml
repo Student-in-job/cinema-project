@@ -1,0 +1,187 @@
+﻿@using Microsoft.AspNet.Identity
+@using OnlineCinemaProject.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>@ViewBag.Title</title>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/carousel.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+
+    <!-- end: Favicon and Touch Icons -->
+
+    <style type="text/css">
+        .jqstooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            background: rgb(0, 0, 0) transparent;
+            background-color: rgba(0,0,0,0.6);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px;
+            border: 1px solid white;
+            z-index: 10000;
+        }
+
+        .jqsfield {
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+        }
+    </style>
+</head>
+<!-- NAVBAR
+================================================== -->
+<body>
+    @{
+        List<genre> genres = ViewBag.Genres;
+    }
+
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">MoviePoint</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse header-nav">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">О нас</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("About","Home")">О проекте</a></li>
+                                    <li><a href="#">Размещение рекламы</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Фильмы</a>
+                                <ul class="dropdown-menu multi-column columns-2">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <ul class="multi-column-dropdown">
+                                                @for (int i = 0; i < 16; i++)
+                                                {
+                                                    <li><a href="#">@genres[i].name</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <ul class="multi-column-dropdown">
+                                                @for (int i = 16; i < genres.Count; i++)
+                                                {
+                                                    <li><a href="#">@genres[i].name</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сериалы</a>
+                                <ul class="dropdown-menu multi-column columns-2">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <ul class="multi-column-dropdown">
+                                                @for (int i = 0; i < 16; i++)
+                                                {
+                                                    <li><a href="#">@genres[i].name</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <ul class="multi-column-dropdown">
+                                                @for (int i = 16; i < genres.Count; i++)
+                                                {
+                                                    <li><a href="#">@genres[i].name</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </li>
+                            @*<li><a href="#about">Фильмы</a></li>
+                <li><a href="#contact">Сериалы</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>*@
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                        @*<ul class="nav navbar-nav pull-right">
+                            
+                            <li class="dropdown">
+                                <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <div class="avatar"><img src="~/uploads/avatar_placeholder.png" alt="Avatar"></div>
+                                    <div class="user">
+                                        <span class="hello">Welcome!</span>
+                                        <span class="name">@User.Identity.GetUserName()</span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-menu-title">
+
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope"></i> Messages</a></li>
+                                    <li><a href="#"><i class="fa fa-off"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                            <!-- end: User Dropdown -->
+                        </ul>*@
+                    </div>
+                </div>
+            </nav>
+
+        
+
+
+<div class="site-wrapper">
+    @RenderBody()
+</div>
+
+    <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="~/Scripts/core.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/custom.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    @RenderSection("scripts", required: false)
+    @RenderSection("styles", required: false)
+</body>
+</html>

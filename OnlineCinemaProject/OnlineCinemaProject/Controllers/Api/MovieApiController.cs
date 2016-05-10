@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
-using OnlineCinemaProject.Models.Utils;
 
 namespace OnlineCinemaProject.Controllers.Api
 {
@@ -16,9 +16,9 @@ namespace OnlineCinemaProject.Controllers.Api
         private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
 
-        [HttpGet]
-        [Route("api/movie/watch/{movieId}")]
-        public HttpResponseMessage WatchMovie(int movieId)
+        /*[HttpGet]
+        [Route("api/movie/watch/{fileId}")]
+        public JSendResponse WatchMovie(int fileId)
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -27,26 +27,26 @@ namespace OnlineCinemaProject.Controllers.Api
             movy movie = _db.movies.Find(movieId);
             if (movie == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return JSendResponse.errorResponse(Error.FileNotFoundError());
             }
             if (_userId==null )
             {
                 if (movie.price==0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessAllowed);                           
+                    return JSendResponse.succsessResponse();                           
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessDenied);
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
             }
             
             aspnetuser user = _db.aspnetusers.Find(_userId);
             if (user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return JSendResponse.errorResponse(Error.UserNotFound());
             }
 
-            if (!UserUtils.CheckAccess( user, movie))
+            if (!user.CheckAccess(movie))
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.MovieAccessDenied);
+                return JSendResponse.failResponse("Для доступа к видео оплатите стоимость просмотра!");
             }
             moviehistory moviehistory = new moviehistory
             {
@@ -56,12 +56,12 @@ namespace OnlineCinemaProject.Controllers.Api
             };
             _db.moviehistories.Add(moviehistory);
             _db.SaveChanges();
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.MovieAccessAllowed);
-        }
+            return JSendResponse.succsessResponse();
+        }*/
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("api/movie/buy/{movieId}")]
-        public HttpResponseMessage BuyMovie(int movieId)
+        public JSendResponse BuyMovie(int movieId)
         {
 
             if (Request.Headers.TryGetValues("token", out _headerValues))
@@ -70,19 +70,24 @@ namespace OnlineCinemaProject.Controllers.Api
             }
             if (_userId == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Response.UserNotAuthorithed);
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
             }
             var user = _db.aspnetusers.Find(_userId);
             var movie = _db.movies.Find(movieId);
 
-            if (movie == null || user == null)
+            if ( user == null)
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.NotFound, Response.EmptyResponse);
+                return JSendResponse.errorResponse(Error.UserNotFound());
+            }
+            if (movie == null)
+            {
+                return JSendResponse.errorResponse(Error.FileNotFoundError());
             }
 
-            if (!UserUtils.DrawMoney(movie.price, user))
+
+            if (!user.DrawMoney(movie.price))
             {
-                return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.LackOfMoney);
+                return JSendResponse.failResponse("Ндостаточно средств на балансе");
             }
 
             payment payment = new payment
@@ -106,8 +111,8 @@ namespace OnlineCinemaProject.Controllers.Api
             _db.usermovies.Add(userMovie);
             _db.SaveChanges();
 
-            return Request.CreateResponse<Response>(HttpStatusCode.OK, Response.SubscriptionSacceeded);
+            return JSendResponse.succsessResponse();
 
-        }
+        }*/
     }
 }

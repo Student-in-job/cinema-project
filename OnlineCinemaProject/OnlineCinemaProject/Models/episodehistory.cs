@@ -20,6 +20,5 @@ namespace OnlineCinemaProject.Models
         public System.DateTime watching_date { get; set; }
     
         public virtual aspnetuser aspnetuser { get; set; }
-        public virtual episode episode { get; set; }
     }
 }

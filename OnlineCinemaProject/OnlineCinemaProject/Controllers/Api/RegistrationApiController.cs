@@ -54,7 +54,8 @@ namespace OnlineCinemaProject.Controllers.Api
                     BirthDate = model.BirthDate,
                     Email = model.Email,
                     Sex = model.Sex,
-                    JoinDate = DateTime.Now
+                    JoinDate = DateTime.Now,
+                    Block = false
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -62,7 +63,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 {
                     UserManager.AddToRole(user.Id, "User");
                    // await SignInAsync(user, isPersistent: false);
-                    //return RedirectToAction("Index", "Home");
+                    return user.Id;
                 }
                 else
                 {
@@ -71,8 +72,7 @@ namespace OnlineCinemaProject.Controllers.Api
             }
 
             // If we got this far, something failed, redisplay form
-            return "succesful";
-            
+            return null;
            
         }
 

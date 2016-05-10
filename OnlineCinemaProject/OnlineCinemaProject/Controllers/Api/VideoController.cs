@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -30,7 +31,7 @@ namespace OnlineCinemaProject.Controllers.Api
     builder.EntitySet<videogenre>("videogenre"); 
     builder.EntitySet<movy>("movy"); 
     config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
-    */
+    #1#
     public class VideoController : ODataController
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
@@ -162,12 +163,12 @@ namespace OnlineCinemaProject.Controllers.Api
             return db.videos.Where(m => m.id == key).SelectMany(m => m.manufacturers);
         }
 
-        // GET odata/Video(5)/overviews
+        /#1#/ GET odata/Video(5)/overviews
         [Queryable]
         public IQueryable<overview> Getoverviews([FromODataUri] int key)
         {
             return db.videos.Where(m => m.id == key).SelectMany(m => m.overviews);
-        }
+        }#1#
 
         // GET odata/Video(5)/seasons
         [Queryable]
@@ -219,3 +220,4 @@ namespace OnlineCinemaProject.Controllers.Api
         }
     }
 }
+*/

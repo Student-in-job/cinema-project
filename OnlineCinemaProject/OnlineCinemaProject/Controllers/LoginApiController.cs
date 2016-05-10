@@ -38,18 +38,24 @@ namespace OnlineCinemaProject.Controllers
         // POST api/<controller>
         public String Post([FromBody]LoginViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                 var user =  UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
-                    
-                    return user.Id;
+                    if (user.Block == false)
+                    {
+                        return user.Id;
+                    }
+                    else
+                    {
+                        return "You are blocked";
+                    }
                 }
             }
-
-
-            return "error";
+            
+            return null;
         }
 
         // PUT api/<controller>/5
