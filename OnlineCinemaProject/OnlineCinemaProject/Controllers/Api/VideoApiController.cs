@@ -19,18 +19,36 @@ namespace OnlineCinemaProject.Controllers.Api
         private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
         //Get: api/video
-        [Route("api/movie")]
-        public JSendResponse GetMovies()
+        [Route("api/{count}/movie")]
+        public JSendResponse GetMovies(int count)
         {
             var videos = _db.videos.Where(i=>i.type == video.MOVIE).ToList();
-            List<MovieInfo> videoInfos = videos.Select(item => item.GetMovieInfo()).ToList();//todo is that is right?
+            var videos2 = videos;
+            if (count != 0)
+            {
+                videos2 = videos.Take(count).ToList();
+            }
+            else
+            {
+                videos2 = videos.ToList();
+            }
+            List<MovieInfo> videoInfos = videos2.Select(item => item.GetMovieInfo()).ToList();
             return JSendResponse.succsessResponse(videoInfos);
         }
-        [Route("api/serial")]
-        public JSendResponse GetSerial()
+        [Route("api/{count}/serial")]
+        public JSendResponse GetSerial(int count)
         {
             var videos = _db.videos.Where(i=>i.type == video.SERIAL).ToList();
-            List<SerialInfo> videoInfos = videos.Select(item => item.GetSerialInfo()).ToList();//todo is that is right?
+            var videos2 = videos;
+            if (count != 0)
+            {
+                videos2 = videos.Take(count).ToList();
+            }
+            else
+            {
+                videos2 = videos.ToList();
+            }
+            List<SerialInfo> videoInfos = videos2.Select(item => item.GetSerialInfo()).ToList();
             return JSendResponse.succsessResponse(videoInfos);
         }
 
@@ -56,36 +74,78 @@ namespace OnlineCinemaProject.Controllers.Api
             return JSendResponse.succsessResponse(video.GetSerialInfo());
         }
 
-        [Route("api/movie/new")]
-        public JSendResponse GetNewMovie()
+        [Route("api/movie/new/{count}")]
+        public JSendResponse GetNewMovie(int count)
         {
-            var videos = _db.videos.Where(i=>i.type == video.MOVIE).OrderByDescending(i=>i.release_date).Take(10).ToList();/*Todo add creation date column to the video table*/
-            List<MovieInfo> videoInfos = videos.Select(item => item.GetMovieInfo()).ToList();// todo i dont like i, but i do it
+            var videos = _db.videos.Where(i=>i.type == video.MOVIE).OrderByDescending(i=>i.release_date).ToList();
+            var videos2 = videos;
+            if (count != 0)
+            {
+                videos2 = videos.Take(count).ToList();
+            }
+            else
+            {
+                videos2 = videos.ToList();
+            }
+            List<MovieInfo> videoInfos = videos2.Select(item => item.GetMovieInfo()).ToList();
             return JSendResponse.succsessResponse(videoInfos);
         }
 
-        [Route("api/movie/popular")]
-        public JSendResponse GetMostPopularMovie()
+        [HttpGet]
+        [Route("api/movie/popular/{count}")]
+        public JSendResponse GetMostPopularMovie(int count)
         {
-            var movies = _db.files.OrderByDescending(i => i.histories.Count).Take(10).ToList();
-            ICollection<video> videos = movies.Select(movie => movie.video).ToList();
-            List<MovieInfo> videoInfos = videos.Select(item => item.GetMovieInfo()).ToList();
+            /*var movies = _db.files.OrderByDescending(i => i.histories.Count).Take(10).ToList();
+            ICollection<video> videos = movies.Select(movie => movie.video).ToList();*/
+            var videos = _db.videos.Where(i => i.type == video.MOVIE).OrderByDescending(i => i.score).ToList();
+            var videos2 = videos;
+            if (count != 0)
+            {
+                videos2 = videos.Take(count).ToList();
+            }
+            else
+            {
+                videos2 = videos.ToList();
+            }
+            List<MovieInfo> videoInfos = videos2.Select(item => item.GetMovieInfo()).ToList();
             return JSendResponse.succsessResponse(videoInfos);
         }
-        [Route("api/serial/new")]
-        public JSendResponse GetNewSerials()
+        
+        [HttpGet]
+        [Route("api/serial/new/{count}")]
+        public JSendResponse GetNewSerials(int count)
         {
-            var videos = _db.videos.Where(i=>i.type == video.SERIAL).OrderByDescending(i=>i.release_date).Take(10).ToList();/*Todo add creation date column to the video table*/
-            List<SerialInfo> videoInfos = videos.Select(item => item.GetSerialInfo()).ToList();// todo i dont like i, but i do it
+            var videos = _db.videos.Where(i=>i.type == video.SERIAL).OrderByDescending(i=>i.release_date).ToList();
+            var videos2 = videos;
+            if (count != 0)
+            {
+                videos2 = videos.Take(count).ToList();
+            }
+            else
+            {
+                videos2 = videos.ToList();
+            }
+            List<SerialInfo> videoInfos = videos2.Select(item => item.GetSerialInfo()).ToList();
             return JSendResponse.succsessResponse(videoInfos);
         }
 
-        [Route("api/serial/popular")]
-        public JSendResponse GetMostPopularSerials()//todo 
+        [HttpGet]
+        [Route("api/serial/popular/{count}")]
+        public JSendResponse GetMostPopularSerials(int count)//todo 
         {
-            var movies = _db.files.OrderByDescending(i => i.histories.Count).Take(10).ToList();
-            ICollection<video> videos = movies.Select(movie => movie.video).ToList();
-            List<SerialInfo> videoInfos = videos.Select(item => item.GetSerialInfo()).ToList();
+            /*var movies = _db.files.OrderByDescending(i => i.histories.Count).Take(10).ToList();
+            ICollection<video> videos = movies.Select(movie => movie.video).ToList();*/
+            var videos =_db.videos.Where(i => i.type == video.SERIAL).OrderByDescending(i => i.score).ToList();
+            var videos2 = videos;
+            if (count != 0)
+            {
+                videos2 = videos.Take(count).ToList();
+            }
+            else
+            {
+                videos2 = videos.ToList();
+            }
+            List<SerialInfo> videoInfos = videos2.Select(item => item.GetSerialInfo()).ToList();
             return JSendResponse.succsessResponse(videoInfos);
         }
 
@@ -165,7 +225,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
             if (!user.DrawMoney((decimal) file.price))
             {
-                return JSendResponse.failResponse("Ндостаточно средств на балансе");
+                return JSendResponse.errorResponse(Error.LackOfMoney());
             }
 
             payment payment = new payment
@@ -252,6 +312,45 @@ namespace OnlineCinemaProject.Controllers.Api
         }
 
         [HttpGet]
+        [Route("api/check/season/{id}")]
+        public JSendResponse CheckSeason(int id)
+        {
+            if (Request.Headers.TryGetValues("token", out _headerValues))
+            {
+                _userId = _headerValues.FirstOrDefault();
+            }
+
+            var file = _db.seasons.Find(id);
+
+            if (file == null)
+            {
+                return JSendResponse.errorResponse(Error.FileNotFoundError());
+            }
+
+            if (_userId == null)
+            {
+                if (file.price == 0)
+                {
+                    return JSendResponse.succsessResponse();
+                }
+                return JSendResponse.errorResponse(Error.UnAuthrizedUserError());
+            }
+
+            aspnetuser user = _db.aspnetusers.Find(_userId);
+            if (user == null)
+            {
+                return JSendResponse.errorResponse(Error.UserNotFound());
+            }
+
+            if (!user.CheckAccess(file))
+            {
+                return JSendResponse.errorResponse(Error.AccessToFileDenied());
+            }
+
+            return JSendResponse.succsessResponse();
+        }
+
+        [HttpGet]
         [Route("api/video/search/{key}")]
         public JSendResponse Search(string key)
         {
@@ -300,6 +399,16 @@ namespace OnlineCinemaProject.Controllers.Api
             _db.reviews.Add(review);
             _db.SaveChanges();
 
+            var video = _db.videos.Find(review.video_id);
+            if (video != null)
+            {
+                video.score = ScoreCallculationJob.GetVideoScore(video, _db);
+                video.last_score_calc = DateTime.Now;
+                _db.Entry(video).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+            
+
             return JSendResponse.succsessResponse();
         }
 
@@ -335,6 +444,15 @@ namespace OnlineCinemaProject.Controllers.Api
             overview.comment = overviewModel.comment;
             _db.Entry(overview).State = EntityState.Modified;
             _db.SaveChanges();
+
+            var video = _db.videos.Find(overview.video_id);
+            if (video != null)
+            {
+                video.score = ScoreCallculationJob.GetVideoScore(video, _db);
+                video.last_score_calc = DateTime.Now;
+                _db.Entry(video).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
 
             return JSendResponse.succsessResponse();
         }

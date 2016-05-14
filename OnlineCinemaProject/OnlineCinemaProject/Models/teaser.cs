@@ -28,6 +28,7 @@ namespace OnlineCinemaProject.Models
         public string name { get; set; }
         public string img_url { get; set; }
         public Nullable<bool> active { get; set; }
+        public string url { get; set; }
     
         public virtual advertiser advertiser { get; set; }
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }

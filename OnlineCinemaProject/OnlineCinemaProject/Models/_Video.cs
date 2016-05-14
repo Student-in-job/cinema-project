@@ -15,7 +15,7 @@ namespace OnlineCinemaProject.Models
         public string scenario { get; set; }
         public string director { get; set; }
         public string poster { get; set; }
-        public double rating { get; set; }
+        public decimal? rating { get; set; }
 
         public List<ActorInfo> actors;
 
@@ -87,7 +87,7 @@ namespace OnlineCinemaProject.Models
                 scenario = details,
                 releaseDate = release_date,
                 /*likes = likes.Count,*/
-                rating = GetRating(),
+                rating = score,
 
                 countries = new List<CountryInfo>(),
                 genres = new List<GenreInfo>(),
@@ -164,7 +164,7 @@ namespace OnlineCinemaProject.Models
                 scenario = details,
                 releaseDate = release_date,
                 /*likes = likes.Count,*/
-                rating = GetRating(),
+                rating = score,
                 
                 countries = new List<CountryInfo>(),
                 genres = new List<GenreInfo>(),
@@ -251,7 +251,7 @@ namespace OnlineCinemaProject.Models
                 scenario = details,
                 releaseDate = release_date,
                 /*likes = likes.Count,*/
-                rating = GetRating(),
+                rating = score,
 
                 countries = new List<CountryInfo>(),
                 genres = new List<GenreInfo>(),

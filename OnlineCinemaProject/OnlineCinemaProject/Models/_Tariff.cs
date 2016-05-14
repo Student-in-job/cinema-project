@@ -32,6 +32,15 @@ namespace OnlineCinemaProject.Models
             }
             return true;
         }
+        public bool Includes(season file)
+        {
+            if ((bool) !new_films_enabled) //если тариф не вкл. просмотр фильмов которые вышли на прокат недавно
+            {
+                //todo check if film is a prmier
+                return true;
+            }
+            return true;
+        }
         
         /*public bool Includes(season season)
         {

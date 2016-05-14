@@ -89,6 +89,24 @@ namespace OnlineCinemaProject.CustomResult
                 message = "Не хватает денег на счете"
             };
         }
+
+        public static Error AdverticementDisabled()
+        {
+            return new Error
+            {
+                code = 2009,
+                message = "Реклама отключена"
+            };
+        }
+
+        public static Error UserAlreadySubscribed()
+        {
+            return new Error
+            {
+                code = 2010,
+                message = "Подписаться на тариф можно только после окончания предыдущей"
+            };
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

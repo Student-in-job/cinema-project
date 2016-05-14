@@ -99,48 +99,74 @@ namespace OnlineCinemaProject.Models
 
     public partial class aspnetuser
     {
+        public subscription GetSudscription()
+        {
+            var sub = this.subscriptions.Where(i => i.tariff_id == TariffId).OrderBy(i => i.start).ToList();
+            if (sub.Count != 0)
+            {
+                return sub.FirstOrDefault();
+            }
+            return null;
+        }
+
         public string FullName()
         {
             return FirstName + " " + LastName;
         }
 
-        public subscription GetSubscription()
+
+        public bool CheckSubscription(file file)
         {
-            foreach (var subscription in subscriptions)
+            var sub = GetSudscription();
+            /*return subscriptions.Any(subscription => subscription.Active() && subscription.tariff.Includes(file));*/
+            if (sub != null)
             {
-                if (subscription.Active())
+                if (sub.Active() && tariff.Includes(file))
                 {
-                    return subscription;
+                    return true;
                 }
             }
-            return null;
+            return false;
+        }
+        
+        public bool CheckSubscription(season season)
+        {
+            var sub = GetSudscription(); 
+            /*return subscriptions.Any(subscription => subscription.Active() && subscription.tariff.Includes(file));*/
+            if (sub != null)
+            {
+                if (sub.Active() && tariff.Includes(season))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool CheckAccess(file file)
         {
-            if (file.video.type == video.SERIAL)
+            if (file.price == 0) // если фильм бесплатный то даем добро для просмотра
             {
-                if (file.season.price == 0)// если фильм бесплатный то даем добро для просмотра
-                {
-                    return true;
-                }
-                if (checkPurchases(file))
-                {
-                    return true;
-                }
+                return true;
             }
-            if (file.video.type == video.MOVIE)
+            if (checkPurchases(file))
             {
-                if (file.price == 0) // если фильм бесплатный то даем добро для просмотра
-                {
-                    return true;
-                }
-                if (checkPurchases(file))
-                {
-                    return true;
-                }
+                return true;
             }
-            return subscriptions.Any(subscription => subscription.Active() && subscription.tariff.Includes(file));
+            return CheckSubscription(file);
+        }
+        public bool CheckAccess(season season)
+        {
+                if (season.price == 0)// если фильм бесплатный то даем добро для просмотра
+                {
+                    return true;
+                }
+                if (checkPurchases(season))
+                {
+                    return true;
+                }
+
+                return CheckSubscription(season);
         }
 
         /*public bool CheckAccess(episode episode)
@@ -150,22 +176,20 @@ namespace OnlineCinemaProject.Models
         }*/
 
         public bool checkPurchases(file file)
+        {  
+            if (purchases.Count(i => i.file_id == file.id) != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+    
+        public bool checkPurchases(season season)
         {
-            if (file.video.type == video.SERIAL)
+            if (userseasons.Count(i => i.season_id == season.id) != 0)
             {
-                if (userseasons.Count(i => i.season_id == file.season.id) != 0)
-                {
-                    return true;
-                }
+                return true;
             }
-            if (file.video.type == video.MOVIE)
-            {
-                if (purchases.Count(i => i.file_id == file.id) != 0)
-                {
-                    return true;
-                }    
-            }
-            
             return false;
         }
 

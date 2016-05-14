@@ -12,10 +12,10 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Index()
         {
             ViewBag.Slider = DataContext.videos.OrderByDescending(i => i.release_date).Take(5).ToList();
-            ViewBag.NewFilm = DataContext.videos.Where(i => i.type == video.MOVIE).OrderByDescending(i => i.release_date).Take(6).ToList();
-            ViewBag.NewSerial = DataContext.videos.Where(i => i.type == video.SERIAL).OrderBy(i => i.release_date).Take(12).ToList();
-            ViewBag.PopularFilm = DataContext.videos.Where(i => i.type == video.MOVIE).OrderByDescending(i => i.release_date).Take(12).ToList();
-            ViewBag.PopularSerial = DataContext.videos.Where(i => i.type == video.SERIAL).OrderBy(i => i.release_date).Take(1).ToList();
+            ViewBag.NewFilm = DataContext.videos.Where(i => i.type == video.MOVIE).OrderByDescending(i => i.release_date).Take(12).ToList();
+            ViewBag.NewSerial = DataContext.videos.Where(i => i.type == video.SERIAL).OrderByDescending(i => i.release_date).Take(12).ToList();
+            ViewBag.PopularFilm = DataContext.videos.Where(i => i.type == video.MOVIE).OrderByDescending(i => i.score).Take(12).ToList();
+            ViewBag.PopularSerial = DataContext.videos.Where(i => i.type == video.SERIAL).OrderByDescending(i => i.score).Take(12).ToList();
             
             return View();
         }
@@ -31,6 +31,20 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Search(string search_input)
+        {
+            var videos = from v in DataContext.videos select v;
+            if (!String.IsNullOrEmpty(search_input))
+            {
+                videos = videos.Where(s => s.name.ToUpper().Contains(search_input.ToUpper())
+                                       || s.details.ToUpper().Contains(search_input.ToUpper()));
+            }
+
+            
+            ViewBag.Search_input = search_input;
+            return View(videos.ToList());
         }
         
         public ActionResult VideoByGenre(int id)
@@ -109,6 +123,21 @@ namespace OnlineCinemaProject.Controllers
             }
 
             return Json(banner.img_url, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public ViewResult SearchVideo(string search_input)
+        {
+            var videos = from v in DataContext.videos select v;
+            if (!String.IsNullOrEmpty(search_input))
+            {
+                videos = videos.Where(s => s.name.ToUpper().Contains(search_input.ToUpper())
+                                       || s.details.ToUpper().Contains(search_input.ToUpper()));
+            }
+
+            ViewBag.Videos = videos;
+            return View(search_input);
         }
 
 

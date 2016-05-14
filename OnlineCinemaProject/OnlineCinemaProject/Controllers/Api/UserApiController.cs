@@ -196,9 +196,9 @@ namespace OnlineCinemaProject.Controllers.Api
                 login = user.UserName
             };
 
-            if (user.GetSubscription() != null)
+            if (user.GetSudscription() != null)
             {
-                profile.subscription = user.GetSubscription().GetSubscriptionInfo(); ;
+                profile.subscription = user.GetSudscription().GetSubscriptionInfo(); ;
             }
             return Request.CreateResponse(HttpStatusCode.OK, profile);
         }

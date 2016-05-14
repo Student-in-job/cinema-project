@@ -198,23 +198,23 @@ function init_Elements () {
 
     //7. Dropdown for authorize button
     		//user list option
-            /*$('.auth__show').click(function (e) {
-                e.preventDefault();
-                $('.auth__function').toggleClass('open-function');
-            });
-
-            $('.btn--singin').click(function (e) {
-                alert('show');
-                e.preventDefault();
-                $('.auth__function').toggleClass('open-function')
-            });*/
+            
 
 }
 
 function init_Home() {
     "use strict";
+    /*$('.auth__show').click(function (e) {
+        e.preventDefault();
+        $('.auth__function').toggleClass('open-function');
+    });
 
-	//1. Init revolution slider and add arrows behaviour
+    $('.btn--singin').click(function (e) {
+        alert('show');
+        e.preventDefault();
+        $('.auth__function').toggleClass('open-function')
+    });*/
+	/*//1. Init revolution slider and add arrows behaviour
 				var api = $('.banner').revolution({
                     delay:9000,
                     startwidth:1170,
@@ -273,15 +273,15 @@ function init_Home() {
                         $('.tp-leftarrow').html( '<span class="slider__info">' + prevSlide + '</span>');
                         $('.tp-rightarrow').html( '<span class="slider__info">' + nextSlide + '</span>');
 
-                    });
+                    });*/
 
 	
 	//2. Dropdown for authorize button
     		//user list option
-            $('.auth__show').click(function (e){
-                e.preventDefault();
-                $('.auth__function').toggleClass('open-function')
-            })
+    $('.auth__show').click(function(e) {
+        e.preventDefault();
+        $('.auth__function').toggleClass('open-function')
+    });
 
             $('.btn--singin').click(function (e){
                 e.preventDefault();
@@ -1755,7 +1755,7 @@ function init_Rates () {
 	//1. Rating fucntion
 				//Rating star
                 $('.score').raty({
-                    width:130, 
+                    width:140, 
                     score: 0,
                     path: '/OnlineCinemaProject/Content/AMovie/images/',
                     starOff : 'star-off.svg',

@@ -16,23 +16,19 @@
 
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <!-- Stylesheets -->
     <link href="~/content/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/AMovie/css/style.css" rel="stylesheet">
-    
-    <!-- Stylesheets -->
     <!-- Mobile menu -->
     <link href="~/Content/AMovie/css/gozha-nav.css" rel="stylesheet">
     <!-- Select -->
     <link href="~/Content/AMovie/css/jquery.selectbox.css" rel="stylesheet">
     <!-- REVOLUTION BANNER CSS SETTINGS -->
     <link rel="stylesheet" type="text/css" href="~/Content/AMovie/css/settings.css" media="screen">
-
     <!-- Custom -->
     <link href="~/Content/AMovie/css/style.css" rel="stylesheet">
 
     <script type="text/javascript" charset="utf-8" async="" src="~/Content/AMovie/js/button.71000885400e222c3c0eec823f8f93f0.js"></script>
-
     <script src="~/scripts/jquery-2.2.3.min.js"></script>
     <script src="~/scripts/mediaelement-and-player.min.js"></script>
     <link rel="stylesheet" href="~/Content/player.css" />
@@ -56,7 +52,7 @@
 <header class="header-wrapper header-wrapper--home">
     <div class="container">
         <!-- Logo link-->
-        <a href="#" class="logo">
+        <a href="@Url.Action("Index","Home")" class="logo">
             <img alt="logo" src="~/Content/AMovie/images/logo.png">
         </a>
 
@@ -180,97 +176,29 @@
 <div class="clearfix"></div>
 <footer class="footer-wrapper">
     <section class="container">
-        <div class="col-xs-4 col-md-2 footer-nav">
-            <ul class="nav-link">
-                <li><a href="http://amovie.gozha.net/#" class="nav-link__item">Cities</a></li>
-                <li><a href="http://amovie.gozha.net/movie-list-left.html" class="nav-link__item">Movies</a></li>
-                <li><a href="http://amovie.gozha.net/trailer.html" class="nav-link__item">Trailers</a></li>
-                <li><a href="http://amovie.gozha.net/rates-left.html" class="nav-link__item">Rates</a></li>
-            </ul>
-        </div>
-        <div class="col-xs-4 col-md-2 footer-nav">
-            <ul class="nav-link">
-                <li><a href="http://amovie.gozha.net/coming-soon.html" class="nav-link__item">Coming soon</a></li>
-                <li><a href="http://amovie.gozha.net/cinema-list.html" class="nav-link__item">Cinemas</a></li>
-                <li><a href="http://amovie.gozha.net/offers.html" class="nav-link__item">Best offers</a></li>
-                <li><a href="http://amovie.gozha.net/news-left.html" class="nav-link__item">News</a></li>
-            </ul>
-        </div>
-        <div class="col-xs-4 col-md-2 footer-nav">
-            <ul class="nav-link">
-                <li><a href="http://amovie.gozha.net/#" class="nav-link__item">Terms of use</a></li>
-                <li><a href="http://amovie.gozha.net/gallery-four.html" class="nav-link__item">Gallery</a></li>
-                <li><a href="http://amovie.gozha.net/contact.html" class="nav-link__item">Contacts</a></li>
-                <li><a href="http://amovie.gozha.net/page-elements.html" class="nav-link__item">Shortcodes</a></li>
-            </ul>
-        </div>
-        <div class="col-xs-12 col-md-6">
-            <div class="footer-info">
-                <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
-                <div class="social">
-                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-facebook"></a>
-                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-twitter"></a>
-                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-vk"></a>
-                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-instagram"></a>
-                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-tumblr"></a>
-                    <a href="http://amovie.gozha.net/#" class="social__variant fa fa-pinterest"></a>
-                </div>
-
-                <div class="clearfix"></div>
-                <p class="copy">© A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
-            </div>
-        </div>
+        <p class="copy">© A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
     </section>
 </footer>
 </div>
-    <!-- open/close -->
-    <div class="overlay overlay-hugeinc">
-
-        <section class="container">
-            <div class="col-sm-4 col-sm-offset-4">
-                <button type="button" class="overlay-close">Close</button>
-                <form id="login-form" class="login" method="get" novalidate="">
-                    <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
-                    <div class="social social--colored">
-                        <a href="http://amovie.gozha.net/#" class="social__variant fa fa-facebook"></a>
-                        <a href="http://amovie.gozha.net/#" class="social__variant fa fa-twitter"></a>
-                        <a href="http://amovie.gozha.net/#" class="social__variant fa fa-tumblr"></a>
-                    </div>
-                    <p class="login__tracker">or</p>
-
-                    <div class="field-wrap">
-                        <input type="email" placeholder="Email" name="user-email" class="login__input">
-                        <input type="password" placeholder="Password" name="user-password" class="login__input">
-                        <span class="checkbox" style="background-position: 0px 0px;"></span><input type="checkbox" id="#informed" class="login__check styled">
-                        <label for="#informed" class="login__check-info">remember me</label>
-                    </div>
-
-                    <div class="login__control">
-                        <button type="submit" class="btn btn-md btn--warning btn--wider">sign in</button>
-                        <a href="http://amovie.gozha.net/#" class="login__tracker form__tracker">Forgot password?</a>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </div>
+    
     <!-- JavaScript-->
     <!-- jQuery 1.9.1-->
-    <script src="~/Content/AMovie/js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/external/jquery-1.10.1.min.js"><\/script>')</script>
+    @*<script src="~/Content/AMovie/js/jquery.min.js"></script>*@
+    @*<script>window.jQuery || document.write('<script src="js/external/jquery-1.10.1.min.js"><\/script>')</script>*@
     <!-- Migrate -->
-    <script src="~/Content/AMovie/js/jquery-migrate-1.2.1.min.js"></script>
+   @* <script src="~/Content/AMovie/js/jquery-migrate-1.2.1.min.js"></script>*@
     <!-- Bootstrap 3-->
-    <script src="~/Content/AMovie/js/bootstrap.min.js"></script>
+    @*<script src="~/Content/AMovie/js/bootstrap.min.js"></script>*@
     <!-- jQuery REVOLUTION Slider -->
-    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.plugins.min.js"></script>
-    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.revolution.min.js"></script>
+   @* <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.revolution.min.js"></script>*@
     <!-- Mobile menu -->
     <script src="~/Content/AMovie/js/jquery.mobile.menu.js"></script>
     <!-- Select -->
-    <script src="~/Content/AMovie/js/jquery.selectbox-0.2.min.js"></script>
-    <!-- Stars rate -->
-    <script src="~/Content/AMovie/js/jquery.raty.js"></script>
-
+    @*<script src="~/Content/AMovie/js/jquery.selectbox-0.2.min.js"></script>*@
+    @*<!-- Stars rate -->
+    <script src="~/Content/AMovie/js/jquery.raty.js"></script>*@
+@*
     <!-- Form element -->
     <script src="~/Content/AMovie/js/form-element.js"></script>
     <style type="text/css">
@@ -294,14 +222,17 @@
     <!-- Form validation -->
     <script src="~/Content/AMovie/js/form.js"></script>
     <!-- Twitter feed -->
-    <script src="~/Content/AMovie/js/twitterfeed.js"></script>
+    <script src="~/Content/AMovie/js/twitterfeed.js"></script>*@
     <!-- Custom -->
-    <script src="~/Content/AMovie/js/custom.js"></script><div class="top-scroll" style="display: block;"><a href="http://amovie.gozha.net/#"></a></div>
+    <script src="~/Content/AMovie/js/custom.js"></script>
+    
 
     <script type="text/javascript">
         $(document).ready(function () {
+            
             init_Home();
             $('.auth__show').click(function (e) {
+                alert("ready");
                 e.preventDefault();
                 $('.auth__function').toggleClass('open-function');
             });
@@ -349,22 +280,22 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/bootstrap")
-    <script type="text/javascript" src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+   @* <script type="text/javascript" src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>*@
     @RenderSection("scripts", required: false)
     @RenderSection("styles", required: false)
 
-    <!-- jQuery REVOLUTION Slider -->
+    @*<!-- jQuery REVOLUTION Slider -->
     <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.plugins.min.js"></script>
     <script type="text/javascript" src="~/Content/AMovie/js/jquery.themepunch.revolution.min.js"></script>
     <!-- Mobile menu -->
     <script src="~/Content/AMovie/js/jquery.mobile.menu.js"></script>
     <!-- Select -->
-    <script src="~/Content/AMovie/js/jquery.selectbox-0.2.min.js"></script>
-    <!-- Stars rate -->
+    <script src="~/Content/AMovie/js/jquery.selectbox-0.2.min.js"></script>*@
+    @*<!-- Stars rate -->
     <script src="~/Content/AMovie/js/jquery.raty.js"></script>
-
+*@
     <!-- Form element -->
-    <script src="~/Content/AMovie/js/form-element.js"></script>
+    @*<script src="~/Content/AMovie/js/form-element.js"></script>
     <style type="text/css">
         input.styled {
             display: none;
@@ -382,13 +313,13 @@
             opacity: 0.5;
             filter: alpha(opacity=50);
         }
-    </style>
+    </style>*@
   
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(document).ready(function () {
             init_Home();
         });
-    </script>
+    </script>*@
 
 
 </body>

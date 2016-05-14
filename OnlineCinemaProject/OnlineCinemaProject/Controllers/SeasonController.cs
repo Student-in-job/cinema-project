@@ -180,8 +180,8 @@ namespace OnlineCinemaProject.Controllers
                     title = season.title,
                     video_id = season.video_id
                 };
-                db.seasons.Attach(entity);
-                db.Entry(entity).State = EntityState.Modified;
+                /*db.seasons.Attach(entity);*/
+                db.Entry(season).State = EntityState.Modified;
                 db.SaveChanges();
             }
             return Json(new[] { season }.ToDataSourceResult(request, ModelState));

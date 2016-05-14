@@ -1,0 +1,70 @@
+﻿@model List<OnlineCinemaProject.Models.video>
+@{
+    ViewBag.Title = "Поиск";
+    Layout = "~/Views/Shared/AMovie.cshtml";
+}
+<script>
+   
+    $("#header_wrapper").removeClass("header-wrapper--home");
+    
+</script>
+<!-- Search bar -->
+<div class="search-wrapper">
+    <div class="container container--add">
+        @using (Html.BeginForm("Search", "Home", null, FormMethod.Get, new {@class = "search"}))
+        {
+            @*<form id="search-form" method="get" class="search">*@
+            <input type="text" class="search__field" placeholder="Search" id="search_input" name="search_input" value="@ViewBag.search_input">
+            <button type="submit" class="btn btn-md btn--danger search__button">Искать фильм</button>
+            /*</form>*/
+        }
+
+    </div>
+</div>
+@if (Model.Count == 0)
+{
+    <div class="row">
+        <p>По вашему запросу ничего не найдено!</p>
+    </div>    
+}
+
+<section class="container">
+    <p></p>
+    <h2 class="page-heading"></h2>
+    <div class="row">
+        <div>
+            @{
+                int counter = 0;
+                bool flag = true;
+                foreach (var item in Model)
+                {
+
+                    if (flag)
+                    {
+                        <div class="movie movie--test movie--test--dark movie--test--left" style="width: 33%">
+                            @Html.Partial("_MovieInfo", item)
+                        </div>
+                        counter++;
+                    }
+                    if (!flag)
+                    {
+                        <div class="movie movie--test movie--test--dark movie--test--right" style="width: 33%">
+                            @Html.Partial("_MovieInfo", item)
+                        </div>
+                         counter++;
+
+                    }
+
+                    if (counter == 3)
+                    {
+                        counter = 0;
+                        flag = !flag;@:
+                        <div class="row"></div>
+                    }
+                }
+            }
+
+        </div>
+
+    </div>
+</section>

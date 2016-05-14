@@ -54,7 +54,13 @@ namespace OnlineCinemaProject.Controllers.Api
             {
                 return JSendResponse.errorResponse(Error.UserNotFound());
             }
-            
+
+            var subs = user.GetSudscription();
+            if (subs != null && subs.Active())
+            {
+                return JSendResponse.errorResponse(Error.UserAlreadySubscribed());
+            }
+
             if (!user.DrawMoney((decimal) tariff.price))
             {
                 return JSendResponse.errorResponse(Error.LackOfMoney());
@@ -81,7 +87,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 start = DateTime.Now,
                 end = DateTime.Now.AddMonths(1)
             };
-
+            user.subscriptions.Add(subscription);
             _db.subscriptions.Add(subscription);
             _db.SaveChanges();
             return JSendResponse.succsessResponse();

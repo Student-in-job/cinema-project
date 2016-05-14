@@ -3,101 +3,27 @@
 
 
     @{
-        int counter = 0;
-        bool flag = true;
-        foreach (var item in Model)
+    int counter = 0;
+    bool flag = true;
+    foreach (var item in Model)
+    {
+
+        if (flag)
         {
-
-            if (flag)
-            {
-                <div class="movie movie--test movie--test--dark movie--test--left">
-                    <div class="movie__images">
-                        <a href="@Url.Action("Details", new{item.id})" class="movie-beta__link">
-                            <img alt="" src="~/uploads/@item.img_url">
-                        </a>
-                    </div>
-                    <div class="movie__info">
-                        <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">@item.name </a>
-                        <p class="movie__time">91 min</p>
-                        <p class="movie__option">
-                            @for (int i = 0; i < 3; i++)
-                            {
-                                if (i < item.videogenres.Count)
-                                {
-                                    <a href="#">@item.videogenres.ToArray()[i].genre.name</a>
-                                    if (i != item.videogenres.Count - 1)
-                                    {
-                                        @:|
-                    }
-                                }
-
-                            }
-                        </p>
-
-                        <div class="movie__rate">
-                            <div class="score" style="cursor: pointer; width: 130px;">
-                                <img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous">
-                                <input type="hidden" name="score">
-                            </div>
-                            <span class="movie__rating">@item.GetRating()</span>
-                        </div>
-                    </div>
-                </div>
-                            counter++;
-            }
-            if (!flag)
-            {
-                <div class="movie movie--test movie--test--dark movie--test--right">
-                    <div class="movie__images">
-                        <a href="@Url.Action("Details", new{item.id})" class="movie-beta__link">
-                            <img alt="" src="~/uploads/@item.img_url">
-                        </a>
-                    </div>
-                    <div class="movie__info">
-                        <a href="http://amovie.gozha.net/movie-page-left.html" class="movie__title">@item.name </a>
-                        <p class="movie__time">91 min</p>
-                        <p class="movie__option">
-                            @for (int i = 0; i < 3; i++)
-                            {
-                                if (i < @item.videogenres.Count)
-                                {
-                                    <a href="#">@item.videogenres.ToArray()[i].genre.name</a>
-                                    if (i != item.videogenres.Count - 1)
-                                    {
-                                        @:|
-                    }
-                                }
-                            }
-                        </p>
-
-                        <div class="movie__rate">
-                            <div class="score" style="cursor: pointer; width: 130px;">
-                                <img src="./AMovie_files/star-off.svg" alt="1" title="bad">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="2" title="poor">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="3" title="regular">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="4" title="good">&nbsp;
-                                <img src="./AMovie_files/star-off.svg" alt="5" title="gorgeous">
-                                <input type="hidden" name="score">
-                            </div>
-                            <span class="movie__rating">@item.GetRating()</span>
-                        </div>
-                    </div>
-                </div>
-                            counter++;
-
-            }
-
-            if (counter == 2)
-            {
-                counter = 0;
-                flag = !flag;
-
-                @:<div class="row"></div>
-            }
+            <div class="movie movie--test movie--test--dark movie--test--left" >@Html.Partial("_MovieInfo", item)</div>
+            counter++;
+        }
+        if (!flag)
+        {
+            <div class="movie movie--test movie--test--dark movie--test--right">@Html.Partial("_MovieInfo", item)</div>
+            counter++;
+        }
+        if (counter == 2)
+        {
+            counter = 0;
+            flag = !flag;
+            @:<div class="clearfix"></div>
+        }
 
 
         }

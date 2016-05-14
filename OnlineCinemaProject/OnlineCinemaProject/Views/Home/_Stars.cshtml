@@ -1,0 +1,46 @@
+﻿@model Decimal
+
+<div class="score" style="width: 140px;">
+    @for (int i = 0; i < 5; i++)
+    {
+        var title = "";
+        switch (i)
+        {
+            case 1:
+                {
+                    title = "bad";
+                    break;
+                }
+            case 2:
+                {
+                    title = "poor";
+                    break;
+                }
+            case 3:
+                {
+                    title = "regular";
+                    break;
+                }
+            case 4:
+                {
+                    title = "good";
+                    break;
+                }
+            case 5:
+                {
+                    title = "gorgeous";
+                    break;
+                }
+        }
+        if (i < Model)
+        {
+            <img src="~/Content/AMovie/images/star-on.svg" alt="1" title="@title">;
+        }
+        else
+        {
+            <img src="~/Content/AMovie/images/star-off.svg" alt="1" title="@title">
+        }
+    }
+
+
+</div>

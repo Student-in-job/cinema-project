@@ -8367,7 +8367,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   overflow: hidden;
   padding: 17px 17px;
   position: relative;
-  min-height: 300px;
+  min-height: 270px;
   margin: 0;
 }
 .movie--test .movie__title {

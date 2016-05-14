@@ -394,6 +394,7 @@
     <Compile Include="Models\ViewModels\TariffViewModel.cs" />
     <Compile Include="Models\ViewModels\VideoGridModel.cs" />
     <Compile Include="Models\ViewModels\VideoViewModel.cs" />
+    <Compile Include="Models\_Advertisement.cs" />
     <Compile Include="Models\_File.cs" />
     <Compile Include="Models\_Video.cs" />
     <Compile Include="Models\_Subscription.cs" />
@@ -2168,6 +2169,7 @@
     <Content Include="uploads\avatar_placeholder.png" />
     <Content Include="uploads\ca878584ed6edaa80707c29609e66a20.gif" />
     <Content Include="uploads\dnevniki-vampira.png" />
+    <Content Include="uploads\edinichka.jpg" />
     <Content Include="uploads\embarcadero_190x280_till25_5494326.jpg" />
     <Content Include="uploads\gods_of_egypt.jpg" />
     <Content Include="uploads\images %281%29.jpg" />
@@ -2175,8 +2177,12 @@
     <Content Include="uploads\images %284%29.jpg" />
     <Content Include="uploads\images.jpg" />
     <Content Include="uploads\images25.jpg" />
+    <Content Include="uploads\love.jpg" />
     <Content Include="uploads\mrHolms.jpg" />
     <Content Include="uploads\mstitel.jpg" />
+    <Content Include="uploads\pandemiya.jpg" />
+    <Content Include="uploads\smeshariki.jpg" />
+    <Content Include="uploads\super.jpg" />
     <Content Include="uploads\The Huntsman.jpg" />
     <Content Include="uploads\uyvhbjnk.jpg" />
     <Content Include="uploads\vampire diaries.jpg" />
@@ -2460,9 +2466,6 @@
     <Content Include="Views\Shared\EditorTemplates\Comment.CommentRating.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.CommentText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.UserId.cshtml" />
-    <Content Include="Views\Home\PopularFilms.cshtml" />
-    <Content Include="Views\Home\PopularSerials.cshtml" />
-    <Content Include="Views\Home\NewSerials.cshtml" />
     <Content Include="Views\Shared\AMovie.cshtml" />
     <Content Include="Views\Home\UserCabinet.cshtml" />
     <Content Include="Views\Home\_PaymentsPartial.cshtml" />
@@ -2475,6 +2478,9 @@
     <Content Include="Views\Home\VideoDetails.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\_UserSubscriptionsPartial.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\_Stars.cshtml" />
+    <Content Include="Views\Home\_MovieInfo.cshtml" />
     <Content Include="Views\Home\VideoByGenre.cshtml" />
   </ItemGroup>
   <ItemGroup>

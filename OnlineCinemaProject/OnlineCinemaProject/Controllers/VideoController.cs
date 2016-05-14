@@ -60,6 +60,7 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(video video, HttpPostedFileBase file, int[] genres, int[] actors, int[] countries)
         {
+            video.score = 0;
             if (ModelState.IsValid)
             {
                 if (file != null)
@@ -382,6 +383,8 @@ namespace OnlineCinemaProject.Controllers
             }
             video.score = ScoreCallculationJob.GetVideoScore(video, db);
             video.last_score_calc = DateTime.Now;
+
+            db.Entry(video).State = EntityState.Modified;
             db.SaveChanges();
             return Content(video.score.ToString());
         }

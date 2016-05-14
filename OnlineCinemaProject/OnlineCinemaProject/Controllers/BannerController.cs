@@ -10,7 +10,6 @@ using Microsoft.AspNet.Identity;
 using OnlineCinemaProject.Models;
 using PagedList;
 
-
 namespace CinemaProject.Controllers
 {
     [Authorize(Roles = "PRManager ")]

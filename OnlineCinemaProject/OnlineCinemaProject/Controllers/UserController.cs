@@ -267,9 +267,11 @@ namespace OnlineCinemaProject.Controllers
             }
         }
 
-
-
-         
-
+         public ActionResult CheckAccess(int id)
+         {
+             var file = _db.files.Find(id);
+             var user = _db.aspnetusers.Find(User.Identity.GetUserId());
+             return Json(user.CheckAccess(file));
+         }
     }
 }

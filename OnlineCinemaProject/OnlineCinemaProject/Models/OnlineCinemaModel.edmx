@@ -78,6 +78,7 @@
           <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="show_amount" Type="int" />
           <Property Name="active" Type="bool" />
+          <Property Name="url" Type="varchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="countries">
           <Key>
@@ -234,6 +235,7 @@
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="img_url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="active" Type="bool" />
+          <Property Name="url" Type="varchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="userseasons">
           <Key>
@@ -1093,6 +1095,7 @@
           <Property Name="active" Type="Boolean" />
           <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="banner" ToRole="advertiser" />
           <NavigationProperty Name="statistics_banner" Relationship="OnlineCinemaModel.id_banner" FromRole="banner" ToRole="statistics_banner" />
+          <Property Name="url" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="country">
           <Key>
@@ -1283,6 +1286,7 @@
           <Property Name="active" Type="Boolean" />
           <NavigationProperty Name="advertiser" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="teaser" ToRole="advertiser" />
           <NavigationProperty Name="statistics_teaser" Relationship="OnlineCinemaModel.id_teasers" FromRole="teaser" ToRole="statistics_teaser" />
+          <Property Name="url" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="videoactor">
           <Key>
@@ -1804,6 +1808,7 @@
           <EntitySetMapping Name="banners">
             <EntityTypeMapping TypeName="OnlineCinemaModel.banner">
               <MappingFragment StoreEntitySet="banners">
+                <ScalarProperty Name="url" ColumnName="url" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="show_amount" ColumnName="show_amount" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
@@ -1975,6 +1980,7 @@
           <EntitySetMapping Name="teasers">
             <EntityTypeMapping TypeName="OnlineCinemaModel.teaser">
               <MappingFragment StoreEntitySet="teaser">
+                <ScalarProperty Name="url" ColumnName="url" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
                 <ScalarProperty Name="name" ColumnName="name" />

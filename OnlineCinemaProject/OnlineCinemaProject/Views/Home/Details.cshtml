@@ -5,10 +5,25 @@
     ViewBag.Title = @Model.name;
     Layout = "~/Views/Shared/AMovie.cshtml";
 }
+<script>
+    var isAuthunticated;
+</script>
+@if (User.Identity.IsAuthenticated)
+{
+    <script>
+        isAuthunticated = true;
+    </script>
+}
+else
+{
+    <script>
+        isAuthunticated = false;
+    </script>
+}
 
 <section class="container">
    <div class="col-sm-8 col-md-9">
-        <div class="movie">
+   <div class="movie">
     <h2 class="page-heading">@Model.name</h2>
     <div class="movie__info">
         <div class="col-sm-6 col-md-4 movie-mobile">
@@ -17,15 +32,8 @@
                 <img alt="" src="~/uploads/@Model.img_url">
             </div>
             <div class="movie__rate">
-                Ваша оцента:
-                <div id="score" class="score" style="cursor: pointer; width: 140px;">
-                    <img src="~/Content/AMovie/images/star-on.svg" alt="1" title="bad">&nbsp;
-                    <img src="~/Content/AMovie/images/star-on.svg" alt="2" title="poor">&nbsp;
-                    <img src="~/Content/AMovie/images/star-on.svg" alt="3" title="regular">&nbsp;
-                    <img src="~/Content/AMovie/images/star-on.svg" alt="4" title="good">&nbsp;
-                    <img src="~/Content/AMovie/images/star-on.svg" alt="5" title="gorgeous">
-                    <input type="hidden" name="score" value="5">
-                </div>
+                Оцента:
+                @Html.Partial("_Stars", (decimal) Model.score)
             </div>
         </div>
         <div class="col-sm-6 col-md-8">
@@ -37,7 +45,7 @@
                     foreach (var item in Model.manufacturers)
                     {
                         ++counter3;
-                        <a href="#">@item.country.name</a>
+                        @item.country.name
                         if (counter3 != Model.manufacturers.Count)
                         {
                             @:,
@@ -51,23 +59,23 @@
             <p class="movie__option">
                 <strong>Жанры: </strong>
                 @{
-                                            int counter4 = 0;
-                                            foreach (var item in Model.videogenres)
-                                            {
-                                                ++counter4;
-                                                <a href="#">@item.genre.name</a>
-                                                if (counter4 != Model.videoactors.Count)
-                                                {
-                                                    @:,
-                                                }
-                                            }
+                    int counter4 = 0;
+                    foreach (var item in Model.videogenres)
+                    {
+                        ++counter4;
+                        <a href="@Url.Action("VideoByGenre","Home", new {item.id})">@item.genre.name</a>
+                        if (counter4 != Model.videoactors.Count)
+                        {
+                            @:,
+                        }
+                    }
                 }
             </p>
             <p class="movie__option">
                 <strong>Дата релиза: </strong>@Model.release_date.Date 
             </p>
             <p class="movie__option">
-                <strong>Режисер: </strong><a href="#">@Model.director</a>
+                <strong>Режисер: </strong>@Model.director
             </p>
             <p class="movie__option">
                 <strong>Актеры: </strong>
@@ -76,7 +84,7 @@
                                             foreach (var item in Model.videoactors)
                                             {
                                                 ++counter;
-                                                <a href="#">@item.actor.name</a>
+                                                @item.actor.name
                                                 if (counter != Model.videoactors.Count)
                                                 {
                                                     @:,
@@ -85,198 +93,162 @@
                 }
             </p>
             <p class="movie__option">
-                <strong>Возрастное ограничение: </strong><a href="http://amovie.gozha.net/movie-page-left.html#">@Model.age_limit</a>
+                <strong>Возрастное ограничение: </strong>@Model.age_limit
             </p>
 
             @{
-                                    if (Model.type == video.MOVIE)
-                                    {
-                                        foreach (var item in @Model.files)
-                                        {
-                                            var b = !item.trailer;
-                                            if (b != null && (bool) b)
-                                            {
-                                                @:<p class="movie__option">
-                                                @:<strong>Цена: </strong><a href="http://amovie.gozha.net/movie-page-left.html#">
-                                                @item.price
-                                                @:</a>
-                                                @:</p>
-                                                break;
-                                            }
-                                        }
-                                    }
+                if (Model.type == video.MOVIE)
+                {
+                    foreach (var item in @Model.files)
+                    {
+                        var b = !item.trailer;
+                        if (b != null && (bool) b)
+                        {
+                            @:<p class="movie__option">
+                            @:<strong>Цена: </strong><
+                            @item.price
+                            @:</p>
+                            break;
+                        }
+                    }
+                }
             }
 
-            <a href="#" class="comment-link">Comments: @Model.reviews.Count</a>
+            
             <div class="movie__btns">
-                <a href="#" class="btn btn-md btn--warning">Купить фильм</a>
+                <a href="#" class="btn btn-md btn--warning" onclick='buy()'>Купить фильм</a>
                 @*<a href="#" class="watchlist">Add to watchlist</a>*@
             </div>
-
         </div>
-
     </div>
-
     <div class="clearfix"></div>
-
     <h2 class="page-heading">Описание</h2>
-        <p>
-            @Model.details
-        </p>
+    <p>@Model.details</p>
 
-            @{
-                file movie = Model.files.FirstOrDefault(i => i.trailer == false);
-                file trailer = Model.files.FirstOrDefault(i => i.trailer == true);
-            }
-            @if (movie != null || trailer != null)
-            {
-                <h2 class="page-heading">Смотреть</h2>
-                <div style="display: block">
-                    <video width="640" height="360" id="player1">
-                        <!-- Pseudo HTML5 -->
-                        @if (movie != null)
-                        {
-                            <source type="application/x-mpegURL" src="@movie.url"/>
-                        }
-                        @if (movie == null && trailer != null)
-                        {
-                            <source type="application/x-mpegURL" src="@movie.url"/>
-                        }
-                    </video>
-                </div>                
-            }
-        
-                
-            
-            <div class="movie__media-switch" style="margin: 20px">
-                @*<a onclick='userSubmit("@erer.url")' href="#" class="watchlist list--video" data-filter="media-photo">Фильм</a>*@
-                @if (trailer != null)
+    @{
+        file movie = Model.files.FirstOrDefault(i => i.trailer == false);
+        file trailer = Model.files.FirstOrDefault(i => i.trailer == true);
+    }
+    @if (movie != null || trailer != null)
+    {
+        <h2 class="page-heading">Смотреть</h2>
+        <div style="display: block">
+            <video width="640" height="360" id="player1">
+                <!-- Pseudo HTML5 -->
+                @if (movie != null)
                 {
-                    <a onclick='userSubmit("@trailer.url")' href="#" class="watchlist list--video" data-filter="media-video">Трейлер</a>
-                    
+                    <source type="application/x-mpegURL" src="@movie.url"/>
                 }
+                @if (movie == null && trailer != null)
+                {
+                    <source type="application/x-mpegURL" src="@movie.url"/>
+                }
+            </video>
+        </div>                
+    }
+
+   <div class="movie__media-switch" style="margin: 20px">
+       @if (movie != null)
+       {
+           <a onclick='userSubmit("@movie.url")' href="#" class="watchlist list--video" data-filter="media-photo">Фильм</a>
+       }
+       @if (trailer != null)
+       {
+           <a onclick='userSubmit("@trailer.url")' href="#" class="watchlist list--video" data-filter="media-video">Трейлер</a>
+
+       }
+   </div>
+
+    @if (@Model.type == 1)
+    {
+        <div>
+            <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                @{
+                    var counter5 = 0;
+                }
+                @foreach (var season in Model.seasons)
+                {
+                    <li role="presentation"
+                        @if (counter5 == 0) { @: class="active"
+                                                    }>
+                        <a href="#@season.id" aria-controls="@season.id" role="tab" data-toggle="tab">Сезон @season.season_number</a>
+                    </li>
+                    counter5++;
+                }
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" style="padding: 0">
+                @foreach (var item in Model.seasons)
+                {
+                    <div role="tabpanel" class="tab-pane active" id="@item.id">@Html.Partial("_SeasonsPartial", item.files.ToList())</div>
+                }
+
             </div>
 
-            @if (@Model.type == 1)
-            {
-                <div>
-                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
-                        @{
-                            var counter5 = 0;
-                        }
-                        @foreach (var season in Model.seasons)
-                        {
-                            <li role="presentation"
-                                @if (counter5 == 0) { @: class="active"
-                                                            }>
-                                <a href="#@season.id" aria-controls="@season.id" role="tab" data-toggle="tab">Сезон @season.season_number</a>
-                            </li>
-                            counter5++;
-                        }
-                    </ul>
-
-
-
-                    <!-- Tab panes -->
-                    <div class="tab-content" style="padding: 0">
-                        @foreach (var item in Model.seasons)
-                        {
-                            <div role="tabpanel" class="tab-pane active" id="@item.id">@Html.Partial("_SeasonsPartial", item.files.ToList())</div>
-                        }
-
-                    </div>
-
-                </div>
-            }
-
-            <script type="text/javascript" src="~/Scripts/hls_streams.js"></script>
-            <script>
-                function userSubmit(url) {
-                    alert('fdsfds');
-                    $('video')[0].player.setSrc(url);
-                    $('video')[0].player.play();
-                }
-            </script>
-            <script>
-                $('video').mediaelementplayer({
-                    success: function (media, node) {
-                        $('#' + node.id + '-mode').html('mode: ' + media.pluginType);
-                    }
-                });
-            </script>
-
-            <h2 class="page-heading">Коментарии (@Model.reviews.Count)</h2>
-
-            <div class="comment-wrapper">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <form id="comment-form" class="comment-form" method="post">
-                        <textarea class="comment-form__text" placeholder="Add you comment here"></textarea>
-                        <label class="comment-form__info">250 characters left</label>
-                        <button id="add_comment" type="submit" class="btn btn-md btn--danger comment-form__btn">add comment</button>
-                    </form>
-                }
-                else
-                {
-                    <p class="error__text"> Только авторизованные пользователи могут оставить отзыв</p>
-                }
-
-                <div class="comment-sets">
-                    @if (Model.reviews.Count != 0)
-                    {
-                        foreach (var item in Model.reviews)
-                        {
-                            <div class="comment">
-                                <div class="comment__images">
-                                    <img alt="" src="">$1$todo avatar#1#
-                                </div>
-                                <a href="" class="comment__author"><span class="social-used fa fa-facebook"></span>@item.aspnetuser.UserName</a>
-                                <p class="comment__date">@item.creation_date</p>
-                                <p class="comment__message">@item.comment</p>
-                                <a href="#" class="comment__reply">@item.rating</a>
-                            </div>
-                        }
-                        <div class="comment-more">
-                            <a href="http://amovie.gozha.net/movie-page-left.html#" class="watchlist">Show more comments</a>
-                        </div>
-                    }
-
-                </div>
-            </div>
         </div>
+    }
 
+    <script type="text/javascript" src="~/Scripts/hls_streams.js"></script>
+    <script>
+        function userSubmit(url) {
+            alert('fdsfds');
+            $('video')[0].player.setSrc(url);
+            $('video')[0].player.play();
+        }
+    </script>
+    <script>
+        $('video').mediaelementplayer({
+            success: function (media, node) {
+                $('#' + node.id + '-mode').html('mode: ' + media.pluginType);
+            }
+        });
+    </script>
+
+    <h2 class="page-heading">Коментарии (@Model.reviews.Count)</h2>
+
+    <div class="comment-wrapper">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form id="comment-form" class="comment-form" method="post">
+                <textarea class="comment-form__text" placeholder="Add you comment here"></textarea>
+                <label class="comment-form__info">250 characters left</label>
+                <button id="add_comment" type="submit" class="btn btn-md btn--danger comment-form__btn">add comment</button>
+            </form>
+        }
+        else
+        {
+            <p class="error__text"> Только авторизованные пользователи могут оставить отзыв</p>
+        }
+
+        <div class="comment-sets">
+            @if (Model.reviews.Count != 0)
+            {
+                foreach (var item in Model.reviews)
+                {
+                    <div class="comment">
+                        
+                        <a href="" class="comment__author"><i class="fa fa-user" aria-hidden="true"></i>@item.aspnetuser.UserName</a>
+                        <p class="comment__date">@item.creation_date</p>
+                        <p class="comment__message">@item.comment</p>
+                        @Html.Partial("_Stars",(decimal) item.rating)
+                    </div>
+                }
+                @*<div class="comment-more">
+                    <a href="http://amovie.gozha.net/movie-page-left.html#" class="watchlist">Show more comments</a>
+                </div>*@
+            }
+
+        </div>
     </div>
+</div>
+</div>
  <aside class="col-sm-4 col-md-3">
         <div class="sitebar">
             <div class="banner-wrap">
                 <img id="firstBanner" alt="banner" src="">
             </div>
             
-            <div class="promo marginb-sm">
-                <div class="promo__head">A.Movie app</div>
-                <div class="promo__describe">
-                    for all smartphones<br> and tablets
-                </div>
-                <div class="promo__content">
-                    <ul>
-                        <li class="store-variant">
-                            <a href="http://amovie.gozha.net/movie-page-left.html#">
-                                <img alt="" src="">
-                            </a>
-                        </li>
-                        <li class="store-variant">
-                            <a href="http://amovie.gozha.net/movie-page-left.html#">
-                                <img alt="" src="">
-                            </a>
-                        </li>
-                        <li class="store-variant">
-                            <a href="http://amovie.gozha.net/movie-page-left.html#">
-                                <img alt="" src="">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+           
 
 
         </div>
@@ -285,14 +257,51 @@
 </section>
 
 <div id="post"></div>
-<script>
-       
 
-    $("#addComment").onclick(function(e) {
+<script>
+    @*
+    function buy() {
+        
+        
+        if (isAuthunticated === true) {
+            $.ajax({
+                url: '@Url.Action("BuyMuvie", "Video")',
+                contentType: "application/json; charset=UTF-8",
+                type: "GET",
+                success: function (response) {
+                    $('#firstBanner').attr('src', '/OnlineCinemaProject/uploads/' + response);
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                    $('#firstBanner').attr('alt', msg);
+                },
+            });
+        } else {
+            alert("Авторизуйтесь сначала");
+        }
+
+    }
+*@
+
+    $("#addComment").onclick(function (e) {
         e.preventDefault();
 
     });
-
 
 
 </script>

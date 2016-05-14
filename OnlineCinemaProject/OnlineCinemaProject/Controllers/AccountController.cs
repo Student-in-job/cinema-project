@@ -16,7 +16,7 @@ using WebMatrix.WebData;
 namespace OnlineCinemaProject.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : ApplicationController
     {
         private OnlineCinemaEntities db = new OnlineCinemaEntities();
 
