@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -46,6 +47,7 @@ namespace OnlineCinemaProject.Controllers.Api
         {
             if (ModelState.IsValid)
             {
+                
                 var user = new ApplicationUser()
                 {
                     UserName = model.UserName,
@@ -55,13 +57,26 @@ namespace OnlineCinemaProject.Controllers.Api
                     Email = model.Email,
                     Sex = model.Sex,
                     JoinDate = DateTime.Now,
-                    Block = false
+                    Block = false,
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "User");
+                    account account = new account
+                    {
+                        balance = 0
+                    };
+
+                    // vanya eto ya dobavil ramazan 
+                    db.accounts.Add(account);
+                    db.SaveChanges();
+
+                    var aspnetuser = db.aspnetusers.Find(user.Id);
+                    aspnetuser.account = account;
+                    db.Entry(aspnetuser).State = EntityState.Modified;
+                    db.SaveChanges();
                    // await SignInAsync(user, isPersistent: false);
                     return user.Id;
                 }

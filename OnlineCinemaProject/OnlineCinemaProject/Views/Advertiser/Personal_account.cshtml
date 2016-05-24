@@ -2,8 +2,9 @@
 @model OnlineCinemaProject.Models.advertiser
 
 @{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
     ViewBag.Title = "Персональный кабинет рекламодателя";
-    Layout = "~/Views/Shared/Dashboard.cshtml";
+   
 }
 <div class="page-header">
     <h2>Персональный кабинет рекламодателя</h2>
@@ -14,34 +15,33 @@
         <img src="~/uploads/@Model.img_url" class="img-thumbnail" alt="200x200" data-holder-rendered="true" style="" width="200" height="200">
     </div>
     <div class="col-md-6">
-       
+
         <p><strong>Имя: </strong>@Model.name</p>
         <p><strong>Е-маил: </strong>@Model.email</p>
         <p><strong>телефон: </strong>@Model.phone_number</p>
         <p>@Html.ActionLink("Изменить персональные данные", "Edit", new { id = Model.id })</p>
         <p> @Html.ActionLink("Добавить новый баннер", "Create", "Banner", null, null)</p>
         <p> @Html.ActionLink("Добавить новый тизер", "Create", "Teaser", null, null)</p>
-       
+
     </div>
 </div>
-<br/>
+<br />
 <div>
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        @*<li role="presentation" class="active"><a href="#banner" aria-controls="banner" role="tab" data-toggle="tab">Banners</a></li>*@
-
+       
         <li role="presentation"><a href="#banner" aria-controls="banner" role="tab" data-toggle="tab">Баннеры</a></li>
         <li role="presentation"><a href="#teasers" aria-controls="teaser" role="tab" data-toggle="tab">Тизеры</a></li>
         <li role="presentation"><a href="#Statistics_Banners" aria-controls="Statistics_Banners" role="tab" data-toggle="tab">Статистика баннеров</a></li>
         <li role="presentation"><a href="#Statistics_Teasers" aria-controls="Statistics_Teasers" role="tab" data-toggle="tab">Статистика тизеров</a></li>
-        <li role="presentation"><a href="#" aria-controls="" role="tab" data-toggle="tab">История оплаты</a></li>
+        
     </ul>
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="banner">
-           
-             <div class="col-md-6">
+
+            <div class="col-md-6">
                 <h4 class="sub-header">Баннеры</h4>
 
                 <table class="table table-striped table-bordered">
@@ -85,7 +85,7 @@
                 <button type="button" class="btn btn-default" id="makeActive">Ok</button>
 
             </div>
-            </div>
+        </div>
 
 
 
@@ -133,11 +133,11 @@
                 <button type="button" class="btn btn-default" id="makeActiveTeaser">Ok</button>
 
             </div>
-            </div>
+        </div>
 
         <div role="tabpanel" class="tab-pane active" id="Statistics_Banners">
             @{
-                var statistic_banner = ViewBag.statistics;
+                var statistic_banner = (List<statistics_banner>)ViewBag.statistics;
             }
 
             <div class="col-md-6">
@@ -161,7 +161,14 @@
                                 <td>@statistics_banners.date</td>
                                 <td>@statistics_banners.show_amount</td>
                                 <td>@statistics_banners.banner.name</td>
-                                <td>@statistics_banners.aspnetuser.FirstName</td>
+                                @if (statistics_banners.aspnetuser != null)
+                                {
+                                    <td>@statistics_banners.aspnetuser.FirstName</td>
+                                }
+                                else
+                                {
+                                    <td>Гость</td>
+                                }
 
                             </tr>
                         }
@@ -169,7 +176,7 @@
                 </table>
 
             </div>
-            </div>
+        </div>
 
         <div role="tabpanel" class="tab-pane active" id="Statistics_Teasers">
 
@@ -205,68 +212,70 @@
                     </tbody>
                 </table>
             </div>
-            </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
-
-                    $('#activeAll').click(function () {
-                        $("#bannersTable input:checkbox").prop('checked', $(this).prop("checked")); //To check all
-                    });
-
-                    $('#makeActive').click(function () {
-                        var selectedValues = [];
-                        var id = "@Model.id";
-                        $("#bannersTable input:checked").each(function () {
-                            selectedValues.push($(this).val());
-                        });
-                        $.ajax({
-                            url: '/Advertiser/ActivateBanners/',
-                            type: 'POST',
-                            data: { "id": id, "args": selectedValues },
-                            datatype: "json",
-                            traditional: true
-
-                        });
-                        /*if (selectedValues.length > 0) {
-                            alert("Selected Value(s): " + selectedValues);
-                        } else {
-                            alert("No item has been selected.");
-                        }*/
-                    });
-                });
-            </script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-
-                    $('#activeAllTeasers').click(function () {
-                        $("#teasersTable input:checkbox").prop('checked', $(this).prop("checked")); //To check all
-                    });
-
-                    $('#makeActiveTeaser').click(function () {
-                        var selectedValuesTeaser = [];
-                        var id = "@Model.id";
-                        $("#teasersTable input:checked").each(function () {
-                            selectedValuesTeaser.push($(this).val());
-                        });
-                        $.ajax({
-                            url: '/Advertiser/ActivateTeasers/',
-                            type: 'POST',
-                            data: { "id": id, "args": selectedValuesTeaser },
-                            datatype: "json",
-                            traditional: true
-
-                        });
-                        if (selectedValuesTeaser.length > 0) {
-                            alert("Selected Value(s): " + selectedValuesTeaser);
-                        } else {
-                            alert("No item has been selected.");
-                        }
-                    });
-                });
-            </script>
-
-
-
-
-
         </div>
+    </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('#activeAll').click(function () {
+                    $("#bannersTable input:checkbox").prop('checked', $(this).prop("checked")); //To check all
+                });
+
+                $('#makeActive').click(function () {
+                    var selectedValues = [];
+                    var id = "@Model.id";
+                    $("#bannersTable input:checked").each(function () {
+                        selectedValues.push($(this).val());
+                    });
+
+                    $.ajax({
+                        url: '@Url.Action("ActivateBanners","Advertiser")',
+                        type: 'POST',
+                        data: { "id": id, "args": selectedValues },
+                        datatype: "json",
+                        traditional: true
+
+                    });
+                    if (selectedValues.length > 0) {
+                        alert("Подтвердите действие");
+                    } else {
+                        alert("No item has been selected.");
+                    }
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('#activeAllTeasers').click(function () {
+                    $("#teasersTable input:checkbox").prop('checked', $(this).prop("checked")); //To check all
+                });
+
+                $('#makeActiveTeaser').click(function () {
+                    var selectedValuesTeaser = [];
+                    var id = "@Model.id";
+                    $("#teasersTable input:checked").each(function () {
+                        selectedValuesTeaser.push($(this).val());
+                    });
+                    $.ajax({
+                        url: '@Url.Action("ActivateTeasers","Advertiser")',
+                        type: 'POST',
+                        data: { "id": id, "args": selectedValuesTeaser },
+                        datatype: "json",
+                        traditional: true
+
+                    });
+                    if (selectedValuesTeaser.length > 0) {
+                        alert("Подтвердите действие");
+                    } else {
+                        alert("No item has been selected.");
+                    }
+                });
+            });
+        </script>
+
+
+
+
+
+    </div>

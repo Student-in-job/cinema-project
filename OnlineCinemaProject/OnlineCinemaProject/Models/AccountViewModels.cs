@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using OnlineCinemaProject.Controllers;
 
 namespace OnlineCinemaProject.Models
 {
@@ -49,6 +50,7 @@ namespace OnlineCinemaProject.Models
     {
         [Required]
         [Display(Name = "Логин")]
+        [AccountController.UserNameNotExists]
         public string UserName { get; set; }
 
         [Required]
@@ -77,8 +79,9 @@ namespace OnlineCinemaProject.Models
         [Required]
         [EmailAddress(ErrorMessage = "Вы неправильно ввели E-mail адрес")]
         [Display(Name = "Электронная почта")]
-        [Remote("DoesUserEmailExist", "Account",  ErrorMessage = "Email address already exists. Please enter a different Email address.")]
+        /*[Remote("DoesUserEmailExist", "Account",  ErrorMessage = "Email address already exists. Please enter a different Email address.")]*/
         [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [AccountController.MailNotExists]
         public string Email { get; set; }
         
         [Required]
@@ -88,12 +91,26 @@ namespace OnlineCinemaProject.Models
    
         
     }
+    public class LoginAdvertiserViewModel
+    {
+        [Required]
+        [Display(Name = "Логин")]
+        public string name { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
+        public string password { get; set; }
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+    }
 
     public class TopUpViewModel
     {
         [Required]
         [Display(Name = "Id пользователя")]
-        public string UserId { get; set; }
+        public int AccountId { get; set; }
 
         [Required]
         [DataType(DataType.Currency)]

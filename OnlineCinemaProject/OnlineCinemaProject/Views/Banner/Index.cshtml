@@ -1,27 +1,22 @@
 ﻿@model PagedList.IPagedList<OnlineCinemaProject.Models.banner>
 @using PagedList.Mvc;
-
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
+    Layout = "~/Views/Shared/_Dashboard.cshtml"; 
     ViewBag.Title = "Banner";
-    Layout = "~/Views/Shared/Dashboard.cshtml"; Layout = "~/Views/Shared/_Dashboard.cshtml";
-}
-
-<h2>      </h2>
+ }
 
 
-@using (Html.BeginForm("Index", "Banner", FormMethod.Get))
+@using (Html.BeginForm("Index", "Banner", FormMethod.Get))  
 {
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
+        Найти баннер по имени: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Поиск" />
     </p>
 
 }
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<p>@Html.ActionLink("Создать", "Create")</p>
 
 <div class="panel panel-success">
     <!-- Default panel contents -->
@@ -39,9 +34,11 @@
             <th>
                 Имя рекламодателя
             </th>
+            <th>Ссылка на продукт</th>
             <th>
                 Изображение
             </th>
+         
             <th></th>
         </tr>
 
@@ -55,13 +52,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.start)
                 </td>
-                
+               
                 <td>
                     @Html.DisplayFor(modelItem => item.advertiser.name)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.url)
+                </td>
+                <td>
                     <center>
-                        <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="75" height="100" />
+                        <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="150" height="50" />
                     </center>
                 </td>
                 <td> <center>
@@ -81,9 +81,10 @@
         }
 
     </table>
-    </div>
+     </div>
     <br />
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+  
+Страница от @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) до @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 

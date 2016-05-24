@@ -50,5 +50,6 @@ namespace OnlineCinemaProject.Models
         public virtual DbSet<video> videos { get; set; }
         public virtual DbSet<userseason> userseasons { get; set; }
         public virtual DbSet<backup> backups { get; set; }
+        public virtual DbSet<account> accounts { get; set; }
     }
 }

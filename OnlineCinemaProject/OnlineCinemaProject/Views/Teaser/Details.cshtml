@@ -1,8 +1,7 @@
 ﻿@model OnlineCinemaProject.Models.teaser
 
 @{
-    ViewBag.Title = "Details"; 
-    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    ViewBag.Title = "Details"; Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
 <h2>Details</h2>
@@ -12,6 +11,14 @@
 	<hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+         <dt>
             @Html.DisplayNameFor(model => model.start)
         </dt>
 
@@ -20,28 +27,28 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.end)
+            @Html.DisplayNameFor(model => model.url)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.end)
+            @Html.DisplayFor(model => model.url)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.showAmount)
-        </dt>
+      @*  <dt>
+        @Html.DisplayNameFor(model => model.showAmount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.showAmount)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.showAmount)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.payment)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.payment)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.payment)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.payment)
+    </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.advertiser.name)

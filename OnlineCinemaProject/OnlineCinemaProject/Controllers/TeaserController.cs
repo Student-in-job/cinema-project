@@ -6,18 +6,20 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using OnlineCinemaProject.Models;
 using PagedList;
 
 
 namespace OnlineCinemaProject.Controllers
 {
-    [Authorize(Roles = "PRManager ")]
+   [Authorize(Roles = "PRManager, Advertiser")]
     public class TeaserController : Controller
     {
         private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
         // GET: /Teaser/
+         [Authorize(Roles = "PRManager")]
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -80,6 +82,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Teaser/Details/5
+         [Authorize(Roles = "PRManager")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -95,6 +98,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Teaser/Create
+         [Authorize(Roles = "PRManager, Advertiser")]
         public ActionResult Create()
         {
 
@@ -114,7 +118,8 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id, name, start,end,showAmount,payment,adv_id")] teaser teaser)
+        [Authorize(Roles = "PRManager, Advertiser")]
+        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id, name, start,end,showAmount,payment, url, adv_id")] teaser teaser)
         {
             try
             {
@@ -142,6 +147,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Teaser/Edit/5
+         [Authorize(Roles = "PRManager")]
         public ActionResult Edit(int? id)
         {
 
@@ -159,7 +165,8 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HttpPostedFileBase file, [Bind(Include = "id,name,start,end,payment, showAmount, adv_id")] teaser teaser)
+        [Authorize(Roles = "PRManager")]
+        public ActionResult Edit(HttpPostedFileBase file, [Bind(Include = "id,name,start,end,payment, showAmount,url, adv_id")] teaser teaser)
         {
             //UpdateVideoGenres(selectedGenres, banner);
             if (ModelState.IsValid)
@@ -178,6 +185,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Teaser/Delete/5
+         [Authorize(Roles = "PRManager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -195,6 +203,7 @@ namespace OnlineCinemaProject.Controllers
         // POST: /Teaser/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "PRManager")]
         public ActionResult DeleteConfirmed(int id)
         {
             teaser teaser = _db.teasers.Find(id);
@@ -211,6 +220,7 @@ namespace OnlineCinemaProject.Controllers
             }
             base.Dispose(disposing);
         }
+         [Authorize(Roles = "PRManager")]
         public ActionResult Rotator()
         {
             OnlineCinemaEntities db = new OnlineCinemaEntities();
@@ -256,7 +266,7 @@ namespace OnlineCinemaProject.Controllers
                 sb.dateShow = DateTime.Now;
                 sb.id_teasers = teaser.id;
                 sb.showAmount = (int?) teaser.showAmount;
-                sb.id_users = "c2e50aec-ab00-493c-9fec-1770fe663d4b";
+                sb.id_users = User.Identity.GetUserId();
                 db.statistics_teaser.Add(sb);
                 db.SaveChanges();
 

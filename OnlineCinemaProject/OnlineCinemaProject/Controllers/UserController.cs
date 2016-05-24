@@ -35,7 +35,7 @@ namespace OnlineCinemaProject.Controllers
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-[HttpGet]
+         [HttpGet]
          public ActionResult TopUpBalance()
          {
              return View();
@@ -43,7 +43,7 @@ namespace OnlineCinemaProject.Controllers
          [HttpPost]
          public ActionResult TopUpBalance(TopUpViewModel model)
          {
-             aspnetuser user = _db.aspnetusers.Find(model.UserId);
+             aspnetuser user = _db.aspnetusers.FirstOrDefault(i => i.AccountId == model.AccountId);
              if (user != null)
              {
                  user.TopUpBalance(model.Amount);
@@ -71,10 +71,15 @@ namespace OnlineCinemaProject.Controllers
             var aspnetusers = _db.aspnetusers.Include(a => a.tariff);
             //var aspnetroles = db.aspnetroles.ToList();
             //ViewBag.roles = db.aspnetroles.Where(i => i.aspnetusers == aspnetuser).ToList();
+            ViewBag.noofsitesvisited = "Количество посещений =" + HttpContext.Application["SiteVisitedCounter"].ToString();
+            ViewBag.onlineusers = "Пользователи онлайн =" + HttpContext.Application["OnlineUserCounter"].ToString();
             return View(aspnetusers.ToList());
+               
+            
         }
+        
 
-        // GET: /User/Details/5
+        /*// GET: /User/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -89,13 +94,13 @@ namespace OnlineCinemaProject.Controllers
             /*ICollection<subscription> subscriptions = db.subscriptions.Where(i =>
                 i.tariff == aspnetuser.tariff &&
                 i.aspnetuser == aspnetuser
-                ).ToList();*/
+                ).ToList();#1#
             ViewBag.subscriptions = _db.subscriptions.Where(i =>
                 i.tariff == aspnetuser.tariff &&
                 i.aspnetuser == aspnetuser
                 ).ToList();
             return View(aspnetuser);
-        }
+        }*/
 
         // GET: /User/Create
         public ActionResult Create()

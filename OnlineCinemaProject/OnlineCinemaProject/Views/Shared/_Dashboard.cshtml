@@ -209,6 +209,7 @@
                             <ul>
                                 <li><a class="submenu" href="@Url.Action("Statistics","Billing")"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-sm"> Статистика</span></a></li>
                                 <li><a class="submenu" href="@Url.Action("Tariffs","Billing")"><i class="fa fa-usd" aria-hidden="true"></i><span class="hidden-sm"> Тарифы</span></a></li>
+                                <li><a class="submenu" href="@Url.Action("TopUpBalance","User")"><i class="fa fa-usd" aria-hidden="true"></i><span class="hidden-sm"> Пополнить баланс</span></a></li>
                             </ul>
                         </li>
                         <li>
@@ -219,6 +220,9 @@
                                 <li><a class="submenu" href="@Url.Action("Index","Teaser")"><i class="fa fa-folder" aria-hidden="true"></i><span class="hidden-sm"> Тизеры</span></a></li>
                                 <li><a class="submenu" href="@Url.Action("Index","StatisticsTeaser")"><i class="fa fa-pie-chart" aria-hidden="true"></i><span class="hidden-sm"> Статистика по тизерам</span></a></li>
                                 <li><a class="submenu" href="@Url.Action("Index","StatisticsBanner")"><i class="fa fa-pie-chart" aria-hidden="true"></i><span class="hidden-sm"> Статистика по баннерам</span></a></li>
+                                <li><a class="submenu" href="@Url.Action("Rotator", "Banner")"><i class="fa fa-folder" aria-hidden="true"></i><span class="hidden-sm"> Ротатор баннеров</span></a></li>
+                                <li><a class="submenu" href="@Url.Action("Rotator","Teaser")"><i class="fa fa-folder" aria-hidden="true"></i><span class="hidden-sm"> Ротатор тизеров</span></a></li>
+
                             </ul>
                         </li>
                         <li>
@@ -230,7 +234,10 @@
                                 <li><a class="submenu" href="@Url.Action("Index","Genre")"><i class="fa fa-shield" aria-hidden="true"></i><span class="hidden-sm"> Жанры </span></a></li>
                             </ul>
                         </li>
-                        <li><a href=""><i class="fa fa-users"></i><span class="hidden-sm"> Пользователи</span></a></li>
+                        <li><a href="@Url.Action("Index","User")"><i class="fa fa-users"></i><span class="hidden-sm"> Пользователи</span></a></li>
+                        <li><a href="@Url.Action("Index","Roles")"><i class="fa fa-users"></i><span class="hidden-sm"> </span>Роли</a></li>
+                        <li><a href="@Url.Action("Index","Cpu")"><i class="fa fa-users"></i><span class="hidden-sm"> </span>Ресурсы</a></li>
+                        <li><a href="@Url.Action("Index","Backup")"><i class="fa fa-users"></i><span class="hidden-sm"> </span>Резервное копирование</a></li>
                     </ul>
                 </div>
             </div>

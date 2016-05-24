@@ -42,6 +42,7 @@ namespace OnlineCinemaProject.Models
         public Nullable<decimal> Balance { get; set; }
         public Nullable<int> TariffId { get; set; }
         public Nullable<bool> Block { get; set; }
+        public Nullable<int> AccountId { get; set; }
     
         public virtual ICollection<history> histories { get; set; }
         public virtual ICollection<purchase> purchases { get; set; }
@@ -54,5 +55,6 @@ namespace OnlineCinemaProject.Models
         public virtual ICollection<statistics_teaser> statistics_teaser { get; set; }
         public virtual ICollection<aspnetrole> aspnetroles { get; set; }
         public virtual ICollection<userseason> userseasons { get; set; }
+        public virtual account account { get; set; }
     }
 }

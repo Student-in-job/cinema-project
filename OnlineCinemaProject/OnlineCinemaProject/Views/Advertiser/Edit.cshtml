@@ -1,17 +1,17 @@
 ﻿@model OnlineCinemaProject.Models.advertiser
 
 @{
-    ViewBag.Title = "Edit"; Layout = "~/Views/Shared/Dashboard.cshtml";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    ViewBag.Title = "Edit"; 
 }
 
-<h2>Edit</h2>
+<h2>Изменить персональные данные</h2>
 
 
 <form action="" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>advertiser</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.id)
@@ -47,16 +47,13 @@
                 @Html.ValidationMessageFor(model => model.password)
             </div>
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.img_url)
+    <div class="form-group">
+            @Html.LabelFor(model => model.img_url, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="ImagePath" title="Upload a product image" type="file" name="file" />
+                @Html.ValidationMessageFor(model => model.img_url)
+            </div>
         </div>
-        <div class="editor-field">
-            <input id="ImagePath" title="Upload a product image" type="file" name="file" />
-            @Html.ValidationMessageFor(model => model.img_url)
-        </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

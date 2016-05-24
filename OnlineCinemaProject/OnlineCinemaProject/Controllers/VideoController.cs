@@ -49,7 +49,7 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Create()
         {
             video video = new video();
-            video.release_date=DateTime.Now;
+            video.release_date = DateTime.Now;
             return View(video);
         }
 
@@ -71,6 +71,7 @@ namespace OnlineCinemaProject.Controllers
                 }
                 db.videos.Add(video);
                 db.SaveChanges();
+                
                 UpdateVideoGenres(genres, video);
                 UpdateVideoActors(actors, video);
                 UpdateVideoCountries(countries, video);
@@ -92,7 +93,11 @@ namespace OnlineCinemaProject.Controllers
         {
             if (selectedActors == null)
             {
-                model.videogenres = new List<videogenre>();
+                var delete = db.videoactors.Where(i => i.video == model).ToList();
+                foreach (var videoactor in delete)
+                {
+                    db.videoactors.Remove(videoactor);
+                }
                 return;
             }
 
@@ -107,14 +112,14 @@ namespace OnlineCinemaProject.Controllers
                         var videoactor = new videoactor();
                         videoactor.actor_id = actor.id;
                         videoactor.video_id = model.id;
-                        model.videoactors.Add(videoactor);
+                        db.videoactors.Add(videoactor);
                     }
                 }
                 else
                 {
                     if (videoActors.Contains(actor.id))
                     {
-                        model.videoactors.Remove(model.videoactors.FirstOrDefault(g => g.actor_id == actor.id));
+                        db.videoactors.Remove(model.videoactors.FirstOrDefault(g => g.actor_id == actor.id));
                     }
                 }
             }
@@ -123,7 +128,11 @@ namespace OnlineCinemaProject.Controllers
         {
             if (selectedGenres == null)
             {
-                model.videogenres = new List<videogenre>();
+                var delete = db.videogenres.Where(i => i.video_id == model.id).ToList();
+                foreach (var videoactor in delete)
+                {
+                    db.videogenres.Remove(videoactor);
+                }
                 return;
             }
 
@@ -138,14 +147,14 @@ namespace OnlineCinemaProject.Controllers
                         var videogenre = new videogenre();
                         videogenre.genre_id = genre.id;
                         videogenre.video_id = model.id;
-                        model.videogenres.Add(videogenre);
+                        db.videogenres.Add(videogenre);
                     }
                 }
                 else
                 {
                     if (videoGenres.Contains(genre.id))
                     {
-                        model.videogenres.Remove(model.videogenres.FirstOrDefault(g=>g.genre_id == genre.id));
+                        db.videogenres.Remove(model.videogenres.FirstOrDefault(g => g.genre_id == genre.id));
                     }
                 }
             }
@@ -154,7 +163,11 @@ namespace OnlineCinemaProject.Controllers
         {
             if (selectedCountries == null)
             {
-                model.manufacturers = new List<manufacturer>();
+                var delete = db.manufacturers.Where(i => i.video_id == model.id).ToList();
+                foreach (var videoactor in delete)
+                {
+                    db.manufacturers.Remove(videoactor);
+                }
                 return;
             }
 
@@ -169,14 +182,14 @@ namespace OnlineCinemaProject.Controllers
                         var manufacturer = new manufacturer();
                         manufacturer.country_id = country.id;
                         manufacturer.video_id = model.id;
-                        model.manufacturers.Add(manufacturer);
+                        db.manufacturers.Add(manufacturer);
                     }
                 }
                 else
                 {
                     if (videoCountries.Contains(country.id))
                     {
-                        model.manufacturers.Remove(model.manufacturers.FirstOrDefault(g => g.country_id == country.id));
+                        db.manufacturers.Remove(model.manufacturers.FirstOrDefault(g => g.country_id == country.id));
                     }
                 }
             }
@@ -187,11 +200,11 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-           video video = db.videos.Where(t=>t.id==id)
-                .Include("videoactors.actor")
-                .Include("videogenres.genre")
-                .Include("manufacturers.country")
-                .FirstOrDefault();
+            video video = db.videos.Where(t => t.id == id)
+                 .Include("videoactors.actor")
+                 .Include("videogenres.genre")
+                 .Include("manufacturers.country")
+                 .FirstOrDefault();
             if (video == null)
             {
                 return HttpNotFound();
@@ -220,9 +233,11 @@ namespace OnlineCinemaProject.Controllers
                 db.Entry(video).Collection(e => e.videoactors).Load();
                 db.Entry(video).Collection(e => e.videogenres).Load();
                 db.Entry(video).Collection(e => e.manufacturers).Load();
+                
                 UpdateVideoGenres(genres, video);
                 UpdateVideoActors(actors, video);
                 UpdateVideoCountries(countries, video);
+                db.Entry(video).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -278,8 +293,8 @@ namespace OnlineCinemaProject.Controllers
             var allActors = db.actors;
             var allCountries = db.countries;
             var videoGenres = new HashSet<int>(video.videogenres/*.Where(i=>i.video_id==video.id)*/.Select(c => c.genre_id));
-            var videoActors = new HashSet<int>(video.videoactors.Select(i=>i.actor_id));
-            var videoCountries = new HashSet<int>(video.manufacturers.Select(i=>i.country_id));
+            var videoActors = new HashSet<int>(video.videoactors.Select(i => i.actor_id));
+            var videoCountries = new HashSet<int>(video.manufacturers.Select(i => i.country_id));
             var genreDatas = new List<IncludedData>();
             var actorDatas = new List<IncludedData>();
             var countryDatas = new List<IncludedData>();
@@ -314,7 +329,7 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.Genres = genreDatas;
             ViewBag.Actors = actorDatas;
             ViewBag.Countries = countryDatas;
-            
+
         }
         [HttpGet]
         public ActionResult CreateNew()
@@ -358,19 +373,23 @@ namespace OnlineCinemaProject.Controllers
                 .Include("videoactor.actor")
                 .Include("videogenre.genre")
                 .Where(
-                    v=>
-                        (!genre.HasValue || v.videogenres.Any(g=>g.genre_id==genre.Value))&&
-                        (!actor.HasValue || v.videoactors.Any(g=>g.actor_id== actor.Value))&&
-                        (!country.HasValue || v.manufacturers.Any(g=>g.country_id== country.Value))
+                    v =>
+                        (!genre.HasValue || v.videogenres.Any(g => g.genre_id == genre.Value)) &&
+                        (!actor.HasValue || v.videoactors.Any(g => g.actor_id == actor.Value)) &&
+                        (!country.HasValue || v.manufacturers.Any(g => g.country_id == country.Value))
                 )
-                .Select(v => new 
-            {
-                    v.name, v.id, v.img_url, v.type, v.release_date,
-                    videogenres = v.videogenres.Select(t=>new {genre = new  { t.genre.name} }),
-                    videoactors = v.videoactors.Select(t=>new {actor = new  { t.actor.name} }),
-                    manufacturers = v.manufacturers.Select(t=>new { country = new  { t.country.name} })
-              
-            }).ToDataSourceResult(request);
+                .Select(v => new
+                {
+                    v.name,
+                    v.id,
+                    v.img_url,
+                    v.type,
+                    v.release_date,
+                    videogenres = v.videogenres.Select(t => new { genre = new { t.genre.name } }),
+                    videoactors = v.videoactors.Select(t => new { actor = new { t.actor.name } }),
+                    manufacturers = v.manufacturers.Select(t => new { country = new { t.country.name } })
+
+                }).ToDataSourceResult(request);
             return Json(result);
         }
 
@@ -398,7 +417,7 @@ namespace OnlineCinemaProject.Controllers
             }
             var data =
                 video.reviews.GroupBy(t => t.rating)
-                    .Select(t => new ScoreModel { Score = Convert.ToInt32(t.Key), Count = t.Count() }).OrderBy(t=>t.Score)
+                    .Select(t => new ScoreModel { Score = Convert.ToInt32(t.Key), Count = t.Count() }).OrderBy(t => t.Score)
                     .ToList();
             return Json(data);
         }

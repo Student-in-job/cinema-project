@@ -4,10 +4,15 @@
 @{
     Layout = "~/Views/Shared/_Dashboard.cshtml";
     ViewBag.Title = "Пользователи";
-    
+
 }
 
 <h2>Пользователи</h2>
+@{
+    int counter = 1;
+}
+<span class="value">@ViewBag.noofsitesvisited</span><br>
+<span class="value">@ViewBag.onlineusers</span>
 
 <p>
     @Html.ActionLink("Cоздать нового", "Create")
@@ -15,9 +20,13 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayName("#")
+
+        </th>
+        <th>
             @Html.DisplayName("Логин")
         </th>
-       
+
         <th>
             @Html.DisplayName("Имя")
         </th>
@@ -52,67 +61,79 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-       
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @if (item.Sex == 1)
-            {
-                @:Муж
-            }
-            else
-            {
-                @:Жен
-                
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JoinDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Balance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tariff.name)
-        </td>
-        <td>
-            @if (item.Block == false)
-            {
-               @:Активный
-            }
-             else
-            {
-               @:Блокированный
-            }                   
-        <td>
-            @foreach (var role in item.aspnetroles)
-            {
-                @role.Name <br/>
-            }
-        </td>
 
-        <td>
-            @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
-            @*@Html.ActionLink("Просмотреть", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })*@
-            @Html.ActionLink("Профиль", "Profile", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
 
+            <td>
+                @counter
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @if (item.Sex == 1)
+                {
+                    @:Муж
+            }
+                else
+                {
+                    @:Жен
+
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JoinDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Balance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tariff.name)
+            </td>
+            <td>
+                @if (item.Block == false)
+                {
+                    @:Активный
+        }
+                else
+                {
+                    @:Блокированный
+        }
+            <td>
+                @foreach (var role in item.aspnetroles)
+                {
+                    @role.Name
+                    <br />
+                }
+            </td>
+
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
+                @*@Html.ActionLink("Просмотреть", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id=item.Id })*@
+                @*@Html.ActionLink("Профиль", "Profile", new { id = item.Id })*@
+            </td>
+        </tr>
+                counter = counter + 1;
+    }
+    @{ int adc = counter - 1; }
+    <h2>Количество пользователей @adc </h2>
 </table>
+CANCELFORWARD 1 DELETE 1 REPLY
+

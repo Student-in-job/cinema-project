@@ -2,64 +2,69 @@
     @using PagedList.Mvc;
    
  <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-    @{
-        ViewBag.Title = "Statistics_banner"; Layout = "~/Views/Shared/_Dashboard.cshtml";
+    @{Layout = "~/Views/Shared/_Dashboard.cshtml";
+        ViewBag.Title = "Statistics_banner";
     }
 
-    <h2>Статистика баннеров</h2>
+    <br/>
 
-    @using (Html.BeginForm("Index", "Statistics_banner", FormMethod.Get))
+    @*@using (Html.BeginForm("Index", "Statistics_banner", FormMethod.Get))
     {
         <p>
-            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            <input type="submit" value="Search" />
+            Найти по имени: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Поиск..." />
         </p>
 
-    }
-    <table class="table">
+    }*@
+<div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2><center> Статистика баннеров </center></h2></div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Количество показов", "Index", new {sortOrder = ViewBag.show_amountSortParm})
+        </th>
+        <th>
+            Пользователь
+        </th>
+        <th>
+            @Html.ActionLink("Баннер", "Index", new {sortOrder = ViewBag.nameSortParm})
+        </th>
+        <th>
+            @Html.ActionLink("Дата показа", "Index", new {sortOrder = ViewBag.dateSortParm})
+        </th>
+
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.ActionLink("Количество показов", "Index", new { sortOrder = ViewBag.show_amountSortParm })
-            </th>
-            <th>
-                Пользователь
-            </th>
-            <th>
-                @Html.ActionLink("Баннер", "Index", new { sortOrder = ViewBag.nameSortParm })
-            </th>
-            <th>
-                @Html.ActionLink("Дата показа", "Index", new { sortOrder = ViewBag.dateSortParm })
-            </th>
 
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => item.show_amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aspnetuser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.banner.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+
+                @Html.ActionLink("Удалить", "Delete", new {id = item.id})
+            </td>
         </tr>
-        
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.show_amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.aspnetuser.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.banner.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date)
-                </td>
-                <td>
-                   
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                </td>
-            </tr>
-        }
-
-    </table>
+</table>
+    </div>
     <br />
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    Страница от @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) до @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -213,19 +213,19 @@ namespace OnlineCinemaProject.Models
 
         public void TopUpBalance(decimal amount)
         {
-            this.Balance = this.Balance + amount;
+            account.balance = account.balance + amount;
         }
 
         public bool DrawMoney(decimal amount)// Снять деньги со счета клиента
         {
             if (!CheckBalance(amount)) return false;
-            Balance = Balance - amount;
+            account.balance = account.balance - amount;
             return true;
         }
 
         public bool CheckBalance(decimal amount) // проверить хватит ли денег 
         {
-            if (Balance < amount)
+            if (account.balance < amount)
             {
                 return false;
             }

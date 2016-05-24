@@ -18,5 +18,6 @@ namespace OnlineCinemaProject.Models
         public string Name { get; set; }
         public string Way { get; set; }
         public Nullable<System.DateTime> Date_Backup { get; set; }
+        public string ZipWay { get; set; }
     }
 }

@@ -102,6 +102,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Log" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -287,6 +290,9 @@
     <Compile Include="Hubs\CpuInfo.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
+    <Compile Include="Models\account.cs">
+      <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\actor.cs">
       <DependentUpon>OnlineCinemaModel.tt</DependentUpon>
@@ -2482,6 +2488,11 @@
     <Content Include="Views\Home\_Stars.cshtml" />
     <Content Include="Views\Home\_MovieInfo.cshtml" />
     <Content Include="Views\Home\VideoByGenre.cshtml" />
+    <Content Include="Views\Account\LoginAdvertiser.cshtml" />
+    <Content Include="Views\Advertiser\BannerStatistics.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Advertiser\TeaserStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

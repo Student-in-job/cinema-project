@@ -1,33 +1,34 @@
 ﻿@model ICollection<OnlineCinemaProject.Models.backup>
-    @{
-        Layout = "~/Views/Shared/_Dashboard.cshtml";
-    }
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
 <div class="row">
     <div class="col-md-12">
         <a href="@Url.Action("Create")">Создать</a>
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>#</th>
-                <th>Название</th>
-                <th>Дата </th>
-                <th> </th>
-            </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Дата </th>
+                    <th> </th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var backup in Model)
-            {
-                <tr>
-                    <td>@backup.id_backup</td>
-                    <td> @backup.Name</td>
-                    <td> @backup.Date_Backup</td>
-                    <td><a href="@Url.Action("Index", "Restore", new {url = backup.Way})">Restore</a></td>
-                </tr>
-            }
+                @foreach (var backup in Model)
+                {
+                    <tr>
+                        <td>@backup.id_backup</td>
+                        <td> @backup.Name</td>
+                        <td> @backup.Date_Backup</td>
+                        <td><a href="@Url.Action("Index", "Restore", new {url = backup.Way})">Restore Data Base</a></td>
+                        <td><a href="@Url.Action("Zip", "Restore", new {urlZip = backup.ZipWay})">Restore Images</a></td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
-    
+
 
 </div>
                       

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,16 +24,19 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Create()
         {
-            string constring = "server=localhost;User Id=root;password=22312tuit;Persist Security Info=True;database=online-cinema";
-            string file = "D:\\Diplomka\\OnlineCinemaProject\\Backup\\online-cinema.sql";
-            string newFileName =
-             Path.Combine(
-             Path.GetDirectoryName(file)
-           , string.Concat(Path.GetFileNameWithoutExtension(file)
+            string constring = "server=localhost;User Id=root;password=tatu22312;Persist Security Info=True;database=online-cinema";
+            string file = "F:\\OnlineCinemaProject\\OnlineCinemaProject\\Backup\\online-cinema.sql";
+            string startPath = @"F:\OnlineCinemaProject\OnlineCinemaProject\OnlineCinemaProject\uploads";
+            string zipPath = @"F:\OnlineCinemaProject\OnlineCinemaProject\Backup\backupImages.zip";
+            string newFileName = Path.Combine(Path.GetDirectoryName(file), string.Concat(Path.GetFileNameWithoutExtension(file)
                           , DateTime.Now.ToString("_yyyy_MM_dd_HH_mm_ss")
                           , Path.GetExtension(file)
-                          )
-           );
+                          ));
+            string newZipPath = Path.Combine(Path.GetDirectoryName(zipPath), string.Concat(Path.GetFileNameWithoutExtension(zipPath)
+                          , DateTime.Now.ToString("_yyyy_MM_dd_HH_mm_ss")
+                          , Path.GetExtension(zipPath)
+                          ));
+
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -47,11 +51,14 @@ namespace OnlineCinemaProject.Controllers
                 }
             }
 
+            ZipFile.CreateFromDirectory(startPath, newZipPath);
+
             backup backup = new backup
             {
-                Name = "backup за "+ DateTime.Now, 
+                Name = "backup за " + DateTime.Now,
                 Date_Backup = DateTime.Now,
-                Way = newFileName
+                Way = newFileName,
+                ZipWay = newZipPath
             };
             if (ModelState.IsValid)
             {
@@ -62,7 +69,7 @@ namespace OnlineCinemaProject.Controllers
             }
 
             return RedirectToAction("Error", "Errors");
-            
+
         }
 
     }

@@ -120,6 +120,41 @@ namespace OnlineCinemaProject.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult LoginAdvertiser(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> LoginAdvertiser(LoginAdvertiserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                OnlineCinemaEntities db = new OnlineCinemaEntities();
+                var adv = db.advertisers.FirstOrDefault(m => m.name == model.name && m.password == model.password);
+                if (adv != null)
+                {
+                    // await SignInAsync(user, model.RememberMe);
+                    var user = await UserManager.FindAsync("advertiser", "advertiser");
+                    if (user != null)
+                    {
+                        await SignInAsync(user, false);
+                        return RedirectToAction("Personal_account", "Advertiser", new { @id = adv.id });
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -152,7 +187,20 @@ namespace OnlineCinemaProject.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "User");
-                    
+                    account account = new account
+                    {
+                        balance = 0
+                    };
+
+                    // vanya eto ya dobavil ramazan 
+                    db.accounts.Add(account);
+                    db.SaveChanges();
+
+                    var aspnetuser = db.aspnetusers.Find(user.Id);
+                    aspnetuser.account = account;
+                    db.Entry(aspnetuser).State = EntityState.Modified;
+                    db.SaveChanges();
+
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -165,7 +213,35 @@ namespace OnlineCinemaProject.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        public class MailNotExists : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                OnlineCinemaEntities db = new OnlineCinemaEntities();
 
+                var user = db.aspnetusers.FirstOrDefault(u => u.Email == (string)value);
+
+                if (user == null)
+                    return ValidationResult.Success;
+                else
+                    return new ValidationResult("Такая почта уже существует");
+            }
+        }
+
+        public class UserNameNotExists : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                OnlineCinemaEntities db = new OnlineCinemaEntities();
+
+                var user = db.aspnetusers.FirstOrDefault(u => u.UserName == (string)value);
+
+                if (user == null)
+                    return ValidationResult.Success;
+                else
+                    return new ValidationResult("Такой логин уже существует");
+            }
+        }
        // [HttpPost]
         public JsonResult DoesUserEmailExist(string email)
         {

@@ -12,12 +12,13 @@ using System.Web;
 
 namespace OnlineCinemaProject.Controllers
 {
-    [Authorize(Roles = "PRManager")]
+    [Authorize(Roles = "PRManager, Advertiser")]
     public class AdvertiserController : Controller
     {
         private readonly OnlineCinemaEntities _db = new OnlineCinemaEntities();
 
         // GET: /Advertiser/
+        [Authorize(Roles = "PRManager")]
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -67,6 +68,7 @@ namespace OnlineCinemaProject.Controllers
 
 
         // GET: /Advertiser/Details/5
+        [Authorize(Roles = "PRManager")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -82,6 +84,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Advertiser/Create
+        [Authorize(Roles = "PRManager")]
         public ActionResult Create()
         { 
            
@@ -93,6 +96,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "PRManager")]
         public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number,password")] advertiser advertiser)
         {
            
@@ -128,6 +132,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Advertiser/Edit/5
+        [Authorize(Roles = "PRManager, Advertiser")]
         public ActionResult Edit(int? id)
         {
             //if (id == null)
@@ -147,6 +152,7 @@ namespace OnlineCinemaProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "PRManager, Advertiser")]
         public ActionResult Edit(HttpPostedFileBase file, [Bind(Include = "id,name,email,phone_number,password")] advertiser advertiser)
         {
           
@@ -165,6 +171,7 @@ namespace OnlineCinemaProject.Controllers
         }
 
         // GET: /Advertiser/Delete/5
+        [Authorize(Roles = "PRManager")]
         public ActionResult Delete(bool? saveChangesError = false, int id = 0)
         {
             if (saveChangesError.GetValueOrDefault())
@@ -182,6 +189,7 @@ namespace OnlineCinemaProject.Controllers
         // POST: /Advertiser/Delete/5
        [HttpPost]
        [ValidateAntiForgeryToken]
+       [Authorize(Roles = "PRManager")]
 public ActionResult Delete(int id)
 {
     try
@@ -206,6 +214,8 @@ public ActionResult Delete(int id)
             }
             base.Dispose(disposing);
         }
+
+        [Authorize(Users = "advertiser")]
         public ActionResult Personal_account(int id)
         {
             var allStatistcs = _db.statistics_banner;
@@ -216,7 +226,7 @@ public ActionResult Delete(int id)
             var allStatistcs2 = _db.statistics_teaser;
             var teasers = _db.teasers.Where(i => i.adv_id == id);
             var advStatistics2 = from n in allStatistcs2 join t in teasers on n.id_teasers equals t.id select n;
-            
+             
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -232,15 +242,19 @@ public ActionResult Delete(int id)
             return View(advertiser);
         }
 
+        [Authorize(Users = "advertiser")]
         public ActionResult TeaserStatistics(int id)
         {
             return View(_db.statistics_teaser.Where(i => i.id_teasers == id).ToList());
         }
+
+        [Authorize(Users = "advertiser")]
         public ActionResult BannerStatistics(int id)
         {
             return View(_db.statistics_banner.Where(i => i.id_banner == id).ToList());
         }
 
+        [Authorize(Users = "advertiser")]
         [HttpPost]
         public ActionResult ActivateBanners(int id, List<int> args)
         {
@@ -266,6 +280,7 @@ public ActionResult Delete(int id)
             return Json(true);
         }
 
+        [Authorize(Users = "advertiser")]
         public ActionResult ActivateTeasers(int id, List<int> args)
         {
             var teasers = _db.teasers.Where(i => i.adv_id == id).ToList();

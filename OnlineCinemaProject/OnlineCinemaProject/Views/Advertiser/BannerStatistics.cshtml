@@ -1,0 +1,39 @@
+﻿@model ICollection<OnlineCinemaProject.Models.statistics_banner>
+
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    ViewBag.Title = "BannerStatistics";
+}
+
+
+
+<div class="panel panel-success">
+    <div class ="panel-heading"><h3> <center>Статистика показов баннера <center></center></h3></div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Дата</th>
+                <th>Количесво показов</th>
+                <th>Имя баннера</th>
+                <th>Имя пользователя</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var statistics_banner in Model)
+            {
+                <tr>
+                    <td>@statistics_banner.id</td>
+                    <td>@statistics_banner.date</td>
+                    <td>@statistics_banner.show_amount</td>
+                    <td>@statistics_banner.banner.name</td>
+                    <td>@statistics_banner.aspnetuser.FirstName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+

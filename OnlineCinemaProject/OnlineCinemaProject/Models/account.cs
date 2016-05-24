@@ -12,22 +12,16 @@ namespace OnlineCinemaProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class advertiser
+    public partial class account
     {
-        public advertiser()
+        public account()
         {
-            this.banners = new HashSet<banner>();
-            this.teasers = new HashSet<teaser>();
+            this.aspnetusers = new HashSet<aspnetuser>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string phone_number { get; set; }
-        public string img_url { get; set; }
-        public string password { get; set; }
+        public Nullable<decimal> balance { get; set; }
     
-        public virtual ICollection<banner> banners { get; set; }
-        public virtual ICollection<teaser> teasers { get; set; }
+        public virtual ICollection<aspnetuser> aspnetusers { get; set; }
     }
 }

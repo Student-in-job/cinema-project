@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OnlineCinemaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="balance" Type="decimal" Precision="10" Scale="0" />
+        </EntityType>
         <EntityType Name="actors">
           <Key>
             <PropertyRef Name="id" />
@@ -21,6 +28,7 @@
           <Property Name="email" Type="varchar" MaxLength="45" />
           <Property Name="phone_number" Type="varchar" MaxLength="45" />
           <Property Name="img_url" Type="varchar" MaxLength="45" />
+          <Property Name="password" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="aspnetroles">
           <Key>
@@ -55,6 +63,7 @@
           <Property Name="Balance" Type="decimal" Precision="10" Scale="0" />
           <Property Name="TariffId" Type="int" />
           <Property Name="Block" Type="bool" />
+          <Property Name="AccountId" Type="int" />
         </EntityType>
         <EntityType Name="backup">
           <Key>
@@ -64,6 +73,7 @@
           <Property Name="Name" Type="longtext" />
           <Property Name="Way" Type="longtext" />
           <Property Name="Date_Backup" Type="datetime" Precision="0" />
+          <Property Name="ZipWay" Type="longtext" />
         </EntityType>
         <EntityType Name="banners">
           <Key>
@@ -396,7 +406,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_season_user">
-          <End Role="seasons" Type="Self.seasons" Multiplicity="0..1" />
+          <End Role="seasons" Type="Self.seasons" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="userseasons" Type="Self.userseasons" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="seasons">
@@ -530,7 +542,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FkSeasonPayment">
-          <End Role="payments" Type="Self.payments" Multiplicity="0..1" />
+          <End Role="payments" Type="Self.payments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="userseasons" Type="Self.userseasons" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="payments">
@@ -553,6 +567,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FkUserAccount">
+          <End Role="account" Type="Self.account" Multiplicity="0..1" />
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aspnetusers">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FkUserEpisodeHistory">
           <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
           <End Role="episodehistory" Type="Self.episodehistory" Multiplicity="*" />
@@ -566,7 +592,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FkUserOverview">
-          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="0..1" />
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="aspnetusers">
@@ -578,7 +606,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FkUserSeasons">
-          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="0..1" />
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="userseasons" Type="Self.userseasons" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="aspnetusers">
@@ -704,6 +734,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OnlineCinemaModelStoreContainer">
+          <EntitySet Name="account" EntityType="Self.account" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="actors" EntityType="Self.actors" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="advertiser" EntityType="Self.advertiser" Schema="online-cinema" store:Type="Tables" />
           <EntitySet Name="aspnetroles" EntityType="Self.aspnetroles" Schema="online-cinema" store:Type="Tables" />
@@ -813,6 +844,10 @@
           <AssociationSet Name="FkSubscriptionPayment" Association="Self.FkSubscriptionPayment">
             <End Role="payments" EntitySet="payments" />
             <End Role="subscriptions" EntitySet="subscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FkUserAccount" Association="Self.FkUserAccount">
+            <End Role="account" EntitySet="account" />
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
           </AssociationSet>
           <AssociationSet Name="FkUserEpisodeHistory" Association="Self.FkUserEpisodeHistory">
             <End Role="aspnetusers" EntitySet="aspnetusers" />
@@ -1021,6 +1056,11 @@
             <End Role="userseason" EntitySet="userseasons" />
           </AssociationSet>
           <EntitySet Name="backups" EntityType="OnlineCinemaModel.backup" />
+          <EntitySet Name="accounts" EntityType="OnlineCinemaModel.account" />
+          <AssociationSet Name="FkUserAccount" Association="OnlineCinemaModel.FkUserAccount">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="aspnetuser" EntitySet="aspnetusers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="actor">
           <Key>
@@ -1041,6 +1081,7 @@
           <Property Name="img_url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="banners" Relationship="OnlineCinemaModel.fk_adv_banner" FromRole="advertiser" ToRole="banner" />
           <NavigationProperty Name="teasers" Relationship="OnlineCinemaModel.fk_id_teaser" FromRole="advertiser" ToRole="teaser" />
+          <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="aspnetrole">
           <Key>
@@ -1079,6 +1120,8 @@
           <NavigationProperty Name="statistics_teaser" Relationship="OnlineCinemaModel.id_users" FromRole="aspnetuser" ToRole="statistics_teaser" />
           <NavigationProperty Name="aspnetroles" Relationship="OnlineCinemaModel.aspnetuserroles" FromRole="aspnetuser" ToRole="aspnetrole" />
           <NavigationProperty Name="userseasons" Relationship="OnlineCinemaModel.FkUserSeasons" FromRole="aspnetuser" ToRole="userseason" />
+          <Property Name="AccountId" Type="Int32" />
+          <NavigationProperty Name="account" Relationship="OnlineCinemaModel.FkUserAccount" FromRole="aspnetuser" ToRole="account" />
         </EntityType>
         <EntityType Name="banner">
           <Key>
@@ -1751,7 +1794,28 @@
           <Property Name="Name" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
           <Property Name="Way" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
           <Property Name="Date_Backup" Type="DateTime" />
+          <Property Name="ZipWay" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="balance" Type="Decimal" />
+          <NavigationProperty Name="aspnetusers" Relationship="OnlineCinemaModel.FkUserAccount" FromRole="account" ToRole="aspnetuser" />
+        </EntityType>
+        <Association Name="FkUserAccount">
+          <End Type="OnlineCinemaModel.account" Role="account" Multiplicity="0..1" />
+          <End Type="OnlineCinemaModel.aspnetuser" Role="aspnetuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aspnetuser">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1769,6 +1833,7 @@
           <EntitySetMapping Name="advertisers">
             <EntityTypeMapping TypeName="OnlineCinemaModel.advertiser">
               <MappingFragment StoreEntitySet="advertiser">
+                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="img_url" ColumnName="img_url" />
                 <ScalarProperty Name="phone_number" ColumnName="phone_number" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -1788,6 +1853,7 @@
           <EntitySetMapping Name="aspnetusers">
             <EntityTypeMapping TypeName="OnlineCinemaModel.aspnetuser">
               <MappingFragment StoreEntitySet="aspnetusers">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
                 <ScalarProperty Name="Block" ColumnName="Block" />
                 <ScalarProperty Name="TariffId" ColumnName="TariffId" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
@@ -2048,10 +2114,19 @@
           <EntitySetMapping Name="backups">
             <EntityTypeMapping TypeName="OnlineCinemaModel.backup">
               <MappingFragment StoreEntitySet="backup">
+                <ScalarProperty Name="ZipWay" ColumnName="ZipWay" />
                 <ScalarProperty Name="Date_Backup" ColumnName="Date_Backup" />
                 <ScalarProperty Name="Way" ColumnName="Way" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id_backup" ColumnName="id_backup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="OnlineCinemaModel.account">
+              <MappingFragment StoreEntitySet="account">
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

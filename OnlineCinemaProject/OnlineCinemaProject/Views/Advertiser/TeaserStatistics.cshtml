@@ -1,0 +1,42 @@
+﻿@model ICollection<OnlineCinemaProject.Models.statistics_teaser>
+
+
+@{
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    ViewBag.Title = "TeaserStatistics";
+}
+
+
+
+<div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2><center> Статистика показов тизеров </center></h2></div>
+
+    <table class="table table-striped table-bordered ">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Дата</th>
+                <th>Количесво показов</th>
+                <th>Имя тизера</th>
+                <th>Имя пользователя</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var statistics_teaser in Model)
+            {
+                <tr>
+                    <td>@statistics_teaser.id</td>
+                    <td>@statistics_teaser.dateShow</td>
+                    <td>@statistics_teaser.showAmount</td>
+                    <td>@statistics_teaser.teaser.name</td>
+                    <td>@statistics_teaser.aspnetuser.FirstName</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+

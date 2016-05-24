@@ -2,7 +2,8 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Advertiser"; Layout = "~/Views/Shared/Dashboard.cshtml";
+    Layout = "~/Views/Shared/_Dashboard.cshtml"; 
+    ViewBag.Title = "Advertiser"; 
 }
 
 <h2>   </h2>
@@ -12,12 +13,12 @@
 @using (Html.BeginForm("Index", "Advertiser", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
+        Найти рекламодателя по имени: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Поиск" />
     </p>
 }
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать", "Create")
 </p>
 <div class="panel panel-title panel-primary">
     <!-- Default panel contents -->
@@ -63,7 +64,7 @@
             </center>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.password)
+            @*@Html.DisplayFor(modelItem => item.password)*@ Password
         </td>
         <td>
             <center>
@@ -85,6 +86,6 @@
     </table>
     </div>
     <br />
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+   Страница от @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) до @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

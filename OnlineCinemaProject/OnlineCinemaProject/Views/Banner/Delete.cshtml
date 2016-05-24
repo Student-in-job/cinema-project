@@ -1,42 +1,41 @@
 ﻿@model OnlineCinemaProject.Models.banner
 
 @{
-    ViewBag.Title = "Delete"; Layout = "~/Views/Shared/_Dashboard.cshtml";
+    Layout = "~/Views/Shared/_Dashboard.cshtml"; 
+    ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Удалить баннер?</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+
 <div>
-    <h4>banner</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.name)
+            Имя
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.name)
         </dd>
-<dt>
-            @Html.DisplayNameFor(model => model.start)
+        <dt>
+            Дата
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.start)
         </dd>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.end)
-        </dt>
-        
-        <dd>
-            @Html.DisplayFor(model => model.payment)
-        </dd>*@
-
-       
         <dt>
-            @Html.DisplayNameFor(model => model.advertiser.name)
+            Ссылка на продукт
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.url)
+        </dd>
+        <dt>
+            Имя рекламодателя
         </dt>
 
         <dd>
@@ -45,12 +44,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
         </div>
     }
 </div>

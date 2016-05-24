@@ -2,23 +2,20 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Teaser";
-    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    ViewBag.Title = "Teaser"; Layout = "~/Views/Shared/_Dashboard.cshtml";
+   
 }
-
-<h2>     </h2>
-
-
+    
 
 @using (Html.BeginForm("Index", "Teaser", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
+       Найти тизер по имени: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Поиск" />
     </p>
 }
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать", "Create")
 </p>
 <div class="panel panel-info">
  
@@ -45,6 +42,7 @@
                 <th>
                     Имя рекламодателя
                 </th>
+                <th>Ссылка на продукт</th>
                 <th>
                     Изображение
                 </th>
@@ -69,7 +67,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.advertiser.name)
                     </td>
-
+                    <td>
+                        @Html.DisplayFor(modelItem => item.url)
+                    </td>
                     <td>
                         <div style="text-align: center;" >
                             <img src="~/uploads/@item.img_url" class="video-img-list" style="" width="75" height="100" />
@@ -94,7 +94,7 @@
         </table>
     </div>
         <br />
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        Страница от @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) до @Model.PageCount
 
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         
