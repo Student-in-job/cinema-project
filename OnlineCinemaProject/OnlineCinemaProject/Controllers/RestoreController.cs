@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO.Compression;
 using System.Linq;
 using System.Web;
@@ -14,11 +15,8 @@ namespace OnlineCinemaProject.Controllers
         // GET: /Restore/
         public ActionResult Index(string url)
         {
-            string constring = "server=localhost;User Id=root;password=tatu22312;Persist Security Info=True;database=online-cinema";
-            /* string fileName = "D:\\online-cinema.sql"*/
-            ;
-
-
+            string constring = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            
             using (MySqlConnection conn = new MySqlConnection(constring))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
@@ -38,7 +36,7 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Zip(string urlZip)
         {
-            string extractPath = @"D:\Diplomka\OnlineCinemaProject\OnlineCinemaProject\uploads";
+            string extractPath = ConfigurationManager.AppSettings["startPath"].ToString();
             ZipFile.ExtractToDirectory(urlZip, extractPath);
             return RedirectToAction("Index", "Backup");
         }

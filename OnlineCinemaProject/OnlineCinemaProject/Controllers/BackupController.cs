@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.IO.Compression;
@@ -8,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using MySql.Data.MySqlClient;
 using OnlineCinemaProject.Models;
+
 
 namespace OnlineCinemaProject.Controllers
 {
@@ -24,10 +26,11 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Create()
         {
-            string constring = "server=localhost;User Id=root;password=tatu22312;Persist Security Info=True;database=online-cinema";
-            string file = "F:\\OnlineCinemaProject\\OnlineCinemaProject\\Backup\\online-cinema.sql";
-            string startPath = @"F:\OnlineCinemaProject\OnlineCinemaProject\OnlineCinemaProject\uploads";
-            string zipPath = @"F:\OnlineCinemaProject\OnlineCinemaProject\Backup\backupImages.zip";
+            string constring = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            
+            string file = ConfigurationManager.AppSettings["file"].ToString();
+            string startPath = ConfigurationManager.AppSettings["startPath"].ToString();
+            string zipPath = ConfigurationManager.AppSettings["zipPath"].ToString();
             string newFileName = Path.Combine(Path.GetDirectoryName(file), string.Concat(Path.GetFileNameWithoutExtension(file)
                           , DateTime.Now.ToString("_yyyy_MM_dd_HH_mm_ss")
                           , Path.GetExtension(file)
