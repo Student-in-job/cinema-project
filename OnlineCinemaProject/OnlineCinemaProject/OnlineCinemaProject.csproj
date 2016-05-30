@@ -2183,6 +2183,7 @@
     <Content Include="uploads\images %284%29.jpg" />
     <Content Include="uploads\images.jpg" />
     <Content Include="uploads\images25.jpg" />
+    <Content Include="uploads\logo_illusion.jpg" />
     <Content Include="uploads\love.jpg" />
     <Content Include="uploads\mrHolms.jpg" />
     <Content Include="uploads\mstitel.jpg" />
@@ -2493,6 +2494,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Advertiser\TeaserStatistics.cshtml" />
+    <Content Include="Views\Home\AllVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

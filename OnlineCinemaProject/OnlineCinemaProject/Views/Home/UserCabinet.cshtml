@@ -54,11 +54,11 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="payments">@Html.Partial("_PaymentsPartial",Model.payments)</div>
+                        <div role="tabpanel" class="tab-pane active" id="payments">@Html.Partial("_PaymentsPartial", Model.payments)</div>
                         <div role="tabpanel" class="tab-pane" id="watch_history">@Html.Partial("_HistoryPartial", Model.histories)</div>
                         <div role="tabpanel" class="tab-pane" id="my_serials">@Html.Partial("_UserSerialsPartial", Model.userseasons)</div>
                         <div role="tabpanel" class="tab-pane" id="my_films">@Html.Partial("_UserFilmsPartial", Model.purchases)</div>
-                        <div role="tabpanel" class="tab-pane" id="my_subscriptions">@Html.Partial("_UserSubscriptionsPartial", (List<subscription>)ViewBag.subscriptions)</div>
+                        <div role="tabpanel" class="tab-pane" id="my_subscriptions">@Html.Partial("_UserSubscriptionsPartial", (List<subscription>) ViewBag.subscriptions)</div>
                     </div>
 
                 </div>
@@ -72,8 +72,39 @@
             <div class="banner-wrap">
                 <img id="firstBanner" alt="banner" src="">
             </div>
-            
+
         </div>
     </aside>
 </section>
-            
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '@Url.Action("RotatorRoma", "Home")',
+            contentType: "application/json; charset=UTF-8",
+            type: "GET",
+            success: function(response) {
+                $('#firstBanner').attr('src', '/OnlineCinemaProject/uploads/' + response);
+            },
+            error: function(jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                $('#firstBanner').attr('alt', msg);
+            },
+        });
+    });
+</script>
+

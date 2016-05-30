@@ -61,39 +61,67 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Create(video video, HttpPostedFileBase file, int[] genres, int[] actors, int[] countries)
         {
             video.score = 0;
-            if (ModelState.IsValid)
+            try
             {
-                if (file != null)
+                if (ModelState.IsValid)
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
-                                + file.FileName);
-                    video.img_url = file.FileName;
-                }
-                db.videos.Add(video);
-                db.SaveChanges();
-                
-                UpdateVideoGenres(genres, video);
-                UpdateVideoActors(actors, video);
-                UpdateVideoCountries(countries, video);
-                db.Entry(video).State = EntityState.Modified;
-                db.SaveChanges();
+                    if (file != null)
+                    {
+                        file.SaveAs(HttpContext.Server.MapPath("~/uploads/")
+                                    + file.FileName);
+                        video.img_url = file.FileName;
+                    }
+                    db.videos.Add(video);
+                    db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    UpdateVideoGenres(genres, video);
+                    UpdateVideoActors(actors, video);
+                    UpdateVideoCountries(countries, video);
+                    db.Entry(video).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    video.videoactors =
+                        db.actors.Where(t => actors.Contains(t.id))
+                            .ToList()
+                            .Select(t => new videoactor() {actor = new actor {id = t.id, name = t.name}, video = video})
+                            .ToList();
+                    video.videogenres =
+                        db.actors.Where(t => actors.Contains(t.id))
+                            .ToList()
+                            .Select(t => new videogenre() {genre = new genre {id = t.id, name = t.name}, video = video})
+                            .ToList();
+                    video.manufacturers =
+                        db.actors.Where(t => countries.Contains(t.id))
+                            .ToList()
+                            .Select(
+                                t =>
+                                    new manufacturer() {country = new country {id = t.id, name = t.name}, video = video})
+                            .ToList();
+                }
+                return View(video);
             }
-            else
+            catch (System.Data.Entity.Validation.DbEntityValidationException dex)
             {
-                video.videoactors = db.actors.Where(t => actors.Contains(t.id)).ToList().Select(t => new videoactor() { actor = new actor { id = t.id, name = t.name }, video = video }).ToList();
-                video.videogenres = db.actors.Where(t => actors.Contains(t.id)).ToList().Select(t => new videogenre() { genre = new genre { id = t.id, name = t.name }, video = video }).ToList();
-                video.manufacturers = db.actors.Where(t => countries.Contains(t.id)).ToList().Select(t => new manufacturer() { country = new country { id = t.id, name = t.name }, video = video }).ToList();
+                Exception raise = dex;
+                foreach (var validationError in  dex.EntityValidationErrors)
+                {
+                    string message = string.Format("{0} {1}", validationError.Entry.Entity.ToString(),
+                        validationError.ToString());
+                    raise = new InvalidOperationException(message, raise);
+                }
+                throw raise;
             }
-            return View(video);
         }
 
         private void UpdateVideoActors(int[] selectedActors, video model)
         {
             if (selectedActors == null)
             {
-                var delete = db.videoactors.Where(i => i.video == model).ToList();
+                var delete = db.videoactors.Where(i => i.video.id == model.id).ToList();
                 foreach (var videoactor in delete)
                 {
                     db.videoactors.Remove(videoactor);

@@ -151,7 +151,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
         [HttpGet]
         [Route("api/video/watch/{file_id}")]
-        public JSendResponse WatchVideo(int file_id)
+        public JSendResponse WatchVideo(string file_id)
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {
@@ -283,7 +283,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
             if (!user.DrawMoney((decimal)season.price))
             {
-                return JSendResponse.failResponse("Ндостаточно средств на балансе");
+                return JSendResponse.failResponse("Недостаточно средств на балансе");
             }
 
             payment payment = new payment

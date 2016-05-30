@@ -52,8 +52,9 @@
 <header class="header-wrapper header-wrapper--home">
     <div class="container">
         <!-- Logo link-->
-        <a href="@Url.Action("Index","Home")" class="logo">
-            <img alt="logo" src="~/Content/AMovie/images/logo.png">
+        <a href="@Url.Action("Index", "Home")" class="logo">
+            <p style="font-size: 28px; color: #ffd564; font-family: sans-serif">Illusion</p>
+            @*<img alt="logo" src="~/uploads/logo_illusion.jpg">*@
         </a>
 
         <!-- Main website navigation-->
@@ -74,63 +75,9 @@
                     <a href="#">О Нас</a>
                     <ul>
                         <li class="menu__nav-item"><a href="@Url.Action("About", "Home")">О проекте</a></li>
-                        <li class="menu__nav-item"><a href="@Url.Action("About", "Home")">Для рекламодателей</a></li>
                     </ul>
                 </li>
-                <li>
-                    <span class="sub-nav-toggle plus"></span>
-                    <a href="http://amovie.gozha.net/#">Фильмы</a>
-                    <ul class="mega-menu container">
-                        <li class="col-md-3 mega-menu__coloum">
-                            <h4 class="mega-menu__heading">Жанры</h4>
-                            <ul class="mega-menu__list">
-
-                                @{
-                                    int counter = 0;
-                                    foreach (var genre in (List<genre>) ViewBag.Genres)
-                                    {
-
-                                        if (counter == 8)
-                                        {
-                                            counter = 0;
-                                            @:</ul></li><li class="col-md-3 mega-menu__coloum mega-menu__coloum--outheading"><ul class="mega-menu__list">
-                                        }
-                                        counter++;
-                                        <li class="mega-menu__nav-item"><a href="#">@genre.name</a></li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-
-                </li>
-                <li>
-                    <span class="sub-nav-toggle plus"></span>
-                    <a href="http://amovie.gozha.net/#">Сериалы</a>
-                    <ul class="mega-menu container">
-                        <li class="col-md-3 mega-menu__coloum">
-                            <h4 class="mega-menu__heading">Жанры</h4>
-                            <ul class="mega-menu__list">
-
-                                @{
-                                    int counter2 = 0;
-                                    foreach (var genre in (List<genre>) ViewBag.Genres)
-                                    {
-
-                                        if (counter2 == 8)
-                                        {
-                                            counter2 = 0;
-
-                                            @:</ul></li><li class="col-md-3 mega-menu__coloum mega-menu__coloum--outheading"><ul class="mega-menu__list">
-                                        }
-                                        counter2++;
-                                        <li class="mega-menu__nav-item"><a href="#">@genre.name</a></li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
+                
 
             </ul>
         </nav>
@@ -162,11 +109,14 @@
                 }
                 if (!isAuzorithed)
                 {
-                    <ul class="nav navbar-nav navbar-right">
+                    <a href="@Url.Action("Login", "Account")" id="registerLink" class="btn btn--sign login-window">Войти</a>
+                    <a href="@Url.Action("Register", "Account")" id="registerLink" class="btn btn--sign login-window">Регистрация</a>
+                    <a href="@Url.Action("LoginAdvertiser", "Account")" id="loginLink" class="btn btn--sign login-window">Рекламодатель</a>
+                    @*<ul class="nav navbar-nav navbar-right">
                         <li><a href="@Url.Action("Register", "Account")" id="registerLink" class="auzorithe" style="color:#BCB3B6">Регистрация</a>
                         <li><a href="@Url.Action("Login", "Account")"  id="loginLink" class="auzorithe" style="color:#BCB3B6">Войти</a>
                         <li><a href="@Url.Action("LoginAdvertiser", "Account")"  id="loginLink" class="auzorithe" style="color:#BCB3B6">Войти как рекламодатель</a>
-                    </ul>
+                    </ul>*@
                 }
             }
         </div>
@@ -177,7 +127,7 @@
 <div class="clearfix"></div>
 <footer class="footer-wrapper">
     <section class="container">
-        <p class="copy">© A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+        <p class="copy">© Illusion, 2016. All rights reserved. </p>
     </section>
 </footer>
 </div>
@@ -233,7 +183,6 @@
             
             init_Home();
             $('.auth__show').click(function (e) {
-                alert("ready");
                 e.preventDefault();
                 $('.auth__function').toggleClass('open-function');
             });
@@ -245,35 +194,7 @@
         });
 
        
-            $(document).ready(function () {
-                $.ajax({
-                    url: '@Url.Action("RotatorRoma","Home")',
-                    contentType: "application/json; charset=UTF-8",
-                    type: "GET",
-                    success: function (response) {
-                        $('#firstBanner').attr('src', '/OnlineCinemaProject/uploads/' + response);
-                    },
-                    error: function (jqXHR, exception) {
-                        var msg = '';
-                        if (jqXHR.status === 0) {
-                            msg = 'Not connect.\n Verify Network.';
-                        } else if (jqXHR.status == 404) {
-                            msg = 'Requested page not found. [404]';
-                        } else if (jqXHR.status == 500) {
-                            msg = 'Internal Server Error [500].';
-                        } else if (exception === 'parsererror') {
-                            msg = 'Requested JSON parse failed.';
-                        } else if (exception === 'timeout') {
-                            msg = 'Time out error.';
-                        } else if (exception === 'abort') {
-                            msg = 'Ajax request aborted.';
-                        } else {
-                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                        }
-                        $('#firstBanner').attr('alt', msg);
-                    },
-                });
-            });
+            
     </script>
 
 

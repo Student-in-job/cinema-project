@@ -62,7 +62,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
             }
 
-            string query = "SELECT * FROM banners order by show_amount asc";
+            string query = "SELECT * FROM banners where active = '1' order by show_amount asc";
 
             var banner = db.banners.SqlQuery(query).ToList().First();
 

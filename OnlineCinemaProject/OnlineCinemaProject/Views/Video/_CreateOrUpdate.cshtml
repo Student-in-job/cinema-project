@@ -315,7 +315,7 @@
 <script type="text/javascript">
     kendo.culture("ru-RU");
     kendo.ui.validator.rules.mvcdate = function (input) {
-        return !input.is("[data-val-date]") || input.val() === "" || kendo.parseDate(input.val(), "dd.mm.yyyy") !== null;
+        return !input.is("[data-val-date]") || input.val() === "" || kendo.parseDate(input.val(), "dd.MM.yyyy") !== null;
     };
     $(document).ready(function () {
         jQuery.validator.addMethod(

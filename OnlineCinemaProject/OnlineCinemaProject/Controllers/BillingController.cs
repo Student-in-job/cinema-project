@@ -34,8 +34,7 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.Account = Utils.Utils.GetAccount(_db.aspnetusers.ToList());
             
             ViewBag.MoneyIncomes = MoneyIncomes();
-            ViewBag.Subscribers = Subscribers();
-            ViewBag.TariffIncomes = TariffIncomes();
+            
 
             return View(_db.payments.ToList());
         }
@@ -46,7 +45,7 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Tariffs()
         {
             ViewBag.Subscribers = Subscribers();
-            ViewBag.TariffIncomes = Subscribers();
+            ViewBag.TariffIncomes = TariffIncomes();
             return View(_db.tariffs.ToList());
         }
 
@@ -103,7 +102,7 @@ namespace OnlineCinemaProject.Controllers
         //
         // GET: /tariff/Edit/5
 
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(int id)
         {
             tariff tariff = _db.tariffs.Find(id);
 
@@ -111,7 +110,7 @@ namespace OnlineCinemaProject.Controllers
             {
                 return HttpNotFound();
             }
-            TariffViewModel tariffView = new TariffViewModel
+            /*TariffViewModel tariffView = new TariffViewModel
             {
                 Id = tariff.id,
                 Name = tariff.name,
@@ -123,8 +122,8 @@ namespace OnlineCinemaProject.Controllers
                 Price = (decimal) tariff.price,
                 Subscriptions = tariff.subscriptions,
                 Active = tariff.active
-            };
-            return View(tariffView);
+            };*/
+            return View(tariff);
         }
 
         //
@@ -132,11 +131,11 @@ namespace OnlineCinemaProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TariffViewModel model)
+        public ActionResult Edit(tariff model)
         {
             if (ModelState.IsValid)
             {
-                var tariff = new tariff
+                /*var tariff = new tariff
                 {
                     id = (int) model.Id,
                     name = model.Name,
@@ -146,9 +145,9 @@ namespace OnlineCinemaProject.Controllers
                     adverticement_enabled = model.AdverticementEnabled,
                     new_films_enabled = model.NewFilmsEnabled,
                     price = model.Price,
-                };
+                };*/
 
-                _db.Entry(tariff).State = EntityState.Modified;
+                _db.Entry(model).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Tariffs");
             }
@@ -251,7 +250,14 @@ namespace OnlineCinemaProject.Controllers
 
             decimal total = tariffs.Aggregate<tariff, decimal>(0, (current, item) => current + item.subscriptions.Count);
 
-            var subscribersChart = tariffs.ToDictionary(tariff => tariff.name, tariff => tariff.subscriptions.Count / total);
+            var subscribersChart = new Dictionary<string, decimal>();
+            foreach (var tariff in tariffs)
+            {
+                if (tariff.subscriptions.Count != 0)
+                {
+                    subscribersChart.Add(tariff.name, tariff.subscriptions.Count / total);
+                }
+            }
 
             var subscribers = subscribersChart.Keys.Select(value => new PaymentTotal
             {
@@ -293,9 +299,24 @@ namespace OnlineCinemaProject.Controllers
         {
             var tariffs = _db.tariffs.ToList();
 
-            decimal total = tariffs.Aggregate<tariff, decimal>(0, (current, item) => current + item.price.Value*item.subscriptions.Count);
+            decimal total = 0;
+            foreach (var tariff in tariffs)
+            {
+                if (tariff.subscriptions.Count != 0)
+                {
+                    total = total + tariff.price.Value * tariff.subscriptions.Count;
+                }
+            }
+            
 
-            var subscribersChart = tariffs.ToDictionary(tariff => tariff.name, tariff => tariff.subscriptions.Count*tariff.price / total);
+            var subscribersChart = new Dictionary<string, decimal?>();
+            foreach (var tariff in tariffs)
+            {
+                if (tariff.subscriptions.Count != 0)
+                {
+                    subscribersChart.Add(tariff.name, tariff.subscriptions.Count * tariff.price / total);
+                }
+            }
 
             var subscribers = subscribersChart.Keys.Select(value => new PaymentTotal
             {
@@ -305,9 +326,9 @@ namespace OnlineCinemaProject.Controllers
 
             var data = subscribers.Select(i => new object[] { i.MonthName, i.Total }).ToArray();
 
-            Highcharts chart = new Highcharts("chart")
+            Highcharts chart = new Highcharts("income")
                 .InitChart(new Chart { PlotShadow = false })
-                .SetTitle(new Title { Text = "Процент подписок на тарифные планы" })
+                .SetTitle(new Title { Text = "Прибыль тарифов" })
                 .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }" })
                 .SetPlotOptions(new PlotOptions
                 {
@@ -326,7 +347,7 @@ namespace OnlineCinemaProject.Controllers
                 .SetSeries(new Series
                 {
                     Type = ChartTypes.Pie,
-                    Name = "tariff",
+                    Name = "tariffIncomes",
                     Data = new Data(data)
                 });
 

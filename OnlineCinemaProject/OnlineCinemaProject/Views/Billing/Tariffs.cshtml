@@ -12,7 +12,7 @@
                 <div class="box-icon">
                     <a href="@Url.Action("Create")" @*class="btn-add"*@><i class="fa fa-plus"></i></a>
                     <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                    @*<a href="http://bootstrapmaster.com/live/simpliq2/table.html#" class="btn-close"><i class="fa fa-times"></i></a>*@
+                    @*<a href="#" class="btn-close"><i class="fa fa-times"></i></a>*@
                 </div>
             </div>
             <div class="box-content">
@@ -86,7 +86,7 @@
                         <tr class="odd">
                             <td class=" sorting_1">@item.name</td>
                             <td class="center ">@item.creation_date</td>
-                            <td class="center ">@count сум</td>
+                            <td class="center ">@item.price сум</td>
                             <td class="center ">
                                 @if ((bool) item.active)
                                 {
@@ -97,7 +97,9 @@
                                     <span class="label label-default">Inactive</span>
                                 }
                             </td>
-                            <td class="center ">@item. сум</td>
+                            <td class="center ">@count </td>
+
+
                             <td class="center ">
                                 <a class="btn btn-success" href="@Url.Action("Details", new {item.id})">
                                     <i class="fa fa-search-plus "></i>
@@ -125,10 +127,13 @@
         @( (DotNet.Highcharts.Highcharts)ViewBag.Subscribers)
     </div>
     <div class="col-md-6 ">
-        @( (DotNet.Highcharts.Highcharts)ViewBag.Subscribers)
+        @( (DotNet.Highcharts.Highcharts)ViewBag.TariffIncomes)
     </div>
 </div>
 
-
+@section scripts
+{
+    @Scripts.Render("~/bundles/highcharts")
+}
 
 

@@ -13,7 +13,8 @@ namespace OnlineCinemaProject.Models.ViewModels
             this.Subscriptions = new HashSet<subscription>();
         }
 
-        public int? Id;//при редактировании объекта надо было где то хранить его Id.)
+
+        public int Id;//при редактировании объекта надо было где то хранить его Id.)
     
         [Required]
         [Display(Name = "Название")]

@@ -49,7 +49,7 @@ namespace OnlineCinemaProject.Controllers.Api
                 }
             }
 
-            string query = "SELECT * FROM teaser order by showAmount asc";
+            string query = "SELECT * FROM teaser where active = '1' order by showAmount asc";
 
             var teaser = db.teasers.SqlQuery(query).ToList().First();
 

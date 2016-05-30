@@ -120,7 +120,8 @@ namespace OnlineCinemaProject.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "PRManager, Advertiser")]
         public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "id, name, start,end,showAmount,payment, url, adv_id")] teaser teaser)
-        {
+         {
+             teaser.showAmount = 0;
             try
             {
                 if (ModelState.IsValid)

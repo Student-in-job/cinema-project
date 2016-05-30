@@ -155,7 +155,7 @@
     <div class="clearfix"></div>
     <div class="col-sm-12">
         <div class="col-sm-8 col-md-9">
-            <h2 id="target" class="page-heading heading--outcontainer page-header">Фильмы</h2>
+            <a href="@Url.Action("AllVideo","Home", new {type = video.MOVIE})"><h2 id="target" class="page-heading heading--outcontainer page-header">Фильмы</h2></a>
             <div>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
@@ -175,25 +175,27 @@
 
             <div class="row"></div>
 
-            <h2 id="target" class="page-heading heading--outcontainer page-header">Сериалы</h2>
-            <div>
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
-                    <li role="presentation" class="active"><a href="#newMovies" aria-controls="newMovies" role="tab" data-toggle="tab">Новые</a></li>
-                    <li role="presentation"><a href="#popFilms" aria-controls="popFilms" role="tab" data-toggle="tab">Популярное</a></li>
-                </ul>
+            <a href="@Url.Action("AllVideo", "Home", new {type = video.SERIAL})">
+                <h2 id="target" class="page-heading heading--outcontainer page-header">Сериалы</h2>
+            </a>
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 30px;">
+                        <li role="presentation" class="active"><a href="#newMovies" aria-controls="newMovies" role="tab" data-toggle="tab">Новые</a></li>
+                        <li role="presentation"><a href="#popFilms" aria-controls="popFilms" role="tab" data-toggle="tab">Популярное</a></li>
+                    </ul>
 
-                <!-- Tab panes -->
-                <div class="tab-content" style="padding: 0">
-                    <div role="tabpanel" class="tab-pane active" id="newMovies">@Html.Partial("NewMovie", (List<video>)ViewBag.NewSerial)</div>
-                    <div role="tabpanel" class="tab-pane" id="popFilms">@Html.Partial("NewMovie", (List<video>)ViewBag.PopularSerial)</div>
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="padding: 0">
+                        <div role="tabpanel" class="tab-pane active" id="newMovies">@Html.Partial("NewMovie", (List<video>)ViewBag.NewSerial)</div>
+                        <div role="tabpanel" class="tab-pane" id="popFilms">@Html.Partial("NewMovie", (List<video>)ViewBag.PopularSerial)</div>
+                    </div>
+
                 </div>
 
-            </div>
 
 
-
-            @*<aside class="col-sm-4 col-md-3">
+                @*<aside class="col-sm-4 col-md-3">
                 <div class="sitebar first-banner--left">
                     <div class="banner-wrap first-banner--left">
                         <img alt="banner" src="./AMovie_files/sale.jpg">
@@ -206,7 +208,7 @@
                     </div>
                 </div>
             </aside>*@
-        </div>
+</div>
         <aside class="col-sm-4 col-md-3">
             <div class="sitebar first-banner--left">
 

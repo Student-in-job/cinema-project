@@ -46,7 +46,13 @@ namespace OnlineCinemaProject.Controllers
             ViewBag.Search_input = search_input;
             return View(videos.ToList());
         }
-        
+
+        public ActionResult AllVideo(int type)
+        {
+            var videos = DataContext.videos.Where(i=>i.type == type).ToList();
+            return View(videos);
+        }
+
         public ActionResult VideoByGenre(int id)
         {
             var videos = DataContext.videogenres.Where(i => i.genre.id == id).Select(i=>i.video).ToList();
@@ -77,12 +83,12 @@ namespace OnlineCinemaProject.Controllers
         [HttpGet]
         public ActionResult RotatorRoma()
         {
-            string query = "SELECT * FROM banners where active = '1' order by show_amount asc";
-            var banner = DataContext.banners.Where(i => i.active == true).OrderBy(i => i.show_amount).ToList().First();
-            statistics_banner sb = new statistics_banner();
+            string query = "SELECT * FROM teasers where active = '1' order by show_amount asc";
+            var banner = DataContext.teasers.Where(i => i.active == true).OrderBy(i => i.showAmount).ToList().First();
+            statistics_teaser sb = new statistics_teaser();
             try
             {
-                sb = DataContext.statistics_banner.Single(i => i.id_banner == banner.id && i.id_user == User.Identity.GetUserId());
+                sb = DataContext.statistics_teaser.Single(i => i.id_teasers == banner.id && i.id_users == User.Identity.GetUserId());
             }
             catch (Exception e)
             {
@@ -90,34 +96,34 @@ namespace OnlineCinemaProject.Controllers
             };
 
 
-            DataContext.banners.Attach(banner);
-            banner.show_amount = banner.show_amount + 1;
+            DataContext.teasers.Attach(banner);
+            banner.showAmount = banner.showAmount + 1;
             var entry = DataContext.Entry(banner);
-            entry.Property(e => e.show_amount).IsModified = true;
+            entry.Property(e => e.showAmount).IsModified = true;
             // other changed properties
             DataContext.SaveChanges();
 
-            if (sb.banner != null)
+            if (sb.teaser != null)
             {
 
-                DataContext.statistics_banner.Attach(sb);
-                sb.date = DateTime.Now;
-                sb.show_amount = (int?)banner.show_amount;
+                DataContext.statistics_teaser.Attach(sb);
+                sb.dateShow = DateTime.Now;
+                sb.showAmount = (int?)banner.showAmount;
 
                 var entry1 = DataContext.Entry(sb);
-                entry1.Property(e => e.show_amount).IsModified = true;
-                entry1.Property(e => e.date).IsModified = true;
+                entry1.Property(e => e.showAmount).IsModified = true;
+                entry1.Property(e => e.dateShow).IsModified = true;
                 // other changed properties
                 DataContext.SaveChanges();
             }
             else
             {
-                sb = new statistics_banner();
-                sb.date = DateTime.Now;
-                sb.id_banner = banner.id;
-                sb.show_amount = (int?)banner.show_amount;
-                sb.id_user = User.Identity.GetUserId();
-                DataContext.statistics_banner.Add(sb);
+                sb = new statistics_teaser();
+                sb.dateShow = DateTime.Now;
+                sb.id_teasers = banner.id;
+                sb.showAmount = (int?)banner.showAmount;
+                sb.id_users = User.Identity.GetUserId();
+                DataContext.statistics_teaser.Add(sb);
                 DataContext.SaveChanges();
 
             }
@@ -138,6 +144,82 @@ namespace OnlineCinemaProject.Controllers
 
             ViewBag.Videos = videos;
             return View(search_input);
+        }
+
+        [HttpGet]
+        public ActionResult WatchVideo(int file_id)
+        {
+
+            var file = DataContext.files.Find(file_id);
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                if (file.price == 0)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            aspnetuser user = DataContext.aspnetusers.Find(User.Identity.GetUserId());
+            
+
+            if (!user.CheckAccess(file))
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            history history = new history
+            {
+                aspnetuser = user,
+                file = file,
+                watching_time = DateTime.Now
+            };
+
+            DataContext.histories.Add(history);
+            DataContext.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult PurchaseVideo(int file_id)
+        {
+            
+            var user = DataContext.aspnetusers.Find(User.Identity.GetUserId());
+            var file = DataContext.files.Find(file_id);
+
+
+            if (!user.DrawMoney((decimal)file.price))
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            payment payment = new payment
+            {
+                aspnetuser = user,
+                amount = (decimal)file.price,
+                title = file.getPurchaseTitle(),
+                payment_type = false,
+                payment_date = DateTime.Now,
+            };
+
+            DataContext.payments.Add(payment);
+            DataContext.SaveChanges();
+
+
+            purchase purchase = new purchase
+            {
+                aspnetuser = user,
+                file = file,
+                payment = payment,
+                purchase_date = DateTime.Now
+            };
+            DataContext.purchases.Add(purchase);
+
+            DataContext.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+
         }
 
 

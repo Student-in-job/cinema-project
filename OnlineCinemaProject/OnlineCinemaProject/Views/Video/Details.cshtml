@@ -3,7 +3,7 @@
 @model OnlineCinemaProject.Models.video
 
 @{
-    Layout = "~/Views/Shared/Dashboard.cshtml";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
     ViewBag.Title = "Details";
 }
 
@@ -134,9 +134,9 @@
             </span>
             @{
                 int profit = 0;
-                foreach (var movie in Model.movies)
+                foreach (var movie in Model.files)
                 {
-                    profit = (int)(profit + movie.price * movie.usermovies.Count);
+                    profit = (int)(profit + movie.price * movie.purchases.Count);
                 }
             }
 
@@ -168,7 +168,7 @@
 
     @if (Model.type == 0)
     {
-        @Html.Partial("MoviePartial", Model.movies)
+        @Html.Partial("MoviePartial", Model.files)
         @Html.ActionLink("Добавить Видео", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
     }
     else
@@ -177,8 +177,8 @@
         @Html.ActionLink("Добавить сезон", "AddSeasonByVideoId", "Season", new { id = @Model.id }, null)
     }
     <hr class="featurette-divider" />
-    @Html.Partial("VideoTrailers", Model.trailers)
-    @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new { video_id = Model.id }, null)
+    @*@Html.Partial("VideoTrailers", Model.files)
+    @Html.ActionLink("Добавить трейлер", "AddTrailerByVideoId", "Trailer", new { video_id = Model.id }, null)*@
 </div>
 
 @*<script type="text/javascript">

@@ -37,7 +37,7 @@ else
             </div>
         </div>
         <div class="col-sm-6 col-md-8">
-            <p class="movie__time">169 min</p>
+            @*<p class="movie__time">169 min</p>*@
             <p class="movie__option">
                 <strong>Country: </strong>
                 @{
@@ -54,7 +54,7 @@ else
                 }
             </p>
             <p class="movie__option">
-                                    <strong>Год: </strong><a href="#">@Model.release_date.Year</a>
+                                    <strong>Год: </strong>@Model.release_date.Year
             </p>
             <p class="movie__option">
                 <strong>Жанры: </strong>
@@ -105,7 +105,7 @@ else
                         if (b != null && (bool) b)
                         {
                             @:<p class="movie__option">
-                            @:<strong>Цена: </strong><
+                            @:<strong>Цена: </strong>
                             @item.price
                             @:</p>
                             break;
@@ -115,10 +115,10 @@ else
             }
 
             
-            <div class="movie__btns">
+            @*<div class="movie__btns">
                 <a href="#" class="btn btn-md btn--warning" onclick='buy()'>Купить фильм</a>
-                @*<a href="#" class="watchlist">Add to watchlist</a>*@
-            </div>
+                $1$<a href="#" class="watchlist">Add to watchlist</a>#1#
+            </div>*@
         </div>
     </div>
     <div class="clearfix"></div>
@@ -150,11 +150,11 @@ else
    <div class="movie__media-switch" style="margin: 20px">
        @if (movie != null)
        {
-           <a onclick='userSubmit("@movie.url")' href="#" class="watchlist list--video" data-filter="media-photo">Фильм</a>
+           <button onclick='userSubmit("@movie.url")' class="watchlist list--video" data-filter="media-photo">Фильм</button>
        }
        @if (trailer != null)
        {
-           <a onclick='userSubmit("@trailer.url")' href="#" class="watchlist list--video" data-filter="media-video">Трейлер</a>
+           <button onclick='userSubmit("@trailer.url")' class="watchlist list--video" data-filter="media-video">Трейлер</button>
 
        }
    </div>
@@ -191,10 +191,21 @@ else
     <script type="text/javascript" src="~/Scripts/hls_streams.js"></script>
     <script>
         function userSubmit(url) {
-            alert('fdsfds');
-            $('video')[0].player.setSrc(url);
-            $('video')[0].player.play();
-        }
+           $.ajax({
+                url: '@Url.Action("WatchVideo","Home", new{file_id = movie.id})',
+                contentType: "application/json; charset=UTF-8",
+                type: "GET",
+                success: function (response) {
+                    if (response) {
+                       $('video')[0].player.setSrc(url);
+                       $('video')[0].player.play();
+                  } else {
+                       $('.overlay').removeClass('close').addClass('open');
+                   }
+    
+                },
+            });
+         }
     </script>
     <script>
         $('video').mediaelementplayer({
@@ -227,7 +238,7 @@ else
                 {
                     <div class="comment">
                         
-                        <a href="" class="comment__author"><i class="fa fa-user" aria-hidden="true"></i>@item.aspnetuser.UserName</a>
+                        <p class="comment__author"><i class="fa fa-user" aria-hidden="true"></i>@item.aspnetuser.UserName</p>
                         <p class="comment__date">@item.creation_date</p>
                         <p class="comment__message">@item.comment</p>
                         @Html.Partial("_Stars",(decimal) item.rating)
@@ -247,22 +258,96 @@ else
             <div class="banner-wrap">
                 <img id="firstBanner" alt="banner" src="">
             </div>
-            
-           
-
-
         </div>
     </aside>
     
 </section>
 
 <div id="post"></div>
+<!-- open/close -->
+<div class="overlay overlay-hugeinc">
 
+    <section class="container">
+        <div class="col-sm-4 col-sm-offset-4 login">
+            <button type="button" class="overlay-close">Close</button>
+            <div class="msg">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p class="login__title">Купить<br><span class="login-edition">Смотреть от @movie.price</span></p>
+                    <p class="login__tracker">Для просмотра вам необходимо оплатить услугу.</p>
+                    <div class="login__control">
+                        <button type="button" id="buy" class="btn btn-md btn--warning btn--wider">Купить</button>
+                    </div>
+                }
+                else
+                {
+                    <p class="login__tracker">Данный контент платный, для ее просмотра  вам необходимо авторизоваться</p>
+                }
+            </div>
+                
+
+                
+        </div>
+    </section>
+</div>
 <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("RotatorRoma","Home")',
+            contentType: "application/json; charset=UTF-8",
+            type: "GET",
+            success: function (response) {
+                $('#firstBanner').attr('src', '@Url.Content("~/uploads/")' + response);
+            },
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                $('#firstBanner').attr('alt', msg);
+            },
+        });
+    });
+
+    $('.overlay-close').click(function (e) {
+        e.preventDefault;
+        $('.overlay').removeClass('open').addClass('close');
+
+        setTimeout(function () {
+            $('.overlay').removeClass('close');
+        }, 500);
+    });
+    $('#buy').click(function(e) {
+        $.ajax({
+            url: '@Url.Action("PurchaseVideo","Home", new{file_id=movie.id})',
+            contentType: "application/json; charset=UTF-8",
+            type: "GET",
+            success: function (response) {
+                if (response) {
+                    alert("play buy");
+                    $('.overlay').removeClass('open').addClass('close');
+                    $('video')[0].player.setSrc('@movie.url');
+                    $('video')[0].player.play();
+                } else {
+                    $("div.msg").replaceWith("<h2>Не хватает денег на счете</h2>");
+                }
+            },
+        });
+    });
     @*
-    function buy() {
-        
-        
+    function buy() {        
         if (isAuthunticated === true) {
             $.ajax({
                 url: '@Url.Action("BuyMuvie", "Video")',
@@ -300,7 +385,6 @@ else
 
     $("#addComment").onclick(function (e) {
         e.preventDefault();
-
     });
 
 
