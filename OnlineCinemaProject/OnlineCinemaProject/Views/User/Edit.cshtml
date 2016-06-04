@@ -21,6 +21,9 @@
         @Html.HiddenFor(model => model.SecurityStamp)
         @Html.HiddenFor(model => model.Discriminator)
         @Html.HiddenFor(model => model.JoinDate)
+        @Html.HiddenFor(model => model.AccountId)
+        @Html.HiddenFor(model => model.Balance)
+        @Html.HiddenFor(model => model.TariffId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, "Логин", new { @class = "control-label col-md-2" })
@@ -90,13 +93,13 @@
         </div>
 
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Balance, "Баланс", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Balance, new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.Balance)
             </div>
-        </div>
+        </div>*@
 
 
         <div class="form-group">
@@ -117,13 +120,13 @@
     <div align="center">
         @Html.ActionLink("Manage User Role", "ManageUserRoles", "Roles")
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.TariffId, "Тариф", new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.DropDownList("TariffId", String.Empty)
                 @Html.ValidationMessageFor(model => model.TariffId)
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

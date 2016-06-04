@@ -151,7 +151,7 @@ namespace OnlineCinemaProject.Controllers.Api
 
         [HttpGet]
         [Route("api/video/watch/{file_id}")]
-        public JSendResponse WatchVideo(string file_id)
+        public JSendResponse WatchVideo(int file_id)
         {
             if (Request.Headers.TryGetValues("token", out _headerValues))
             {

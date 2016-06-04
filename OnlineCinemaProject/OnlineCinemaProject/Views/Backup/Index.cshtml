@@ -21,8 +21,8 @@
                         <td>@backup.id_backup</td>
                         <td> @backup.Name</td>
                         <td> @backup.Date_Backup</td>
-                        <td><a href="@Url.Action("Index", "Restore", new {url = backup.Way})">Restore Data Base</a></td>
-                        <td><a href="@Url.Action("Zip", "Restore", new {urlZip = backup.ZipWay})">Restore Images</a></td>
+                        <td><a href="@Url.Action("Index", "Restore", new {url = backup.Way})">Восстановление базы данных</a></td>
+                        <td><a href="@Url.Action("Zip", "Restore", new {urlZip = backup.ZipWay})">Восстановление изображений</a></td>
                     </tr>
                 }
             </tbody>

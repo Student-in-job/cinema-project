@@ -228,6 +228,10 @@ namespace CinemaProject.Controllers
 //            string query = "SELECT * FROM banners order by show_amount asc";
             string query = "SELECT * FROM banners where active = '1' order by show_amount asc";
             var banner = _db.banners.SqlQuery(query).ToList().First();
+            if (banner.show_amount == null)
+            {
+                banner.show_amount = 0;
+            }
             statistics_banner sb = new statistics_banner();
             try
             {
@@ -280,6 +284,10 @@ namespace CinemaProject.Controllers
 
             string query = "SELECT * FROM banners where active = '1' order by show_amount asc";
             var banner = _db.banners.Where(i=>i.active == true).OrderBy(i=>i.show_amount).ToList().First();
+            if (banner.show_amount == null)
+            {
+                banner.show_amount = 0;
+            }
             statistics_banner sb = new statistics_banner();
             try
             {

@@ -176,6 +176,7 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Files_create([DataSourceRequest]DataSourceRequest request, file file, int videoId)
         {
+            file.creation_date = DateTime.Now;
             if (ModelState.IsValid)
             {
                 var entity = db.files.Add(new file { url = file.url, video_id = videoId, creation_date = file.creation_date, price = file.price, quality = file.quality, trailer = false});
@@ -206,7 +207,7 @@ namespace OnlineCinemaProject.Controllers
 
         public ActionResult Files_destroy([DataSourceRequest]DataSourceRequest request, file file)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 var entity = new file()
                 {
@@ -278,7 +279,7 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var entity = db.files.Add(new file { url = episode.url, season_id = seasondId, title = episode.title, trailer = false});
+                var entity = db.files.Add(new file { url = episode.url, season_id = seasondId, title = episode.title, trailer = false, episode_number = episode.episode_number});
                 db.SaveChanges();
                 episode.id = entity.id;
             }
@@ -293,7 +294,8 @@ namespace OnlineCinemaProject.Controllers
                 {
                     url = episode.url,
                     season_id = episode.season_id,
-                    title = episode.title
+                    title = episode.title,
+                    episode_number = episode.episode_number
                 };
                 db.files.Attach(entity);
                 db.Entry(entity).State = EntityState.Modified;

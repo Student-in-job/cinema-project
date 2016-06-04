@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using OnlineCinemaProject.CustomResult;
 using OnlineCinemaProject.Models;
 
 namespace OnlineCinemaProject.Controllers
@@ -62,7 +63,12 @@ namespace OnlineCinemaProject.Controllers
         public ActionResult Details(int id)
         {
             var video = DataContext.videos.Find(id);
-
+            var user = DataContext.aspnetusers.Find(User.Identity.GetUserId());
+            var file = video.files.FirstOrDefault(i => i.trailer == false);
+            if (file != null)
+            {
+                ViewBag.IsBought = user.checkPurchases(file);
+            }
             return View(video);
         }
 
@@ -97,6 +103,11 @@ namespace OnlineCinemaProject.Controllers
 
 
             DataContext.teasers.Attach(banner);
+            if (banner.showAmount == null)
+            {
+                banner.showAmount = 0;
+            }
+
             banner.showAmount = banner.showAmount + 1;
             var entry = DataContext.Entry(banner);
             entry.Property(e => e.showAmount).IsModified = true;
@@ -183,6 +194,43 @@ namespace OnlineCinemaProject.Controllers
         }
 
         [HttpGet]
+        public ActionResult WatchSeason(int file_id)
+        {
+
+            var file = DataContext.files.Find(file_id);
+
+            var season = file.season;
+            if (!User.Identity.IsAuthenticated)
+            {
+                if (file.price == 0)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            aspnetuser user = DataContext.aspnetusers.Find(User.Identity.GetUserId());
+
+
+            if (!user.CheckAccess(season))
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            history history = new history
+            {
+                aspnetuser = user,
+                file = file,
+                watching_time = DateTime.Now
+            };
+
+            DataContext.histories.Add(history);
+            DataContext.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult PurchaseVideo(int file_id)
         {
             
@@ -192,7 +240,7 @@ namespace OnlineCinemaProject.Controllers
 
             if (!user.DrawMoney((decimal)file.price))
             {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return Json(JSendResponse.errorResponse(Error.LackOfMoney()), JsonRequestBehavior.AllowGet);
             }
 
             payment payment = new payment
@@ -218,10 +266,48 @@ namespace OnlineCinemaProject.Controllers
             DataContext.purchases.Add(purchase);
 
             DataContext.SaveChanges();
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(JSendResponse.succsessResponse(file.url), JsonRequestBehavior.AllowGet);
 
         }
 
+        [HttpGet]
+        public ActionResult PurchaseSeason(int file_id)
+        {
+
+            var user = DataContext.aspnetusers.Find(User.Identity.GetUserId());
+            var file = DataContext.files.Find(file_id);
+            var season = file.season;
+
+            if (!user.DrawMoney((decimal)season.price))
+            {
+                return Json( JSendResponse.errorResponse(Error.LackOfMoney()), JsonRequestBehavior.AllowGet);
+            }
+
+            payment payment = new payment
+            {
+                aspnetuser = user,
+                amount = (decimal)season.price,
+                title = "покупка " + season.season_number+" го сезона, сериала " + season.video.name,
+                payment_type = false,
+                payment_date = DateTime.Now,
+            };
+
+            DataContext.payments.Add(payment);
+            DataContext.SaveChanges();
+
+
+            userseason userseason = new userseason
+            {
+                aspnetuser = user,
+                season = file.season,
+                payment = payment,
+            };
+            DataContext.userseasons.Add(userseason);
+
+            DataContext.SaveChanges();
+            return Json(JSendResponse.succsessResponse(file.url), JsonRequestBehavior.AllowGet);
+
+        }
 
     }
 }

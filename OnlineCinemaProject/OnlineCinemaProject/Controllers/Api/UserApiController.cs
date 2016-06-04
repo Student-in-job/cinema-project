@@ -187,13 +187,14 @@ namespace OnlineCinemaProject.Controllers.Api
 
             Profile profile = new Profile
             {
-                balance = user.Balance != null ? user.Balance : 0,
+                balance = user.account.balance,
                 firstName = user.FirstName,
                 lastName = user.LastName,
                 email = user.Email,
                 birthDate = user.BirthDate,
                 sex = user.Sex,
-                login = user.UserName
+                login = user.UserName,
+                account_id = (int) user.AccountId
             };
 
             if (user.GetSudscription() != null)

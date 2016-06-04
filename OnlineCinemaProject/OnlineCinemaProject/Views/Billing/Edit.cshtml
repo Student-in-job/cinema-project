@@ -52,7 +52,7 @@
                             @Html.LabelFor(model => model.adverticement_enabled, new { @class = "control-label" })
                             <div class="colntrol">
                                 <div class="input-group col-sm-4">
-                                    @Html.TextBoxFor(model => model.adverticement_enabled, new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.adverticement_enabled, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.adverticement_enabled)
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                             @Html.LabelFor(model => model.new_films_enabled, new { @class = "control-label" })
                             <div class="colntrol">
                                 <div class="input-group col-sm-4">
-                                    @Html.TextBoxFor(model => model.new_films_enabled, new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.new_films_enabled, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.new_films_enabled)
                                 </div>
                             </div>

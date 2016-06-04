@@ -162,7 +162,7 @@ namespace OnlineCinemaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var entity = db.seasons.Add(new season { video_id = videoId, release_date = season.release_date, price = season.price, title = season.title });
+                var entity = db.seasons.Add(new season { video_id = videoId, release_date = season.release_date, price = season.price, title = season.title, season_number = season.season_number});
                 db.SaveChanges();
                 season.id = entity.id;
             }

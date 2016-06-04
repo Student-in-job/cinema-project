@@ -150,8 +150,8 @@ namespace OnlineCinemaProject.Controllers
         // GET: /Teaser/Edit/5
          [Authorize(Roles = "PRManager")]
         public ActionResult Edit(int? id)
-        {
-
+         {
+             
             teaser teaser = _db.teasers.Find(id);
             if (teaser == null)
             {
@@ -235,6 +235,10 @@ namespace OnlineCinemaProject.Controllers
             //SELECT teasers.img_url statistics_teaser from teasers where teasers.id not in (SELECT statistics_teaser.id_teaser from statistics_teaser WHERE statistics_teaser.id_users = '9e0cc9f5-0665-49d4-a009-4c859a00b2d9') 
             string query = "SELECT * FROM teaser where active = '1' order by showAmount asc";
             var teaser = db.teasers.SqlQuery(query).ToList().First();
+            if (teaser.showAmount == null)
+            {
+                teaser.showAmount = 0;
+            }
             statistics_teaser sb = new statistics_teaser();
             try
             {

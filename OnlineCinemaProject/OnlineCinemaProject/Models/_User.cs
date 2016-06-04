@@ -95,6 +95,8 @@ namespace OnlineCinemaProject.Models
         public decimal? balance { get; set; }
 
         public SubscriptionInfo subscription;
+
+        public int account_id { get; set; }
     }
 
     public partial class aspnetuser
