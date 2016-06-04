@@ -10,3 +10,15 @@ D:\Diplomka\OnlineCinemaProject\CpuInfoClient\bin\Release\Newtonsoft.Json.xml
 D:\Diplomka\OnlineCinemaProject\CpuInfoClient\obj\Release\CpuInfoClient.csprojResolveAssemblyReference.cache
 D:\Diplomka\OnlineCinemaProject\CpuInfoClient\obj\Release\CpuInfoClient.exe
 D:\Diplomka\OnlineCinemaProject\CpuInfoClient\obj\Release\CpuInfoClient.pdb
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\CpuInfoClient.exe.config
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\CpuInfoClient.exe
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\CpuInfoClient.pdb
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\Microsoft.AspNet.SignalR.Core.dll
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\Microsoft.AspNet.SignalR.SystemWeb.dll
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\Newtonsoft.Json.dll
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\Microsoft.AspNet.SignalR.Core.xml
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\Microsoft.AspNet.SignalR.SystemWeb.xml
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\bin\Release\Newtonsoft.Json.xml
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\obj\Release\CpuInfoClient.csprojResolveAssemblyReference.cache
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\obj\Release\CpuInfoClient.exe
+F:\OnlineCinemaProject\OnlineCinemaProject\CpuInfoClient\obj\Release\CpuInfoClient.pdb
