@@ -1,5 +1,7 @@
 package com.ognev.online.app.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebView;
 import butterknife.Bind;
@@ -27,5 +29,10 @@ public class TeaserActivity extends BaseActivity {
 
   @OnClick(R.id.close) public void onCloseClocked() {
     finish();
+  }
+
+  @OnClick(R.id.view) public void onViewClocked() {
+    Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("http://" +  banner.url));
+    startActivity(intent);
   }
 }

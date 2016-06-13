@@ -10,23 +10,23 @@ import java.util.List;
 
 public interface VideoService {
 
-  @GET("/api/movie")
-  void getVideos(Callback<ResponseObject<List<BaseVideo>>> callback);
+  @GET("/api/{count}/movie")
+  void getVideos(@Path("count") int count, Callback<ResponseObject<List<BaseVideo>>> callback);
 
-  @GET("/api/movie/new")
-  void getNewVideos(Callback<ResponseObject<List<BaseVideo>>> callback);
+  @GET("/api/movie/new/{count}")
+  void getNewVideos(@Path("count") int count, Callback<ResponseObject<List<BaseVideo>>> callback);
 
-  @GET("/api/movie/popular")
-  void getPopularVideos(Callback<ResponseObject<List<BaseVideo>>> callback);
+  @GET("/api/movie/popular/{count}")
+  void getPopularVideos(@Path("count") int count, Callback<ResponseObject<List<BaseVideo>>> callback);
 
   @GET("/odata/Video({id})/movies")
   void getMovies(@Path("id") int id, Callback<MovieListWrapper> callback);
 
   @GET("/api/banner")
-  void getBanner(Callback<Banner> callback);
+  void getBanner(Callback<ResponseObject<Banner>> callback);
 
   @GET("/api/teaser")
-  void getTeaser(Callback<Banner> callback);
+  void getTeaser(Callback<ResponseObject<Banner>> callback);
 
   //api/movie/watch/{movieId}/{userId}
   @GET("/api/video/watch/{fileId}")
@@ -53,8 +53,15 @@ public interface VideoService {
   @GET("/api/season/purchase/{fileId}")
   void buySeason(@Path("fileId") int id, Callback<ResponseObject<MovieHistoryWrapper>> callback);
 
-  @GET("/api/serial")
-  void getSerials(Callback<ResponseObject<List<BaseVideo>>> callback);
+  /**
+   * Проверка сезона
+   * @param callback
+   */
+  @GET("/api/check/season/{id}")
+  void checkSeason(@Path("id") int id, Callback<ResponseObject<MovieHistoryWrapper>> callback);
+
+  @GET("/api/{count}/serial")
+  void getSerials(@Path("count") int count, Callback<ResponseObject<List<BaseVideo>>> callback);
 
   @GET("/api/video/search/{query}")
   void searchVideo(@Path("query") String query, Callback<ResponseObject<List<BaseVideo>>> callback);

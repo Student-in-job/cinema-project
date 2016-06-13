@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.*;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,6 +81,12 @@ public class TariffDetailsDialog extends DialogFragment {
           case Constants.N_ENOUGH_MONEY:
             ((BaseActivity) getActivity()).showInfoDialog(response.error.message);
             break;
+
+          case Constants.YOU_HAVE_TARIFF:
+            ((BaseActivity) getActivity()).showInfoDialog(response.error.message);
+            break;
+        } else {
+          Toast.makeText(getActivity(), getString(R.string.success_purchased_tariff, tariff.name), Toast.LENGTH_SHORT).show();
         }
         dismiss();
       }

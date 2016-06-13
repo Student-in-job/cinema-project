@@ -53,7 +53,7 @@
 	<string name="storage_permission_denied">Permission to access storage was denied</string>
 	<string name="video_name">Название фильма</string>
 	<string name="video_desc">Действие фильма начинается в 1981 году в Сан-Франциско, Калифорния. Линда и Крис Гарднер живут в маленькой квартире с их сыном Кристофером. Крис-старший потратил все семейные сбережения на франшизу по продаже переносных денситометров. Эти сканирующие устройства предоставляли немного более чёткие снимки, чем рентгеновские аппараты, но большинство докторов, которых посещал Крис, считали, что устройства слишком дорогие.</string>
-	<string name="watch_price">Смотреть от 299 рублей</string>
+	<string name="watch_price">Смотреть от %1$s сум</string>
 	<string name="trailer">Трейлер</string>
 	<string name="share_via">share via</string>
 	<string name="share_content">Очень советую посмотреть фильм %1$s на OnlineApp: http://172.20.16.4/%2$s</string>
@@ -63,6 +63,7 @@
 	<string name="login">Login</string>
 	<string name="email">Email</string>
 	<string name="birth_date">Birthdate</string>
+	<string name="birth_date_format">d MMMM yyyy\' года\'</string>
 	<string name="gender">Gender</string>
 	<string name="male">Male</string>
 	<string name="female">Female</string>
@@ -433,6 +434,11 @@
 	<string name="no">Нет</string>
 	<string name="rating">Рейтинг</string>
 	<string name="all_genres">все жанры</string>
+	<string name="user_edit">Редактирование профиля</string>
+	<string name="success_purchased_season">Вы купили %1$s сезон %2$s</string>
+	<string name="success_purchased_tariff">Вы купили тариф %1$s</string>
+	<string name="exp_date">Дата окончания</string>
+	<string name="no_trailer">Трейлер временно не доступен</string>
 
 
 	<string-array name="profile_tabs">

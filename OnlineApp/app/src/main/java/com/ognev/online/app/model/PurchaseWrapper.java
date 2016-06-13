@@ -9,4 +9,7 @@ public class PurchaseWrapper {
   @SerializedName("Usermovies")
   public List<UserVideo> purchases;
 
+  @SerializedName("Userseasons")
+  public List<UserVideo> seasons;
+
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,7 +32,7 @@ import java.util.List;
 public class VideoActivity extends BaseActivity {
 //  @Bind(R.id.name) TextView name;
   @Bind(R.id.details) TextView details;
-  private VideoDataListWrapper video;
+  private BaseVideo video;
 
   @Bind(R.id.recyclerview)
   RecyclerView recyclerView;
@@ -52,6 +53,9 @@ public class VideoActivity extends BaseActivity {
 
   @Bind(R.id.rating)
   TextView rating;
+
+  @Bind(R.id.review_view)
+  View reviewView;
 
   @Bind(R.id.backdrop)
   ImageView backdrop;
@@ -95,9 +99,21 @@ public class VideoActivity extends BaseActivity {
 
     Picasso.with(this).load(Constants.BASE_URL + "/uploads/" + video.poster).fit().centerCrop().into(backdrop);
 
+    if(Prefs.hasId()) {
+      reviewView.setVisibility(View.VISIBLE);
+    } else {
+      reviewView.setVisibility(View.GONE);
+    }
+
+    if(video.comments.size() > 0) {
+      commentsTv.setVisibility(View.VISIBLE);
+    } else {
+      commentsTv.setVisibility(View.GONE);
+    }
+
     collapsingToolbar.setTitle(video.name);
 
-    videoService.getPopularVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+    videoService.getPopularVideos(Constants.EIGHT, new Callback<ResponseObject<List<BaseVideo>>>() {
       @Override
       public void success(ResponseObject<List<BaseVideo>> listResponseObject, Response response) {
         videos.addAll(listResponseObject.data);
@@ -110,11 +126,12 @@ public class VideoActivity extends BaseActivity {
       }
     });
 
-    videoService.getTeaser(new Callback<Banner>() {
+    videoService.getTeaser(new Callback<ResponseObject<Banner>>() {
       @Override
-      public void success(Banner banner, Response response) {
+      public void success(ResponseObject<Banner> banner, Response response) {
+        if(!Constants.ERROR.equals(banner.status))
         startActivity(new Intent(VideoActivity.this, TeaserActivity.class)
-        .putExtra(Constants.BANNER, Parcels.wrap(banner)));
+        .putExtra(Constants.BANNER, Parcels.wrap(banner.data)));
 //        BannerFragmentPage bannerPage = new BannerFragmentPage();
 //        Bundle bundle = new Bundle();
 //        bundle.putString("banner", banner.imgUrl);
@@ -191,14 +208,21 @@ public class VideoActivity extends BaseActivity {
 
   @OnClick(R.id.trailer)
   public void onWatchTrailerClicked() {
-//    Samples.Sample sample = Samples.HLS[0];
-//    Intent mpdIntent = new Intent(VideoActivity.this, PlayerActivity.class)
-////        .setData(Uri.parse("http://172.20.16.2/mobile/panda/panda.m3u8"))
-//        .putExtra(PlayerActivity.CONTENT_ID_EXTRA, sample.contentId)
-//        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, sample.type)
-//        .putExtra(Constants.VIDEO, Parcels.wrap(video))
-//        .putExtra(PlayerActivity.PROVIDER_EXTRA, sample.provider);
-//    startActivity(mpdIntent);
+    if(video.trailer != null) {
+      Samples.Sample sample = Samples.HLS[0];
+      Intent mpdIntent = new Intent(VideoActivity.this, PlayerActivity.class)
+//        .setData(Uri.parse("http://172.20.16.2/mobile/panda/panda.m3u8"))
+          .putExtra(PlayerActivity.CONTENT_ID_EXTRA, sample.contentId)
+          .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, sample.type)
+          .putExtra(Constants.TRAILER, Parcels.wrap(video))
+          .putExtra(PlayerActivity.PROVIDER_EXTRA, sample.provider);
+      startActivity(mpdIntent);
+    } else {
+      AlertDialog.Builder builder = new AlertDialog.Builder(VideoActivity.this);
+      builder.setMessage(R.string.no_trailer);
+      builder.setNeutralButton("OK", null);
+      builder.show();
+    }
   }
 
   @OnClick(R.id.watch_video) void onWatchVideoClicked() {

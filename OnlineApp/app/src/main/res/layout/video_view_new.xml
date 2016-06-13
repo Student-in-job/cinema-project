@@ -97,6 +97,8 @@
 				android:layout_height="wrap_content"/>
 
 			<LinearLayout
+					android:id="@+id/review_view"
+					android:visibility="gone"
 					android:gravity="center_horizontal"
 					android:layout_marginBottom="10dp"
 					android:layout_marginTop="10dp"
@@ -141,6 +143,7 @@
 			<TextView
 					android:id="@+id/comments_tv"
 					android:text="Комментарии"
+					android:visibility="gone"
 					android:layout_marginTop="10dp"
 					android:textColor="@color/black"
 					android:textSize="18sp"
@@ -181,7 +184,7 @@
 			android:layout_width="wrap_content"
 			app:layout_anchor="@id/appbar"
 			app:layout_anchorGravity="bottom|right|end"
-			android:src="@drawable/play"
+			android:src="@drawable/ic_play_arrow_white_48dp"
 			android:layout_margin="@dimen/fab_margin"
 			app:backgroundTint="@color/black"
 			android:tint="@color/white"

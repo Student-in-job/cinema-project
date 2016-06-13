@@ -9,5 +9,6 @@ public class Banner {
   @SerializedName("img_url")
   public String imgUrl;
 
+  @SerializedName("site_url")
   public String url;
 }

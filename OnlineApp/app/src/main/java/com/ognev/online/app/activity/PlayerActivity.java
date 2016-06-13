@@ -30,24 +30,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.accessibility.CaptioningManager;
-import android.widget.Button;
-import android.widget.MediaController;
-import android.widget.PopupMenu;
+import android.widget.*;
 import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.Toast;
-import com.ognev.online.app.Constants;
-import com.ognev.online.app.R;
-import com.ognev.online.app.model.File;
-import com.ognev.online.app.model.MovieHistoryWrapper;
-import com.ognev.online.app.model.ResponseObject;
-import com.ognev.online.app.model.VideoDataListWrapper;
-import com.ognev.online.app.player.DemoPlayer;
-import com.ognev.online.app.player.EventLogger;
-import com.ognev.online.app.player.HlsRendererBuilder;
-import com.ognev.online.app.ui.TeaserReceiver;
 import com.google.android.exoplayer.AspectRatioFrameLayout;
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
@@ -67,6 +52,16 @@ import com.google.android.exoplayer.util.DebugTextViewHelper;
 import com.google.android.exoplayer.util.MimeTypes;
 import com.google.android.exoplayer.util.Util;
 import com.google.android.exoplayer.util.VerboseLogUtil;
+import com.ognev.online.app.Constants;
+import com.ognev.online.app.R;
+import com.ognev.online.app.model.File;
+import com.ognev.online.app.model.MovieHistoryWrapper;
+import com.ognev.online.app.model.ResponseObject;
+import com.ognev.online.app.model.VideoDataListWrapper;
+import com.ognev.online.app.player.DemoPlayer;
+import com.ognev.online.app.player.EventLogger;
+import com.ognev.online.app.player.HlsRendererBuilder;
+import com.ognev.online.app.ui.TeaserReceiver;
 import org.parceler.Parcels;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -170,92 +165,8 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
 
     video = Parcels.unwrap(getIntent().getParcelableExtra(Constants.VIDEO));
 
-
-//        contentUri = intent.getData();
-    videoService.postShow(video.files.get(0).id, new Callback<ResponseObject>() {
-      @Override
-      public void success(ResponseObject o, Response response) {
-        hasVideo = true;
-        if (Constants.ERROR.equals(o.status)) {
-          switch (o.error.code) {
-            case 2006:
-              final Dialog dialog = new Dialog(PlayerActivity.this);
-              final View view = LayoutInflater.from(PlayerActivity.this).inflate(R.layout.buy, null);
-              dialog.setContentView(view);
-              view.findViewById(R.id.back).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  dialog.dismiss();
-                }
-              });
-
-              view.findViewById(R.id.buy).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  view.findViewById(R.id.content).setVisibility(View.INVISIBLE);
-                  view.findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                  videoService.buyVideo(video.files.get(0).id, new Callback<ResponseObject<MovieHistoryWrapper>>() {
-                    @Override
-                    public void success(ResponseObject<MovieHistoryWrapper> movieHistoryWrapper, Response response) {
-                      dialog.dismiss();
-                      startPlayingVideo(video.files);
-                      if (!isOnPause) {
-                        if (Constants.FAIL.equals(movieHistoryWrapper.status)) {
-//                              showInfoDialog(movieHistoryWrapper.error);
-
-                        } else {
-                          startPlayingVideo(video.files);
-                        }
-                      }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                      if (!isOnPause) {
-                        dialog.dismiss();
-                        showInfoDialog(error.getMessage());
-                      }
-                    }
-                  });
-                }
-              });
-
-              WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-              Window window = dialog.getWindow();
-              lp.copyFrom(window.getAttributes());
-              lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-              lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-              window.setAttributes(lp);
-              dialog.setCancelable(false);
-              dialog.show();
-
-              break;
-
-            case 1002:
-              startPlayingVideo(video.files);
-              break;
-
-            default:
-              showInfoDialog(o.error.message);
-              break;
-          }
-        } else {
-          startPlayingVideo(video.files);
-        }
-
-      }
-
-      @Override
-      public void failure(RetrofitError error) {
-        if (!isOnPause)
-          showInfoDialog("/api/movie/watch/{movieId} \n" + error.getMessage());
-
-      }
-    });
-
-
     View root = findViewById(R.id.root);
-    root.setOnTouchListener(new OnTouchListener() {
+    root.setOnTouchListener(new View.OnTouchListener() {
       @Override
       public boolean onTouch(View view, MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -266,7 +177,7 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
         return true;
       }
     });
-    root.setOnKeyListener(new OnKeyListener() {
+    root.setOnKeyListener(new View.OnKeyListener() {
       @Override
       public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE
@@ -303,12 +214,138 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
 
     audioCapabilitiesReceiver = new AudioCapabilitiesReceiver(this, this);
     audioCapabilitiesReceiver.register();
+
+    if(getIntent().hasExtra(Constants.TRAILER)) {
+      video = Parcels.unwrap(getIntent().getParcelableExtra(Constants.TRAILER));
+      startPlayingVideo(video.trailer);
+    } else {
+
+//        contentUri = intent.getData();
+      videoService.postShow(video.files.get(0).id, new Callback<ResponseObject>() {
+        @Override
+        public void success(ResponseObject o, Response response) {
+          hasVideo = true;
+          if (Constants.ERROR.equals(o.status)) {
+            switch (o.error.code) {
+              case 2006:
+                final Dialog dialog = new Dialog(PlayerActivity.this);
+                final View view = LayoutInflater.from(PlayerActivity.this).inflate(R.layout.buy, null);
+                dialog.setContentView(view);
+                view.findViewById(R.id.back).setOnClickListener(new OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                    dialog.dismiss();
+                  }
+                });
+
+                ((TextView) view.findViewById(R.id.price)).setText(getString(R.string.watch_price, ((int) video.files.get(0).price / 1)));
+                view.findViewById(R.id.buy).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                    view.findViewById(R.id.content).setVisibility(View.INVISIBLE);
+                    view.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+
+                    videoService.buyVideo(video.files.get(0).id, new Callback<ResponseObject<MovieHistoryWrapper>>() {
+                      @Override
+                      public void success(ResponseObject<MovieHistoryWrapper> movieHistoryWrapper, Response response) {
+                        dialog.dismiss();
+                        if (!isOnPause) {
+                          if (Constants.ERROR.equals(movieHistoryWrapper.status)) {
+                            showInfoDialog(movieHistoryWrapper.error.message);
+                          } else {
+                            startPlayingVideo(video.files);
+                          }
+                        }
+                      }
+
+                      @Override
+                      public void failure(RetrofitError error) {
+                        if (!isOnPause) {
+                          dialog.dismiss();
+                          showInfoDialog(error.getMessage());
+                        }
+                      }
+                    });
+                  }
+                });
+
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                Window window = dialog.getWindow();
+                lp.copyFrom(window.getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                window.setAttributes(lp);
+                dialog.setCancelable(false);
+                dialog.show();
+
+                break;
+
+              case 1002:
+                startPlayingVideo(video.files);
+                break;
+
+              default:
+                showInfoDialog(o.error.message);
+                break;
+            }
+          } else {
+            startPlayingVideo(video.files);
+          }
+
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+          if (!isOnPause)
+            showInfoDialog("/api/movie/watch/{movieId} \n" + error.getMessage());
+
+        }
+      });
+
+    }
+
+
   }
 
 
   private void startPlayingVideo(List<File> movieListWrapper) {
     final Intent intent = getIntent();
     contentUri = Uri.parse(movieListWrapper.get(0).url);
+    contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA,
+        inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
+    contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
+    provider = intent.getStringExtra(PROVIDER_EXTRA);
+    configureSubtitleView();
+    if (player == null) {
+      if (!maybeRequestPermission()) {
+        preparePlayer(true);
+      }
+    } else {
+      player.setBackgrounded(false);
+    }
+
+    player.addListener(new DemoPlayer.Listener() {
+      @Override
+      public void onStateChanged(boolean playWhenReady, int playbackState) {
+
+      }
+
+      @Override
+      public void onError(Exception e) {
+
+      }
+
+      @Override
+      public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
+
+      }
+    });
+
+  }
+
+  private void startPlayingVideo(File movieListWrapper) {
+    final Intent intent = getIntent();
+    contentUri = Uri.parse(movieListWrapper.url);
     contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA,
         inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
     contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
@@ -366,7 +403,7 @@ public class PlayerActivity extends BaseActivity implements SurfaceHolder.Callba
 
     AlarmManager mgr = (AlarmManager) getSystemService(ALARM_SERVICE);
     mgr.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),
-        60000 * 10,
+        1200000 ,
         getPendingIntent(PlayerActivity.this));
   }
 

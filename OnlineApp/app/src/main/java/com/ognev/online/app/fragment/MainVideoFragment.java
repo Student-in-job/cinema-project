@@ -1,5 +1,7 @@
 package com.ognev.online.app.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,6 +38,8 @@ public class MainVideoFragment extends BaseFragment {
 
   @Bind(R.id.banner) ImageView banner1;
   @Bind(R.id.banner_2) ImageView banner2;
+  Banner b1;
+  Banner b2;
 
   private SimpleAdapter newAdapter;
   private SimpleAdapter popularAdapter;
@@ -79,14 +83,24 @@ public class MainVideoFragment extends BaseFragment {
     popularRecyclerView.setAdapter(popularAdapter);
     allRecyclerView.setAdapter(allAdapter);
 
-    videoService.getBanner(new Callback<Banner>() {
+    videoService.getBanner(new Callback<ResponseObject<Banner>>() {
       @Override
-      public void success(Banner banner, Response response) {
-        Picasso.with(getActivity()).load(Constants.BASE_URL + "/uploads/" + banner.imgUrl).fit().into(banner2);
-        videoService.getBanner(new Callback<Banner>() {
+      public void success(ResponseObject<Banner> banner, Response response) {
+        if(!Constants.ERROR.equals(banner.status)) {
+          banner2.setVisibility(View.VISIBLE);
+          b2 = banner.data;
+          Picasso.with(getActivity()).load(Constants.BASE_URL + "/uploads/" + banner.data.imgUrl).fit().into(banner2);
+        }
+        else banner2.setVisibility(View.GONE);
+        videoService.getBanner(new Callback<ResponseObject<Banner>>() {
           @Override
-          public void success(Banner banner, Response response) {
-            Picasso.with(getActivity()).load(Constants.BASE_URL + "/uploads/" + banner.imgUrl).fit().into(banner1);
+          public void success(ResponseObject<Banner> banner, Response response) {
+            if(!Constants.ERROR.equals(banner.status)) {
+              banner1.setVisibility(View.VISIBLE);
+              b1 = banner.data;
+              Picasso.with(getActivity()).load(Constants.BASE_URL + "/uploads/" + banner.data.imgUrl).fit().into(banner1);
+            }
+            else banner1.setVisibility(View.GONE);
 
           }
 
@@ -105,17 +119,17 @@ public class MainVideoFragment extends BaseFragment {
 
 
 
-    videoService.getNewVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+    videoService.getNewVideos(Constants.EIGHT, new Callback<ResponseObject<List<BaseVideo>>>() {
       @Override
       public void success(final ResponseObject<List<BaseVideo>> videoDataListWrappers1, Response response) {
 
         newVideos.addAll(videoDataListWrappers1.data);
-        videoService.getPopularVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+        videoService.getPopularVideos(Constants.EIGHT, new Callback<ResponseObject<List<BaseVideo>>>() {
           @Override
           public void success(ResponseObject<List<BaseVideo>> videoDataListWrappers2, Response response) {
             popularVideos.addAll(videoDataListWrappers2.data);
 
-            videoService.getVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+            videoService.getVideos(Constants.EIGHT, new Callback<ResponseObject<List<BaseVideo>>>() {
               @Override
               public void success(ResponseObject<List<BaseVideo>> videoDataListWrappers, Response response) {
                 allVideos.addAll(videoDataListWrappers.data);
@@ -146,6 +160,18 @@ public class MainVideoFragment extends BaseFragment {
       }
     });
 
+  }
+
+  @OnClick(R.id.banner)
+  public void onBannerClicked() {
+    Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + b1.url));
+    startActivity(intent);
+  }
+
+  @OnClick(R.id.banner_2)
+  public void onBanner2Clicked() {
+    Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + b2.url));
+    startActivity(intent);
   }
 
   @OnClick(R.id.new_card)

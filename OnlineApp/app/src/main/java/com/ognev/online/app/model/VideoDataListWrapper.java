@@ -26,6 +26,8 @@ public class VideoDataListWrapper implements Serializable {
 
   public float rating;
 
+  public File trailer;
+
 
   public List<Actor> actors;
   public List<Genre> genres;

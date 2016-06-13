@@ -86,7 +86,7 @@ public class MovieListFragment extends BaseFragment {
         } else {
           switch (getArguments().getInt(Constants.CATEGORY)) {
             case Constants.ALL:
-              ((BaseActivity) getActivity()).videoService.getVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+              ((BaseActivity) getActivity()).videoService.getVideos(Constants.ALL, new Callback<ResponseObject<List<BaseVideo>>>() {
                 @Override
                 public void success(ResponseObject<List<BaseVideo>> listResponseObject, Response response) {
                   initAdapter(listResponseObject);
@@ -102,7 +102,7 @@ public class MovieListFragment extends BaseFragment {
               break;
 
             case Constants.NEW:
-              ((BaseActivity) getActivity()).videoService.getNewVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+              ((BaseActivity) getActivity()).videoService.getNewVideos(Constants.ALL,new Callback<ResponseObject<List<BaseVideo>>>() {
                 @Override
                 public void success(ResponseObject<List<BaseVideo>> listResponseObject, Response response) {
                   initAdapter(listResponseObject);
@@ -116,7 +116,7 @@ public class MovieListFragment extends BaseFragment {
               break;
 
             case Constants.POPULAR:
-              ((BaseActivity) getActivity()).videoService.getPopularVideos(new Callback<ResponseObject<List<BaseVideo>>>() {
+              ((BaseActivity) getActivity()).videoService.getPopularVideos(Constants.ALL,new Callback<ResponseObject<List<BaseVideo>>>() {
                 @Override
                 public void success(ResponseObject<List<BaseVideo>> listResponseObject, Response response) {
                   initAdapter(listResponseObject);

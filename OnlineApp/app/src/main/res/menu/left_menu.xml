@@ -38,11 +38,11 @@
 				android:checkable="false"
 				android:title="@string/settings"/>
 
-		<item
-				android:id="@+id/agreement"
-				android:icon="@drawable/ic_event_available_black_36dp"
-				android:checkable="false"
-				android:title="@string/agreement"/>
+		<!--<item-->
+				<!--android:id="@+id/agreement"-->
+				<!--android:icon="@drawable/ic_event_available_black_36dp"-->
+				<!--android:checkable="false"-->
+				<!--android:title="@string/agreement"/>-->
 
 		<item
 				android:id="@+id/about"

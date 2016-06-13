@@ -39,7 +39,7 @@ public class  Prefs {
 
   public static boolean hasId() {
 //    return true;
-    return !TextUtils.isEmpty(editor.getString(USER_ID, null)) && !"error".equals(editor.getString(USER_ID, null));
+    return !TextUtils.isEmpty(editor.getString(USER_ID, null));
   }
 
   public static void saveIp(String s) {

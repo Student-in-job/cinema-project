@@ -27,6 +27,15 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
 		<TextView
 				android:text="Баланс"
 				android:padding="16dp"
@@ -41,7 +50,35 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 
+			</FrameLayout>
+
+						<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+		<TextView
+				android:text="Лицевой счет:"
+				android:padding="16dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+		<TextView
+				android:id="@+id/account"
+				android:gravity="right"
+				android:padding="16dp"
+				android:layout_gravity="right"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+			</FrameLayout>
+
+
+		</LinearLayout>
+
 	</android.support.v7.widget.CardView>
+
+
+
 	<android.support.v7.widget.CardView
 			android:elevation="6dp"
 			app:cardUseCompatPadding="true"
@@ -146,27 +183,19 @@
 
 			</LinearLayout>
 
-			<LinearLayout
-					android:padding="10dp"
-					android:orientation="vertical"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-				<TextView
-						android:id="@+id/phone"
-						android:textSize="20sp"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"/>
-
-				<TextView
-						android:text="Mobile phone"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"/>
-
-			</LinearLayout>
 
 		</LinearLayout>
+		<android.support.design.widget.FloatingActionButton
+				android:id="@+id/fab"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="end|bottom"
+				android:layout_margin="8dp"
+				android:src="@drawable/ic_edit_white_24dp"
+				app:layout_anchorGravity="end"
 
+				app:fabSize="normal"
+				app:borderWidth="0dp" />
 
 	</android.support.v7.widget.CardView>
 
@@ -177,6 +206,10 @@
 		android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
+		<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 		<FrameLayout
 				android:id="@+id/tariff_view"
 				android:padding="10dp"
@@ -197,13 +230,31 @@
 
 		</FrameLayout>
 
-		<TextView
-					android:id="@+id/select_tariff"
-				android:visibility="gone"
-				android:layout_gravity="center"
-				android:text="@string/new_tariff"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"/>
+			<FrameLayout
+					android:visibility="gone"
+					android:id="@+id/tariff_info"
+					android:padding="10dp"
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+
+				<TextView
+						android:text="@string/exp_date"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+				<TextView
+						android:id="@+id/date"
+						android:layout_gravity="right"
+						android:text="@string/new_tariff"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+
+			</FrameLayout>
+
+
+		</LinearLayout>
+
+
 
 	</android.support.v7.widget.CardView>
 
@@ -217,6 +268,8 @@
 					android:layout_gravity="center"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"/>
+
+
 		</FrameLayout>
 	</ScrollView>
 </android.support.v4.widget.NestedScrollView>

@@ -43,6 +43,8 @@ public class PaymentHistoryFragment extends BaseFragment {
       public void success(ResponseObject<PurchaseWrapper> purchaseWrapper, Response response) {
         if(isAdded()) {
           movieHistories.addAll(purchaseWrapper.data.purchases);
+          if(purchaseWrapper.data.seasons != null)
+          movieHistories.addAll(purchaseWrapper.data.seasons);
           mAdapter = new UserVideoHistoryAdapter(getActivity(), movieHistories);
           mRecyclerView.setAdapter(mAdapter);
         }

@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import com.ognev.online.app.Constants;
 import com.ognev.online.app.R;
 import com.ognev.online.app.activity.ReviewsActivity;
+import com.ognev.online.app.model.BaseVideo;
 import com.ognev.online.app.model.Comment;
 import com.ognev.online.app.model.VideoDataListWrapper;
 import com.ognev.online.app.service.ReviewService;
@@ -30,6 +31,7 @@ public class VideoReviewAdapter extends RecyclerView.Adapter<VideoReviewAdapter.
   private List<Comment> comments;
   private ReviewService reviewService;
   private VideoDataListWrapper video;
+  private int count = 1;
 
   public VideoReviewAdapter(Context context, List<Comment> comments) {
     this.context = context;
@@ -41,9 +43,10 @@ public class VideoReviewAdapter extends RecyclerView.Adapter<VideoReviewAdapter.
     this.reviewService = reviewService;
   }
 
-  public void setVideo(VideoDataListWrapper video) {
+  public void setVideo(BaseVideo video) {
     this.video = video;
   }
+
 
   @Override
   public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -82,16 +85,15 @@ public class VideoReviewAdapter extends RecyclerView.Adapter<VideoReviewAdapter.
 
   @Override
   public int getItemViewType(int position) {
-    int type = position == 3 ? FOOTER : ITEM;
-//    if(getItemCount() == 0) {
-//      type = EMPTY;
-//    }
+    int type = position == count-1 ? FOOTER : ITEM;
+
     return type;
   }
 
   @Override
   public int getItemCount() {
-    return comments.size();
+    count = comments.size() > 2 ? 3 : comments.size();
+    return count;
   }
 
   public class CommentViewHolder extends RecyclerView.ViewHolder {

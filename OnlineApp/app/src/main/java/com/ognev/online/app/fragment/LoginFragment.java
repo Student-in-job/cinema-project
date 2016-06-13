@@ -25,7 +25,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class LoginFragment extends BaseFragment {
+public class LoginFragment extends BaseFragment  {
   @Bind(R.id.email) EditText login;
   @Bind(R.id.password) EditText password;
   @Bind(R.id.login) MaterialLoginView materialLoginView;
@@ -79,6 +79,7 @@ public class LoginFragment extends BaseFragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    materialLoginView.setActivity(getActivity());
     materialLoginView.setListener(new MaterialLoginViewListener() {
       @Override
       public void onRegister(TextInputLayout registerFirstName, TextInputLayout registerLastName, TextInputLayout registerUser, TextInputLayout registerPass, TextInputLayout registerPassRep) {
@@ -123,6 +124,8 @@ public class LoginFragment extends BaseFragment {
       }
     });
   }
+
+
 
   private boolean isValidLoginFields(TextInputLayout loginUser, TextInputLayout loginPass) {
     boolean isValid = false;

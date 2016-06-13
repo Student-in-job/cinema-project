@@ -81,9 +81,9 @@ public abstract class MenuActivity extends BaseActivity {
                 showFragment(MovieListFragment.newInstance(Constants.ALL));
                 break;
 
-              case R.id.agreement:
-                showFragment(AgreementFragment.newInstance());
-                break;
+//              case R.id.agreement:
+//                showFragment(AgreementFragment.newInstance());
+//                break;
 
               case R.id.about:
                 showFragment(AboutFragment.newInstance());
@@ -92,7 +92,7 @@ public abstract class MenuActivity extends BaseActivity {
               case R.id.logout:
                 Prefs.clearProfile();
                 finish();
-                startActivity(new Intent(MenuActivity.this, MainActivity.class));
+                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
                 break;
             }
             mDrawerLayout.closeDrawers();

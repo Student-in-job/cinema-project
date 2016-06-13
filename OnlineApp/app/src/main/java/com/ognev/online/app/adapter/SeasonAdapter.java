@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import com.ognev.online.app.Constants;
 import com.ognev.online.app.R;
 import com.ognev.online.app.activity.SeasonActivity;
+import com.ognev.online.app.model.BaseVideo;
 import com.ognev.online.app.model.Season;
 import org.parceler.Parcels;
 
@@ -22,6 +23,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
   private List<Season> seasons;
   private Context context;
   private LayoutInflater inflater;
+  private BaseVideo serial;
 
   public SeasonAdapter(Context context, List<Season> seasons) {
     this.context = context;
@@ -41,7 +43,8 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
       @Override
       public void onClick(View v) {
         Intent mpdIntent = new Intent(context, SeasonActivity.class)
-            .putExtra(Constants.SERIAL, Parcels.wrap(seasons.get(position)));
+            .putExtra(Constants.SEASON, position)
+            .putExtra(Constants.SERIAL, Parcels.wrap(serial));
         context.startActivity(mpdIntent);
       }
     });
@@ -51,6 +54,10 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
   @Override
   public int getItemCount() {
     return seasons.size();
+  }
+
+  public void setSeason(BaseVideo serial) {
+    this.serial = serial;
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {

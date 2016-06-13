@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,16 +20,22 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.ognev.online.app.R;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by shem on 1/15/16.
  */
-public class MaterialLoginView extends FrameLayout {
+public class MaterialLoginView extends FrameLayout implements DatePickerDialog.OnDateSetListener {
 
     private MaterialLoginViewListener listener;
 
@@ -40,6 +47,8 @@ public class MaterialLoginView extends FrameLayout {
     private TextView loginTitle;
     private TextInputLayout loginUser;
     private TextInputLayout loginPass;
+//    private TextInputLayout login;
+    private EditText birthDate;
     private TextView loginBtn;
     private FloatingActionButton registerFab;
     private View registerCancel;
@@ -49,6 +58,10 @@ public class MaterialLoginView extends FrameLayout {
     private View registerCard;
     private TextInputLayout registerFirstName;
     private TextInputLayout registerLastName;
+    private Calendar mCalendar;
+    private Context context;
+    private SimpleDateFormat mDateFormat;
+    private FragmentActivity activity;
 
     public MaterialLoginView(Context context) {
         this(context, null);
@@ -56,28 +69,54 @@ public class MaterialLoginView extends FrameLayout {
 
     public MaterialLoginView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        this.context = context;
     }
 
     public MaterialLoginView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
+        this.context = context;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialLoginView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
+        this.context = context;
     }
 
     private void init(Context context, AttributeSet attrs) {
+        mDateFormat = new SimpleDateFormat(
+            context.getString(R.string.birth_date_format),
+            new Locale("ru")); //todo
+        mCalendar = Calendar.getInstance();
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.login_view, this, true);
+        this.context = context;
 
         loginView = findViewById(R.id.login_window);
         loginCard = findViewById(R.id.login_card);
         loginTitle = (TextView) findViewById(R.id.login_title);
         loginUser = (TextInputLayout) findViewById(R.id.login_user);
         loginPass = (TextInputLayout) findViewById(R.id.login_pass);
+//        login = (TextInputLayout) findViewById(R.id.login_et);
+        birthDate = (EditText) findViewById(R.id.birth_date);
+        birthDate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    MaterialLoginView.this,
+                    mCalendar.get(Calendar.YEAR),
+                    mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH)
+                );
+
+                dpd.setAccentColor(ContextCompat.getColor(getContext(), R.color.color_primary));
+                dpd.show(activity.getFragmentManager(), DatePickerDialog.class.getSimpleName());
+            }
+        });
+
         loginBtn = (TextView) findViewById(R.id.login_btn);
 
         registerView = findViewById(R.id.register_window);
@@ -189,7 +228,21 @@ public class MaterialLoginView extends FrameLayout {
             a.recycle();
         }
     }
+//
+//    @OnClick(R.id.birth_date)
+//    void onDatePickClicked() {
+//
+//    }
 
+    @Override
+    public void onDateSet(DatePickerDialog datePickerDialog,
+                          int year, int month, int day) {
+        mCalendar.set(Calendar.YEAR, year);
+        mCalendar.set(Calendar.MONTH, month);
+        mCalendar.set(Calendar.DAY_OF_MONTH, day);
+
+        birthDate.setText(mDateFormat.format(mCalendar.getTime()));
+    }
     private void animateRegister() {
         Path path = new Path();
         RectF rect = new RectF(-241F, -40F, 41F, 242F);
@@ -274,6 +327,10 @@ public class MaterialLoginView extends FrameLayout {
 
     public void setListener(MaterialLoginViewListener listener) {
         this.listener = listener;
+    }
+
+    public void setActivity(FragmentActivity activity) {
+        this.activity = activity;
     }
 
     class FabAnimation extends Animation {
